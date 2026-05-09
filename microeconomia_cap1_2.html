@@ -1,0 +1,1534 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Microeconomía — Capítulos 1 y 2</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<style>
+:root{
+  --bg:#fafaf7;
+  --bg-card:#ffffff;
+  --text:#2c2c2a;
+  --text-muted:#5f5e5a;
+  --text-light:#888780;
+  --border:#e5e3dc;
+  --border-strong:#c8c5bc;
+  --accent:#1d6e56;
+  --accent-light:#e1f5ee;
+  --warn:#993c1d;
+  --warn-light:#faece7;
+  --info:#185fa5;
+  --info-light:#e6f1fb;
+  --highlight:#f8f4e3;
+  --code-bg:#f1efe8;
+  --serif:Georgia,'Times New Roman',serif;
+  --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:17px}
+body{
+  font-family:var(--serif);
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+}
+.container{
+  display:grid;
+  grid-template-columns:280px 1fr;
+  max-width:1400px;
+  margin:0 auto;
+}
+/* SIDEBAR */
+nav.toc{
+  position:sticky;
+  top:0;
+  height:100vh;
+  overflow-y:auto;
+  padding:2rem 1.5rem;
+  border-right:1px solid var(--border);
+  background:var(--bg);
+  font-family:var(--sans);
+  font-size:0.875rem;
+}
+nav.toc h2{
+  font-size:0.75rem;
+  text-transform:uppercase;
+  letter-spacing:0.1em;
+  color:var(--text-light);
+  margin-bottom:1rem;
+  font-weight:600;
+}
+nav.toc ul{list-style:none}
+nav.toc>ul>li{margin-bottom:1.25rem}
+nav.toc>ul>li>a{
+  display:block;
+  font-weight:600;
+  color:var(--text);
+  text-decoration:none;
+  padding:0.4rem 0;
+  border-bottom:1px solid var(--border);
+  margin-bottom:0.5rem;
+}
+nav.toc ul ul{
+  padding-left:0.75rem;
+  margin-top:0.25rem;
+  border-left:2px solid var(--border);
+}
+nav.toc ul ul li{margin:0.15rem 0}
+nav.toc ul ul a{
+  display:block;
+  color:var(--text-muted);
+  text-decoration:none;
+  padding:0.2rem 0.6rem;
+  font-size:0.8rem;
+  line-height:1.4;
+  border-radius:3px;
+  transition:all 0.15s;
+}
+nav.toc ul ul a:hover{
+  color:var(--accent);
+  background:var(--accent-light);
+}
+/* MAIN */
+main{
+  padding:3rem 4rem;
+  max-width:820px;
+}
+h1.title{
+  font-family:var(--sans);
+  font-size:2.2rem;
+  font-weight:700;
+  letter-spacing:-0.02em;
+  margin-bottom:0.5rem;
+  color:var(--text);
+}
+.subtitle{
+  font-family:var(--sans);
+  color:var(--text-muted);
+  margin-bottom:3rem;
+  font-size:1rem;
+}
+.chapter{
+  margin-top:5rem;
+  padding-top:2rem;
+  border-top:3px double var(--border-strong);
+}
+.chapter:first-of-type{margin-top:0;border-top:none;padding-top:0}
+.chapter-label{
+  display:inline-block;
+  font-family:var(--sans);
+  font-size:0.7rem;
+  font-weight:700;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  color:var(--accent);
+  background:var(--accent-light);
+  padding:0.3rem 0.7rem;
+  border-radius:3px;
+  margin-bottom:0.8rem;
+}
+h1.chapter-title{
+  font-family:var(--sans);
+  font-size:1.9rem;
+  font-weight:700;
+  letter-spacing:-0.015em;
+  margin-bottom:2rem;
+  line-height:1.2;
+}
+h2{
+  font-family:var(--sans);
+  font-size:1.4rem;
+  font-weight:600;
+  margin-top:3rem;
+  margin-bottom:1rem;
+  letter-spacing:-0.01em;
+  color:var(--text);
+}
+h3{
+  font-family:var(--sans);
+  font-size:1.1rem;
+  font-weight:600;
+  margin-top:2rem;
+  margin-bottom:0.8rem;
+  color:var(--text);
+}
+h4{
+  font-family:var(--sans);
+  font-size:1rem;
+  font-weight:600;
+  margin-top:1.5rem;
+  margin-bottom:0.6rem;
+  color:var(--text);
+}
+p{margin-bottom:1rem}
+ul,ol{margin-bottom:1rem;padding-left:1.5rem}
+li{margin-bottom:0.4rem}
+strong{color:var(--text);font-weight:600}
+em{color:var(--text-muted)}
+code{
+  font-family:'SF Mono',Monaco,Consolas,monospace;
+  font-size:0.88em;
+  background:var(--code-bg);
+  padding:0.1em 0.35em;
+  border-radius:3px;
+}
+
+/* BOXES */
+.box{
+  margin:1.5rem 0;
+  padding:1.2rem 1.4rem;
+  border-radius:6px;
+  border-left:4px solid;
+}
+.box p:last-child{margin-bottom:0}
+.box-def{
+  background:var(--info-light);
+  border-color:var(--info);
+}
+.box-def::before{
+  content:'DEFINICIÓN';
+  display:block;
+  font-family:var(--sans);
+  font-size:0.7rem;
+  font-weight:700;
+  letter-spacing:0.12em;
+  color:var(--info);
+  margin-bottom:0.5rem;
+}
+.box-rule{
+  background:var(--accent-light);
+  border-color:var(--accent);
+}
+.box-rule::before{
+  content:'REGLA CLAVE';
+  display:block;
+  font-family:var(--sans);
+  font-size:0.7rem;
+  font-weight:700;
+  letter-spacing:0.12em;
+  color:var(--accent);
+  margin-bottom:0.5rem;
+}
+.box-warn{
+  background:var(--warn-light);
+  border-color:var(--warn);
+}
+.box-warn::before{
+  content:'CUIDADO';
+  display:block;
+  font-family:var(--sans);
+  font-size:0.7rem;
+  font-weight:700;
+  letter-spacing:0.12em;
+  color:var(--warn);
+  margin-bottom:0.5rem;
+}
+.box-intuition{
+  background:var(--highlight);
+  border-color:#b88a1f;
+}
+.box-intuition::before{
+  content:'INTUICIÓN';
+  display:block;
+  font-family:var(--sans);
+  font-size:0.7rem;
+  font-weight:700;
+  letter-spacing:0.12em;
+  color:#854f0b;
+  margin-bottom:0.5rem;
+}
+.box-exercise{
+  background:#f8f7f4;
+  border:1px solid var(--border-strong);
+  border-left:4px solid var(--accent);
+  padding:1.5rem 1.7rem;
+  margin:2rem 0;
+  border-radius:6px;
+}
+.box-exercise>.exercise-label{
+  display:inline-block;
+  font-family:var(--sans);
+  font-size:0.7rem;
+  font-weight:700;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--accent);
+  background:var(--accent-light);
+  padding:0.25rem 0.6rem;
+  border-radius:3px;
+  margin-bottom:0.8rem;
+}
+.box-exercise>.exercise-title{
+  font-family:var(--sans);
+  font-weight:600;
+  color:var(--text);
+  margin-bottom:1rem;
+  font-size:1.05rem;
+}
+.box-exercise blockquote{
+  font-style:italic;
+  color:var(--text-muted);
+  background:#fff;
+  padding:0.8rem 1rem;
+  border-left:3px solid var(--border-strong);
+  margin:1rem 0;
+  font-size:0.95rem;
+}
+.step{
+  margin:1.2rem 0;
+  padding-left:1rem;
+  border-left:3px solid var(--accent);
+}
+.step-label{
+  font-family:var(--sans);
+  font-weight:700;
+  font-size:0.85rem;
+  color:var(--accent);
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+  margin-bottom:0.3rem;
+  display:block;
+}
+
+/* TABLES */
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin:1.5rem 0;
+  font-family:var(--sans);
+  font-size:0.92rem;
+  background:var(--bg-card);
+  border:1px solid var(--border);
+}
+th{
+  background:var(--bg);
+  text-align:left;
+  padding:0.7rem 1rem;
+  font-weight:600;
+  font-size:0.85rem;
+  border-bottom:2px solid var(--border-strong);
+  color:var(--text);
+}
+td{
+  padding:0.7rem 1rem;
+  border-bottom:1px solid var(--border);
+  vertical-align:top;
+}
+tr:last-child td{border-bottom:none}
+tr:hover{background:#fdfcf9}
+
+/* SVG / FIGURES */
+.figure{
+  margin:2rem 0;
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:6px;
+  padding:1.5rem;
+}
+.figure svg{display:block;width:100%;height:auto;max-width:100%}
+.figure-caption{
+  font-family:var(--sans);
+  font-size:0.85rem;
+  color:var(--text-muted);
+  text-align:center;
+  margin-top:0.8rem;
+  font-style:italic;
+}
+
+/* MATH */
+.math-display{
+  margin:1.5rem 0;
+  padding:1rem;
+  background:var(--bg-card);
+  border-left:3px solid var(--accent);
+  border-radius:4px;
+  overflow-x:auto;
+}
+
+/* CALLOUT NUMBERS (Krugman principles) */
+.principle{
+  margin:1.8rem 0;
+  padding:1.4rem 1.5rem 1.4rem 4.5rem;
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:6px;
+  position:relative;
+}
+.principle-num{
+  position:absolute;
+  left:1rem;
+  top:1.1rem;
+  width:2.5rem;
+  height:2.5rem;
+  background:var(--accent);
+  color:white;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:var(--sans);
+  font-weight:700;
+  font-size:1rem;
+}
+.principle h4{margin-top:0;color:var(--accent)}
+.principle p:last-child{margin-bottom:0}
+
+/* RESPONSIVE */
+@media (max-width:900px){
+  .container{grid-template-columns:1fr}
+  nav.toc{
+    position:static;
+    height:auto;
+    border-right:none;
+    border-bottom:1px solid var(--border);
+  }
+  main{padding:2rem 1.5rem}
+}
+
+/* FOOTER */
+footer{
+  margin-top:5rem;
+  padding-top:2rem;
+  border-top:1px solid var(--border);
+  font-family:var(--sans);
+  color:var(--text-muted);
+  font-size:0.85rem;
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<nav class="toc">
+<h2>Contenido</h2>
+<ul>
+<li>
+<a href="#cap1">Cap. 1 — Principios de la economía</a>
+<ul>
+<li><a href="#c1-introduccion">Introducción</a></li>
+<li><a href="#c1-microeconomia">¿Qué es la microeconomía?</a></li>
+<li><a href="#c1-principios">Los 12 principios de Krugman</a></li>
+<li><a href="#c1-agentes">Los agentes económicos</a></li>
+<li><a href="#c1-mercado">El mercado</a></li>
+<li><a href="#c1-positivo-normativo">Análisis positivo vs normativo</a></li>
+<li><a href="#c1-modelos">Teorías y modelos</a></li>
+<li><a href="#c1-equilibrio">Gráfico del equilibrio</a></li>
+<li><a href="#c1-resumen">Resumen del capítulo</a></li>
+</ul>
+</li>
+<li>
+<a href="#cap2">Cap. 2 — Teoría del consumidor</a>
+<ul>
+<li><a href="#c2-pregunta">La pregunta central</a></li>
+<li><a href="#c2-racionalidad">Racionalidad del consumidor</a></li>
+<li><a href="#c2-canasta">El concepto de canasta</a></li>
+<li><a href="#c2-supuestos">Los supuestos sobre las preferencias</a></li>
+<li><a href="#c2-utilidad">La función de utilidad</a></li>
+<li><a href="#c2-curvas">Las curvas de indiferencia</a></li>
+<li><a href="#c2-propiedades">Las 4 propiedades</a></li>
+<li><a href="#c2-tmgs">La TMgS</a></li>
+<li><a href="#c2-um">Utilidad marginal</a></li>
+<li><a href="#c2-conexion">Conexión TMgS = UMₓ/UMᵧ</a></li>
+<li><a href="#c2-maria">Ejercicio: María</a></li>
+<li><a href="#c2-tipos">Tipos especiales</a></li>
+<li><a href="#c2-renata">Ejercicio: Renata</a></li>
+<li><a href="#c2-cecilia">Ejercicio: Cecilia</a></li>
+<li><a href="#c2-juanpablo">Ejercicio: Juan Pablo</a></li>
+<li><a href="#c2-checklist">Checklist práctico</a></li>
+<li><a href="#c2-resumen">Resumen del capítulo</a></li>
+</ul>
+</li>
+</ul>
+</nav>
+
+<main>
+
+<h1 class="title">Microeconomía</h1>
+<p class="subtitle">Capítulos 1 y 2 — Guía de estudio paso a paso</p>
+
+<!-- ============================================ -->
+<!-- CAPÍTULO 1 -->
+<!-- ============================================ -->
+<section class="chapter" id="cap1">
+<span class="chapter-label">Capítulo 1</span>
+<h1 class="chapter-title">Principios de la economía</h1>
+
+<h2 id="c1-introduccion">1. Antes de cualquier fórmula: ¿qué es la economía?</h2>
+
+<p>Imagínate por un momento que tienes solo S/100 en tu billetera y quieres comprar varias cosas: almuerzo, libros, un café, transporte, salir con amigos. No te alcanza para todo. Tienes que <strong>decidir</strong>. Esa decisión —cómo repartir lo poco que tienes entre muchos usos posibles— es, en su esencia más pura, lo que estudia la economía.</p>
+
+<div class="box box-def">
+<p>La <strong>economía</strong> es la ciencia que estudia cómo las personas, las empresas y las sociedades <strong>toman decisiones</strong> para asignar <strong>recursos escasos</strong> entre <strong>necesidades ilimitadas</strong>.</p>
+</div>
+
+<p>Hay dos palabras que son el corazón de esta definición:</p>
+
+<ul>
+<li><strong>Escasos</strong> → los recursos (dinero, tiempo, materias primas, trabajadores, tierra) son <strong>limitados</strong>.</li>
+<li><strong>Ilimitadas</strong> → siempre queremos más cosas de las que podemos tener.</li>
+</ul>
+
+<p>Esa tensión entre lo que queremos y lo que podemos tener obliga a <strong>elegir</strong>. Y elegir es el verbo central de la economía.</p>
+
+<h2 id="c1-microeconomia">2. ¿Qué es la microeconomía?</h2>
+
+<p>La economía se divide tradicionalmente en dos grandes ramas:</p>
+
+<ul>
+<li><strong>Microeconomía:</strong> estudia las decisiones de <strong>unidades pequeñas</strong> (un consumidor, una empresa, un mercado específico). Es como mirar el bosque árbol por árbol.</li>
+<li><strong>Macroeconomía:</strong> estudia los <strong>agregados</strong> de la economía completa (PBI, inflación, desempleo, tipo de cambio). Es mirar el bosque entero desde un avión.</li>
+</ul>
+
+<p>En tus apuntes lo definen así: <em>"la microeconomía es el estudio de las decisiones económicas que toman los individuos y empresas y de cómo estas decisiones crean mercados"</em>. Pindyck lo refuerza: gran parte de la microeconomía se ocupa de los <strong>límites</strong> y de <strong>la mejor manera de aprovecharlos</strong>.</p>
+
+<p>Las preguntas típicas de la microeconomía son:</p>
+<ul>
+<li>¿Cómo y por qué los individuos toman decisiones?</li>
+<li>¿Qué influye en esas decisiones (precios, ingresos)?</li>
+<li>¿Cómo se determinan los precios?</li>
+<li>¿Cómo funcionan y evolucionan los mercados?</li>
+<li>¿Cómo afectan las decisiones del Gobierno?</li>
+</ul>
+
+<h2 id="c1-principios">3. Los principios fundamentales (Krugman)</h2>
+
+<p>Krugman organiza la economía alrededor de <strong>principios</strong> que son las "leyes" intuitivas que rigen el comportamiento económico. Vamos uno por uno, con su explicación profunda y ejemplos.</p>
+
+<div class="principle">
+<span class="principle-num">1</span>
+<h4>Las elecciones son necesarias porque los recursos son escasos</h4>
+<p><strong>La idea:</strong> Si los recursos fueran infinitos, no necesitaríamos economía: cada persona tendría todo lo que quisiera. Pero como son <strong>limitados</strong>, hay que escoger.</p>
+<p><strong>¿Qué tipo de recursos?</strong></p>
+<ul>
+<li><strong>Trabajo</strong> (horas que la gente puede trabajar)</li>
+<li><strong>Capital</strong> (máquinas, herramientas, infraestructura)</li>
+<li><strong>Recursos naturales</strong> (tierra, agua, minerales)</li>
+<li><strong>Tiempo</strong> (este es uno que olvidamos: tu día tiene 24 horas, y punto)</li>
+<li><strong>Dinero / presupuesto</strong></li>
+</ul>
+<p><strong>Razonamiento profundo:</strong> Cada vez que tomas una decisión —dormir más, estudiar, ir al cine— estás usando un recurso escaso (tu tiempo, tu dinero). Por lo tanto, <strong>toda decisión económica implica renunciar a algo</strong>. Esto nos lleva directamente al siguiente principio.</p>
+</div>
+
+<div class="principle">
+<span class="principle-num">2</span>
+<h4>El verdadero costo de algo es su costo de oportunidad</h4>
+<p><strong>La idea:</strong> El <strong>costo de oportunidad</strong> es el valor de la <strong>mejor alternativa a la que renuncias</strong> cuando tomas una decisión.</p>
+<p><strong>¿Por qué es "el verdadero costo"?</strong> Porque el precio en dinero (lo que pagas en la caja) es solo una parte. El costo completo incluye lo que <strong>dejaste de hacer</strong> con ese dinero o ese tiempo.</p>
+
+<div class="box box-intuition">
+<p><strong>Ejemplo paso a paso:</strong> Supón que decides ir al cine. La entrada cuesta S/20.</p>
+<ul>
+<li><strong>Costo monetario:</strong> S/20.</li>
+<li><strong>Costo de oportunidad:</strong> lo mejor que pudiste haber hecho con esos S/20 (por ejemplo, comprarte un libro) <strong>+</strong> las 2 horas que invertiste (que pudiste haber usado para estudiar para tu parcial).</li>
+</ul>
+<p>Si tu parcial es mañana y vas mal, el costo de oportunidad real de ir al cine es altísimo, aunque la entrada sea barata.</p>
+</div>
+
+<p><strong>Por qué importa:</strong> los economistas siempre razonan en términos de costo de oportunidad porque es la única forma de comparar alternativas correctamente. Si te dicen "este servicio es gratis", el economista pregunta: "¿gratis? ¿Cuánto tiempo me toma usarlo?"</p>
+</div>
+
+<div class="principle">
+<span class="principle-num">3</span>
+<h4>El "cuánto" es una decisión marginal</h4>
+<p><strong>La idea:</strong> Muchas decisiones económicas no son "sí o no", sino "¿un poquito más o un poquito menos?". Eso se llama <strong>pensamiento marginal</strong>.</p>
+
+<div class="box box-def">
+<p><strong>Marginal</strong> = lo adicional, lo que viene "en el margen", la siguiente unidad.</p>
+</div>
+
+<p><strong>Ejemplos:</strong></p>
+<ul>
+<li>¿Estudio una hora más o me voy a dormir? (decisión marginal sobre tiempo de estudio)</li>
+<li>¿Contrato un trabajador adicional? (decisión marginal sobre empleo)</li>
+<li>¿Produzco una unidad más de mi producto? (decisión marginal sobre producción)</li>
+<li>¿Como una porción más de pizza? (decisión marginal sobre consumo)</li>
+</ul>
+
+<div class="box box-rule">
+<p><strong>Regla de oro del pensamiento marginal:</strong></p>
+<div class="math-display">$$\text{Hacer la actividad adicional} \iff \text{Beneficio marginal} \geq \text{Costo marginal}$$</div>
+<p>Es decir: vale la pena hacer "una unidad más" mientras lo que <strong>ganas</strong> con esa unidad sea mayor o igual a lo que te <strong>cuesta</strong>. En cuanto el costo marginal supere al beneficio marginal, conviene parar.</p>
+</div>
+
+<p><strong>Por qué este principio es tan importante:</strong> TODA la microeconomía se construye sobre este razonamiento. La decisión óptima de un consumidor, de una empresa, de un trabajador, siempre se resuelve igualando algún tipo de beneficio marginal con algún tipo de costo marginal. Vas a verlo aparecer una y otra vez.</p>
+</div>
+
+<div class="principle">
+<span class="principle-num">4</span>
+<h4>Las personas responden a incentivos</h4>
+<p><strong>La idea:</strong> Un <strong>incentivo</strong> es cualquier cosa (una recompensa, un castigo) que cambia el comportamiento de las personas.</p>
+<p><strong>Ejemplos:</strong></p>
+<ul>
+<li>Si suben el precio de la gasolina → la gente maneja menos.</li>
+<li>Si bajan los impuestos al ahorro → la gente ahorra más.</li>
+<li>Si una empresa paga bonos por productividad → los trabajadores producen más.</li>
+</ul>
+<p><strong>Razonamiento profundo:</strong> Este principio es el que permite <strong>predecir</strong> lo que pasará en una economía. Si el gobierno cambia un impuesto, los economistas no adivinan: analizan cómo cambian los incentivos y predicen el comportamiento.</p>
+
+<div class="box box-warn">
+<p><strong>Cuidado con los incentivos perversos:</strong> A veces un incentivo bien intencionado tiene efectos contrarios. Ejemplo clásico: en India colonial, el gobierno británico ofreció recompensa por cobras muertas para reducir la población. Resultado: la gente empezó a <strong>criar</strong> cobras para matarlas y cobrar. El incentivo creó el problema que pretendía resolver.</p>
+</div>
+</div>
+
+<div class="principle">
+<span class="principle-num">5</span>
+<h4>Las ganancias del comercio (especialización)</h4>
+<p><strong>La idea:</strong> Cuando dos personas (o dos países) intercambian, <strong>ambas pueden ganar</strong>. El comercio no es un juego de suma cero.</p>
+<p><strong>Razonamiento:</strong> En lugar de que cada persona produzca todo lo que necesita (autosuficiencia), es mejor que cada una se <strong>especialice</strong> en lo que hace mejor y luego intercambien.</p>
+
+<div class="box box-intuition">
+<p><strong>Ejemplo:</strong> Imagina dos personas: Ana y Beto. Ana es muy buena cocinando, Beto es muy bueno arreglando computadoras. Si Ana trata de arreglar su propia computadora, le toma 5 horas. Si Beto cocina su comida, le toma 3 horas y queda mediocre. Pero si Ana cocina para los dos (1 hora) y Beto arregla la computadora de Ana (30 minutos), <strong>ambos terminan con más bienes y servicios usando menos tiempo</strong>.</p>
+</div>
+
+<p>Esto es la base de por qué existen los mercados, las ciudades y el comercio internacional.</p>
+</div>
+
+<div class="principle">
+<span class="principle-num">6</span>
+<h4>Los mercados tienden al equilibrio</h4>
+<p><strong>La idea:</strong> Un <strong>equilibrio</strong> es una situación donde nadie tiene incentivo para cambiar lo que está haciendo.</p>
+<p><strong>Ejemplo cotidiano:</strong> En un supermercado con varias cajas, si una caja tiene cola enorme y otra está vacía, la gente se cambia hasta que las colas se igualen. Cuando las colas son parecidas, ya nadie se mueve. Eso es equilibrio.</p>
+<p><strong>En el mercado de bienes:</strong> si el precio es muy alto, sobra mercadería (los vendedores quieren vender más de lo que la gente quiere comprar) → los precios bajan. Si el precio es muy bajo, falta mercadería (la gente quiere comprar más de lo que hay) → los precios suben. El precio se ajusta hasta que la cantidad ofrecida = cantidad demandada. <strong>Eso es el precio de equilibrio.</strong></p>
+</div>
+
+<div class="principle">
+<span class="principle-num">7</span>
+<h4>Los recursos deben usarse eficientemente</h4>
+
+<div class="box box-def">
+<p>Una economía es <strong>eficiente</strong> si <strong>no es posible mejorar a alguien sin empeorar a otro</strong>. (Criterio de Pareto)</p>
+</div>
+
+<p><strong>Ejemplo:</strong> Si en una pizzería sobran 3 porciones que se van a botar y hay un comensal hambriento que las quiere y nadie las extraña, es <strong>ineficiente</strong> botarlas. Dárselas a él lo mejora a él sin empeorar a nadie.</p>
+<p><strong>Importante:</strong> eficiencia ≠ equidad. Una economía puede ser eficiente y muy desigual a la vez. Esa tensión entre eficiencia y equidad es uno de los grandes debates de la economía.</p>
+</div>
+
+<div class="principle">
+<span class="principle-num">8</span>
+<h4>Los mercados normalmente tienden a la eficiencia</h4>
+<p><strong>La idea:</strong> Adam Smith lo llamó la <strong>"mano invisible"</strong>. Cuando los individuos buscan su propio interés en un mercado libre, <strong>sin querer</strong> terminan asignando los recursos de manera eficiente.</p>
+<p><strong>Razonamiento:</strong> Si una transacción mejora a ambas partes, la harán. Si todos hacen las transacciones que los benefician, al final del proceso se han agotado todas las oportunidades de mejora → eficiencia.</p>
+</div>
+
+<div class="principle">
+<span class="principle-num">9</span>
+<h4>Cuando los mercados fallan, el gobierno puede mejorar el bienestar</h4>
+<p><strong>La idea:</strong> A veces los mercados <strong>no</strong> alcanzan la eficiencia por sí solos. A esto se le llama <strong>falla de mercado</strong>. Las principales son:</p>
+<ul>
+<li><strong>Monopolios:</strong> un único vendedor que cobra precios excesivos.</li>
+<li><strong>Externalidades:</strong> efectos sobre terceros (contaminación, congestión).</li>
+<li><strong>Bienes públicos:</strong> cosas como el alumbrado público que el mercado no produciría espontáneamente.</li>
+<li><strong>Asimetrías de información:</strong> una parte sabe mucho más que la otra.</li>
+</ul>
+<p>En esos casos, <strong>la intervención del gobierno</strong> (impuestos, subsidios, regulaciones) puede mejorar el bienestar social.</p>
+</div>
+
+<div class="principle">
+<span class="principle-num">12</span>
+<h4>Las políticas del gobierno pueden alterar el gasto</h4>
+<p>El gobierno influye en la economía mediante <strong>impuestos, subsidios, regulaciones y gasto público</strong>. Cuando sube un impuesto al cigarro, baja el consumo. Cuando subsidia el transporte, sube su uso. Es decir: el gobierno <strong>modifica los incentivos</strong> y, por tanto, las decisiones.</p>
+</div>
+
+<h2 id="c1-agentes">4. Los agentes económicos</h2>
+
+<p>En cualquier mercado actúan tres tipos de agentes:</p>
+
+<table>
+<thead>
+<tr><th>Agente</th><th>¿Qué busca maximizar?</th><th>¿Qué restricción tiene?</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>Consumidores</strong></td><td>Bienestar / utilidad / satisfacción</td><td>Su ingreso (presupuesto limitado)</td></tr>
+<tr><td><strong>Trabajadores</strong></td><td>Su ingreso / bienestar</td><td>Su tiempo (24 h al día), elección entre trabajo y ocio</td></tr>
+<tr><td><strong>Empresas</strong></td><td>Beneficios (∏ = Ingresos − Costos)</td><td>Su tecnología, costos, demanda del mercado</td></tr>
+</tbody>
+</table>
+
+<p>Toda la microeconomía se reduce a entender estos tres tipos de decisiones y cómo se cruzan en los mercados.</p>
+
+<h2 id="c1-mercado">5. ¿Qué es un mercado?</h2>
+
+<div class="box box-def">
+<p>Un <strong>mercado</strong> es el conjunto de <strong>compradores y vendedores</strong> que, mediante sus interacciones reales o potenciales, <strong>determinan el precio</strong> de un bien o servicio.</p>
+</div>
+
+<p>No es necesariamente un lugar físico (aunque puede serlo). El "mercado de petróleo" no es un sitio: es el conjunto mundial de compradores y vendedores cuyas interacciones determinan el precio del barril.</p>
+
+<h3>5.1 Mercados competitivos vs. no competitivos</h3>
+
+<p><strong>Mercado perfectamente competitivo:</strong> tiene <strong>muchos compradores y muchos vendedores</strong>, ninguno tan grande como para influir solo en el precio. Por eso decimos que no hay <strong>poder de mercado</strong>. Todos toman el precio como dado (son <em>price-takers</em>, "tomadores de precio").</p>
+
+<p><strong>Mercado no competitivo:</strong> uno o pocos vendedores tienen poder para influir en el precio (monopolio, oligopolio).</p>
+
+<p><strong>Precio de mercado:</strong> <em>"el precio vigente en un mercado competitivo"</em> (tus apuntes lo definen así textualmente).</p>
+
+<h2 id="c1-positivo-normativo">6. Análisis positivo vs. análisis normativo</h2>
+
+<p>Esta distinción es importante porque siempre te van a pedir distinguirlas:</p>
+
+<div class="box box-def">
+<p><strong>Análisis positivo:</strong> describe <strong>lo que ES</strong>. Responde a "¿qué pasará si…?". Es objetivo, basado en datos.<br>
+Ejemplo: <em>"Si el gobierno sube el IGV en 1 punto, el consumo bajará 0.5%"</em>.</p>
+<p><strong>Análisis normativo:</strong> prescribe <strong>lo que DEBERÍA SER</strong>. Responde a "¿qué política conviene?". Tiene juicios de valor.<br>
+Ejemplo: <em>"El gobierno debería bajar los impuestos a la clase media"</em>.</p>
+</div>
+
+<h2 id="c1-modelos">7. Teorías y modelos: ¿por qué la economía simplifica tanto?</h2>
+
+<p>Pindyck dedica una parte importante del capítulo 1 a esto. Una <strong>teoría</strong> explica fenómenos a partir de supuestos básicos. Un <strong>modelo</strong> es una <strong>representación matemática simplificada</strong> de la realidad.</p>
+
+<p><strong>¿Por qué simplificar?</strong> Porque la economía real es tan compleja (millones de personas, millones de bienes) que sería imposible analizarla sin modelos. Asumimos cosas como "los consumidores son racionales" o "<em>ceteris paribus</em>" (todo lo demás constante) para aislar el efecto de una variable a la vez.</p>
+
+<div class="box box-warn">
+<p><em>"Ninguna teoría es absolutamente correcta"</em>. Una teoría es útil mientras explique y prediga bien los fenómenos. Si falla, se modifica o se descarta.</p>
+</div>
+
+<h2 id="c1-equilibrio">8. El gráfico fundamental: el equilibrio del mercado</h2>
+
+<p>Vamos a ver el gráfico clave del capítulo. Es el primer dibujo de toda la microeconomía y aparecerá decenas de veces en tu curso.</p>
+
+<div class="figure">
+<svg viewBox="0 0 680 440" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<marker id="arr1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+</defs>
+<line x1="100" y1="380" x2="600" y2="380" stroke="#2c2c2a" stroke-width="1" marker-end="url(#arr1)"/>
+<line x1="100" y1="380" x2="100" y2="40" stroke="#2c2c2a" stroke-width="1" marker-end="url(#arr1)"/>
+<text x="610" y="384" font-family="sans-serif" font-size="14" font-weight="600">Q</text>
+<text x="610" y="398" font-family="sans-serif" font-size="12" fill="#5f5e5a">cantidad</text>
+<text x="92" y="32" text-anchor="end" font-family="sans-serif" font-size="14" font-weight="600">P</text>
+<text x="92" y="46" text-anchor="end" font-family="sans-serif" font-size="12" fill="#5f5e5a">precio</text>
+<line x1="100" y1="60" x2="580" y2="380" stroke="#185fa5" stroke-width="2.5"/>
+<text x="588" y="384" font-family="sans-serif" font-size="14" font-weight="600" fill="#185fa5">D</text>
+<text x="588" y="398" font-family="sans-serif" font-size="12" fill="#185fa5">demanda</text>
+<line x1="100" y1="380" x2="580" y2="60" stroke="#993c1d" stroke-width="2.5"/>
+<text x="588" y="64" font-family="sans-serif" font-size="14" font-weight="600" fill="#993c1d">O</text>
+<text x="588" y="78" font-family="sans-serif" font-size="12" fill="#993c1d">oferta</text>
+<line x1="340" y1="380" x2="340" y2="220" stroke="#888780" stroke-width="0.5" stroke-dasharray="4 4"/>
+<line x1="100" y1="220" x2="340" y2="220" stroke="#888780" stroke-width="0.5" stroke-dasharray="4 4"/>
+<circle cx="340" cy="220" r="5" fill="#2c2c2a"/>
+<text x="352" y="216" font-family="sans-serif" font-size="14" font-weight="600">E</text>
+<text x="352" y="232" font-family="sans-serif" font-size="12" fill="#5f5e5a">equilibrio</text>
+<text x="340" y="400" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600">Q*</text>
+<text x="88" y="224" text-anchor="end" font-family="sans-serif" font-size="14" font-weight="600">P*</text>
+<text x="100" y="416" text-anchor="end" font-family="sans-serif" font-size="12">0</text>
+</svg>
+<p class="figure-caption">Figura 1. Equilibrio del mercado: oferta y demanda se cruzan en E.</p>
+</div>
+
+<h3>Cómo leer este gráfico (paso a paso)</h3>
+
+<p>Este es el gráfico más importante de toda la microeconomía. Vamos a entender cada elemento:</p>
+
+<div class="step">
+<span class="step-label">Paso 1 — Los ejes</span>
+<p>El eje horizontal (X) mide la <strong>cantidad</strong> del bien (Q). El eje vertical (Y) mide el <strong>precio</strong> (P).</p>
+<p>Una convención clave que te va a confundir al inicio: en economía, el precio (que es la <em>causa</em>) va en el eje vertical, y la cantidad (que es el <em>efecto</em>) va en el horizontal. En matemáticas suele ser al revés. Acostúmbrate.</p>
+</div>
+
+<div class="step">
+<span class="step-label">Paso 2 — La curva de demanda (D, en azul)</span>
+<p>Tiene <strong>pendiente negativa</strong> (baja de izquierda a derecha). Esto refleja la <strong>Ley de la Demanda</strong>:</p>
+<div class="box box-rule">
+<p>Cuando el precio sube, la cantidad demandada baja. Cuando el precio baja, la cantidad demandada sube.</p>
+</div>
+<p>¿Por qué? Porque a precios altos los consumidores compran menos (algunos se retiran del mercado, otros buscan sustitutos). A precios bajos compran más.</p>
+</div>
+
+<div class="step">
+<span class="step-label">Paso 3 — La curva de oferta (O, en terracota)</span>
+<p>Tiene <strong>pendiente positiva</strong> (sube de izquierda a derecha). Esto refleja la <strong>Ley de la Oferta</strong>:</p>
+<div class="box box-rule">
+<p>Cuando el precio sube, los productores quieren ofrecer más. Cuando el precio baja, ofrecen menos.</p>
+</div>
+<p>¿Por qué? Porque a precios altos es más rentable producir, así que entran más empresas y las existentes producen más.</p>
+</div>
+
+<div class="step">
+<span class="step-label">Paso 4 — El punto E (equilibrio)</span>
+<p>Es donde la oferta y la demanda <strong>se cruzan</strong>. En ese punto:</p>
+<ul>
+<li>El precio P* es el <strong>precio de equilibrio</strong> (lo que efectivamente se paga en el mercado).</li>
+<li>La cantidad Q* es la <strong>cantidad de equilibrio</strong> (lo que efectivamente se transa).</li>
+</ul>
+<p>En el equilibrio, <strong>lo que los compradores quieren comprar = lo que los vendedores quieren vender</strong>. No hay escasez, no hay sobrante. Por eso decimos que el mercado "se vacía".</p>
+</div>
+
+<div class="step">
+<span class="step-label">Paso 5 — ¿Qué pasa fuera del equilibrio?</span>
+<ul>
+<li>Si el precio está <strong>por encima</strong> de P* → hay <strong>exceso de oferta</strong> (sobra mercadería) → presión a la baja del precio.</li>
+<li>Si el precio está <strong>por debajo</strong> de P* → hay <strong>exceso de demanda</strong> (falta mercadería) → presión al alza del precio.</li>
+</ul>
+<p>En ambos casos el precio se ajusta hasta llegar a P*. Esa es la fuerza que vimos en el Principio 6: los mercados tienden al equilibrio.</p>
+</div>
+
+<h2 id="c1-resumen">9. Resumen del capítulo 1 — los conceptos que NO puedes olvidar</h2>
+
+<p>Antes de pasar al capítulo 2, asegúrate de tener bien claras estas ideas:</p>
+
+<table>
+<thead>
+<tr><th>#</th><th>Concepto</th><th>Idea esencial</th></tr>
+</thead>
+<tbody>
+<tr><td>1</td><td><strong>Escasez</strong></td><td>Fundamento de la economía</td></tr>
+<tr><td>2</td><td><strong>Costo de oportunidad</strong></td><td>El verdadero costo de cualquier decisión</td></tr>
+<tr><td>3</td><td><strong>Pensamiento marginal</strong></td><td>Comparar BMg y CMg (regla: BMg = CMg en el óptimo)</td></tr>
+<tr><td>4</td><td><strong>Incentivos</strong></td><td>La gente responde a ellos, predeciblemente</td></tr>
+<tr><td>5</td><td><strong>Equilibrio</strong></td><td>Donde nadie quiere cambiar lo que hace</td></tr>
+<tr><td>6</td><td><strong>Eficiencia</strong></td><td>No se puede mejorar a alguien sin empeorar a otro</td></tr>
+<tr><td>7</td><td><strong>Falla de mercado</strong></td><td>Cuando el mercado solo no logra eficiencia</td></tr>
+<tr><td>8</td><td><strong>Análisis positivo vs normativo</strong></td><td>Lo que es vs. lo que debería ser</td></tr>
+<tr><td>9</td><td><strong>Mercado</strong></td><td>Conjunto de compradores y vendedores que determinan el precio</td></tr>
+<tr><td>10</td><td><strong>Modelo económico</strong></td><td>Simplificación matemática útil aunque imperfecta</td></tr>
+</tbody>
+</table>
+
+</section>
+
+<!-- ============================================ -->
+<!-- CAPÍTULO 2 -->
+<!-- ============================================ -->
+<section class="chapter" id="cap2">
+<span class="chapter-label">Capítulo 2</span>
+<h1 class="chapter-title">Teoría del consumidor — Preferencias y curvas de indiferencia</h1>
+
+<h2 id="c2-pregunta">1. ¿Qué problema vamos a resolver?</h2>
+
+<p>Recuerda los principios del capítulo anterior: el consumidor tiene <strong>recursos escasos</strong> (su ingreso) y debe <strong>elegir</strong> cómo gastarlos. Toda la teoría del consumidor responde a una sola pregunta:</p>
+
+<div class="box box-rule">
+<p>Dado que tengo un presupuesto limitado, <strong>¿qué combinación de bienes me hace más feliz?</strong></p>
+</div>
+
+<p>Para responderla, los economistas dividen el problema en dos partes:</p>
+
+<table>
+<thead>
+<tr><th>Parte</th><th>Pregunta que responde</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>Preferencias</strong> (este capítulo)</td><td>¿Qué me gustaría tener? ¿Qué prefiero entre dos opciones?</td></tr>
+<tr><td><strong>Restricción presupuestaria</strong> (próximo capítulo)</td><td>¿Qué puedo permitirme con mi dinero?</td></tr>
+</tbody>
+</table>
+
+<p>Cuando juntemos ambas partes, encontraremos la <strong>canasta óptima</strong>: lo mejor que el consumidor puede tener dado lo que le gusta y lo que tiene en el bolsillo.</p>
+
+<h2 id="c2-racionalidad">2. El supuesto fundamental: el consumidor es racional</h2>
+
+<p>Antes de cualquier matemática, hay que entender este supuesto:</p>
+
+<div class="box box-def">
+<p><strong>Racionalidad</strong> significa que el individuo toma sus decisiones de acuerdo con sus preferencias (deseos), y su elección <strong>maximiza su satisfacción</strong>, sujeta a las restricciones que enfrenta.</p>
+</div>
+
+<p>Esto <strong>NO</strong> significa que el consumidor sea un robot frío y calculador. Significa que:</p>
+<ol>
+<li>Tiene preferencias coherentes.</li>
+<li>Conoce esas preferencias.</li>
+<li>Elige lo que más le gusta dentro de lo que puede pagar.</li>
+</ol>
+
+<h2 id="c2-canasta">3. El concepto de canasta (o cesta de mercado)</h2>
+
+<p>En la realidad existen miles de bienes. Como no podemos analizar todos a la vez, <strong>agrupamos</strong> los bienes en lo que se llama una <strong>canasta</strong>.</p>
+
+<div class="box box-def">
+<p>Una <strong>canasta</strong> (o cesta de mercado) es una lista que contiene cantidades específicas de uno o más bienes.</p>
+</div>
+
+<p>Para simplificar, en todo el curso vamos a trabajar con <strong>dos bienes</strong> (por ejemplo, alimentos y vestido). Esto nos permite usar gráficos en 2 dimensiones. La lógica es la misma con N bienes, pero requiere matemáticas más avanzadas.</p>
+
+<p><strong>Notación:</strong> una canasta se escribe como un par ordenado $(A, V)$:</p>
+<ul>
+<li>$A$ = cantidad de alimentos</li>
+<li>$V$ = cantidad de vestido</li>
+</ul>
+
+<p>Ejemplo: la canasta $(20, 30)$ significa "20 unidades de alimentos y 30 de vestido".</p>
+
+<p>Cada canasta es un <strong>punto</strong> en un plano cartesiano donde el eje X mide alimentos y el Y mide vestido.</p>
+
+<h2 id="c2-supuestos">4. Los supuestos básicos sobre las preferencias</h2>
+
+<p>Para que la teoría funcione, asumimos que las preferencias del consumidor cumplen tres propiedades. Esto es <strong>fundamental</strong> y lo vas a ver en exámenes.</p>
+
+<h3>4.1 Supuesto 1: Completitud</h3>
+
+<div class="box box-def">
+<p>El consumidor puede <strong>comparar y ordenar</strong> todas las canastas posibles.</p>
+</div>
+
+<p>Es decir, dadas dos canastas A y B, el consumidor siempre puede decir una de tres cosas:</p>
+<ul>
+<li>"Prefiero A a B" (escrito A ≻ B)</li>
+<li>"Prefiero B a A" (B ≻ A)</li>
+<li>"Me da igual entre A y B" (A ~ B, indiferente)</li>
+</ul>
+
+<p><strong>Lo que NO se permite:</strong> "no sé". Toda persona racional puede comparar.</p>
+
+<h3>4.2 Supuesto 2: Transitividad</h3>
+
+<div class="box box-def">
+<p>Si <strong>A es preferida a B</strong>, y <strong>B es preferida a C</strong>, entonces <strong>A es preferida a C</strong>.</p>
+</div>
+
+<p>En tus apuntes lo ponen así: <em>"Si C mejor que G y G mejor que F, entonces C mejor que F"</em>.</p>
+
+<div class="box box-intuition">
+<p><strong>Por qué importa:</strong> sin transitividad, las preferencias serían incoherentes. Imagina alguien que prefiere chocolate a vainilla, vainilla a fresa, y fresa a chocolate. Le venderías chocolate por vainilla cobrando 1 sol, vainilla por fresa cobrando 1 sol, fresa por chocolate cobrando 1 sol… y le sacarías toda su plata sin que tenga ningún cambio neto. Eso no es racional.</p>
+</div>
+
+<h3>4.3 Supuesto 3: "Más es mejor" (no saciedad)</h3>
+
+<div class="box box-def">
+<p>Una canasta con <strong>más cantidad de algún bien</strong> (y no menos del otro) siempre se prefiere a una canasta con menos.</p>
+</div>
+
+<p>En el plano: si te mueves hacia arriba, hacia la derecha, o hacia el noreste (más de un bien sin perder del otro), <strong>estás en una canasta mejor</strong>.</p>
+
+<p><strong>Importante:</strong> esto requiere que estemos hablando de <strong>bienes</strong>, no de <strong>males</strong> (cosas que no nos gustan, como la basura o la contaminación). Para los males, "menos es mejor".</p>
+
+<h2 id="c2-utilidad">5. La función de utilidad</h2>
+
+<p>Ahora vamos a darle un número a la satisfacción.</p>
+
+<div class="box box-def">
+<p>La <strong>función de utilidad</strong> es una <strong>regla matemática</strong> que asigna un número (la "utilidad") a cada canasta, de forma que las canastas más preferidas reciban un número más alto.</p>
+</div>
+
+<p><strong>Notación:</strong> $U(A, V)$ es la utilidad que el consumidor obtiene de la canasta $(A, V)$.</p>
+
+<p>Ejemplos típicos de funciones de utilidad:</p>
+<ul>
+<li>$U(A, V) = A \cdot V$ (Cobb-Douglas simple)</li>
+<li>$U(A, V) = 3A + 6V$ (lineal — sustitutos perfectos)</li>
+<li>$U(A, V) = \min\{A, V\}$ (Leontief — complementarios perfectos)</li>
+</ul>
+
+<p>Cada forma matemática refleja un <strong>tipo de preferencias</strong>.</p>
+
+<h3>5.1 Utilidad ordinal vs. utilidad cardinal — un punto crítico</h3>
+
+<p>Esto siempre se pregunta. Léelo despacio:</p>
+
+<ul>
+<li><strong>Utilidad ordinal:</strong> los números solo importan por el <strong>orden</strong> que generan. Si $U_C = 100$ y $U_B = 50$, <strong>NO</strong> significa que C dé el doble de satisfacción que B; solo significa que <strong>C se prefiere a B</strong>.</li>
+<li><strong>Utilidad cardinal:</strong> los números sí miden la magnitud de la satisfacción.</li>
+</ul>
+
+<div class="box box-rule">
+<p><strong>La microeconomía moderna usa utilidad ordinal.</strong> ¿Por qué? Porque no existe forma objetiva de medir cuánto disfruta una persona algo. No hay un "satisfaciómetro". Solo podemos observar <strong>qué elige</strong> la gente, y eso nos revela el orden de sus preferencias, no la magnitud.</p>
+</div>
+
+<p>Como dice tu Pindyck: <em>"el hecho de que U₃ tenga una utilidad de 100 y U₂ de 50 no significa que las cestas de U₃ generen el doble de satisfacción que las de U₂"</em>.</p>
+
+<h2 id="c2-curvas">6. Las curvas de indiferencia: el concepto central</h2>
+
+<p>Aquí entra el dibujo más característico de la teoría del consumidor.</p>
+
+<div class="box box-def">
+<p>Una <strong>curva de indiferencia</strong> representa <strong>todas las combinaciones</strong> de bienes que reportan al consumidor <strong>el mismo nivel de satisfacción</strong> (la misma utilidad).</p>
+</div>
+
+<p>Es decir: si te paras en cualquier punto de una curva de indiferencia y te mueves a otro punto <strong>de la misma curva</strong>, te da exactamente igual. Eres indiferente entre los dos puntos.</p>
+
+<div class="figure">
+<svg viewBox="0 0 680 460" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<marker id="arr2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+</defs>
+<line x1="100" y1="400" x2="620" y2="400" stroke="#2c2c2a" stroke-width="1" marker-end="url(#arr2)"/>
+<line x1="100" y1="400" x2="100" y2="40" stroke="#2c2c2a" stroke-width="1" marker-end="url(#arr2)"/>
+<text x="630" y="404" font-family="sans-serif" font-size="14" font-weight="600">A</text>
+<text x="630" y="418" font-family="sans-serif" font-size="12" fill="#5f5e5a">alimentos</text>
+<text x="92" y="32" text-anchor="end" font-family="sans-serif" font-size="14" font-weight="600">V</text>
+<text x="92" y="46" text-anchor="end" font-family="sans-serif" font-size="12" fill="#5f5e5a">vestido</text>
+<path d="M 130 350 Q 200 200 380 160 T 600 110" fill="none" stroke="#7f77dd" stroke-width="2.5"/>
+<text x="610" y="114" font-family="sans-serif" font-size="14" font-weight="600" fill="#7f77dd">U₃</text>
+<path d="M 130 370 Q 200 250 340 210 T 580 160" fill="none" stroke="#1d9e75" stroke-width="2.5"/>
+<text x="590" y="164" font-family="sans-serif" font-size="14" font-weight="600" fill="#1d9e75">U₂</text>
+<path d="M 150 390 Q 230 310 360 270 T 580 230" fill="none" stroke="#d85a30" stroke-width="2.5"/>
+<text x="590" y="234" font-family="sans-serif" font-size="14" font-weight="600" fill="#d85a30">U₁</text>
+<circle cx="280" cy="250" r="4" fill="#2c2c2a"/>
+<text x="288" y="246" font-family="sans-serif" font-size="12">B</text>
+<circle cx="380" cy="200" r="4" fill="#2c2c2a"/>
+<text x="388" y="196" font-family="sans-serif" font-size="12">C</text>
+<circle cx="450" cy="160" r="4" fill="#2c2c2a"/>
+<text x="458" y="156" font-family="sans-serif" font-size="12">D</text>
+<line x1="500" y1="340" x2="560" y2="280" stroke="#888780" stroke-width="1" marker-end="url(#arr2)"/>
+<text x="510" y="358" font-family="sans-serif" font-size="12" fill="#5f5e5a">más es mejor</text>
+</svg>
+<p class="figure-caption">Figura 2. Mapa de curvas de indiferencia. Las curvas más alejadas del origen representan mayor utilidad.</p>
+</div>
+
+<h3>Cómo leer este gráfico</h3>
+
+<p><strong>Tres curvas, tres niveles de utilidad:</strong></p>
+<ul>
+<li>$U_1$ (la más cercana al origen, terracota) → el menor nivel de satisfacción.</li>
+<li>$U_2$ (verde, intermedia) → satisfacción intermedia.</li>
+<li>$U_3$ (morada, la más alejada) → la mayor satisfacción.</li>
+</ul>
+
+<p>Cada curva representa <strong>infinitas canastas</strong> que dan la misma satisfacción al consumidor. El conjunto de todas las curvas se llama el <strong>mapa de curvas de indiferencia</strong> del consumidor.</p>
+
+<div class="box box-rule">
+<p><strong>Punto clave:</strong> los puntos B, C y D están en curvas distintas. El consumidor prefiere D a C, y C a B (por el supuesto "más es mejor", D está más al noreste).</p>
+</div>
+
+<h2 id="c2-propiedades">7. Las cuatro propiedades de las curvas de indiferencia</h2>
+
+<p>Estas son <strong>leyes</strong> que las curvas siempre cumplen (cuando se trata de bienes normales). Pueden preguntarte cualquiera.</p>
+
+<h3>7.1 Pendiente negativa</h3>
+
+<div class="box box-rule">
+<p>Las curvas de indiferencia bajan de izquierda a derecha.</p>
+</div>
+
+<p><strong>¿Por qué?</strong> Por el supuesto "más es mejor". Si quieres aumentar tu consumo de alimentos pero quedarte en la misma curva (mismo nivel de utilidad), <strong>tienes que renunciar</strong> a algo de vestido. Si no renunciaras a nada, tendrías más de un bien y nada menos del otro → estarías en una curva superior, no en la misma.</p>
+
+<h3>7.2 Más alejadas del origen → mayor utilidad</h3>
+
+<div class="box box-rule">
+<p>Una curva más lejos del origen representa mayor satisfacción.</p>
+</div>
+
+<p><strong>¿Por qué?</strong> Otra vez "más es mejor". Una canasta más al noreste tiene más de algún bien.</p>
+
+<h3>7.3 No pueden cortarse (con demostración)</h3>
+
+<p>Esta propiedad es importante y se demuestra por contradicción. Si dos curvas se cortaran, violaríamos la transitividad.</p>
+
+<div class="step">
+<span class="step-label">Razonamiento (lógica pura)</span>
+<ol>
+<li>Supón dos curvas $U_1$ y $U_2$ que se cortan en el punto C.</li>
+<li>Sea B otro punto en $U_1$ y D otro punto en $U_2$.</li>
+<li>Como C está en $U_1$, <strong>C ~ B</strong> (indiferentes).</li>
+<li>Como C está en $U_2$, <strong>C ~ D</strong> (indiferentes).</li>
+<li>Por transitividad, <strong>B ~ D</strong>.</li>
+<li>Pero B y D están en curvas distintas, ¡contradicción! Una de las dos curvas tendría que dar mayor utilidad que la otra.</li>
+</ol>
+<p><strong>Conclusión:</strong> las curvas de indiferencia <strong>no pueden cruzarse</strong>.</p>
+</div>
+
+<h3>7.4 Convexas hacia el origen</h3>
+
+<div class="box box-rule">
+<p>Las curvas tienen forma "redondeada hacia el origen", como la letra L invertida pero curva.</p>
+</div>
+
+<p><strong>¿Por qué?</strong> Esto refleja que el consumidor <strong>prefiere la variedad</strong>. Cuando tienes mucho vestido y poco alimento, estás dispuesto a renunciar a mucho vestido por una unidad más de alimento (porque el alimento es escaso para ti). Pero a medida que ya tienes mucho alimento, cada unidad adicional de alimento te impresiona menos, así que renuncias a menos vestido por ella.</p>
+
+<p>Este principio se llama <strong>principio de la utilidad marginal decreciente</strong> y lo veremos formalizado abajo.</p>
+
+<h2 id="c2-tmgs">8. La Tasa Marginal de Sustitución (TMgS)</h2>
+
+<p>Aquí entra el concepto matemático más importante del capítulo.</p>
+
+<div class="box box-def">
+<p>La <strong>TMgS de A por V</strong> es la cantidad <strong>máxima</strong> de vestido a la que el consumidor está dispuesto a renunciar para obtener <strong>una unidad adicional</strong> de alimento, manteniendo constante su nivel de satisfacción.</p>
+</div>
+
+<p>En palabras simples: "¿cuántos vestidos darías a cambio de un alimento más, sin sentirte mejor ni peor?"</p>
+
+<h3>8.1 Fórmula</h3>
+
+<div class="math-display">$$\text{TMgS} = -\frac{\Delta V}{\Delta A}$$</div>
+
+<p>Es decir: cuánto vestido (V) renuncias, dividido entre cuánto alimento (A) ganas, todo ello sobre la misma curva de indiferencia.</p>
+
+<div class="box box-warn">
+<p><strong>¿Por qué el signo negativo?</strong> Porque al moverte sobre una curva de indiferencia, $\Delta V$ y $\Delta A$ tienen signos opuestos (si $\Delta A > 0$, entonces $\Delta V < 0$). El signo negativo convierte la TMgS en un número positivo, que es como se interpreta económicamente.</p>
+</div>
+
+<h3>8.2 Interpretación geométrica</h3>
+
+<div class="box box-rule">
+<p><strong>La TMgS es el valor absoluto de la pendiente de la curva de indiferencia</strong> en un punto.</p>
+</div>
+
+<p>Como la curva tiene pendiente negativa, su pendiente es un número negativo; cuando le pones el signo menos al frente, sale positivo. Esa es la TMgS.</p>
+
+<h3>8.3 Ejemplo numérico (lo encontrarás idéntico en Pindyck Cap. 3, Fig. 3.5)</h3>
+
+<p>Supón que el consumidor está sobre una misma curva de indiferencia y tenemos estos puntos:</p>
+
+<table>
+<thead>
+<tr><th>Punto</th><th>Vestido</th><th>Alimentos</th><th>Cambio de A</th><th>Cambio de V</th><th>TMgS</th></tr>
+</thead>
+<tbody>
+<tr><td>C</td><td>16</td><td>1</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td>B</td><td>10</td><td>2</td><td>+1</td><td>−6</td><td><strong>6</strong></td></tr>
+<tr><td>D</td><td>6</td><td>3</td><td>+1</td><td>−4</td><td><strong>4</strong></td></tr>
+<tr><td>E</td><td>4</td><td>4</td><td>+1</td><td>−2</td><td><strong>2</strong></td></tr>
+<tr><td>F</td><td>3</td><td>5</td><td>+1</td><td>−1</td><td><strong>1</strong></td></tr>
+</tbody>
+</table>
+
+<div class="step">
+<span class="step-label">Interpretación paso a paso</span>
+<ul>
+<li>De C a B: ganamos 1 unidad de alimento renunciando a 6 de vestido. TMgS = 6/1 = 6.</li>
+<li>De B a D: ganamos 1 alimento renunciando a 4 vestidos. TMgS = 4.</li>
+<li>De D a E: TMgS = 2. De E a F: TMgS = 1.</li>
+</ul>
+<p><strong>¿Qué notas?</strong> La TMgS <strong>disminuye</strong> a medida que avanzamos hacia la derecha (más alimento, menos vestido). Esto se llama <strong>TMgS decreciente</strong> y es justamente lo que produce la convexidad de la curva.</p>
+</div>
+
+<div class="box box-intuition">
+<p><strong>Razonamiento intuitivo:</strong> Cuando tienes mucho vestido y poco alimento, una unidad extra de alimento es una bendición y sacrificas mucho vestido por ella. Cuando ya tienes mucho alimento, una unidad más no te emociona, y solo renuncias a poco vestido.</p>
+</div>
+
+<h2 id="c2-um">9. La utilidad marginal y su conexión con la TMgS</h2>
+
+<p>Otro concepto que necesitas dominar. Es el equivalente del "pensamiento marginal" del capítulo 1, aplicado a la utilidad.</p>
+
+<h3>9.1 Definición</h3>
+
+<div class="box box-def">
+<p>La <strong>utilidad marginal</strong> de un bien es la <strong>satisfacción adicional</strong> que reporta el consumo de <strong>una unidad adicional</strong> de ese bien, manteniendo constante el consumo del resto.</p>
+</div>
+
+<p><strong>Notación:</strong></p>
+<ul>
+<li>$UM_A$ = utilidad marginal de alimentos</li>
+<li>$UM_V$ = utilidad marginal de vestido</li>
+</ul>
+
+<p>Matemáticamente, si tienes la función de utilidad $U(A, V)$:</p>
+
+<div class="math-display">$$UM_A = \frac{\partial U}{\partial A}, \quad UM_V = \frac{\partial U}{\partial V}$$</div>
+
+<p>(la derivada parcial respecto al bien correspondiente). Tu profesor probablemente diga "no necesitamos derivadas todavía", así que en la práctica calcularás la utilidad marginal con tablas o por inspección directa.</p>
+
+<h3>9.2 Principio de la utilidad marginal decreciente</h3>
+
+<div class="box box-rule">
+<p>A medida que consumes más unidades de un mismo bien, <strong>cada unidad adicional te aporta menos satisfacción</strong> que la anterior.</p>
+</div>
+
+<p>Ejemplo: la primera porción de pizza es deliciosa. La segunda, muy buena. La tercera, ya estás lleno. La cuarta, te empacha. La quinta, ya no la quieres. La utilidad marginal va bajando.</p>
+
+<h2 id="c2-conexion">10. La conexión crucial entre UM y TMgS</h2>
+
+<p>Aquí viene el resultado que <strong>DEBES</strong> aprender. Es el puente entre dos conceptos que parecían separados.</p>
+
+<div class="step">
+<span class="step-label">Razonamiento (lo deduce Pindyck en su libro)</span>
+<p>Imagina un pequeño movimiento sobre una curva de indiferencia: ganas $\Delta A$ alimentos y pierdes $\Delta V$ vestidos.</p>
+<ul>
+<li>La utilidad ganada por los alimentos extra es: $UM_A \cdot \Delta A$.</li>
+<li>La utilidad perdida por el vestido sacrificado es: $UM_V \cdot \Delta V$ (recuerda que $\Delta V < 0$).</li>
+</ul>
+
+<p>Como te mueves sobre la <strong>misma</strong> curva de indiferencia, la utilidad total no cambia:</p>
+
+<div class="math-display">$$UM_A \cdot \Delta A + UM_V \cdot \Delta V = 0$$</div>
+
+<p>Reordenando:</p>
+
+<div class="math-display">$$-\frac{\Delta V}{\Delta A} = \frac{UM_A}{UM_V}$$</div>
+
+<p>Y como el lado izquierdo es la TMgS, llegamos a:</p>
+
+<div class="box box-rule">
+<div class="math-display">$$\text{TMgS} = \frac{UM_A}{UM_V}$$</div>
+</div>
+</div>
+
+<p><strong>Lectura económica:</strong> la TMgS es el <strong>cociente entre las utilidades marginales</strong> de ambos bienes. Esto será <strong>clave</strong> para resolver el problema del consumidor en el capítulo de canasta óptima.</p>
+
+<h2 id="c2-maria">11. Ejercicio guiado: María (de tu Hoja de ejercicios 2)</h2>
+
+<div class="box-exercise">
+<span class="exercise-label">Ejercicio</span>
+<div class="exercise-title">María — utilidad por sol gastado</div>
+<blockquote>"María sabe que consumir una hamburguesa adicional proporciona 4 unidades adicionales de utilidad, mientras que una bebida extra produce 2. El precio de la hamburguesa es S/2 y de la bebida S/1. Si María quiere maximizar su utilidad, ¿qué bien debería comprar?"</blockquote>
+
+<div class="step">
+<span class="step-label">Paso 1 — Identificar los datos</span>
+<ul>
+<li>Hamburguesa: $UM_H = 4$, precio $P_H = 2$.</li>
+<li>Bebida: $UM_B = 2$, precio $P_B = 1$.</li>
+</ul>
+</div>
+
+<div class="step">
+<span class="step-label">Paso 2 — Identificar el criterio correcto</span>
+<p>Lo que tenemos que comparar <strong>NO</strong> es la utilidad marginal absoluta (sino María elegiría siempre hamburguesa porque le da 4 vs. 2 de utilidad). Tenemos que comparar la <strong>utilidad por sol gastado</strong> en cada bien (el principio que vimos arriba: cuando se maximiza, $UM/P$ debe ser igual en todos los bienes).</p>
+</div>
+
+<div class="step">
+<span class="step-label">Paso 3 — Calcular utilidad por sol</span>
+<ul>
+<li>Hamburguesa: $\dfrac{UM_H}{P_H} = \dfrac{4}{2} = 2$ unidades de utilidad por sol.</li>
+<li>Bebida: $\dfrac{UM_B}{P_B} = \dfrac{2}{1} = 2$ unidades de utilidad por sol.</li>
+</ul>
+</div>
+
+<div class="step">
+<span class="step-label">Paso 4 — Comparar y concluir</span>
+<p>$UM_H/P_H = UM_B/P_B = 2$. ¡Son iguales!</p>
+<div class="box box-rule">
+<p><strong>Conclusión:</strong> María está <strong>indiferente</strong> entre gastar el siguiente sol en hamburguesa o en bebida. Cualquiera de los dos le da la misma utilidad adicional por sol gastado. Ya está maximizando, no debería preferir un bien sobre el otro en ese instante.</p>
+</div>
+<p>Si en cambio fuera $UM_H/P_H > UM_B/P_B$, debería comprar más hamburguesa (porque cada sol en hamburguesa rinde más utilidad). Si fuera al revés, más bebida.</p>
+</div>
+</div>
+
+<h2 id="c2-tipos">12. Tipos especiales de preferencias y curvas de indiferencia</h2>
+
+<p>No todas las curvas de indiferencia son convexas con TMgS decreciente. Hay tres casos extremos que <strong>siempre</strong> te van a preguntar.</p>
+
+<h3>12.1 Sustitutos perfectos</h3>
+
+<div class="box box-def">
+<p>Dos bienes son <strong>sustitutos perfectos</strong> si el consumidor está dispuesto a sustituir uno por otro a una <strong>tasa constante</strong>.</p>
+</div>
+
+<p><strong>Ejemplo:</strong> café y té (para alguien que solo quiere cafeína), Coca-Cola y Pepsi (para alguien al que le da igual la marca).</p>
+
+<ul>
+<li>Las curvas de indiferencia son <strong>rectas</strong> (pendiente constante).</li>
+<li>La <strong>TMgS es constante</strong> (no decreciente).</li>
+<li>Función de utilidad típica: $U(X, Y) = aX + bY$, donde $a$ y $b$ son números positivos.</li>
+</ul>
+
+<div class="box box-warn">
+<p>"TMgS constante" <strong>no</strong> significa que sea siempre −1. Por ejemplo, si para Renata $U(L, V) = 3L + 6V$ (libros y videojuegos), la TMgS de V por L es $UM_L/UM_V = 3/6 = 0.5$. Está dispuesta a cambiar 0.5 videojuegos por 1 libro, <strong>siempre</strong>, en cualquier punto.</p>
+</div>
+
+<h3>12.2 Complementarios perfectos</h3>
+
+<div class="box box-def">
+<p>Dos bienes son <strong>complementarios perfectos</strong> si tienen que consumirse en una <strong>proporción fija</strong> para dar satisfacción.</p>
+</div>
+
+<p><strong>Ejemplo clásico:</strong> zapato izquierdo y zapato derecho. Si tienes 5 zapatos derechos y 3 izquierdos, solo puedes usar 3 pares; los 2 zapatos extras no te aportan nada.</p>
+
+<ul>
+<li>Las curvas de indiferencia tienen <strong>forma de L</strong> (esquina).</li>
+<li>Función de utilidad típica: $U(X, Y) = \min\{X, Y\}$ o $\min\{aX, bY\}$ si la proporción no es 1:1.</li>
+</ul>
+
+<div class="box box-warn">
+<p>La proporción no siempre es 1 a 1. Si Cecilia (de tu Hoja 1) "encuentra satisfacción solo si consume 1.5 bebidas por cada 1 dulce", la utilidad sería $U(B, D) = \min\{B/1.5, D\}$ y las esquinas de las L estarían sobre la línea $B = 1.5D$.</p>
+</div>
+
+<h3>12.3 Bienes neutrales</h3>
+
+<div class="box box-def">
+<p>Un bien es <strong>neutral</strong> si al consumidor le <strong>da exactamente igual</strong> consumirlo o no.</p>
+</div>
+
+<p><strong>Ejemplo:</strong> En la Hoja 1, <em>"para Juan Pablo la carne se ha vuelto un producto que no le disgusta, pero tampoco le genera satisfacción"</em>. La carne es un bien neutral.</p>
+
+<ul>
+<li>Las curvas de indiferencia son <strong>líneas rectas paralelas</strong> al eje del bien neutral.</li>
+<li>Si la carne (eje X) es neutral y las frutas (eje Y) sí dan utilidad → curvas <strong>horizontales</strong>.</li>
+<li>Si las frutas son neutrales y la carne sí da utilidad → curvas <strong>verticales</strong>.</li>
+</ul>
+
+<p><strong>¿Por qué?</strong> Si la carne no aporta nada, agregar más carne no cambia tu nivel de satisfacción. Solo importa cuánta fruta tienes. Por eso, todas las canastas con la misma cantidad de fruta están en la misma curva, sin importar cuánta carne haya.</p>
+
+<h3>12.4 Males (cosas que no te gustan)</h3>
+
+<div class="box box-def">
+<p>Un <strong>mal</strong> es algo de lo que el consumidor <strong>prefiere tener menos</strong>.</p>
+</div>
+
+<p>Ejemplo: contaminación, ruido, basura. En este caso, "menos es mejor" para ese eje.</p>
+
+<ul>
+<li>Las curvas de indiferencia tienen <strong>pendiente positiva</strong> (al revés que un bien normal).</li>
+<li>Esto se debe a que para mantenerte en el mismo nivel de satisfacción, si te dan más del mal, te tienen que dar también más del bien para compensar.</li>
+</ul>
+
+<p>Vamos a ver los tres tipos especiales en un solo gráfico para que los compares.</p>
+
+<div class="figure">
+<svg viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<marker id="arr3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
+</defs>
+<g>
+<line x1="40" y1="260" x2="220" y2="260" stroke="#2c2c2a" stroke-width="1" marker-end="url(#arr3)"/>
+<line x1="40" y1="260" x2="40" y2="60" stroke="#2c2c2a" stroke-width="1" marker-end="url(#arr3)"/>
+<text x="226" y="264" font-family="sans-serif" font-size="12">Café</text>
+<text x="32" y="54" text-anchor="end" font-family="sans-serif" font-size="12">Té</text>
+<line x1="40" y1="180" x2="200" y2="100" stroke="#185fa5" stroke-width="2"/>
+<line x1="40" y1="220" x2="200" y2="140" stroke="#185fa5" stroke-width="2"/>
+<line x1="40" y1="260" x2="200" y2="180" stroke="#185fa5" stroke-width="2"/>
+<text x="130" y="295" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600">Sustitutos perfectos</text>
+<text x="130" y="310" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#5f5e5a">TMgS constante</text>
+</g>
+<g>
+<line x1="270" y1="260" x2="450" y2="260" stroke="#2c2c2a" stroke-width="1" marker-end="url(#arr3)"/>
+<line x1="270" y1="260" x2="270" y2="60" stroke="#2c2c2a" stroke-width="1" marker-end="url(#arr3)"/>
+<text x="456" y="264" font-family="sans-serif" font-size="12">Zap. der.</text>
+<text x="262" y="54" text-anchor="end" font-family="sans-serif" font-size="12">Zap. izq.</text>
+<polyline points="320,80 320,180 430,180" fill="none" stroke="#993c1d" stroke-width="2"/>
+<polyline points="350,80 350,210 430,210" fill="none" stroke="#993c1d" stroke-width="2"/>
+<polyline points="380,80 380,235 430,235" fill="none" stroke="#993c1d" stroke-width="2"/>
+<text x="360" y="295" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600">Complementarios perfectos</text>
+<text x="360" y="310" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#5f5e5a">forma de L</text>
+</g>
+<g>
+<line x1="500" y1="260" x2="660" y2="260" stroke="#2c2c2a" stroke-width="1" marker-end="url(#arr3)"/>
+<line x1="500" y1="260" x2="500" y2="60" stroke="#2c2c2a" stroke-width="1" marker-end="url(#arr3)"/>
+<text x="666" y="264" font-family="sans-serif" font-size="12">Carne</text>
+<text x="492" y="54" text-anchor="end" font-family="sans-serif" font-size="12">Frutas</text>
+<line x1="500" y1="120" x2="650" y2="120" stroke="#1d9e75" stroke-width="2"/>
+<line x1="500" y1="170" x2="650" y2="170" stroke="#1d9e75" stroke-width="2"/>
+<line x1="500" y1="220" x2="650" y2="220" stroke="#1d9e75" stroke-width="2"/>
+<text x="575" y="295" text-anchor="middle" font-family="sans-serif" font-size="14" font-weight="600">Bien neutral (carne)</text>
+<text x="575" y="310" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#5f5e5a">curvas horizontales</text>
+</g>
+</svg>
+<p class="figure-caption">Figura 3. Tres tipos especiales de curvas de indiferencia: sustitutos perfectos, complementarios perfectos y bien neutral.</p>
+</div>
+
+<h3>Cómo razonar cada caso</h3>
+
+<p><strong>Sustitutos perfectos (azul, izquierda):</strong> las rectas son paralelas y descendentes. Cada recta es un nivel de utilidad. Si te mueves al noreste, llegas a una recta superior. La pendiente es siempre la misma → la TMgS es constante.</p>
+
+<p><strong>Complementarios perfectos (terracota, centro):</strong> cada esquina de la L está sobre la diagonal $X = Y$ (cuando la proporción es 1:1). Sumar más zapato derecho sin sumar izquierdo te mantiene en la misma curva (no ganas utilidad). Solo aumentas tu utilidad si <strong>ambos</strong> crecen al mismo tiempo.</p>
+
+<p><strong>Bien neutral (verde, derecha):</strong> la cantidad de carne (eje X) no cambia tu utilidad. Solo importan las frutas. Por eso, todas las canastas con la misma cantidad de fruta están en la misma curva → curvas horizontales.</p>
+
+<h2 id="c2-renata">13. Ejercicio resuelto: Renata (de tu Hoja 1)</h2>
+
+<div class="box-exercise">
+<span class="exercise-label">Ejercicio</span>
+<div class="exercise-title">Renata — función de utilidad lineal</div>
+<blockquote>"Si la función de utilidad de Renata es $U(L, V) = 3L + 6V$, donde L es libros y V videojuegos, grafique el mapa de curvas de indiferencia de Renata. ¿Cuál sería la Tasa Marginal de Sustitución de videojuegos por libros de Renata?"</blockquote>
+
+<div class="step">
+<span class="step-label">Paso 1 — Reconocer el tipo de preferencias</span>
+<p>La función de utilidad es <strong>lineal</strong> en ambas variables: $U = 3L + 6V$. Esa forma matemática es la marca de los <strong>sustitutos perfectos</strong>. Las curvas de indiferencia serán rectas con pendiente constante.</p>
+</div>
+
+<div class="step">
+<span class="step-label">Paso 2 — Calcular las utilidades marginales</span>
+<p>Por inspección directa de la función:</p>
+<ul>
+<li>$UM_L = 3$ (cada libro adicional aporta 3 unidades de utilidad).</li>
+<li>$UM_V = 6$ (cada videojuego adicional aporta 6 unidades de utilidad).</li>
+</ul>
+<p><strong>Razonamiento:</strong> Renata valora cada videojuego el doble de lo que valora cada libro.</p>
+</div>
+
+<div class="step">
+<span class="step-label">Paso 3 — Calcular la TMgS de V por L</span>
+<p>"TMgS de V por L" significa: <strong>cuántos videojuegos está dispuesta Renata a entregar por un libro adicional</strong>. La fórmula es:</p>
+<div class="math-display">$$\text{TMgS}_{V,L} = \frac{UM_L}{UM_V} = \frac{3}{6} = 0.5$$</div>
+<p>Es decir, Renata daría <strong>medio videojuego por cada libro adicional</strong>, manteniendo su utilidad constante.</p>
+</div>
+
+<div class="step">
+<span class="step-label">Paso 4 — Construir el mapa de curvas</span>
+<p>Para dibujar una curva de indiferencia, fijamos un nivel de utilidad. Por ejemplo, $U = 30$:</p>
+<div class="math-display">$$3L + 6V = 30 \quad\Longrightarrow\quad V = 5 - 0.5L$$</div>
+<p>Es una recta que va de $(L=0, V=5)$ a $(L=10, V=0)$. Para $U = 60$: $V = 10 - 0.5L$, una recta paralela más alejada del origen. Y así sucesivamente.</p>
+<div class="box box-rule">
+<p>Las curvas de indiferencia de Renata son <strong>rectas paralelas con pendiente −0.5</strong>. Mientras más al noreste, mayor utilidad.</p>
+</div>
+</div>
+</div>
+
+<h2 id="c2-cecilia">14. Ejercicio resuelto: Cecilia (de tu Hoja 1)</h2>
+
+<div class="box-exercise">
+<span class="exercise-label">Ejercicio (parte 1)</span>
+<div class="exercise-title">Cecilia — complementarios en proporción 1.5:1</div>
+<blockquote>"Suponga que Cecilia solo encuentra satisfacción si consume bebidas y dulces en proporción de 1.5 bebidas por cada 1 dulce. ¿Cómo serían sus preferencias? Grafique."</blockquote>
+
+<div class="step">
+<span class="step-label">Paso 1 — Identificar el tipo de preferencias</span>
+<p>"Solo encuentra satisfacción si consume ambos en proporción fija" → <strong>complementarios perfectos</strong>. Curvas en forma de L.</p>
+</div>
+
+<div class="step">
+<span class="step-label">Paso 2 — Plantear la función de utilidad</span>
+<p>La proporción es <strong>1.5 bebidas por 1 dulce</strong>. Es decir, en la canasta óptima debe haber $B = 1.5D$. Si tiene más bebidas de las que corresponden a sus dulces, las extras no le aportan utilidad. Y al revés.</p>
+<p>La función de utilidad es:</p>
+<div class="math-display">$$U(B, D) = \min\left\{\frac{B}{1.5}, \, D\right\}$$</div>
+<p><strong>¿Por qué se divide B entre 1.5?</strong> Porque para "convertir" bebidas a "unidades de paquete" necesitamos saber cuántos paquetes podemos formar. Si tienes $B$ bebidas, alcanzan para $B/1.5$ paquetes; si tienes $D$ dulces, alcanzan para $D$ paquetes. El número de paquetes efectivos es el mínimo de ambos.</p>
+</div>
+
+<div class="step">
+<span class="step-label">Paso 3 — Forma del gráfico</span>
+<p>Las esquinas de las L de Cecilia están sobre la recta $B = 1.5D$. Por ejemplo:</p>
+<ul>
+<li>Si $D = 2$, la esquina está en $(D = 2, B = 3)$.</li>
+<li>Si $D = 4$, la esquina está en $(D = 4, B = 6)$.</li>
+<li>Si $D = 10$, la esquina está en $(D = 10, B = 15)$.</li>
+</ul>
+<p>Cada esquina representa una proporción "perfecta". Si el dulce está en el eje X y la bebida en el Y, las L se "abren" hacia el noreste a partir de cada esquina.</p>
+</div>
+</div>
+
+<div class="box-exercise">
+<span class="exercise-label">Ejercicio (parte 2)</span>
+<div class="exercise-title">Cecilia — los dulces se vuelven neutrales</div>
+<blockquote>"Suponga ahora que, como consecuencia de la campaña del gobierno, Cecilia ha cambiado sus preferencias y ahora el consumo de dulces no le reporta mayor satisfacción, pero tampoco los considera un mal. Grafique las curvas de indiferencia."</blockquote>
+
+<div class="step">
+<span class="step-label">Paso 1 — Identificar el tipo de preferencias</span>
+<p>"No le aportan satisfacción pero tampoco son un mal" → los dulces son un <strong>bien neutral</strong>. Solo importan las bebidas.</p>
+</div>
+
+<div class="step">
+<span class="step-label">Paso 2 — Razonar la forma de las curvas</span>
+<p>Si el dulce está en el eje X y la bebida en el eje Y: como solo las bebidas dan utilidad, todas las canastas con la <strong>misma cantidad de bebidas</strong> están en la misma curva de indiferencia, sin importar cuántos dulces haya.</p>
+<p><strong>Curvas horizontales</strong>, paralelas al eje del dulce. Cuanto más alta la curva (más bebidas), mayor utilidad.</p>
+</div>
+
+<div class="step">
+<span class="step-label">Paso 3 — Función de utilidad implícita</span>
+<p>$U(B, D) = B$ (depende solo de B, no de D). Esa es la marca matemática de un bien neutral.</p>
+</div>
+</div>
+
+<h2 id="c2-juanpablo">15. Ejercicio resuelto: Juan Pablo (de tu Hoja 1)</h2>
+
+<div class="box-exercise">
+<span class="exercise-label">Ejercicio</span>
+<div class="exercise-title">Juan Pablo — la carne se vuelve neutral</div>
+<blockquote>"Con el paso de los años, para Juan Pablo la carne se ha vuelto un producto que no le disgusta, pero tampoco le genera una satisfacción. ¿Cómo serían ahora sus curvas de indiferencia?"</blockquote>
+
+<p>Recordemos que Juan Pablo consume <strong>frutas (eje Y) y carne (eje X)</strong>.</p>
+
+<div class="step">
+<span class="step-label">Paso 1 — Identificar el tipo de preferencias</span>
+<p>"No le disgusta, pero tampoco le genera satisfacción" → la carne es un <strong>bien neutral</strong>. Su utilidad depende solo de las frutas.</p>
+</div>
+
+<div class="step">
+<span class="step-label">Paso 2 — Forma de las curvas de indiferencia</span>
+<p>Como solo las frutas (eje Y) dan utilidad, las curvas de indiferencia serán <strong>líneas horizontales</strong> (paralelas al eje X de la carne):</p>
+<ul>
+<li>Si Juan Pablo tiene 10 kg de fruta y 0 kg de carne, está en la curva $U = 10$.</li>
+<li>Si tiene 10 kg de fruta y 50 kg de carne, también está en $U = 10$ (la carne no le aporta nada).</li>
+<li>Si tiene 20 kg de fruta y cualquier cantidad de carne, está en $U = 20$ (curva más alta).</li>
+</ul>
+</div>
+
+<div class="step">
+<span class="step-label">Paso 3 — Implicación económica</span>
+<p>Aunque Juan Pablo pueda comprar carne con su presupuesto, no querrá hacerlo: cada sol gastado en carne le aporta 0 utilidad. Le conviene gastar todo en frutas. Esto será importante cuando veamos la canasta óptima en los siguientes capítulos.</p>
+</div>
+</div>
+
+<h2 id="c2-checklist">16. Lo que necesitas para resolver ejercicios — checklist práctico</h2>
+
+<p>Antes de pasar al siguiente capítulo (recta presupuestaria), asegúrate de poder:</p>
+
+<ul>
+<li>✅ Reconocer una <strong>canasta</strong> $(A, V)$ y dibujarla como punto en el plano.</li>
+<li>✅ Enunciar los <strong>tres supuestos</strong> sobre las preferencias: completitud, transitividad, no saciedad.</li>
+<li>✅ Distinguir <strong>utilidad ordinal</strong> de <strong>utilidad cardinal</strong>.</li>
+<li>✅ Dibujar un <strong>mapa de curvas de indiferencia</strong> y saber por qué tienen pendiente negativa, no se cortan, las más alejadas son mejores y son convexas al origen.</li>
+<li>✅ Calcular la <strong>TMgS</strong> entre dos puntos: $\text{TMgS} = -\Delta V/\Delta A$.</li>
+<li>✅ Saber que la <strong>TMgS = $UM_A/UM_V$</strong> (cociente de utilidades marginales).</li>
+<li>✅ Dado una función de utilidad, reconocer el tipo de bienes:
+<ul>
+<li>Lineal $aX + bY$ → sustitutos perfectos.</li>
+<li>$\min\{X, Y\}$ → complementarios perfectos.</li>
+<li>Cobb-Douglas $X^a Y^b$ → bienes normales con TMgS decreciente.</li>
+</ul>
+</li>
+<li>✅ Dibujar curvas de indiferencia para los <strong>casos especiales</strong>: sustitutos, complementarios, neutrales, males.</li>
+</ul>
+
+<h2 id="c2-resumen">17. Resumen del capítulo 2</h2>
+
+<table>
+<thead>
+<tr><th>Concepto</th><th>Idea esencial</th><th>Fórmula clave</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>Canasta</strong></td><td>Lista de cantidades de bienes</td><td>$(A, V)$</td></tr>
+<tr><td><strong>Preferencias</strong></td><td>Cómo el consumidor ordena las canastas</td><td>A ≻ B, A ~ B</td></tr>
+<tr><td><strong>Función de utilidad</strong></td><td>Asigna número a cada canasta según preferencia</td><td>$U(A,V)$</td></tr>
+<tr><td><strong>Curva de indiferencia</strong></td><td>Canastas con misma utilidad</td><td>$U(A,V) = \overline{U}$</td></tr>
+<tr><td><strong>Utilidad marginal</strong></td><td>Satisfacción adicional de una unidad más</td><td>$UM_A, UM_V$</td></tr>
+<tr><td><strong>TMgS</strong></td><td>Cuánto V renuncias por 1 A más</td><td>$\text{TMgS} = \dfrac{UM_A}{UM_V}$</td></tr>
+</tbody>
+</table>
+
+<h3>Las 4 propiedades de las curvas de indiferencia (memoriza)</h3>
+<ol>
+<li><strong>Pendiente negativa</strong> (por "más es mejor").</li>
+<li><strong>Más alejadas del origen → mayor utilidad</strong> (por "más es mejor").</li>
+<li><strong>No se cortan</strong> (por transitividad).</li>
+<li><strong>Convexas al origen</strong> (por TMgS decreciente / preferencia por la variedad).</li>
+</ol>
+
+<h3>Tabla resumen de tipos especiales</h3>
+
+<table>
+<thead>
+<tr><th>Tipo</th><th>Forma de la curva</th><th>TMgS</th><th>Función típica</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>Bienes normales</strong></td><td>Convexas al origen</td><td>Decreciente</td><td>$X^a Y^b$</td></tr>
+<tr><td><strong>Sustitutos perfectos</strong></td><td>Rectas</td><td>Constante</td><td>$aX + bY$</td></tr>
+<tr><td><strong>Complementarios perfectos</strong></td><td>Forma de L</td><td>0 o ∞ (en codos)</td><td>$\min\{aX, bY\}$</td></tr>
+<tr><td><strong>Neutral</strong> (X)</td><td>Verticales</td><td>0</td><td>$U = Y$</td></tr>
+<tr><td><strong>Neutral</strong> (Y)</td><td>Horizontales</td><td>∞</td><td>$U = X$</td></tr>
+<tr><td><strong>Males</strong></td><td>Pendiente positiva</td><td>Negativa</td><td>$U = X - Y$ (Y es mal)</td></tr>
+</tbody>
+</table>
+
+<h3>🔭 Vista previa del próximo capítulo</h3>
+
+<p>Hasta ahora hemos respondido <strong>qué quiere</strong> el consumidor (sus preferencias). Pero falta el otro lado: <strong>qué puede pagar</strong>. En el siguiente capítulo construiremos la <strong>recta presupuestaria</strong> (también llamada restricción presupuestaria), que delimita el conjunto de canastas que el consumidor puede permitirse con su ingreso. Veremos:</p>
+<ul>
+<li>La ecuación de la recta presupuestaria.</li>
+<li>Su pendiente (que será un cociente de precios, paralelo a lo que aprendimos hoy con las utilidades marginales).</li>
+<li>Cómo cambia cuando varía el ingreso.</li>
+<li>Cómo cambia cuando varía un precio.</li>
+<li>Casos especiales como descuentos por volumen e impuestos parciales.</li>
+</ul>
+
+<p>Y en el capítulo siguiente uniremos <strong>preferencias</strong> (curvas de indiferencia) con <strong>restricción</strong> (recta presupuestaria) para encontrar la famosa <strong>canasta óptima</strong>.</p>
+
+</section>
+
+<footer>
+<p>Guía de estudio de Microeconomía — Capítulos 1 y 2. Basada en Krugman & Wells (Cap. 1), Pindyck & Rubinfeld (Caps. 1 y 3), y los apuntes de los Temas 1 y 2 del curso.</p>
+</footer>
+
+</main>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  if (typeof renderMathInElement !== 'undefined') {
+    renderMathInElement(document.body, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false},
+        {left: '\\[', right: '\\]', display: true},
+        {left: '\\(', right: '\\)', display: false}
+      ],
+      throwOnError: false
+    });
+  }
+});
+</script>
+
+</body>
+</html>
