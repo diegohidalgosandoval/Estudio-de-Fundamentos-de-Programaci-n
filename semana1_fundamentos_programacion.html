@@ -1,0 +1,2629 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Semana 1 · Fundamentos de Programación · Pingüino</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<style>
+/* ============ CSS VARIABLES — DARK MODE (default) ============ */
+:root[data-theme="dark"] {
+  --bg: #0a0e1a;
+  --bg-elevated: #131829;
+  --bg-card: #161c2f;
+  --bg-card-hover: #1c2340;
+  --bg-code: #0d1322;
+  --border: #2a3354;
+  --border-strong: #3d4870;
+  --text: #e8edf7;
+  --text-muted: #98a4c2;
+  --text-dim: #6b7793;
+  --primary: #60a5fa;
+  --primary-strong: #3b82f6;
+  --primary-bg: rgba(96, 165, 250, 0.12);
+  --accent: #34d399;
+  --accent-bg: rgba(52, 211, 153, 0.12);
+  --warning: #fbbf24;
+  --warning-bg: rgba(251, 191, 36, 0.12);
+  --danger: #f87171;
+  --danger-bg: rgba(248, 113, 113, 0.12);
+  --purple: #a78bfa;
+  --purple-bg: rgba(167, 139, 250, 0.12);
+  --pink: #f472b6;
+  --pink-bg: rgba(244, 114, 182, 0.12);
+  --shadow: 0 4px 24px rgba(0,0,0,0.4);
+  --shadow-strong: 0 8px 32px rgba(0,0,0,0.55);
+}
+/* ============ CSS VARIABLES — LIGHT MODE ============ */
+:root[data-theme="light"] {
+  --bg: #f8fafc;
+  --bg-elevated: #ffffff;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f1f5f9;
+  --bg-code: #f1f5f9;
+  --border: #e2e8f0;
+  --border-strong: #cbd5e1;
+  --text: #0f172a;
+  --text-muted: #475569;
+  --text-dim: #94a3b8;
+  --primary: #2563eb;
+  --primary-strong: #1d4ed8;
+  --primary-bg: rgba(37, 99, 235, 0.08);
+  --accent: #059669;
+  --accent-bg: rgba(5, 150, 105, 0.08);
+  --warning: #d97706;
+  --warning-bg: rgba(217, 119, 6, 0.08);
+  --danger: #dc2626;
+  --danger-bg: rgba(220, 38, 38, 0.08);
+  --purple: #7c3aed;
+  --purple-bg: rgba(124, 58, 237, 0.08);
+  --pink: #db2777;
+  --pink-bg: rgba(219, 39, 119, 0.08);
+  --shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+  --shadow-strong: 0 8px 24px rgba(15, 23, 42, 0.08);
+}
+/* ============ RESET & BASE ============ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  font-size: 16px;
+  transition: background 0.3s ease, color 0.3s ease;
+  min-height: 100vh;
+}
+::selection { background: var(--primary); color: #fff; }
+/* ============ HEADER ============ */
+.topbar {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 32px;
+  display: flex; align-items: center; justify-content: space-between;
+  backdrop-filter: blur(12px);
+  background: color-mix(in srgb, var(--bg-elevated) 85%, transparent);
+}
+.brand {
+  display: flex; align-items: center; gap: 12px;
+  font-weight: 700; font-size: 1.05rem; color: var(--text);
+}
+.brand-icon {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--primary), var(--purple));
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; color: #fff;
+  box-shadow: 0 4px 12px var(--primary-bg);
+}
+.brand-text small {
+  display: block; font-size: 0.75rem; font-weight: 500;
+  color: var(--text-muted); margin-top: -2px;
+}
+.theme-toggle {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 8px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.85rem; font-weight: 500;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+.theme-toggle:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--primary);
+  transform: translateY(-1px);
+}
+.theme-toggle .icon { font-size: 1rem; }
+/* ============ LAYOUT ============ */
+.layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  max-width: 1500px;
+  margin: 0 auto;
+  gap: 0;
+}
+@media (max-width: 1024px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+}
+.sidebar {
+  position: sticky; top: 64px;
+  height: calc(100vh - 64px);
+  overflow-y: auto;
+  padding: 24px 16px 24px 32px;
+  border-right: 1px solid var(--border);
+  background: var(--bg);
+}
+.sidebar h3 {
+  font-size: 0.78rem; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--text-dim);
+  margin-bottom: 12px; font-weight: 700;
+}
+.toc-list { list-style: none; }
+.toc-list li { margin: 2px 0; }
+.toc-list a {
+  display: block;
+  padding: 8px 14px;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  border-left: 3px solid transparent;
+  transition: all 0.15s ease;
+}
+.toc-list a:hover {
+  background: var(--bg-card);
+  color: var(--text);
+}
+.toc-list a.active {
+  background: var(--primary-bg);
+  color: var(--primary);
+  border-left-color: var(--primary);
+  font-weight: 600;
+}
+.toc-sub { padding-left: 12px; margin-top: 4px; }
+.toc-sub a { font-size: 0.84rem; padding: 5px 12px; }
+main {
+  padding: 40px 56px 80px;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+@media (max-width: 768px) {
+  main { padding: 24px 20px 60px; }
+  .topbar { padding: 12px 16px; }
+}
+/* ============ HERO ============ */
+.hero {
+  padding: 36px 0 48px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 48px;
+}
+.hero-badge {
+  display: inline-block;
+  padding: 6px 14px;
+  background: var(--primary-bg);
+  color: var(--primary);
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, var(--text) 0%, var(--primary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-sub {
+  font-size: 1.15rem;
+  color: var(--text-muted);
+  max-width: 720px;
+}
+.hero-meta {
+  display: flex; flex-wrap: wrap; gap: 16px;
+  margin-top: 24px;
+}
+.meta-pill {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.meta-pill strong { color: var(--text); font-weight: 600; }
+/* ============ SECTIONS ============ */
+section.block {
+  margin: 64px 0;
+  scroll-margin-top: 80px;
+}
+.block-header {
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 28px;
+}
+.block-num {
+  width: 48px; height: 48px;
+  background: linear-gradient(135deg, var(--primary), var(--purple));
+  color: #fff;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; font-weight: 800;
+  flex-shrink: 0;
+  box-shadow: 0 6px 16px var(--primary-bg);
+}
+h2 {
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+h3 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin: 36px 0 16px;
+  color: var(--text);
+  letter-spacing: -0.005em;
+}
+h4 {
+  font-size: 1.08rem;
+  font-weight: 700;
+  margin: 24px 0 12px;
+  color: var(--text);
+}
+p { margin: 12px 0; color: var(--text); }
+strong { color: var(--text); font-weight: 600; }
+em { color: var(--primary); font-style: normal; font-weight: 500; }
+ul, ol { margin: 12px 0 12px 24px; }
+li { margin: 6px 0; }
+a { color: var(--primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+/* ============ CALLOUTS ============ */
+.callout {
+  margin: 24px 0;
+  padding: 20px 24px;
+  border-radius: 14px;
+  border-left: 4px solid;
+  background: var(--bg-card);
+  position: relative;
+}
+.callout-header {
+  display: flex; align-items: center; gap: 10px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+}
+.callout-icon {
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+}
+.callout p { margin: 6px 0; }
+.callout p:last-child { margin-bottom: 0; }
+.callout.intuition { border-color: var(--primary); background: var(--primary-bg); }
+.callout.intuition .callout-icon { background: var(--primary); color: #fff; }
+.callout.intuition .callout-header { color: var(--primary); }
+.callout.theory { border-color: var(--purple); background: var(--purple-bg); }
+.callout.theory .callout-icon { background: var(--purple); color: #fff; }
+.callout.theory .callout-header { color: var(--purple); }
+.callout.tip { border-color: var(--accent); background: var(--accent-bg); }
+.callout.tip .callout-icon { background: var(--accent); color: #fff; }
+.callout.tip .callout-header { color: var(--accent); }
+.callout.warning { border-color: var(--warning); background: var(--warning-bg); }
+.callout.warning .callout-icon { background: var(--warning); color: #fff; }
+.callout.warning .callout-header { color: var(--warning); }
+.callout.example { border-color: var(--pink); background: var(--pink-bg); }
+.callout.example .callout-icon { background: var(--pink); color: #fff; }
+.callout.example .callout-header { color: var(--pink); }
+/* ============ DEFINITION CARD ============ */
+.def-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 22px 26px;
+  margin: 20px 0;
+  position: relative;
+  overflow: hidden;
+}
+.def-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--primary), var(--purple));
+}
+.def-card .def-label {
+  display: inline-block;
+  font-size: 0.72rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--primary);
+  background: var(--primary-bg);
+  padding: 3px 10px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+.def-card .def-term {
+  font-size: 1.15rem; font-weight: 700; color: var(--text);
+  margin-bottom: 6px;
+}
+.def-card .def-text { color: var(--text-muted); }
+/* ============ TABLE ============ */
+.table-wrapper {
+  overflow-x: auto;
+  margin: 20px 0;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.93rem;
+}
+th, td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+th {
+  background: var(--bg-elevated);
+  color: var(--text);
+  font-weight: 700;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  position: sticky; top: 0;
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--bg-card-hover); }
+td.center, th.center { text-align: center; }
+/* ============ CODE ============ */
+code {
+  font-family: 'JetBrains Mono', monospace;
+  background: var(--bg-code);
+  border: 1px solid var(--border);
+  padding: 2px 7px;
+  border-radius: 5px;
+  font-size: 0.88em;
+  color: var(--accent);
+}
+pre {
+  background: var(--bg-code);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px 22px;
+  overflow-x: auto;
+  margin: 16px 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.88rem;
+  line-height: 1.7;
+}
+pre code {
+  background: none; border: none; padding: 0; color: var(--text);
+}
+/* ============ FLOWCHART CONTAINER ============ */
+.flowchart-container {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+  margin: 20px 0;
+  text-align: center;
+  overflow-x: auto;
+}
+.flowchart-container .mermaid {
+  display: flex; justify-content: center;
+  min-height: 100px;
+}
+.flowchart-caption {
+  margin-top: 12px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+/* ============ STEPPER ============ */
+.stepper {
+  display: flex; flex-direction: column; gap: 0;
+  margin: 20px 0;
+}
+.step {
+  display: flex; gap: 18px;
+  position: relative;
+  padding-bottom: 24px;
+}
+.step:not(:last-child)::before {
+  content: ''; position: absolute;
+  left: 17px; top: 40px; bottom: 0;
+  width: 2px; background: var(--border-strong);
+}
+.step-num {
+  width: 36px; height: 36px;
+  background: var(--primary);
+  color: #fff;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700;
+  flex-shrink: 0;
+  box-shadow: 0 3px 8px var(--primary-bg);
+}
+.step-content { flex: 1; padding-top: 4px; }
+.step-content h4 { margin-top: 0; }
+/* ============ EXERCISE BOX ============ */
+.exercise {
+  background: var(--bg-card);
+  border: 2px solid var(--border-strong);
+  border-radius: 16px;
+  margin: 28px 0;
+  overflow: hidden;
+}
+.exercise-header {
+  background: linear-gradient(135deg, var(--primary), var(--purple));
+  color: #fff;
+  padding: 14px 24px;
+  display: flex; align-items: center; gap: 12px;
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+.exercise-num {
+  background: rgba(255,255,255,0.25);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+.exercise-body { padding: 24px 28px; }
+.statement-box {
+  background: var(--warning-bg);
+  border-left: 4px solid var(--warning);
+  padding: 16px 20px;
+  border-radius: 8px;
+  margin: 16px 0 24px;
+}
+.statement-box .statement-label {
+  font-weight: 700; color: var(--warning);
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+  display: block;
+}
+.solution-block {
+  margin-top: 20px;
+}
+.solution-block h4 {
+  display: flex; align-items: center; gap: 8px;
+  color: var(--accent);
+  margin: 24px 0 10px;
+  font-size: 1rem;
+}
+.final-answer {
+  background: var(--accent-bg);
+  border-left: 4px solid var(--accent);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin: 20px 0;
+}
+.final-answer-label {
+  font-weight: 700; color: var(--accent);
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+}
+/* ============ GLOSSARY ============ */
+.glossary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+  margin: 20px 0;
+}
+.gloss-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 18px;
+  transition: all 0.2s ease;
+}
+.gloss-item:hover {
+  border-color: var(--primary);
+  background: var(--bg-card-hover);
+  transform: translateY(-2px);
+}
+.gloss-term {
+  font-weight: 700; color: var(--primary);
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+.gloss-def {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+/* ============ QUIZ ============ */
+.quiz-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px 24px;
+  margin: 18px 0;
+}
+.quiz-q {
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+.quiz-q::before {
+  content: 'P' counter(qcount) '.';
+  counter-increment: qcount;
+  color: var(--primary);
+  font-weight: 800;
+  margin-right: 8px;
+}
+.quiz-section { counter-reset: qcount; }
+.quiz-options { list-style: none; margin: 8px 0; padding-left: 8px; }
+.quiz-options li {
+  padding: 6px 12px;
+  margin: 4px 0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.quiz-options li:hover { background: var(--bg-card-hover); }
+details {
+  margin-top: 12px;
+  border-top: 1px dashed var(--border);
+  padding-top: 12px;
+}
+summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--accent);
+  font-size: 0.9rem;
+  padding: 6px 0;
+  user-select: none;
+}
+summary::marker { color: var(--accent); }
+details[open] summary { margin-bottom: 10px; }
+.answer-content {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  background: var(--accent-bg);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-top: 8px;
+}
+.answer-content strong { color: var(--accent); }
+/* ============ KEYWORDS ============ */
+.kw {
+  background: var(--purple-bg);
+  color: var(--purple);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.95em;
+}
+/* ============ COMPARISON CARDS ============ */
+.compare-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin: 20px 0;
+}
+.compare-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px 20px;
+}
+.compare-card h4 {
+  margin: 0 0 10px;
+  display: flex; align-items: center; gap: 8px;
+  font-size: 1rem;
+}
+.compare-card.imperative h4 { color: var(--primary); }
+.compare-card.declarative h4 { color: var(--accent); }
+/* ============ FOOTER ============ */
+footer {
+  text-align: center;
+  padding: 40px 20px;
+  border-top: 1px solid var(--border);
+  margin-top: 80px;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+}
+footer .heart { color: var(--danger); }
+/* ============ UTILS ============ */
+.text-center { text-align: center; }
+.mt-2 { margin-top: 24px; }
+.mb-2 { margin-bottom: 24px; }
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 32px 0;
+  border: none;
+}
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+</style>
+</head>
+<body>
+
+<!-- ============ TOPBAR ============ -->
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-icon">🐧</div>
+    <div class="brand-text">
+      Pingüino · Fundamentos de Programación
+      <small>Guía de estudio · Semana 1</small>
+    </div>
+  </div>
+  <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+    <span class="icon" id="themeIcon">🌙</span>
+    <span id="themeLabel">Modo oscuro</span>
+  </button>
+</header>
+
+<div class="layout">
+  <!-- ============ SIDEBAR / TOC ============ -->
+  <aside class="sidebar">
+    <h3>📑 Contenido</h3>
+    <ul class="toc-list">
+      <li><a href="#intro">🏁 Introducción</a></li>
+      <li><a href="#bloque1">1️⃣ Sociedad digital</a></li>
+      <li><a href="#bloque2">2️⃣ Hardware</a></li>
+      <li><a href="#bloque3">3️⃣ Software</a></li>
+      <li><a href="#bloque4">4️⃣ Lenguajes de programación</a></li>
+      <li><a href="#bloque5">5️⃣ Desarrollo de software</a></li>
+      <li><a href="#bloque6">6️⃣ Paradigmas de programación</a></li>
+      <li><a href="#ejercicios">💪 Ejercicios resueltos</a></li>
+      <li><a href="#glosario">📖 Glosario</a></li>
+      <li><a href="#autoevaluacion">✅ Autoevaluación</a></li>
+      <li><a href="#cierre">🎯 Cierre</a></li>
+    </ul>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <main>
+
+    <!-- HERO -->
+    <section class="hero" id="intro">
+      <div class="hero-badge">Semana 1 · Bloque introductorio</div>
+      <h1>Sociedad digital, computadoras y los cimientos de la programación</h1>
+      <p class="hero-sub">
+        Antes de escribir tu primer algoritmo, vas a entender <strong>qué es una computadora por dentro</strong>,
+        <strong>cómo se le dan instrucciones</strong>, <strong>cómo se construye software profesional</strong>,
+        y <strong>cuáles son las grandes filosofías para programar</strong>. Todo desde cero, paso a paso, con el
+        <em>porqué</em> detrás de cada concepto.
+      </p>
+      <div class="hero-meta">
+        <div class="meta-pill">⏱️ <span><strong>Lectura:</strong> ~60 min</span></div>
+        <div class="meta-pill">📚 <span><strong>Bloques:</strong> 6 + ejercicios</span></div>
+        <div class="meta-pill">🎯 <span><strong>Para:</strong> examen parcial</span></div>
+        <div class="meta-pill">🐧 <span><strong>Estudiante:</strong> Pingüino</span></div>
+      </div>
+    </section>
+
+    <!-- ============ BLOQUE 1 ============ -->
+    <section class="block" id="bloque1">
+      <div class="block-header">
+        <div class="block-num">1</div>
+        <h2>Sociedad digital y competencias digitales</h2>
+      </div>
+
+      <div class="callout intuition">
+        <div class="callout-header"><span class="callout-icon">💡</span> Intuición primero</div>
+        <p>
+          Antes de aprender a programar, necesitas entender <strong>el escenario donde vas a programar</strong>.
+          Es como un médico: antes de aprender a recetar antibióticos, necesita entender qué es una bacteria
+          y qué es un cuerpo humano. Programar sin entender la sociedad digital sería como recetar sin
+          entender al paciente.
+        </p>
+      </div>
+
+      <h3>1.1. ¿Qué es una sociedad digital?</h3>
+
+      <div class="def-card">
+        <span class="def-label">Definición operativa</span>
+        <div class="def-term">Sociedad digital</div>
+        <div class="def-text">
+          Sociedad que se basa en usar <strong>tecnologías digitales</strong> —internet, computadoras, tablets,
+          teléfonos inteligentes y redes de alta velocidad— para realizar sus actividades cotidianas. Estas
+          tecnologías facilitan la <strong>ubicuidad</strong>, la <strong>interconectividad</strong> y el
+          <strong>procesamiento de grandes cantidades de datos</strong>.
+        </div>
+      </div>
+
+      <h4>Desempaquemos cada palabra clave</h4>
+
+      <p><strong>a) Tecnologías digitales</strong> → No son simplemente "aparatos electrónicos". Son herramientas que
+      <em>representan la información en forma de bits (0s y 1s)</em>. El microondas es electrónico, pero no necesariamente
+      "digital" en sentido moderno. Una <em>smart TV</em> sí lo es: procesa datos, se conecta a redes, ejecuta software.</p>
+
+      <p><strong>b) Ubicuidad</strong> → Significa "estar en todas partes a la vez". El correo electrónico te llega
+      tanto si estás en Lima, en Piura o en un avión. <em>Antes</em> de la sociedad digital, la información dependía
+      del lugar físico (tenías que <em>ir</em> al banco para conocer tu saldo).</p>
+
+      <p><strong>c) Interconectividad</strong> → Todos los dispositivos pueden hablar entre sí. Tu reloj le habla
+      a tu celular, tu celular a la nevera, la nevera al supermercado. Esto es el <span class="kw">Internet de las Cosas (IoT)</span>.</p>
+
+      <p><strong>d) Procesamiento de grandes cantidades de datos</strong> → Esto es el <span class="kw">Big Data</span>.
+      Una transacción bancaria genera datos. Mil millones al día generan <em>muchísimos</em>. Procesarlos requiere
+      algoritmos eficientes (ahí entras tú como futuro programador).</p>
+
+      <h3>1.2. Las tres consecuencias de una sociedad digital</h3>
+
+      <p>Tu material destaca <strong>tres efectos</strong> que toda sociedad digital busca producir. Memorízalos
+      porque son el <em>"para qué"</em> de todo el curso:</p>
+
+      <div class="flowchart-container">
+        <div class="mermaid-container" data-original='graph LR
+    SD["Sociedad Digital"]
+    SD --> A["Innovación"]
+    SD --> B["Empleo"]
+    SD --> C["Competitividad"]
+    A --> R["Mejor calidad de vida"]
+    B --> R
+    C --> R
+    style SD fill:#3b82f6,stroke:#1e40af,color:#fff,stroke-width:2px
+    style A fill:#34d399,stroke:#059669,color:#000,stroke-width:2px
+    style B fill:#34d399,stroke:#059669,color:#000,stroke-width:2px
+    style C fill:#34d399,stroke:#059669,color:#000,stroke-width:2px
+    style R fill:#fbbf24,stroke:#d97706,color:#000,stroke-width:2px'>
+          <div class="mermaid">
+graph LR
+    SD["Sociedad Digital"]
+    SD --> A["Innovación"]
+    SD --> B["Empleo"]
+    SD --> C["Competitividad"]
+    A --> R["Mejor calidad de vida"]
+    B --> R
+    C --> R
+    style SD fill:#3b82f6,stroke:#1e40af,color:#fff,stroke-width:2px
+    style A fill:#34d399,stroke:#059669,color:#000,stroke-width:2px
+    style B fill:#34d399,stroke:#059669,color:#000,stroke-width:2px
+    style C fill:#34d399,stroke:#059669,color:#000,stroke-width:2px
+    style R fill:#fbbf24,stroke:#d97706,color:#000,stroke-width:2px
+          </div>
+        </div>
+        <div class="flowchart-caption">📊 Diagrama 1 · Efectos clave de una sociedad digital</div>
+      </div>
+
+      <h3>1.3. Impacto en 5 áreas (esto puede caer en tu examen)</h3>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>Área</th><th>¿Cómo cambió?</th><th>¿Por qué?</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Educación</strong></td><td>Aulas virtuales, MOOCs, IA tutora</td><td>El conocimiento dejó de estar físicamente atado a bibliotecas; hoy está accesible 24/7</td></tr>
+            <tr><td><strong>Salud</strong></td><td>Telemedicina, historia clínica electrónica, IA diagnóstica</td><td>Los datos médicos viajan; los algoritmos detectan patrones invisibles al ojo humano</td></tr>
+            <tr><td><strong>Comercio y economía</strong></td><td>E-commerce, banca móvil, criptomonedas</td><td>Dinero y productos pasan de bienes <em>físicos</em> a <em>información</em></td></tr>
+            <tr><td><strong>Trabajo</strong></td><td>Teletrabajo, freelancing, plataformas</td><td>El trabajo se desliga del lugar físico: importa el resultado, no la presencia</td></tr>
+            <tr><td><strong>Administración pública</strong></td><td>Gobierno electrónico, identidad digital, trámites en línea</td><td>El Estado adopta procesos digitales para ser más eficiente y transparente</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header"><span class="callout-icon">🔑</span> Idea-fuerza</div>
+        <p>
+          En las 5 áreas, lo común es que <strong>la información dejó de ser un bien físico (papeles, expedientes)
+          y pasó a ser un bien digital (bits)</strong>. Eso es precisamente lo que tú vas a aprender a manipular
+          cuando programes.
+        </p>
+      </div>
+
+      <h3>1.4. Los 5 conceptos asociados a la sociedad digital</h3>
+
+      <p>Tu profesor pidió que los investigues. Aquí los tienes con el <em>porqué</em> de cada uno:</p>
+
+      <h4>a) Tecnologías digitales</h4>
+      <p>Conjunto de herramientas, sistemas y dispositivos que <strong>generan, procesan, almacenan y transmiten
+      información en formato digital (bits)</strong>. Ejemplos: internet, computadoras, smartphones, IoT, computación
+      en la nube, IA, blockchain. <em>Es la "infraestructura" sobre la que corre todo lo demás.</em></p>
+
+      <h4>b) Transformación digital</h4>
+      <p>Proceso por el cual una organización <strong>rediseña sus procesos, productos y cultura</strong> integrando
+      tecnologías digitales para crear valor.</p>
+
+      <div class="callout warning">
+        <div class="callout-header"><span class="callout-icon">⚠️</span> ¡Cuidado con la confusión más común!</div>
+        <p><strong>Digitalizar ≠ Transformación digital</strong></p>
+        <ul>
+          <li><strong>Digitalizar</strong> = pasar algo de papel a archivo digital (escanear documentos).</li>
+          <li><strong>Transformar digitalmente</strong> = <em>repensar el proceso completo</em> gracias a lo digital
+          (en vez de escanear formularios, eliminar el formulario y capturar el dato automáticamente al hacer un trámite por el celular).</li>
+        </ul>
+      </div>
+
+      <h4>c) Brecha digital</h4>
+      <p><strong>Desigualdad</strong> en el acceso, uso o aprovechamiento de las tecnologías digitales entre personas,
+      grupos sociales o países.</p>
+
+      <p>Tres dimensiones:</p>
+      <ol>
+        <li><strong>Brecha de acceso</strong>: ¿tienes internet/computadora? (campesino rural vs. universitario en Lima).</li>
+        <li><strong>Brecha de uso</strong>: ¿sabes usarlo? (abuela con celular vs. su nieto).</li>
+        <li><strong>Brecha de aprovechamiento</strong>: ¿generas valor con eso? (alguien que solo usa WhatsApp
+        vs. alguien que monta un negocio digital).</li>
+      </ol>
+
+      <h4>d) Seguridad digital</h4>
+      <p>Conjunto de prácticas, políticas y tecnologías para <strong>proteger</strong> sistemas, redes y datos.</p>
+
+      <p>Sus tres pilares (la "tríada CIA"):</p>
+      <ul>
+        <li><strong>Confidencialidad</strong>: que la información solo la vea quien debe verla.</li>
+        <li><strong>Integridad</strong>: que la información no se altere sin permiso.</li>
+        <li><strong>Disponibilidad</strong>: que la información esté ahí cuando se necesite.</li>
+      </ul>
+
+      <div class="callout example">
+        <div class="callout-header"><span class="callout-icon">🏠</span> Analogía intuitiva</div>
+        <p>
+          Si tu cuenta bancaria fuera un cuarto físico: la <strong>confidencialidad</strong> sería la cerradura
+          (solo tú entras), la <strong>integridad</strong> sería que nadie modifique tus papeles dentro, y la
+          <strong>disponibilidad</strong> sería que el cuarto siempre esté abierto cuando tú quieras entrar.
+        </p>
+      </div>
+
+      <h4>e) Ética digital</h4>
+      <p>Reflexión sobre <strong>lo que está bien y lo que está mal</strong> en el uso de las tecnologías digitales.
+      Dilemas típicos: ¿debe una IA decidir quién recibe un préstamo? ¿es ético recopilar datos de niños sin
+      consentimiento? <em>Cuando escribes código, tomas decisiones éticas implícitas.</em></p>
+
+      <h3>1.5. Competencias digitales</h3>
+
+      <div class="def-card">
+        <span class="def-label">Definición</span>
+        <div class="def-term">Competencias digitales</div>
+        <div class="def-text">
+          Conjunto de <strong>conocimientos, habilidades y actitudes</strong> necesarias para usar las TIC
+          (Tecnologías de la Información y Comunicación) de forma eficaz, crítica, segura y creativa.
+        </div>
+      </div>
+
+      <p>El marco más usado a nivel internacional es <strong>DigComp</strong>. Define 5 áreas que debes dominar:</p>
+
+      <div class="stepper">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h4>Información y alfabetización digital</h4>
+            <p>Saber buscar, evaluar y gestionar información (no creerse el primer link de Google).</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h4>Comunicación y colaboración</h4>
+            <p>Trabajar en línea con otros (Google Docs, GitHub, Slack).</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h4>Creación de contenido digital</h4>
+            <p>Producir, no solo consumir. <em>Escribir código entra aquí.</em></p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h4>Seguridad</h4>
+            <p>Proteger dispositivos, datos personales, salud y entorno digital.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <h4>Resolución de problemas</h4>
+            <p><strong>Esta es el corazón de la programación.</strong> Identificar necesidades y elegir
+            herramientas digitales adecuadas para resolverlas.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header"><span class="callout-icon">🎯</span> Insight para tu carrera</div>
+        <p>
+          El curso de Fundamentos de Programación es, en esencia, un curso de <strong>competencia 5: resolución
+          de problemas usando computadoras</strong>. Las semanas 2 a 7 son el "cómo" detallado de esta competencia.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ BLOQUE 2 ============ -->
+    <section class="block" id="bloque2">
+      <div class="block-header">
+        <div class="block-num">2</div>
+        <h2>Hardware: la parte física de la computadora</h2>
+      </div>
+
+      <div class="callout intuition">
+        <div class="callout-header"><span class="callout-icon">💡</span> Intuición primero</div>
+        <p>
+          Imagínate la computadora como un restaurante. <strong>El hardware</strong> es el edificio, la cocina,
+          los hornos, las mesas (todo lo físico). <strong>El software</strong> son las recetas, los procedimientos
+          y los menús (las instrucciones que dicen qué hacer). Sin recetas, la cocina está muerta. Sin cocina,
+          las recetas no sirven. <em>Programar es escribir las recetas.</em>
+        </p>
+      </div>
+
+      <h3>2.1. Origen y evolución del computador (resumen)</h3>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>Época</th><th>Hito</th><th>Por qué importó</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Siglo XVII</td><td>Máquinas mecánicas (Pascalina, Leibniz)</td><td>Primer intento de automatizar el cálculo</td></tr>
+            <tr><td>Siglo XIX</td><td>Babbage diseña la "máquina analítica"; Ada Lovelace escribe el primer algoritmo</td><td>Idea pionera de una máquina <em>programable</em></td></tr>
+            <tr><td>1940s</td><td>ENIAC, Mark I (1ª generación)</td><td>Computadoras de tubos de vacío; gigantescas y militares</td></tr>
+            <tr><td>1950s–60s</td><td>Transistores, circuitos integrados (2ª y 3ª generaciones)</td><td>Más pequeñas, más rápidas, más confiables</td></tr>
+            <tr><td>1970s–80s</td><td>Microprocesadores, PC (4ª generación)</td><td>La computadora <em>llega al hogar</em></td></tr>
+            <tr><td>1990s–hoy</td><td>Internet, móviles, nube, IA (5ª generación y posteriores)</td><td>La computación se vuelve <em>ubicua</em></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>2.2. Definición de hardware</h3>
+
+      <div class="def-card">
+        <span class="def-label">Definición</span>
+        <div class="def-term">Hardware</div>
+        <div class="def-text">
+          Es <strong>toda la parte física</strong> de una computadora; es decir, <em>todo lo que puedes ver y tocar</em>.
+        </div>
+      </div>
+
+      <h4>Hardware externo vs. hardware interno</h4>
+
+      <div class="compare-grid">
+        <div class="compare-card imperative">
+          <h4>🖥️ Hardware externo</h4>
+          <p>Periféricos que se conectan por fuera del gabinete:</p>
+          <p>Teclado, monitor, mouse, impresoras, disco duro externo, lápiz óptico, audífonos, proyector, parlantes.</p>
+        </div>
+        <div class="compare-card declarative">
+          <h4>🔧 Hardware interno</h4>
+          <p>Componentes que están dentro del gabinete:</p>
+          <p>Disco duro, memorias (RAM/ROM), procesador, tarjetas de red, tarjeta gráfica, tarjeta madre, tarjeta de sonido, ventilador.</p>
+        </div>
+      </div>
+
+      <h3>2.3. Organización física de una computadora</h3>
+
+      <p>Toda computadora moderna —desde tu celular hasta el servidor de Google— sigue la misma arquitectura
+      conceptual, propuesta por <strong>John von Neumann</strong> en 1945:</p>
+
+      <div class="flowchart-container">
+        <div class="mermaid-container" data-original='graph LR
+    E["Dispositivos<br/>de Entrada<br/>⌨️ 🖱️"]
+    subgraph CPU ["UCP (Procesador / CPU)"]
+        UC["Unidad de<br/>Control"]
+        ALU["Unidad Aritmética<br/>y Lógica (ALU)"]
+        MC["Memoria<br/>Central (RAM)"]
+    end
+    S["Dispositivos<br/>de Salida<br/>🖥️ 🖨️"]
+    ME["Memoria Externa<br/>(almacenamiento<br/>permanente)<br/>💾"]
+    E --> CPU
+    CPU --> S
+    CPU <--> ME
+    style E fill:#60a5fa,stroke:#1e40af,color:#000,stroke-width:2px
+    style S fill:#34d399,stroke:#059669,color:#000,stroke-width:2px
+    style ME fill:#fbbf24,stroke:#d97706,color:#000,stroke-width:2px
+    style UC fill:#a78bfa,stroke:#6d28d9,color:#fff,stroke-width:2px
+    style ALU fill:#a78bfa,stroke:#6d28d9,color:#fff,stroke-width:2px
+    style MC fill:#a78bfa,stroke:#6d28d9,color:#fff,stroke-width:2px'>
+          <div class="mermaid">
+graph LR
+    E["Dispositivos<br/>de Entrada<br/>⌨️ 🖱️"]
+    subgraph CPU ["UCP (Procesador / CPU)"]
+        UC["Unidad de<br/>Control"]
+        ALU["Unidad Aritmética<br/>y Lógica (ALU)"]
+        MC["Memoria<br/>Central (RAM)"]
+    end
+    S["Dispositivos<br/>de Salida<br/>🖥️ 🖨️"]
+    ME["Memoria Externa<br/>(almacenamiento<br/>permanente)<br/>💾"]
+    E --> CPU
+    CPU --> S
+    CPU <--> ME
+    style E fill:#60a5fa,stroke:#1e40af,color:#000,stroke-width:2px
+    style S fill:#34d399,stroke:#059669,color:#000,stroke-width:2px
+    style ME fill:#fbbf24,stroke:#d97706,color:#000,stroke-width:2px
+    style UC fill:#a78bfa,stroke:#6d28d9,color:#fff,stroke-width:2px
+    style ALU fill:#a78bfa,stroke:#6d28d9,color:#fff,stroke-width:2px
+    style MC fill:#a78bfa,stroke:#6d28d9,color:#fff,stroke-width:2px
+          </div>
+        </div>
+        <div class="flowchart-caption">📊 Diagrama 2 · Organización física de una computadora (arquitectura de von Neumann)</div>
+      </div>
+
+      <h4>Los 5 componentes principales</h4>
+
+      <div class="stepper">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h4>🧠 Unidad Central de Procesamiento (UCP / CPU)</h4>
+            <p>Es el "cerebro" de la computadora. Interpreta y ejecuta las instrucciones de los programas.
+            Internamente tiene dos sub-unidades:</p>
+            <ul>
+              <li><strong>Unidad de Control (UC)</strong>: dirige el "tráfico" — decide qué instrucción se ejecuta y cuándo.</li>
+              <li><strong>Unidad Aritmética y Lógica (ALU)</strong>: hace las cuentas (sumas, restas) y las comparaciones (¿es A mayor que B?).</li>
+            </ul>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h4>💾 Memoria principal</h4>
+            <p>Donde están los datos y el programa <em>mientras se ejecuta</em>. Hay dos tipos clave:</p>
+            <ul>
+              <li><strong>RAM</strong> (Random Access Memory): rápida pero <em>volátil</em> — se borra al apagar la PC.</li>
+              <li><strong>ROM</strong> (Read Only Memory): lenta pero <em>permanente</em>; viene grabada de fábrica (ej. BIOS).</li>
+            </ul>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h4>⌨️ Dispositivos de entrada</h4>
+            <p>Por donde la computadora <em>recibe</em> información: teclado, mouse, micrófono, escáner, cámara, lectores de huellas.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h4>🖥️ Dispositivos de salida</h4>
+            <p>Por donde la computadora <em>entrega</em> información: monitor, impresora, parlantes, proyector.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <h4>🌐 Sistema de comunicación</h4>
+            <p>Cómo la computadora habla con otras: tarjeta de red (NIC), módem, router, WiFi, Bluetooth.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3>2.4. Memoria: bit, byte y unidades</h3>
+
+      <p>Toda la información dentro de una computadora se guarda como <strong>bits</strong>: ceros y unos.
+      Un solo bit casi no dice nada; agrupados, codifican letras, números, imágenes y videos.</p>
+
+      <div class="callout theory">
+        <div class="callout-header"><span class="callout-icon">📐</span> Demostración formal</div>
+        <p>Con <strong>n</strong> bits puedes representar <strong>2<sup>n</sup></strong> combinaciones distintas:</p>
+        <ul>
+          <li>1 bit → 2<sup>1</sup> = 2 valores (0 o 1)</li>
+          <li>4 bits → 2<sup>4</sup> = 16 valores (suficiente para un dígito hex)</li>
+          <li>1 byte = 8 bits → 2<sup>8</sup> = 256 valores (suficiente para representar todos los caracteres del código ASCII)</li>
+        </ul>
+        <p><em>Por eso 1 byte se eligió como unidad estándar: cabe un carácter típico.</em></p>
+      </div>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>Unidad</th><th>Símbolo</th><th>Equivalencia</th><th>Ejemplo</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Bit</td><td>b</td><td>0 o 1</td><td>El "ladrillo" mínimo</td></tr>
+            <tr><td>Byte</td><td>B</td><td>8 bits</td><td>1 carácter ("A")</td></tr>
+            <tr><td>Kilobyte</td><td>KB</td><td>1.024 B</td><td>Un párrafo</td></tr>
+            <tr><td>Megabyte</td><td>MB</td><td>1.024 KB</td><td>Una foto comprimida</td></tr>
+            <tr><td>Gigabyte</td><td>GB</td><td>1.024 MB</td><td>Una película</td></tr>
+            <tr><td>Terabyte</td><td>TB</td><td>1.024 GB</td><td>Disco duro común</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>2.5. Almacenamiento secundario</h3>
+      <p>Como la RAM se borra al apagar, necesitamos memoria <em>permanente</em>. Esto es el almacenamiento secundario:</p>
+      <ul>
+        <li><strong>HDD</strong> (Hard Disk Drive): discos magnéticos giratorios. Más baratos, más lentos.</li>
+        <li><strong>SSD</strong> (Solid State Drive): memoria flash, sin partes móviles. Más rápido, más caro.</li>
+        <li><strong>USB / pendrives / tarjetas SD</strong>: memoria flash portátil.</li>
+        <li><strong>CD/DVD/Blu-ray</strong>: discos ópticos (cada vez menos usados).</li>
+        <li><strong>Nube</strong>: almacenamiento remoto (Google Drive, Dropbox).</li>
+      </ul>
+
+      <h3>2.6. El ciclo Fetch-Decode-Execute (cómo trabaja la CPU)</h3>
+
+      <p>La CPU hace, miles de millones de veces por segundo, este ciclo simple:</p>
+
+      <div class="flowchart-container">
+        <div class="mermaid-container" data-original='graph LR
+    F["1. FETCH<br/>(Buscar instrucción<br/>en memoria)"]
+    D["2. DECODE<br/>(Decodificar<br/>qué significa)"]
+    E["3. EXECUTE<br/>(Ejecutar la<br/>instrucción)"]
+    F --> D
+    D --> E
+    E --> F
+    style F fill:#60a5fa,stroke:#1e40af,color:#000,stroke-width:2px
+    style D fill:#a78bfa,stroke:#6d28d9,color:#fff,stroke-width:2px
+    style E fill:#34d399,stroke:#059669,color:#000,stroke-width:2px'>
+          <div class="mermaid">
+graph LR
+    F["1. FETCH<br/>(Buscar instrucción<br/>en memoria)"]
+    D["2. DECODE<br/>(Decodificar<br/>qué significa)"]
+    E["3. EXECUTE<br/>(Ejecutar la<br/>instrucción)"]
+    F --> D
+    D --> E
+    E --> F
+    style F fill:#60a5fa,stroke:#1e40af,color:#000,stroke-width:2px
+    style D fill:#a78bfa,stroke:#6d28d9,color:#fff,stroke-width:2px
+    style E fill:#34d399,stroke:#059669,color:#000,stroke-width:2px
+          </div>
+        </div>
+        <div class="flowchart-caption">📊 Diagrama 3 · Ciclo Fetch-Decode-Execute de la CPU</div>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header"><span class="callout-icon">⚡</span> Para tu intuición</div>
+        <p>
+          Cuando ejecutas un programa, la CPU está haciendo este ciclo millones de millones de veces por segundo.
+          Tu programa no es más que una <em>secuencia de instrucciones</em> que la CPU lee una a una.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ BLOQUE 3 ============ -->
+    <section class="block" id="bloque3">
+      <div class="block-header">
+        <div class="block-num">3</div>
+        <h2>Software: la parte lógica de la computadora</h2>
+      </div>
+
+      <div class="def-card">
+        <span class="def-label">Definición</span>
+        <div class="def-term">Software</div>
+        <div class="def-text">
+          Conjunto de <strong>instrucciones</strong> (programas) que controlan y coordinan los componentes hardware
+          y le dicen a la computadora <em>qué hacer</em>. <em>Sin software, una computadora es una máquina vacía.</em>
+        </div>
+      </div>
+
+      <h3>3.1. Los tres tipos clásicos de software</h3>
+
+      <div class="compare-grid">
+        <div class="compare-card imperative">
+          <h4>📱 Software de aplicación</h4>
+          <p>Lo que el usuario usa para hacer cosas concretas.</p>
+          <p><strong>Ejemplos:</strong> Word, Chrome, Spotify, juegos, apps móviles.</p>
+        </div>
+        <div class="compare-card declarative">
+          <h4>🏢 Software de gestión</h4>
+          <p>Apoya la operación integral de una empresa.</p>
+          <p><strong>Ejemplos:</strong> contabilidad, facturación, planillas, SAP, ERP.</p>
+        </div>
+        <div class="compare-card" style="border-color: var(--purple);">
+          <h4 style="color: var(--purple);">⚙️ Software de programación</h4>
+          <p>Software <em>para construir</em> otro software.</p>
+          <p><strong>Ejemplos:</strong> Python, Visual Studio, compiladores, IDEs.</p>
+        </div>
+      </div>
+
+      <h3>3.2. La otra clasificación: sistema vs. aplicación</h3>
+
+      <p>Joyanes (autor del libro base de tu curso) distingue dos grandes familias:</p>
+
+      <div class="flowchart-container">
+        <div class="mermaid-container" data-original='graph TB
+    U["👤 Usuario"]
+    A["📱 Software de Aplicación<br/>(Word, Chrome, juegos...)"]
+    SO["🪟 Sistema Operativo<br/>(Windows, macOS, Linux)"]
+    H["🔧 Hardware<br/>(CPU, RAM, disco, etc.)"]
+    U --> A
+    A --> SO
+    SO --> H
+    style U fill:#fbbf24,stroke:#d97706,color:#000,stroke-width:2px
+    style A fill:#34d399,stroke:#059669,color:#000,stroke-width:2px
+    style SO fill:#60a5fa,stroke:#1e40af,color:#000,stroke-width:2px
+    style H fill:#a78bfa,stroke:#6d28d9,color:#fff,stroke-width:2px'>
+          <div class="mermaid">
+graph TB
+    U["👤 Usuario"]
+    A["📱 Software de Aplicación<br/>(Word, Chrome, juegos...)"]
+    SO["🪟 Sistema Operativo<br/>(Windows, macOS, Linux)"]
+    H["🔧 Hardware<br/>(CPU, RAM, disco, etc.)"]
+    U --> A
+    A --> SO
+    SO --> H
+    style U fill:#fbbf24,stroke:#d97706,color:#000,stroke-width:2px
+    style A fill:#34d399,stroke:#059669,color:#000,stroke-width:2px
+    style SO fill:#60a5fa,stroke:#1e40af,color:#000,stroke-width:2px
+    style H fill:#a78bfa,stroke:#6d28d9,color:#fff,stroke-width:2px
+          </div>
+        </div>
+        <div class="flowchart-caption">📊 Diagrama 4 · Capas del software (modelo "cebolla")</div>
+      </div>
+
+      <h4>Software de sistema</h4>
+      <p>Conjunto de programas <strong>indispensables para que la máquina funcione</strong>. Incluye:</p>
+      <ul>
+        <li><strong>Sistema operativo (SO)</strong>: el "director de orquesta" que coordina todo (Windows, macOS, Linux, Android, iOS).</li>
+        <li><strong>Compiladores e intérpretes</strong>: los traductores de lenguajes (los veremos en el Bloque 4).</li>
+        <li><strong>Programas de utilidad / utilerías</strong>: antivirus, limpiadores, gestores de archivos.</li>
+        <li><strong>Editores</strong>: herramientas básicas para escribir texto/código.</li>
+      </ul>
+
+      <h4>Software de aplicación</h4>
+      <p>Programas <em>específicos</em> escritos por empresas o usuarios para realizar tareas concretas
+      (procesador de textos, hoja de cálculo, navegador, etc.). <em>Le habla al sistema operativo, no directamente al hardware.</em></p>
+
+      <h3>3.3. El sistema operativo en detalle</h3>
+
+      <div class="callout intuition">
+        <div class="callout-header"><span class="callout-icon">🎼</span> Analogía: el director de orquesta</div>
+        <p>
+          El sistema operativo es como el director de una orquesta. Tú (la aplicación) le dices "quiero tocar esta nota"
+          y él decide cuándo, con qué instrumento (qué hardware) y coordina con todos los demás músicos (los demás programas
+          que están corriendo). Sin él, el caos.
+        </p>
+      </div>
+
+      <p>Funciones clave de un SO:</p>
+      <ul>
+        <li>Gestionar el <strong>procesador</strong> (qué programa se ejecuta cuándo).</li>
+        <li>Gestionar la <strong>memoria</strong> (qué datos van en RAM, cuáles se descartan).</li>
+        <li>Gestionar los <strong>dispositivos</strong> (cómo accedemos al disco, a la red, a la impresora).</li>
+        <li>Gestionar los <strong>archivos</strong> (organizarlos en carpetas, controlar permisos).</li>
+        <li>Proveer una <strong>interfaz de usuario</strong> (línea de comandos o gráfica).</li>
+      </ul>
+    </section>
+
+    <!-- ============ BLOQUE 4 ============ -->
+    <section class="block" id="bloque4">
+      <div class="block-header">
+        <div class="block-num">4</div>
+        <h2>Lenguajes de programación y traductores</h2>
+      </div>
+
+      <div class="callout intuition">
+        <div class="callout-header"><span class="callout-icon">🗣️</span> Intuición primero</div>
+        <p>
+          Imagina que tú hablas español y la computadora habla "binarés" (solo 0s y 1s). Si quieres que ella haga algo,
+          o tú aprendes "binarés" (imposible), o ella aprende español (imposible), o usan un <strong>traductor</strong>.
+          Eso es exactamente lo que hace un compilador o un intérprete.
+        </p>
+      </div>
+
+      <h3>4.1. Los tres tipos de lenguajes (3 generaciones)</h3>
+
+      <div class="flowchart-container">
+        <div class="mermaid-container" data-original='graph TB
+    U["🧑 Programador<br/>(humano)"]
+    AN["Lenguajes de ALTO NIVEL<br/>(3ª gen)<br/>Python, Java, C, C++<br/>📖 Cercano al lenguaje humano"]
+    EN["Lenguaje ENSAMBLADOR<br/>(2ª gen)<br/>MOV, ADD, SUB...<br/>🔡 Nemotécnicos en inglés"]
+    MA["Lenguaje MÁQUINA<br/>(1ª gen)<br/>00100100 01000010<br/>💻 Solo binario"]
+    HW["⚙️ Hardware<br/>(CPU)"]
+    U --> AN
+    AN --> EN
+    EN --> MA
+    MA --> HW
+    style U fill:#fbbf24,stroke:#d97706,color:#000,stroke-width:2px
+    style AN fill:#34d399,stroke:#059669,color:#000,stroke-width:2px
+    style EN fill:#60a5fa,stroke:#1e40af,color:#000,stroke-width:2px
+    style MA fill:#a78bfa,stroke:#6d28d9,color:#fff,stroke-width:2px
+    style HW fill:#f472b6,stroke:#be185d,color:#fff,stroke-width:2px'>
+          <div class="mermaid">
+graph TB
+    U["🧑 Programador<br/>(humano)"]
+    AN["Lenguajes de ALTO NIVEL<br/>(3ª gen)<br/>Python, Java, C, C++<br/>📖 Cercano al lenguaje humano"]
+    EN["Lenguaje ENSAMBLADOR<br/>(2ª gen)<br/>MOV, ADD, SUB...<br/>🔡 Nemotécnicos en inglés"]
+    MA["Lenguaje MÁQUINA<br/>(1ª gen)<br/>00100100 01000010<br/>💻 Solo binario"]
+    HW["⚙️ Hardware<br/>(CPU)"]
+    U --> AN
+    AN --> EN
+    EN --> MA
+    MA --> HW
+    style U fill:#fbbf24,stroke:#d97706,color:#000,stroke-width:2px
+    style AN fill:#34d399,stroke:#059669,color:#000,stroke-width:2px
+    style EN fill:#60a5fa,stroke:#1e40af,color:#000,stroke-width:2px
+    style MA fill:#a78bfa,stroke:#6d28d9,color:#fff,stroke-width:2px
+    style HW fill:#f472b6,stroke:#be185d,color:#fff,stroke-width:2px
+          </div>
+        </div>
+        <div class="flowchart-caption">📊 Diagrama 5 · Niveles de lenguajes de programación</div>
+      </div>
+
+      <h4>1ª generación: Lenguaje máquina</h4>
+      <ul>
+        <li>Solo <strong>0s y 1s</strong> (binario puro).</li>
+        <li>La <em>única</em> que la CPU entiende directamente.</li>
+        <li>Cada CPU tiene <em>su propio</em> lenguaje máquina (incompatible entre fabricantes).</li>
+        <li>Ejemplo de instrucción: <code>1101101010101001</code>.</li>
+        <li><strong>Pros:</strong> velocidad máxima. <strong>Contras:</strong> imposible para un humano.</li>
+      </ul>
+
+      <h4>2ª generación: Lenguaje ensamblador (assembly)</h4>
+      <ul>
+        <li>Usa <strong>nemotécnicos</strong> (palabras cortas en inglés) en lugar de binario: <code>MOV</code>, <code>ADD</code>, <code>SUB</code>, <code>STO</code>.</li>
+        <li>Cada instrucción ensamblador corresponde a <strong>una</strong> instrucción máquina.</li>
+        <li>Necesita un programa <strong>ensamblador</strong> que lo traduzca a lenguaje máquina.</li>
+        <li><strong>Pros:</strong> control total del hardware. <strong>Contras:</strong> aún muy difícil; depende del hardware.</li>
+      </ul>
+
+      <h4>3ª generación: Lenguajes de alto nivel</h4>
+      <ul>
+        <li>Cercanos al lenguaje natural (inglés mayormente): <code>print</code>, <code>read</code>, <code>if</code>, <code>while</code>.</li>
+        <li>Una instrucción de alto nivel = muchas instrucciones máquina.</li>
+        <li><strong>Independientes del hardware</strong> (portables): el mismo código corre en distintas CPUs si hay traductor.</li>
+        <li>Ejemplos: Python, Java, C, C++, C#, JavaScript, R.</li>
+      </ul>
+
+      <h3>4.2. Traductores: compiladores e intérpretes</h3>
+
+      <p>Como las computadoras solo entienden lenguaje máquina, hace falta <strong>traducir</strong> el código que
+      escribes en alto nivel. Hay dos formas de hacerlo:</p>
+
+      <div class="compare-grid">
+        <div class="compare-card imperative">
+          <h4>🏭 Compilador</h4>
+          <p>Traduce <strong>todo el programa de una vez</strong> y produce un archivo ejecutable independiente.</p>
+          <ul>
+            <li>Más rápido al ejecutar.</li>
+            <li>Hay que recompilar tras cada cambio.</li>
+            <li>Ejemplos: C, C++, Rust, Go.</li>
+          </ul>
+        </div>
+        <div class="compare-card declarative">
+          <h4>🎙️ Intérprete</h4>
+          <p>Traduce y ejecuta <strong>línea por línea</strong>, en tiempo real.</p>
+          <ul>
+            <li>Más lento al ejecutar pero más flexible.</li>
+            <li>No necesita compilar antes de probar.</li>
+            <li>Ejemplos: Python, JavaScript, Ruby.</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>4.3. Pseudocódigo: el "puente" entre humano y máquina</h3>
+
+      <p>Antes de escribir código real (que es estricto y poco perdonador), los programadores escriben
+      <strong>pseudocódigo</strong>: un lenguaje informal en español/inglés que describe el algoritmo
+      sin preocuparse por la sintaxis. Es lo que vas a ver en la Semana 2.</p>
+
+      <pre><code>Inicio
+    leer numero
+    si numero > 0 entonces
+        escribir "Es positivo"
+    sino
+        escribir "Es cero o negativo"
+    fin_si
+Fin</code></pre>
+
+      <div class="callout tip">
+        <div class="callout-header"><span class="callout-icon">🌉</span> Por qué pseudocódigo</div>
+        <p>
+          El pseudocódigo te permite <strong>pensar el algoritmo sin distraerte con la sintaxis</strong>.
+          Una vez claro el algoritmo, traducir a Python (o cualquier lenguaje) es casi mecánico. Por eso
+          los programadores experimentados <em>diseñan</em> antes de <em>codificar</em>.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ BLOQUE 5 ============ -->
+    <section class="block" id="bloque5">
+      <div class="block-header">
+        <div class="block-num">5</div>
+        <h2>Desarrollo de software: del problema al programa</h2>
+      </div>
+
+      <h3>5.1. ¿Qué es un algoritmo?</h3>
+
+      <div class="def-card">
+        <span class="def-label">Definición · etimología</span>
+        <div class="def-term">Algoritmo</div>
+        <div class="def-text">
+          Del latín medieval <em>algorismus</em> (en honor al matemático persa Al-Juarismi) y del griego
+          <em>arithmos</em> = número. Es un <strong>conjunto finito y ordenado de pasos</strong> que permite
+          resolver un problema en un tiempo finito.
+        </div>
+      </div>
+
+      <p>Tu material te da <strong>tres definiciones equivalentes</strong>:</p>
+      <ol>
+        <li>Es un <strong>método</strong> para resolver un problema.</li>
+        <li>Es una <strong>descripción ordenada de instrucciones</strong> que deben realizarse para resolver
+        un problema en un tiempo finito.</li>
+        <li><strong>Conjunto de pasos, procedimientos o acciones</strong> que nos permiten alcanzar un resultado
+        o resolver un problema.</li>
+      </ol>
+
+      <h4>Las 5 propiedades que TODO algoritmo debe cumplir</h4>
+
+      <div class="stepper">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h4>Preciso</h4>
+            <p>No deja lugar a interpretaciones. Cada paso es exacto.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h4>Definido</h4>
+            <p>Si lo ejecutas dos veces con la misma entrada, obtienes la misma salida.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h4>Finito</h4>
+            <p>Termina en un número finito de pasos. <em>Un algoritmo que nunca termina no es un algoritmo.</em></p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h4>Tiene entradas (inputs)</h4>
+            <p>Recibe los datos necesarios para resolver el problema.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <h4>Tiene salidas (outputs)</h4>
+            <p>Produce uno o más resultados que son la solución del problema.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout example">
+        <div class="callout-header"><span class="callout-icon">🍳</span> Analogía: la receta de cocina</div>
+        <p>
+          Una <strong>receta de cocina</strong> es un algoritmo: pasos precisos, ordenados, finitos, con ingredientes
+          (entradas) y un plato terminado (salida). Si saltas un paso o cambias el orden, el resultado puede ser un
+          desastre. Lo mismo con un algoritmo de programación.
+        </p>
+      </div>
+
+      <h3>5.2. Las dos formas de representar un algoritmo</h3>
+
+      <div class="compare-grid">
+        <div class="compare-card imperative">
+          <h4>📝 Pseudocódigo</h4>
+          <p>Texto estructurado en lenguaje natural.</p>
+          <pre style="margin-top:8px;font-size:0.78rem;"><code>Inicio
+   leer x
+   escribir x*2
+Fin</code></pre>
+          <p style="margin-top:8px;font-size:0.85rem;color:var(--text-muted);">
+          <em>Orientado al desarrollo de los lenguajes de programación.</em></p>
+        </div>
+        <div class="compare-card declarative">
+          <h4>🔷 Diagrama de flujo</h4>
+          <p>Representación gráfica con figuras y flechas.</p>
+          <p style="margin-top:8px;font-size:0.85rem;color:var(--text-muted);">
+          <em>Orientado al diseño visual del algoritmo.</em></p>
+        </div>
+      </div>
+
+      <p>Las dos formas son <strong>equivalentes</strong>: el mismo algoritmo puede representarse de ambas maneras.
+      En este curso trabajarás <em>las dos</em> a partir de la Semana 2.</p>
+
+      <h3>5.3. Fases para resolver un problema con la computadora</h3>
+
+      <div class="flowchart-container">
+        <div class="mermaid-container" data-original='graph LR
+    P["🎯 Problema"]
+    A["1. Análisis<br/>(¿qué se pide?)"]
+    D["2. Diseño<br/>(algoritmo)"]
+    C["3. Codificación<br/>(programa)"]
+    Pr["4. Pruebas<br/>(¿funciona?)"]
+    M["5. Mantenimiento<br/>(actualizar)"]
+    P --> A
+    A --> D
+    D --> C
+    C --> Pr
+    Pr --> M
+    style P fill:#fbbf24,stroke:#d97706,color:#000,stroke-width:2px
+    style A fill:#60a5fa,stroke:#1e40af,color:#000,stroke-width:2px
+    style D fill:#a78bfa,stroke:#6d28d9,color:#fff,stroke-width:2px
+    style C fill:#34d399,stroke:#059669,color:#000,stroke-width:2px
+    style Pr fill:#f472b6,stroke:#be185d,color:#fff,stroke-width:2px
+    style M fill:#fbbf24,stroke:#d97706,color:#000,stroke-width:2px'>
+          <div class="mermaid">
+graph LR
+    P["🎯 Problema"]
+    A["1. Análisis<br/>(¿qué se pide?)"]
+    D["2. Diseño<br/>(algoritmo)"]
+    C["3. Codificación<br/>(programa)"]
+    Pr["4. Pruebas<br/>(¿funciona?)"]
+    M["5. Mantenimiento<br/>(actualizar)"]
+    P --> A
+    A --> D
+    D --> C
+    C --> Pr
+    Pr --> M
+    style P fill:#fbbf24,stroke:#d97706,color:#000,stroke-width:2px
+    style A fill:#60a5fa,stroke:#1e40af,color:#000,stroke-width:2px
+    style D fill:#a78bfa,stroke:#6d28d9,color:#fff,stroke-width:2px
+    style C fill:#34d399,stroke:#059669,color:#000,stroke-width:2px
+    style Pr fill:#f472b6,stroke:#be185d,color:#fff,stroke-width:2px
+    style M fill:#fbbf24,stroke:#d97706,color:#000,stroke-width:2px
+          </div>
+        </div>
+        <div class="flowchart-caption">📊 Diagrama 6 · Fases para resolver un problema con la computadora</div>
+      </div>
+
+      <h3>5.4. Ciclo de vida del software (modelo en cascada)</h3>
+
+      <p>Cuando el software es grande (no un programita de juguete), se sigue un proceso ordenado llamado
+      <strong>ciclo de vida</strong>. El más clásico es el modelo "en cascada":</p>
+
+      <div class="flowchart-container">
+        <div class="mermaid-container" data-original='graph TB
+    A["1. Análisis de<br/>requerimientos"]
+    D["2. Diseño"]
+    I["3. Implementación<br/>(codificación)"]
+    P["4. Pruebas (testing)"]
+    Ds["5. Despliegue<br/>(instalación)"]
+    M["6. Mantenimiento"]
+    A --> D
+    D --> I
+    I --> P
+    P --> Ds
+    Ds --> M
+    style A fill:#60a5fa,stroke:#1e40af,color:#000,stroke-width:2px
+    style D fill:#a78bfa,stroke:#6d28d9,color:#fff,stroke-width:2px
+    style I fill:#34d399,stroke:#059669,color:#000,stroke-width:2px
+    style P fill:#fbbf24,stroke:#d97706,color:#000,stroke-width:2px
+    style Ds fill:#f472b6,stroke:#be185d,color:#fff,stroke-width:2px
+    style M fill:#f87171,stroke:#dc2626,color:#fff,stroke-width:2px'>
+          <div class="mermaid">
+graph TB
+    A["1. Análisis de<br/>requerimientos"]
+    D["2. Diseño"]
+    I["3. Implementación<br/>(codificación)"]
+    P["4. Pruebas (testing)"]
+    Ds["5. Despliegue<br/>(instalación)"]
+    M["6. Mantenimiento"]
+    A --> D
+    D --> I
+    I --> P
+    P --> Ds
+    Ds --> M
+    style A fill:#60a5fa,stroke:#1e40af,color:#000,stroke-width:2px
+    style D fill:#a78bfa,stroke:#6d28d9,color:#fff,stroke-width:2px
+    style I fill:#34d399,stroke:#059669,color:#000,stroke-width:2px
+    style P fill:#fbbf24,stroke:#d97706,color:#000,stroke-width:2px
+    style Ds fill:#f472b6,stroke:#be185d,color:#fff,stroke-width:2px
+    style M fill:#f87171,stroke:#dc2626,color:#fff,stroke-width:2px
+          </div>
+        </div>
+        <div class="flowchart-caption">📊 Diagrama 7 · Ciclo de vida del software en cascada (Joyanes)</div>
+      </div>
+
+      <div class="table-wrapper">
+        <table>
+          <thead><tr><th>Fase</th><th>¿Qué se hace?</th><th>Pregunta clave</th></tr></thead>
+          <tbody>
+            <tr><td><strong>1. Análisis</strong></td><td>Entender qué necesita el cliente</td><td>¿<em>Qué</em> hay que hacer?</td></tr>
+            <tr><td><strong>2. Diseño</strong></td><td>Decidir cómo se hará (algoritmos, arquitectura)</td><td>¿<em>Cómo</em> lo haremos?</td></tr>
+            <tr><td><strong>3. Implementación</strong></td><td>Escribir el código en un lenguaje</td><td>Traducir el diseño a código</td></tr>
+            <tr><td><strong>4. Pruebas</strong></td><td>Verificar que funciona y cumple requisitos</td><td>¿Funciona bien?</td></tr>
+            <tr><td><strong>5. Despliegue</strong></td><td>Instalar el producto al cliente</td><td>Entregar y poner en marcha</td></tr>
+            <tr><td><strong>6. Mantenimiento</strong></td><td>Corregir errores y actualizar</td><td>¿Qué cambia con el tiempo?</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout warning">
+        <div class="callout-header"><span class="callout-icon">⚠️</span> Limitación del modelo en cascada</div>
+        <p>
+          En la práctica, los proyectos rara vez siguen este modelo de forma estrictamente lineal: las fases se
+          solapan, hay iteraciones, y los requisitos cambian. Por eso hoy se usan también <strong>modelos ágiles</strong>
+          (Scrum, Kanban) que son iterativos. <em>Pero el modelo en cascada sigue siendo el ideal para entender el proceso completo.</em>
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ BLOQUE 6 ============ -->
+    <section class="block" id="bloque6">
+      <div class="block-header">
+        <div class="block-num">6</div>
+        <h2>Paradigmas de programación</h2>
+      </div>
+
+      <div class="callout intuition">
+        <div class="callout-header"><span class="callout-icon">🧭</span> Intuición primero</div>
+        <p>
+          Un <strong>paradigma</strong> es una <em>forma de pensar la programación</em>; una "filosofía" sobre cómo
+          escribir programas. No es un lenguaje, es una <strong>manera</strong>. Algunos lenguajes adoptan un solo
+          paradigma; otros (como Python) son <em>multiparadigma</em>.
+        </p>
+      </div>
+
+      <h3>6.1. La gran división: Imperativo vs. Declarativo</h3>
+
+      <div class="flowchart-container">
+        <div class="mermaid-container" data-original='graph LR
+    P["Paradigmas de<br/>programación"]
+    I["IMPERATIVO<br/>¿CÓMO?<br/>(instrucciones)"]
+    D["DECLARATIVO<br/>¿QUÉ?<br/>(lógica de primer orden)"]
+    P --> I
+    P --> D
+    I --> Es["Estructurado<br/>(C, Pascal)"]
+    I --> OO["Orientado a Objetos<br/>(Java, C++, Python)"]
+    I --> Mo["Modular"]
+    D --> F["Funcional<br/>(Lisp, Haskell)"]
+    D --> L["Lógico<br/>(Prolog)"]
+    style P fill:#3b82f6,stroke:#1e40af,color:#fff,stroke-width:2px
+    style I fill:#60a5fa,stroke:#1e40af,color:#000,stroke-width:2px
+    style D fill:#34d399,stroke:#059669,color:#000,stroke-width:2px
+    style Es fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style OO fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style Mo fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style F fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#fbbf24,stroke:#d97706,color:#000'>
+          <div class="mermaid">
+graph LR
+    P["Paradigmas de<br/>programación"]
+    I["IMPERATIVO<br/>¿CÓMO?<br/>(instrucciones)"]
+    D["DECLARATIVO<br/>¿QUÉ?<br/>(lógica de primer orden)"]
+    P --> I
+    P --> D
+    I --> Es["Estructurado<br/>(C, Pascal)"]
+    I --> OO["Orientado a Objetos<br/>(Java, C++, Python)"]
+    I --> Mo["Modular"]
+    D --> F["Funcional<br/>(Lisp, Haskell)"]
+    D --> L["Lógico<br/>(Prolog)"]
+    style P fill:#3b82f6,stroke:#1e40af,color:#fff,stroke-width:2px
+    style I fill:#60a5fa,stroke:#1e40af,color:#000,stroke-width:2px
+    style D fill:#34d399,stroke:#059669,color:#000,stroke-width:2px
+    style Es fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style OO fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style Mo fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style F fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#fbbf24,stroke:#d97706,color:#000
+          </div>
+        </div>
+        <div class="flowchart-caption">📊 Diagrama 8 · Mapa de paradigmas de programación</div>
+      </div>
+
+      <div class="compare-grid">
+        <div class="compare-card imperative">
+          <h4>⚙️ Imperativo · ¿CÓMO?</h4>
+          <p>Le indicas a la computadora <strong>paso a paso qué hacer</strong>. Como una receta de cocina.</p>
+          <p><strong>Pregunta de fondo:</strong> ¿Cómo se obtiene el resultado?</p>
+          <p><strong>Lenguajes:</strong> C, Fortran, Basic, Pascal, Ada (y partes de Java, Python, C++).</p>
+        </div>
+        <div class="compare-card declarative">
+          <h4>📜 Declarativo · ¿QUÉ?</h4>
+          <p>Le describes a la computadora <strong>qué quieres obtener</strong>, no cómo. La máquina decide el cómo.</p>
+          <p><strong>Pregunta de fondo:</strong> ¿Qué resultado quiero?</p>
+          <p><strong>Lenguajes:</strong> Prolog (lógico), Lisp / Haskell (funcional), SQL (consultas).</p>
+        </div>
+      </div>
+
+      <h3>6.2. Los sub-paradigmas que más vas a oír</h3>
+
+      <h4>🧩 Programación estructurada (sub-tipo del imperativo)</h4>
+      <p>Usa solo tres estructuras de control: <strong>secuencia, selección y repetición</strong>. <em>Sin uso del
+      desastroso <code>GOTO</code>.</em> Es la base de lo que verás en las semanas 4 y 5.</p>
+
+      <h4>🧱 Programación orientada a objetos (POO)</h4>
+      <p>El mundo se modela como <strong>objetos</strong> que tienen <strong>atributos</strong> (datos) y
+      <strong>métodos</strong> (funciones). Cada objeto interactúa con otros enviando mensajes.</p>
+      <p><strong>Ejemplo intuitivo:</strong> un <code>Auto</code> es un objeto. Atributos: color, marca, velocidad.
+      Métodos: <code>acelerar()</code>, <code>frenar()</code>. <em>Lenguajes:</em> Java, C++, Python, C#.</p>
+
+      <h4>🔄 Programación funcional</h4>
+      <p>Todo se modela con <strong>funciones matemáticas</strong>. Sin variables que cambian, sin estado.
+      Más cercano a las matemáticas. <em>Lenguajes:</em> Haskell, Lisp, Scheme.</p>
+
+      <h4>🤔 Programación lógica</h4>
+      <p>Defines <strong>hechos y reglas</strong>; la máquina deduce las respuestas. Basado en lógica de predicados.
+      <em>Lenguaje:</em> Prolog.</p>
+
+      <div class="callout tip">
+        <div class="callout-header"><span class="callout-icon">🐍</span> Caso especial: Python</div>
+        <p>
+          Python es <strong>multiparadigma</strong>: soporta imperativo, orientado a objetos y funcional. Por eso
+          es el lenguaje que vas a usar a partir de la semana 9: te permite explorar las distintas filosofías
+          sin cambiar de lenguaje.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ EJERCICIOS RESUELTOS ============ -->
+    <section class="block" id="ejercicios">
+      <div class="block-header">
+        <div class="block-num">💪</div>
+        <h2>Ejercicios resueltos paso a paso</h2>
+      </div>
+
+      <p style="font-size:1.05rem;color:var(--text-muted);margin-bottom:24px;">
+        Cada ejercicio sigue el mismo patrón: <strong>Enunciado → ¿Qué piden? (interpretación) → ¿Cómo lo abordo?
+        (intuición) → Resolución paso a paso (con razonamiento) → Respuesta final → Lección aprendida</strong>.
+        Así internalizas el método, no solo la respuesta.
+      </p>
+
+      <!-- EJERCICIO 1 -->
+      <div class="exercise">
+        <div class="exercise-header">
+          <span class="exercise-num">EJ. 1</span>
+          <span>Clasificar elementos en hardware o software</span>
+        </div>
+        <div class="exercise-body">
+          <div class="statement-box">
+            <span class="statement-label">📝 Enunciado</span>
+            <p>Clasifica cada elemento como <strong>Hardware (H)</strong> o <strong>Software (S)</strong>:</p>
+            <p>1) Mouse · 2) Windows 11 · 3) Microsoft Word · 4) Memoria RAM · 5) Tarjeta gráfica · 6) Google Chrome
+            · 7) Antivirus · 8) Disco SSD · 9) Sistema operativo Android · 10) Procesador Intel i7</p>
+          </div>
+
+          <div class="solution-block">
+            <h4>🎯 ¿Qué nos están pidiendo?</h4>
+            <p>Distinguir entre <strong>componentes físicos (hardware)</strong> que se pueden tocar y
+            <strong>programas/instrucciones (software)</strong> que son intangibles.</p>
+
+            <h4>🧠 ¿Cómo lo abordo? (intuición)</h4>
+            <p>El "test del martillo": <em>si lo golpeas con un martillo, ¿se rompe físicamente?</em> Si la
+            respuesta es <strong>SÍ</strong>, es hardware. Si es solo un archivo o programa, es software.</p>
+
+            <h4>🪜 Resolución paso a paso</h4>
+            <ol>
+              <li><strong>Mouse</strong> → ¿Lo puedes tocar? Sí, es físico → <strong>H</strong>.</li>
+              <li><strong>Windows 11</strong> → Es un sistema operativo (programa) → <strong>S</strong>.</li>
+              <li><strong>Microsoft Word</strong> → Aplicación, programa → <strong>S</strong>.</li>
+              <li><strong>Memoria RAM</strong> → Chip físico dentro de la PC → <strong>H</strong>.</li>
+              <li><strong>Tarjeta gráfica</strong> → Componente físico → <strong>H</strong>.</li>
+              <li><strong>Google Chrome</strong> → Navegador, aplicación → <strong>S</strong>.</li>
+              <li><strong>Antivirus</strong> → Programa de protección → <strong>S</strong>.</li>
+              <li><strong>Disco SSD</strong> → Almacenamiento físico → <strong>H</strong>.</li>
+              <li><strong>Android</strong> → Sistema operativo móvil → <strong>S</strong>.</li>
+              <li><strong>Procesador Intel i7</strong> → Chip físico → <strong>H</strong>.</li>
+            </ol>
+
+            <div class="final-answer">
+              <div class="final-answer-label">✅ Respuesta final</div>
+              <p><strong>Hardware:</strong> 1, 4, 5, 8, 10 (mouse, RAM, tarjeta gráfica, SSD, procesador).</p>
+              <p><strong>Software:</strong> 2, 3, 6, 7, 9 (Windows, Word, Chrome, antivirus, Android).</p>
+            </div>
+
+            <div class="callout tip">
+              <div class="callout-header"><span class="callout-icon">💡</span> Lección</div>
+              <p>El sistema operativo (Windows, Android, macOS, Linux) <strong>siempre es software</strong>
+              aunque venga "instalado de fábrica". El criterio es <em>tangibilidad física</em>, no si vino
+              preinstalado.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EJERCICIO 2 -->
+      <div class="exercise">
+        <div class="exercise-header">
+          <span class="exercise-num">EJ. 2</span>
+          <span>Identificar el tipo de lenguaje de programación</span>
+        </div>
+        <div class="exercise-body">
+          <div class="statement-box">
+            <span class="statement-label">📝 Enunciado</span>
+            <p>Identifica de qué tipo de lenguaje se trata cada fragmento:</p>
+            <p><strong>(a)</strong> <code>10110010 01001110 11001000</code></p>
+            <p><strong>(b)</strong> <code>MOV AX, 5 · ADD AX, 3 · STO AX, [100]</code></p>
+            <p><strong>(c)</strong> <code>print("Hola, mundo")</code></p>
+          </div>
+
+          <div class="solution-block">
+            <h4>🎯 ¿Qué nos están pidiendo?</h4>
+            <p>Clasificar cada fragmento en una de las <strong>tres generaciones de lenguajes</strong>:
+            máquina (1ª), ensamblador (2ª) o alto nivel (3ª).</p>
+
+            <h4>🧠 ¿Cómo lo abordo?</h4>
+            <p>Tres pistas visuales:</p>
+            <ul>
+              <li>Solo <strong>0s y 1s</strong> → lenguaje máquina.</li>
+              <li>Palabras cortas en mayúsculas tipo <code>MOV</code>, <code>ADD</code>, <code>SUB</code> → ensamblador.</li>
+              <li>Palabras parecidas al inglés con paréntesis y comillas → alto nivel.</li>
+            </ul>
+
+            <h4>🪜 Resolución paso a paso</h4>
+            <p><strong>(a)</strong> <code>10110010 01001110 11001000</code></p>
+            <ol>
+              <li><strong>Observación:</strong> solo dígitos 0 y 1 separados en grupos de 8.</li>
+              <li><strong>Razonamiento:</strong> los grupos de 8 bits son bytes; cada byte representa una instrucción
+              o dato directamente para la CPU.</li>
+              <li><strong>Conclusión:</strong> es <strong>lenguaje máquina (1ª generación)</strong>.</li>
+            </ol>
+
+            <p><strong>(b)</strong> <code>MOV AX, 5 · ADD AX, 3 · STO AX, [100]</code></p>
+            <ol>
+              <li><strong>Observación:</strong> palabras cortas en mayúsculas, registros como <code>AX</code>,
+              direcciones entre corchetes.</li>
+              <li><strong>Razonamiento:</strong> son <em>nemotécnicos</em> (abreviaturas) que sustituyen instrucciones
+              binarias. Cada línea = una instrucción de máquina, pero más legible.</li>
+              <li><strong>Conclusión:</strong> es <strong>lenguaje ensamblador (2ª generación)</strong>.</li>
+            </ol>
+
+            <p><strong>(c)</strong> <code>print("Hola, mundo")</code></p>
+            <ol>
+              <li><strong>Observación:</strong> palabra <code>print</code> en inglés, paréntesis, cadena entre comillas.</li>
+              <li><strong>Razonamiento:</strong> sintaxis cercana al lenguaje natural, abstrae los detalles del hardware.
+              Una sola línea = muchas instrucciones máquina por debajo.</li>
+              <li><strong>Conclusión:</strong> es <strong>lenguaje de alto nivel (3ª generación)</strong>, específicamente Python.</li>
+            </ol>
+
+            <div class="final-answer">
+              <div class="final-answer-label">✅ Respuesta final</div>
+              <p>(a) Lenguaje máquina · (b) Lenguaje ensamblador · (c) Lenguaje de alto nivel (Python).</p>
+            </div>
+
+            <div class="callout tip">
+              <div class="callout-header"><span class="callout-icon">💡</span> Lección</div>
+              <p>A medida que <strong>subes</strong> en la escala de generaciones, el lenguaje se vuelve <em>más
+              fácil para el humano</em> pero <em>más lejano del hardware</em>. El traductor (compilador o intérprete)
+              es el puente entre los dos extremos.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EJERCICIO 3 -->
+      <div class="exercise">
+        <div class="exercise-header">
+          <span class="exercise-num">EJ. 3</span>
+          <span>Distinguir digitalización vs. transformación digital</span>
+        </div>
+        <div class="exercise-body">
+          <div class="statement-box">
+            <span class="statement-label">📝 Enunciado</span>
+            <p>Para cada caso, indica si se trata de <strong>D (digitalización)</strong> o
+            <strong>TD (transformación digital)</strong>:</p>
+            <ol>
+              <li>Una clínica escanea las historias clínicas en papel y las guarda como PDF.</li>
+              <li>Un banco crea una app que permite abrir cuentas, pedir préstamos y hacer transferencias sin ir a la sucursal.</li>
+              <li>Un colegio reemplaza el cuaderno físico de notas por una hoja Excel.</li>
+              <li>Una universidad usa IA para personalizar el contenido de cada estudiante según sus puntos débiles.</li>
+            </ol>
+          </div>
+
+          <div class="solution-block">
+            <h4>🎯 ¿Qué nos están pidiendo?</h4>
+            <p>Detectar si en cada caso solo se cambió el <strong>medio</strong> (papel → digital) sin tocar el
+            proceso (digitalización), o si <strong>se rediseñó el proceso completo</strong> aprovechando lo digital
+            (transformación digital).</p>
+
+            <h4>🧠 ¿Cómo lo abordo? (intuición)</h4>
+            <p>Pregúntate: <em>"¿el proceso ahora es esencialmente igual, o es algo nuevo que antes era imposible?"</em>
+            Si es lo mismo pero en pantalla → <strong>D</strong>. Si es algo cualitativamente nuevo → <strong>TD</strong>.</p>
+
+            <h4>🪜 Resolución paso a paso</h4>
+
+            <p><strong>Caso 1 (clínica escanea historias):</strong></p>
+            <ul>
+              <li>El proceso sigue siendo: paciente llega, médico lo atiende, se anota en su historia.</li>
+              <li>Lo único que cambió es el <em>soporte</em>: papel → PDF.</li>
+              <li>El proceso esencial es idéntico.</li>
+              <li><strong>→ Digitalización (D).</strong></li>
+            </ul>
+
+            <p><strong>Caso 2 (app de banco completa):</strong></p>
+            <ul>
+              <li>Antes: ir a sucursal, hacer cola, llenar formularios, esperar.</li>
+              <li>Ahora: cuenta abierta en 5 minutos desde el celular, sin papeles, sin colas.</li>
+              <li>El proceso completo se rediseñó: <em>la sucursal dejó de ser el centro</em>.</li>
+              <li><strong>→ Transformación digital (TD).</strong></li>
+            </ul>
+
+            <p><strong>Caso 3 (colegio cuaderno → Excel):</strong></p>
+            <ul>
+              <li>El profesor sigue poniendo notas a mano (en Excel) y cada periodo las suma.</li>
+              <li>Mismo proceso: anotar, sumar, promediar.</li>
+              <li><strong>→ Digitalización (D).</strong></li>
+            </ul>
+
+            <p><strong>Caso 4 (universidad con IA personalizada):</strong></p>
+            <ul>
+              <li>Antes: el contenido era el mismo para todos, sin distinguir nivel.</li>
+              <li>Ahora: cada estudiante recibe un <em>plan único</em> que se adapta automáticamente.</li>
+              <li>Esto era <strong>imposible</strong> sin tecnología digital.</li>
+              <li><strong>→ Transformación digital (TD).</strong></li>
+            </ul>
+
+            <div class="final-answer">
+              <div class="final-answer-label">✅ Respuesta final</div>
+              <p>1) D · 2) TD · 3) D · 4) TD</p>
+            </div>
+
+            <div class="callout tip">
+              <div class="callout-header"><span class="callout-icon">💡</span> Lección</div>
+              <p>Pregunta-clave: <em>"¿esto que ahora ocurre, era posible antes en formato analógico?"</em>
+              Si era posible → solo digitalizaste. Si era imposible → transformaste.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EJERCICIO 4 -->
+      <div class="exercise">
+        <div class="exercise-header">
+          <span class="exercise-num">EJ. 4</span>
+          <span>Identificar componentes del CPU y su función</span>
+        </div>
+        <div class="exercise-body">
+          <div class="statement-box">
+            <span class="statement-label">📝 Enunciado</span>
+            <p>Para cada operación, indica qué <strong>sub-unidad de la CPU</strong> es responsable:
+            <strong>UC</strong> (Unidad de Control), <strong>ALU</strong> (Unidad Aritmética y Lógica) o
+            <strong>Memoria Central</strong>.</p>
+            <ol>
+              <li>Sumar 5 + 3.</li>
+              <li>Decidir cuál es la siguiente instrucción a ejecutar.</li>
+              <li>Comparar si A es mayor que B.</li>
+              <li>Almacenar temporalmente los datos del programa que se está ejecutando.</li>
+              <li>Coordinar el envío de datos del teclado a la memoria.</li>
+            </ol>
+          </div>
+
+          <div class="solution-block">
+            <h4>🎯 ¿Qué nos están pidiendo?</h4>
+            <p>Asociar cada acción con la sub-unidad encargada:
+            <strong>cálculos/comparaciones → ALU</strong>;
+            <strong>coordinación/control → UC</strong>;
+            <strong>almacenamiento temporal → Memoria Central (RAM)</strong>.</p>
+
+            <h4>🧠 ¿Cómo lo abordo? (intuición)</h4>
+            <p>Piensa en la CPU como una mini empresa:</p>
+            <ul>
+              <li><strong>UC = el jefe</strong>: dirige, organiza, no hace cuentas.</li>
+              <li><strong>ALU = el contador</strong>: hace todas las matemáticas y comparaciones.</li>
+              <li><strong>Memoria Central = la pizarra</strong>: ahí se anotan datos para no olvidarlos.</li>
+            </ul>
+
+            <h4>🪜 Resolución paso a paso</h4>
+            <ol>
+              <li><strong>Sumar 5 + 3</strong> → operación aritmética → <strong>ALU</strong>.</li>
+              <li><strong>Decidir siguiente instrucción</strong> → coordinación, no cálculo → <strong>UC</strong>.</li>
+              <li><strong>Comparar A &gt; B</strong> → operación lógica/comparación → <strong>ALU</strong>.</li>
+              <li><strong>Almacenar datos del programa</strong> → almacenamiento temporal → <strong>Memoria Central</strong>.</li>
+              <li><strong>Coordinar envío teclado → memoria</strong> → coordinación → <strong>UC</strong>.</li>
+            </ol>
+
+            <div class="final-answer">
+              <div class="final-answer-label">✅ Respuesta final</div>
+              <p>1) ALU · 2) UC · 3) ALU · 4) Memoria Central · 5) UC</p>
+            </div>
+
+            <div class="callout tip">
+              <div class="callout-header"><span class="callout-icon">💡</span> Lección</div>
+              <p><strong>Truco mnemotécnico:</strong> Si en la pregunta aparece un verbo de cálculo o comparación
+              (<em>sumar, restar, comparar, evaluar</em>), es <strong>ALU</strong>. Si aparece un verbo de coordinación
+              (<em>decidir, dirigir, ordenar, controlar</em>), es <strong>UC</strong>.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EJERCICIO 5 -->
+      <div class="exercise">
+        <div class="exercise-header">
+          <span class="exercise-num">EJ. 5</span>
+          <span>Compilador o Intérprete: ¿qué conviene?</span>
+        </div>
+        <div class="exercise-body">
+          <div class="statement-box">
+            <span class="statement-label">📝 Enunciado</span>
+            <p>Para cada situación, indica si conviene usar un <strong>Compilador (C)</strong> o
+            un <strong>Intérprete (I)</strong>, y justifica.</p>
+            <ol>
+              <li>Estás aprendiendo a programar y quieres probar cada línea inmediatamente.</li>
+              <li>Vas a entregar un videojuego que debe correr lo más rápido posible en miles de PCs.</li>
+              <li>Estás haciendo un script rápido para procesar un Excel y borrarlo.</li>
+              <li>Vas a desarrollar el sistema operativo de un satélite (cada milisegundo cuenta).</li>
+            </ol>
+          </div>
+
+          <div class="solution-block">
+            <h4>🎯 ¿Qué nos están pidiendo?</h4>
+            <p>Decidir según dos criterios: <strong>velocidad de ejecución</strong> (compilador gana) vs.
+            <strong>flexibilidad/inmediatez</strong> (intérprete gana).</p>
+
+            <h4>🧠 ¿Cómo lo abordo? (intuición)</h4>
+            <p>Compilador = "traducción profesional impresa" → tarda en hacerse, pero leerla luego es rapidísimo.<br/>
+            Intérprete = "traductor simultáneo" → empiezas a entender al instante, pero más lento porque traduce mientras hablas.</p>
+
+            <h4>🪜 Resolución paso a paso</h4>
+
+            <p><strong>1) Aprendiendo, prueba inmediata:</strong></p>
+            <ul>
+              <li>Necesitas <em>velocidad de iteración</em>, no de ejecución.</li>
+              <li>Quieres ver el error YA, no compilar 30 segundos.</li>
+              <li>→ <strong>Intérprete (I)</strong>. Python es ideal aquí.</li>
+            </ul>
+
+            <p><strong>2) Videojuego para miles de PCs:</strong></p>
+            <ul>
+              <li>El usuario final no edita el código, solo lo ejecuta.</li>
+              <li>Necesitas <em>máxima velocidad</em> en cada frame.</li>
+              <li>→ <strong>Compilador (C)</strong>. C++ con motores tipo Unreal/Unity.</li>
+            </ul>
+
+            <p><strong>3) Script rápido para Excel:</strong></p>
+            <ul>
+              <li>Una sola vez, descartable, no importa la velocidad bruta.</li>
+              <li>Importa que sea rápido <em>de escribir</em>.</li>
+              <li>→ <strong>Intérprete (I)</strong>. Python o JavaScript.</li>
+            </ul>
+
+            <p><strong>4) SO de satélite (tiempo real):</strong></p>
+            <ul>
+              <li>Cada milisegundo cuenta. La interpretación añade latencia inaceptable.</li>
+              <li>Además, no se "pueden" subir parches casualmente al satélite.</li>
+              <li>→ <strong>Compilador (C)</strong>. C o Rust son los típicos.</li>
+            </ul>
+
+            <div class="final-answer">
+              <div class="final-answer-label">✅ Respuesta final</div>
+              <p>1) I · 2) C · 3) I · 4) C</p>
+            </div>
+
+            <div class="callout tip">
+              <div class="callout-header"><span class="callout-icon">💡</span> Lección</div>
+              <p><strong>Regla práctica:</strong></p>
+              <ul>
+                <li>Si <em>tú</em> vas a usarlo (desarrollo, scripts, prototipos) → intérprete.</li>
+                <li>Si lo van a usar <em>otros</em> (productos finales, sistemas críticos) → compilador.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EJERCICIO 6 -->
+      <div class="exercise">
+        <div class="exercise-header">
+          <span class="exercise-num">EJ. 6</span>
+          <span>Ordenar las fases del ciclo de vida del software</span>
+        </div>
+        <div class="exercise-body">
+          <div class="statement-box">
+            <span class="statement-label">📝 Enunciado</span>
+            <p>Las siguientes fases del ciclo de vida en cascada están <strong>desordenadas</strong>. Ordénalas correctamente:</p>
+            <p><em>Pruebas (testing) · Mantenimiento · Análisis de requerimientos · Diseño · Despliegue · Implementación</em></p>
+            <p>Además, asocia cada fase con la pregunta que responde:
+            <em>¿Qué se hace? · ¿Cómo lo hago? · Traducir a código · ¿Funciona? · Entregar al cliente · ¿Qué actualizo?</em></p>
+          </div>
+
+          <div class="solution-block">
+            <h4>🎯 ¿Qué nos están pidiendo?</h4>
+            <p>Reconstruir el flujo lógico desde el problema inicial hasta el producto entregado y mantenido.
+            Cada fase responde a una pregunta natural del proceso.</p>
+
+            <h4>🧠 ¿Cómo lo abordo? (intuición)</h4>
+            <p>Piensa en construir una casa:</p>
+            <ol>
+              <li>Primero <em>entiendes</em> qué quiere el dueño.</li>
+              <li>Luego <em>diseñas</em> los planos.</li>
+              <li>Después <em>construyes</em>.</li>
+              <li>Después <em>pruebas</em> que no haya goteras.</li>
+              <li>Después <em>entregas</em> las llaves.</li>
+              <li>Y por último <em>mantienes</em> la casa con el tiempo.</li>
+            </ol>
+
+            <h4>🪜 Resolución paso a paso</h4>
+
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr><th class="center">Orden</th><th>Fase</th><th>Pregunta que responde</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td class="center"><strong>1</strong></td><td>Análisis de requerimientos</td><td>¿Qué se hace?</td></tr>
+                  <tr><td class="center"><strong>2</strong></td><td>Diseño</td><td>¿Cómo lo hago?</td></tr>
+                  <tr><td class="center"><strong>3</strong></td><td>Implementación</td><td>Traducir a código</td></tr>
+                  <tr><td class="center"><strong>4</strong></td><td>Pruebas (testing)</td><td>¿Funciona?</td></tr>
+                  <tr><td class="center"><strong>5</strong></td><td>Despliegue</td><td>Entregar al cliente</td></tr>
+                  <tr><td class="center"><strong>6</strong></td><td>Mantenimiento</td><td>¿Qué actualizo?</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="final-answer">
+              <div class="final-answer-label">✅ Respuesta final</div>
+              <p>Análisis → Diseño → Implementación → Pruebas → Despliegue → Mantenimiento.</p>
+            </div>
+
+            <div class="callout tip">
+              <div class="callout-header"><span class="callout-icon">💡</span> Lección</div>
+              <p>Las fases <strong>no se pueden saltar</strong> en el modelo en cascada (por eso "cascada":
+              cada salida cae a la siguiente). Saltarte el análisis = construir lo que nadie pidió. Saltarte
+              las pruebas = entregar errores al cliente. <em>Cada fase tiene su porqué.</em></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EJERCICIO 7 -->
+      <div class="exercise">
+        <div class="exercise-header">
+          <span class="exercise-num">EJ. 7</span>
+          <span>Identificar el paradigma de programación</span>
+        </div>
+        <div class="exercise-body">
+          <div class="statement-box">
+            <span class="statement-label">📝 Enunciado</span>
+            <p>Para cada fragmento, identifica el paradigma: <strong>imperativo estructurado</strong>,
+            <strong>orientado a objetos</strong>, <strong>funcional</strong> o <strong>lógico</strong>.</p>
+
+            <p><strong>(a)</strong></p>
+            <pre><code>suma = 0
+para i desde 1 hasta 10
+    suma = suma + i
+fin_para
+escribir suma</code></pre>
+
+            <p><strong>(b)</strong></p>
+            <pre><code>class Auto:
+    def __init__(self, marca):
+        self.marca = marca
+    def acelerar(self):
+        print("Vroom!")</code></pre>
+
+            <p><strong>(c)</strong></p>
+            <pre><code>suma(L) = if L = []
+              then 0
+              else head(L) + suma(tail(L))</code></pre>
+
+            <p><strong>(d)</strong></p>
+            <pre><code>padre(juan, maria).
+padre(juan, pedro).
+abuelo(X, Y) :- padre(X, Z), padre(Z, Y).</code></pre>
+          </div>
+
+          <div class="solution-block">
+            <h4>🎯 ¿Qué nos están pidiendo?</h4>
+            <p>Reconocer el "estilo" de programación a partir de su sintaxis y filosofía.</p>
+
+            <h4>🧠 ¿Cómo lo abordo? (intuición)</h4>
+            <p>Pistas visuales clave:</p>
+            <ul>
+              <li>Bucles <code>para</code>/<code>mientras</code> + variables que cambian → <strong>imperativo estructurado</strong>.</li>
+              <li>Palabra <code>class</code>, atributos como <code>self.x</code>, métodos → <strong>orientado a objetos</strong>.</li>
+              <li>Funciones que se llaman a sí mismas, sin variables que cambian → <strong>funcional</strong>.</li>
+              <li>Hechos y reglas tipo <code>X :- Y</code> → <strong>lógico (Prolog)</strong>.</li>
+            </ul>
+
+            <h4>🪜 Resolución paso a paso</h4>
+
+            <p><strong>(a)</strong></p>
+            <ol>
+              <li>Hay variable <code>suma</code> que va cambiando.</li>
+              <li>Hay un bucle <code>para</code> que indica el "cómo".</li>
+              <li>No hay clases ni recursión.</li>
+              <li>→ <strong>Imperativo estructurado</strong>.</li>
+            </ol>
+
+            <p><strong>(b)</strong></p>
+            <ol>
+              <li>Aparece <code>class</code>.</li>
+              <li><code>self.marca</code> = atributo del objeto.</li>
+              <li><code>def acelerar</code> = método del objeto.</li>
+              <li>→ <strong>Orientado a objetos</strong>.</li>
+            </ol>
+
+            <p><strong>(c)</strong></p>
+            <ol>
+              <li>La función <code>suma</code> se llama a sí misma con <code>tail(L)</code> (recursión).</li>
+              <li>No hay variables que cambien (todo es expresión matemática).</li>
+              <li>Estilo <em>"qué"</em>, no <em>"cómo"</em>.</li>
+              <li>→ <strong>Funcional</strong>.</li>
+            </ol>
+
+            <p><strong>(d)</strong></p>
+            <ol>
+              <li>Hay <strong>hechos</strong>: "juan es padre de maria", "juan es padre de pedro".</li>
+              <li>Hay una <strong>regla</strong>: "X es abuelo de Y SI X es padre de Z y Z es padre de Y".</li>
+              <li>El programador no dice <em>cómo</em> calcular, solo declara hechos y reglas.</li>
+              <li>→ <strong>Lógico (Prolog)</strong>.</li>
+            </ol>
+
+            <div class="final-answer">
+              <div class="final-answer-label">✅ Respuesta final</div>
+              <p>(a) Imperativo estructurado · (b) Orientado a objetos · (c) Funcional · (d) Lógico</p>
+            </div>
+
+            <div class="callout tip">
+              <div class="callout-header"><span class="callout-icon">💡</span> Lección</div>
+              <p>El paradigma se reconoce más por <em>cómo se piensa el problema</em> que por la sintaxis exacta.
+              Imperativo y POO te dicen <em>el cómo paso a paso</em>; funcional y lógico te dicen <em>el qué</em>
+              y la máquina decide el cómo.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EJERCICIO 8 -->
+      <div class="exercise">
+        <div class="exercise-header">
+          <span class="exercise-num">EJ. 8</span>
+          <span>Caso aplicado: emprendimiento digital</span>
+        </div>
+        <div class="exercise-body">
+          <div class="statement-box">
+            <span class="statement-label">📝 Enunciado</span>
+            <p>Una emprendedora quiere lanzar una app llamada <strong>"FrutaFresca"</strong> para entregar fruta a domicilio.
+            Te pide que apliques los conceptos de la Semana 1 para guiarla.</p>
+            <ol>
+              <li>¿En qué <strong>fase del ciclo de vida</strong> debería empezar?</li>
+              <li>¿Qué <strong>tipo de software</strong> va a construir (sistema/aplicación/gestión)?</li>
+              <li>¿Qué <strong>paradigma</strong> recomendarías para una app moderna como esta?</li>
+              <li>¿La app representa <strong>digitalización o transformación digital</strong> del mercado de frutas?</li>
+              <li>Menciona un riesgo de <strong>seguridad digital</strong> que ella debe considerar.</li>
+            </ol>
+          </div>
+
+          <div class="solution-block">
+            <h4>🎯 ¿Qué nos están pidiendo?</h4>
+            <p>Aplicar los 6 bloques de la Semana 1 a un caso real e integrar los conceptos.</p>
+
+            <h4>🪜 Resolución paso a paso</h4>
+
+            <p><strong>1) Fase inicial:</strong></p>
+            <ul>
+              <li>Antes de programar, hay que entender: ¿qué quiere ofrecer? ¿qué pagos? ¿qué zonas?</li>
+              <li>Eso es <strong>análisis de requerimientos</strong> (fase 1 del ciclo de vida).</li>
+              <li><strong>→ Empezar con análisis de requerimientos.</strong></li>
+            </ul>
+
+            <p><strong>2) Tipo de software:</strong></p>
+            <ul>
+              <li>El usuario final usa la app para pedir fruta → no es sistema operativo, no es gestión empresarial.</li>
+              <li>Es un programa para una tarea específica del usuario final.</li>
+              <li><strong>→ Software de aplicación.</strong></li>
+            </ul>
+
+            <p><strong>3) Paradigma recomendado:</strong></p>
+            <ul>
+              <li>Una app moderna modela "cosas" del mundo real: <code>Cliente</code>, <code>Pedido</code>, <code>Producto</code>, <code>Repartidor</code>.</li>
+              <li>Cada uno tiene atributos y métodos.</li>
+              <li><strong>→ Orientado a objetos (POO)</strong>, en un lenguaje multiparadigma como Python o Java.</li>
+            </ul>
+
+            <p><strong>4) Digitalización o transformación digital:</strong></p>
+            <ul>
+              <li>Antes: ir físicamente al mercado. Implicaba traslado, tiempo, contacto.</li>
+              <li>Ahora: pedir desde casa, recibir en 30 minutos.</li>
+              <li>El proceso completo cambia → <strong>Transformación digital.</strong></li>
+            </ul>
+
+            <p><strong>5) Riesgo de seguridad digital:</strong></p>
+            <ul>
+              <li>La app maneja <em>datos personales y de pago</em> (dirección, tarjeta).</li>
+              <li>Si esos datos se filtran → daño grave a clientes y reputación.</li>
+              <li><strong>→ Riesgo: filtración de datos sensibles.</strong> Solución: cifrado, autenticación robusta, no
+              guardar tarjetas en texto plano.</li>
+            </ul>
+
+            <div class="final-answer">
+              <div class="final-answer-label">✅ Respuesta final integrada</div>
+              <ol>
+                <li>Empezar con <strong>análisis de requerimientos</strong>.</li>
+                <li>Es <strong>software de aplicación</strong>.</li>
+                <li>Recomendar paradigma <strong>orientado a objetos</strong>.</li>
+                <li>Es <strong>transformación digital</strong> del mercado tradicional de frutas.</li>
+                <li>Riesgo: <strong>filtración de datos personales y de pago</strong> (proteger con cifrado y buenas prácticas).</li>
+              </ol>
+            </div>
+
+            <div class="callout tip">
+              <div class="callout-header"><span class="callout-icon">💡</span> Lección integradora</div>
+              <p>Los conceptos de la Semana 1 <em>no son trivia para memorizar</em>: son la <strong>brújula</strong>
+              que te orienta antes de escribir una sola línea de código. Sin esta semana, las próximas no tendrían sentido.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ GLOSARIO ============ -->
+    <section class="block" id="glosario">
+      <div class="block-header">
+        <div class="block-num">📖</div>
+        <h2>Glosario rápido</h2>
+      </div>
+
+      <p style="color:var(--text-muted);margin-bottom:20px;">
+        Tarjetas para repasar el día previo al examen. Pásalas en voz alta.
+      </p>
+
+      <div class="glossary-grid">
+        <div class="gloss-item"><div class="gloss-term">Sociedad digital</div><div class="gloss-def">Sociedad basada en tecnologías digitales que permiten ubicuidad, interconectividad y procesamiento masivo de datos.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Brecha digital</div><div class="gloss-def">Desigualdad en acceso, uso o aprovechamiento de la tecnología.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Transformación digital</div><div class="gloss-def">Rediseño completo de procesos aprovechando tecnologías digitales.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Tríada CIA</div><div class="gloss-def">Confidencialidad, Integridad, Disponibilidad — pilares de seguridad digital.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Hardware</div><div class="gloss-def">Parte física de una computadora.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Software</div><div class="gloss-def">Conjunto de instrucciones (programas) que controlan al hardware.</div></div>
+        <div class="gloss-item"><div class="gloss-term">CPU / UCP</div><div class="gloss-def">Unidad Central de Procesamiento. Cerebro de la computadora. Tiene UC + ALU.</div></div>
+        <div class="gloss-item"><div class="gloss-term">UC</div><div class="gloss-def">Unidad de Control. Coordina y dirige las instrucciones.</div></div>
+        <div class="gloss-item"><div class="gloss-term">ALU</div><div class="gloss-def">Unidad Aritmética y Lógica. Hace cálculos y comparaciones.</div></div>
+        <div class="gloss-item"><div class="gloss-term">RAM</div><div class="gloss-def">Memoria principal volátil; se borra al apagar la computadora.</div></div>
+        <div class="gloss-item"><div class="gloss-term">ROM</div><div class="gloss-def">Memoria de solo lectura, permanente, viene grabada de fábrica.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Bit / Byte</div><div class="gloss-def">Bit: 0 o 1. Byte: 8 bits = 1 carácter típico.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Sistema operativo</div><div class="gloss-def">Software que coordina hardware y aplicaciones (Windows, Linux, macOS, Android, iOS).</div></div>
+        <div class="gloss-item"><div class="gloss-term">Lenguaje máquina</div><div class="gloss-def">Lenguaje binario directo de la CPU (1ª generación).</div></div>
+        <div class="gloss-item"><div class="gloss-term">Lenguaje ensamblador</div><div class="gloss-def">Lenguaje con nemotécnicos (MOV, ADD), 2ª generación.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Lenguaje de alto nivel</div><div class="gloss-def">Lenguaje cercano al humano e independiente del hardware (Python, Java, C). 3ª generación.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Compilador</div><div class="gloss-def">Traduce todo el programa antes de ejecutar.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Intérprete</div><div class="gloss-def">Traduce y ejecuta línea por línea.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Pseudocódigo</div><div class="gloss-def">Algoritmo en lenguaje informal cercano al humano.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Diagrama de flujo</div><div class="gloss-def">Representación gráfica de un algoritmo con figuras y flechas.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Algoritmo</div><div class="gloss-def">Conjunto finito y ordenado de pasos para resolver un problema.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Ciclo en cascada</div><div class="gloss-def">Análisis → Diseño → Implementación → Pruebas → Despliegue → Mantenimiento.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Paradigma imperativo</div><div class="gloss-def">Indica el "cómo" paso a paso (estructurado, OO, modular).</div></div>
+        <div class="gloss-item"><div class="gloss-term">Paradigma declarativo</div><div class="gloss-def">Indica el "qué" sin especificar el cómo (funcional, lógico).</div></div>
+        <div class="gloss-item"><div class="gloss-term">POO</div><div class="gloss-def">Programación Orientada a Objetos: modela el mundo en objetos con atributos y métodos.</div></div>
+      </div>
+    </section>
+
+    <!-- ============ AUTOEVALUACIÓN ============ -->
+    <section class="block quiz-section" id="autoevaluacion">
+      <div class="block-header">
+        <div class="block-num">✅</div>
+        <h2>Autoevaluación · 12 preguntas</h2>
+      </div>
+
+      <p style="color:var(--text-muted);margin-bottom:20px;">
+        Responde mentalmente, luego abre la respuesta. <strong>Si fallas más de 3, repasa los bloques correspondientes</strong>.
+      </p>
+
+      <div class="quiz-item">
+        <div class="quiz-q">¿Cuál es la diferencia entre digitalizar y transformación digital?</div>
+        <details><summary>Ver respuesta</summary><div class="answer-content">
+          <strong>Digitalizar</strong> = pasar algo de papel a archivo digital sin cambiar el proceso.
+          <strong>Transformación digital</strong> = rediseñar todo el proceso aprovechando lo digital.
+        </div></details>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">Menciona los tres pilares de la seguridad digital.</div>
+        <details><summary>Ver respuesta</summary><div class="answer-content">
+          <strong>Confidencialidad, Integridad y Disponibilidad</strong> (tríada CIA).
+        </div></details>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">Si te muestran <code>10110010 01001110</code>, ¿qué tipo de lenguaje es?</div>
+        <details><summary>Ver respuesta</summary><div class="answer-content">
+          <strong>Lenguaje máquina</strong> (1ª generación). Solo 0s y 1s.
+        </div></details>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">¿Cuál es la sub-unidad de la CPU encargada de hacer comparaciones?</div>
+        <details><summary>Ver respuesta</summary><div class="answer-content">
+          La <strong>ALU</strong> (Unidad Aritmética y Lógica).
+        </div></details>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">¿Por qué la memoria RAM se considera "volátil"?</div>
+        <details><summary>Ver respuesta</summary><div class="answer-content">
+          Porque <strong>pierde su contenido al apagar la computadora</strong>. Por eso se necesita almacenamiento secundario (HDD/SSD) para guardar permanentemente.
+        </div></details>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">¿Cuántos valores distintos puedes representar con 1 byte?</div>
+        <details><summary>Ver respuesta</summary><div class="answer-content">
+          <strong>2<sup>8</sup> = 256 valores</strong> distintos.
+        </div></details>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">¿Qué hace un sistema operativo? Da dos funciones.</div>
+        <details><summary>Ver respuesta</summary><div class="answer-content">
+          Coordina el hardware y los programas. Funciones: gestión de procesador, memoria, dispositivos, archivos, e interfaz con el usuario. (Cualquier 2 son válidas.)
+        </div></details>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">¿Por qué los programas en lenguaje de alto nivel son "portables"?</div>
+        <details><summary>Ver respuesta</summary><div class="answer-content">
+          Porque son <strong>independientes del hardware</strong>: el mismo código fuente puede ejecutarse en distintas computadoras, siempre que exista un compilador o intérprete adecuado.
+        </div></details>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">Da una analogía simple para distinguir compilador de intérprete.</div>
+        <details><summary>Ver respuesta</summary><div class="answer-content">
+          <strong>Compilador</strong> = libro completo traducido por adelantado.
+          <strong>Intérprete</strong> = traductor simultáneo que va frase por frase.
+        </div></details>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">Lista las 6 fases del ciclo de vida del software en cascada.</div>
+        <details><summary>Ver respuesta</summary><div class="answer-content">
+          Análisis → Diseño → Implementación → Pruebas → Despliegue → Mantenimiento.
+        </div></details>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">¿En qué se diferencia el paradigma imperativo del declarativo?</div>
+        <details><summary>Ver respuesta</summary><div class="answer-content">
+          <strong>Imperativo</strong>: le dices a la máquina <em>cómo</em> resolver el problema, paso a paso.
+          <strong>Declarativo</strong>: le dices <em>qué</em> quieres, ella decide cómo.
+        </div></details>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">Menciona las 5 propiedades que todo algoritmo debe cumplir.</div>
+        <details><summary>Ver respuesta</summary><div class="answer-content">
+          <strong>Preciso, definido, finito, con entradas y con salidas.</strong>
+        </div></details>
+      </div>
+    </section>
+
+    <!-- ============ CIERRE ============ -->
+    <section class="block" id="cierre">
+      <div class="block-header">
+        <div class="block-num">🎯</div>
+        <h2>Cierre y conexión con la siguiente semana</h2>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header"><span class="callout-icon">🏁</span> Lo que ya dominas</div>
+        <ul>
+          <li>El <strong>contexto</strong> en el que vas a programar (sociedad digital, competencias).</li>
+          <li>La <strong>arquitectura física</strong> de la computadora (CPU, memoria, E/S).</li>
+          <li>La <strong>arquitectura lógica</strong> (software de sistema vs. aplicación, SO).</li>
+          <li>Cómo se "habla" con la computadora (<strong>lenguajes y traductores</strong>).</li>
+          <li>Cómo se construye software profesional (<strong>ciclo de vida</strong>).</li>
+          <li>Las grandes <strong>filosofías de programación</strong> (paradigmas).</li>
+        </ul>
+      </div>
+
+      <div class="callout intuition">
+        <div class="callout-header"><span class="callout-icon">➡️</span> Qué viene en la Semana 2</div>
+        <p>
+          Ahora que sabes <em>qué es un algoritmo</em>, en la <strong>Semana 2</strong> vas a aprender a
+          <strong>diseñarlos</strong>: las fases formales para resolver un algoritmo, escribir pseudocódigo
+          correcto, y dibujar tus primeros diagramas de flujo. Es donde empiezas a "pensar como programador".
+        </p>
+      </div>
+
+      <div class="callout warning">
+        <div class="callout-header"><span class="callout-icon">📋</span> Antes del examen parcial</div>
+        <p>Asegúrate de poder responder <strong>sin ver apuntes</strong>:</p>
+        <ol>
+          <li>Definir hardware vs. software con un ejemplo de cada uno.</li>
+          <li>Dibujar la organización de una computadora con sus 5 componentes.</li>
+          <li>Explicar en qué se diferencian RAM y ROM.</li>
+          <li>Listar las 3 generaciones de lenguajes con un ejemplo.</li>
+          <li>Diferenciar compilador de intérprete con un caso de uso de cada uno.</li>
+          <li>Listar las 6 fases del ciclo de vida del software.</li>
+          <li>Distinguir paradigma imperativo vs. declarativo con un ejemplo.</li>
+          <li>Definir las 5 propiedades de un algoritmo.</li>
+        </ol>
+      </div>
+    </section>
+
+    <footer>
+      <p>📘 <strong>Semana 1 · Fundamentos de Programación</strong></p>
+      <p>Hecho con <span class="heart">♥</span> para Pingüino · Universidad de Piura</p>
+      <p style="margin-top:8px;font-size:0.8rem;">Tip: usa <kbd>Ctrl</kbd>+<kbd>F</kbd> para buscar cualquier término dentro del documento.</p>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+/* ============ THEME TOGGLE ============ */
+const root = document.documentElement;
+const themeToggle = document.getElementById('themeToggle');
+const themeIcon = document.getElementById('themeIcon');
+const themeLabel = document.getElementById('themeLabel');
+
+// Read saved theme from localStorage (with fallback to dark)
+function getSavedTheme() {
+  try {
+    return localStorage.getItem('penguin-theme') || 'dark';
+  } catch (e) { return 'dark'; }
+}
+function saveTheme(t) {
+  try { localStorage.setItem('penguin-theme', t); } catch (e) {}
+}
+
+function applyTheme(theme) {
+  root.setAttribute('data-theme', theme);
+  if (theme === 'dark') {
+    themeIcon.textContent = '🌙';
+    themeLabel.textContent = 'Modo oscuro';
+  } else {
+    themeIcon.textContent = '☀️';
+    themeLabel.textContent = 'Modo claro';
+  }
+  // Re-render mermaid diagrams with new theme
+  initMermaid(theme);
+}
+
+themeToggle.addEventListener('click', () => {
+  const current = root.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  applyTheme(next);
+  saveTheme(next);
+});
+
+/* ============ MERMAID INIT & RE-RENDER ============ */
+function initMermaid(theme) {
+  if (typeof mermaid === 'undefined') return;
+  const isDark = (theme === 'dark');
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: isDark ? 'dark' : 'default',
+    securityLevel: 'loose',
+    themeVariables: isDark ? {
+      background: '#161c2f',
+      primaryColor: '#1e293b',
+      primaryTextColor: '#e8edf7',
+      primaryBorderColor: '#3d4870',
+      lineColor: '#94a3b8',
+      secondaryColor: '#a78bfa',
+      tertiaryColor: '#34d399',
+      mainBkg: '#1a2138',
+      nodeBkg: '#1a2138',
+      clusterBkg: '#0d1322',
+      edgeLabelBackground: '#161c2f',
+      fontFamily: 'Inter, sans-serif',
+    } : {
+      background: '#ffffff',
+      primaryColor: '#f1f5f9',
+      primaryTextColor: '#0f172a',
+      primaryBorderColor: '#cbd5e1',
+      lineColor: '#475569',
+      mainBkg: '#ffffff',
+      clusterBkg: '#f8fafc',
+      fontFamily: 'Inter, sans-serif',
+    },
+    flowchart: { curve: 'basis', padding: 20, useMaxWidth: true }
+  });
+
+  // Restore original code & re-render
+  document.querySelectorAll('.mermaid-container').forEach(container => {
+    const original = container.dataset.original;
+    if (original) {
+      container.innerHTML = '<div class="mermaid">' + original + '</div>';
+    }
+  });
+  // Run mermaid on all .mermaid blocks
+  if (mermaid.run) {
+    mermaid.run();
+  } else if (mermaid.init) {
+    mermaid.init(undefined, document.querySelectorAll('.mermaid'));
+  }
+}
+
+/* ============ TOC SCROLLSPY ============ */
+const tocLinks = document.querySelectorAll('.toc-list a');
+const sections = document.querySelectorAll('section.block, section.hero');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      tocLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+}, { rootMargin: '-30% 0px -60% 0px' });
+sections.forEach(s => observer.observe(s));
+
+/* ============ INIT ============ */
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = getSavedTheme();
+  applyTheme(saved);
+});
+</script>
+
+</body>
+</html>
