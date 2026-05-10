@@ -1,0 +1,2188 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Semana 3 · Instrucciones, Diagramas y Algoritmos Secuenciales · Pingüino</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<style>
+/* ============ DARK MODE (default) ============ */
+:root[data-theme="dark"] {
+  --bg: #0a0e1a; --bg-elevated: #131829; --bg-card: #161c2f; --bg-card-hover: #1c2340;
+  --bg-code: #0d1322; --border: #2a3354; --border-strong: #3d4870;
+  --text: #e8edf7; --text-muted: #98a4c2; --text-dim: #6b7793;
+  --primary: #60a5fa; --primary-strong: #3b82f6; --primary-bg: rgba(96, 165, 250, 0.12);
+  --accent: #34d399; --accent-bg: rgba(52, 211, 153, 0.12);
+  --warning: #fbbf24; --warning-bg: rgba(251, 191, 36, 0.12);
+  --danger: #f87171; --danger-bg: rgba(248, 113, 113, 0.12);
+  --purple: #a78bfa; --purple-bg: rgba(167, 139, 250, 0.12);
+  --pink: #f472b6; --pink-bg: rgba(244, 114, 182, 0.12);
+  --shadow: 0 4px 24px rgba(0,0,0,0.4); --shadow-strong: 0 8px 32px rgba(0,0,0,0.55);
+  --syn-kw: #c586c0; --syn-fn: #dcdcaa; --syn-tipo: #4ec9b0;
+  --syn-op: #ff79c6; --syn-num: #b5cea8; --syn-str: #ce9178;
+  --syn-var: #9cdcfe; --syn-cmt: #6a9955; --syn-bg: #0d1322;
+}
+:root[data-theme="light"] {
+  --bg: #f8fafc; --bg-elevated: #ffffff; --bg-card: #ffffff; --bg-card-hover: #f1f5f9;
+  --bg-code: #f8fafc; --border: #e2e8f0; --border-strong: #cbd5e1;
+  --text: #0f172a; --text-muted: #475569; --text-dim: #94a3b8;
+  --primary: #2563eb; --primary-strong: #1d4ed8; --primary-bg: rgba(37, 99, 235, 0.08);
+  --accent: #059669; --accent-bg: rgba(5, 150, 105, 0.08);
+  --warning: #d97706; --warning-bg: rgba(217, 119, 6, 0.08);
+  --danger: #dc2626; --danger-bg: rgba(220, 38, 38, 0.08);
+  --purple: #7c3aed; --purple-bg: rgba(124, 58, 237, 0.08);
+  --pink: #db2777; --pink-bg: rgba(219, 39, 119, 0.08);
+  --shadow: 0 2px 8px rgba(15, 23, 42, 0.06); --shadow-strong: 0 8px 24px rgba(15, 23, 42, 0.08);
+  --syn-kw: #af00db; --syn-fn: #795e26; --syn-tipo: #267f99;
+  --syn-op: #d73a49; --syn-num: #098658; --syn-str: #a31515;
+  --syn-var: #001080; --syn-cmt: #008000; --syn-bg: #f6f8fa;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--text);
+  line-height: 1.7; font-size: 16px; transition: background 0.3s, color 0.3s; min-height: 100vh; }
+::selection { background: var(--primary); color: #fff; }
+.topbar { position: sticky; top: 0; z-index: 100; background: var(--bg-elevated);
+  border-bottom: 1px solid var(--border); padding: 14px 32px;
+  display: flex; align-items: center; justify-content: space-between;
+  backdrop-filter: blur(12px); background: color-mix(in srgb, var(--bg-elevated) 85%, transparent); }
+.brand { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 1.05rem; color: var(--text); }
+.brand-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--primary), var(--purple));
+  border-radius: 10px; display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; color: #fff; box-shadow: 0 4px 12px var(--primary-bg); }
+.brand-text small { display: block; font-size: 0.75rem; font-weight: 500; color: var(--text-muted); margin-top: -2px; }
+.theme-toggle { background: var(--bg-card); border: 1px solid var(--border); color: var(--text);
+  padding: 8px 14px; border-radius: 999px; cursor: pointer; display: flex; align-items: center; gap: 8px;
+  font-size: 0.85rem; font-weight: 500; font-family: inherit; transition: all 0.2s; }
+.theme-toggle:hover { background: var(--bg-card-hover); border-color: var(--primary); transform: translateY(-1px); }
+.layout { display: grid; grid-template-columns: 280px 1fr; max-width: 1500px; margin: 0 auto; }
+@media (max-width: 1024px) { .layout { grid-template-columns: 1fr; } .sidebar { display: none; } }
+.sidebar { position: sticky; top: 64px; height: calc(100vh - 64px); overflow-y: auto;
+  padding: 24px 16px 24px 32px; border-right: 1px solid var(--border); background: var(--bg); }
+.sidebar h3 { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--text-dim); margin-bottom: 12px; font-weight: 700; }
+.toc-list { list-style: none; }
+.toc-list li { margin: 2px 0; }
+.toc-list a { display: block; padding: 8px 14px; color: var(--text-muted); text-decoration: none;
+  border-radius: 8px; font-size: 0.9rem; border-left: 3px solid transparent; transition: all 0.15s; }
+.toc-list a:hover { background: var(--bg-card); color: var(--text); }
+.toc-list a.active { background: var(--primary-bg); color: var(--primary);
+  border-left-color: var(--primary); font-weight: 600; }
+main { padding: 40px 56px 80px; max-width: 100%; overflow-x: hidden; }
+@media (max-width: 768px) { main { padding: 24px 20px 60px; } .topbar { padding: 12px 16px; } }
+.hero { padding: 36px 0 48px; border-bottom: 1px solid var(--border); margin-bottom: 48px; }
+.hero-badge { display: inline-block; padding: 6px 14px; background: var(--primary-bg); color: var(--primary);
+  border-radius: 999px; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.05em;
+  text-transform: uppercase; margin-bottom: 16px; }
+h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em;
+  margin-bottom: 16px; background: linear-gradient(135deg, var(--text) 0%, var(--primary) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero-sub { font-size: 1.15rem; color: var(--text-muted); max-width: 720px; }
+.hero-meta { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 24px; }
+.meta-pill { display: flex; align-items: center; gap: 8px; padding: 8px 14px;
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px;
+  font-size: 0.85rem; color: var(--text-muted); }
+.meta-pill strong { color: var(--text); font-weight: 600; }
+section.block { margin: 64px 0; scroll-margin-top: 80px; }
+.block-header { display: flex; align-items: center; gap: 16px; margin-bottom: 28px; }
+.block-num { width: 48px; height: 48px; background: linear-gradient(135deg, var(--primary), var(--purple));
+  color: #fff; border-radius: 12px; display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; font-weight: 800; flex-shrink: 0; box-shadow: 0 6px 16px var(--primary-bg); }
+h2 { font-size: clamp(1.6rem, 3vw, 2.1rem); font-weight: 800; letter-spacing: -0.01em; color: var(--text); }
+h3 { font-size: 1.35rem; font-weight: 700; margin: 36px 0 16px; color: var(--text); }
+h4 { font-size: 1.08rem; font-weight: 700; margin: 24px 0 12px; color: var(--text); }
+p { margin: 12px 0; color: var(--text); }
+strong { color: var(--text); font-weight: 600; }
+em { color: var(--primary); font-style: normal; font-weight: 500; }
+ul, ol { margin: 12px 0 12px 24px; }
+li { margin: 6px 0; }
+a { color: var(--primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.callout { margin: 24px 0; padding: 20px 24px; border-radius: 14px; border-left: 4px solid;
+  background: var(--bg-card); position: relative; }
+.callout-header { display: flex; align-items: center; gap: 10px; font-weight: 700;
+  margin-bottom: 8px; font-size: 0.95rem; }
+.callout-icon { width: 28px; height: 28px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+.callout p { margin: 6px 0; }
+.callout p:last-child { margin-bottom: 0; }
+.callout.intuition { border-color: var(--primary); background: var(--primary-bg); }
+.callout.intuition .callout-icon { background: var(--primary); color: #fff; }
+.callout.intuition .callout-header { color: var(--primary); }
+.callout.theory { border-color: var(--purple); background: var(--purple-bg); }
+.callout.theory .callout-icon { background: var(--purple); color: #fff; }
+.callout.theory .callout-header { color: var(--purple); }
+.callout.tip { border-color: var(--accent); background: var(--accent-bg); }
+.callout.tip .callout-icon { background: var(--accent); color: #fff; }
+.callout.tip .callout-header { color: var(--accent); }
+.callout.warning { border-color: var(--warning); background: var(--warning-bg); }
+.callout.warning .callout-icon { background: var(--warning); color: #fff; }
+.callout.warning .callout-header { color: var(--warning); }
+.callout.example { border-color: var(--pink); background: var(--pink-bg); }
+.callout.example .callout-icon { background: var(--pink); color: #fff; }
+.callout.example .callout-header { color: var(--pink); }
+.def-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px;
+  padding: 22px 26px; margin: 20px 0; position: relative; overflow: hidden; }
+.def-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--primary), var(--purple)); }
+.def-card .def-label { display: inline-block; font-size: 0.72rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em; color: var(--primary);
+  background: var(--primary-bg); padding: 3px 10px; border-radius: 6px; margin-bottom: 8px; }
+.def-card .def-term { font-size: 1.15rem; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+.def-card .def-text { color: var(--text-muted); }
+.table-wrapper { overflow-x: auto; margin: 20px 0; border-radius: 12px;
+  border: 1px solid var(--border); background: var(--bg-card); }
+table { width: 100%; border-collapse: collapse; font-size: 0.93rem; }
+th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid var(--border); }
+th { background: var(--bg-elevated); color: var(--text); font-weight: 700;
+  font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.04em; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--bg-card-hover); }
+td.center, th.center { text-align: center; }
+td.mono, th.mono { font-family: 'JetBrains Mono', monospace; font-size: 0.95em; }
+code { font-family: 'JetBrains Mono', monospace; background: var(--bg-code);
+  border: 1px solid var(--border); padding: 2px 7px; border-radius: 5px;
+  font-size: 0.88em; color: var(--accent); }
+pre.pseudo { background: var(--syn-bg); border: 1px solid var(--border); border-left: 4px solid var(--purple);
+  border-radius: 12px; padding: 20px 24px 18px; overflow-x: auto; margin: 16px 0;
+  font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 0.92rem; line-height: 1.85;
+  position: relative; color: var(--text); }
+pre.pseudo::before { content: '⌨ pseudocódigo'; position: absolute; top: 6px; right: 14px;
+  font-size: 0.68rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.08em;
+  font-family: 'Inter', sans-serif; font-weight: 600; }
+pre.pseudo code { background: none; border: none; padding: 0; color: inherit; font-size: inherit; }
+.kw { color: var(--syn-kw); font-weight: 700; }
+.fn { color: var(--syn-fn); font-weight: 600; }
+.tipo { color: var(--syn-tipo); font-weight: 600; }
+.op { color: var(--syn-op); font-weight: 500; }
+.num { color: var(--syn-num); }
+.str { color: var(--syn-str); }
+.var { color: var(--syn-var); }
+.cmt { color: var(--syn-cmt); font-style: italic; }
+.flowchart-container { background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 24px; margin: 20px 0; text-align: center; overflow-x: auto; }
+.flowchart-container .mermaid { display: flex; justify-content: center; min-height: 100px; }
+.flowchart-caption { margin-top: 12px; font-size: 0.85rem; color: var(--text-muted); font-style: italic; }
+.dual-view { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0; align-items: start; }
+@media (max-width: 900px) { .dual-view { grid-template-columns: 1fr; } }
+.dual-view .flowchart-container { margin: 0; }
+.dual-view pre.pseudo { margin: 0; }
+.stepper { display: flex; flex-direction: column; gap: 0; margin: 20px 0; }
+.step { display: flex; gap: 18px; position: relative; padding-bottom: 24px; }
+.step:not(:last-child)::before { content: ''; position: absolute; left: 17px; top: 40px; bottom: 0;
+  width: 2px; background: var(--border-strong); }
+.step-num { width: 36px; height: 36px; background: var(--primary); color: #fff;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-weight: 700; flex-shrink: 0; box-shadow: 0 3px 8px var(--primary-bg); }
+.step-content { flex: 1; padding-top: 4px; }
+.step-content h4 { margin-top: 0; }
+.exercise { background: var(--bg-card); border: 2px solid var(--border-strong);
+  border-radius: 16px; margin: 28px 0; overflow: hidden; }
+.exercise-header { background: linear-gradient(135deg, var(--primary), var(--purple));
+  color: #fff; padding: 14px 24px; display: flex; align-items: center; gap: 12px;
+  font-weight: 700; font-size: 1.05rem; flex-wrap: wrap; }
+.exercise-num { background: rgba(255,255,255,0.25); padding: 4px 10px; border-radius: 6px; font-size: 0.85rem; }
+.exercise-tag { background: rgba(255,255,255,0.18); padding: 3px 10px; border-radius: 6px;
+  font-size: 0.78rem; font-weight: 500; margin-left: auto; }
+.exercise-body { padding: 24px 28px; }
+.statement-box { background: var(--warning-bg); border-left: 4px solid var(--warning);
+  padding: 16px 20px; border-radius: 8px; margin: 16px 0 24px; }
+.statement-box .statement-label { font-weight: 700; color: var(--warning);
+  font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; display: block; }
+.solution-block { margin-top: 20px; }
+.solution-block h4 { display: flex; align-items: center; gap: 8px; color: var(--accent);
+  margin: 24px 0 10px; font-size: 1rem; }
+.final-answer { background: var(--accent-bg); border-left: 4px solid var(--accent);
+  border-radius: 8px; padding: 16px 20px; margin: 20px 0; }
+.final-answer-label { font-weight: 700; color: var(--accent); font-size: 0.82rem;
+  text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+.trace-table { background: var(--bg-card); border-radius: 10px; overflow: hidden;
+  margin: 14px 0; border: 1px solid var(--border); }
+.trace-table table { font-size: 0.88rem; }
+.trace-table th { background: var(--purple-bg); color: var(--purple); }
+.legend-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px;
+  padding: 12px 16px; margin: 12px 0; font-size: 0.9rem; }
+.legend-box .legend-title { font-weight: 700; color: var(--primary); margin-bottom: 6px;
+  font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; }
+.compare-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px; margin: 20px 0; }
+.compare-card { background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 12px; padding: 18px 20px; }
+.compare-card h4 { margin: 0 0 10px; display: flex; align-items: center; gap: 8px; font-size: 1rem; }
+.symbol-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px; margin: 20px 0; }
+.symbol-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px;
+  padding: 18px; text-align: center; transition: all 0.2s; }
+.symbol-card:hover { transform: translateY(-2px); border-color: var(--primary); }
+.symbol-card .sym {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 80px; height: 50px; margin-bottom: 10px;
+  font-weight: 700; color: var(--text); font-size: 0.85rem;
+}
+.symbol-card .sym.terminal { border: 2.5px solid var(--accent); border-radius: 25px; background: var(--accent-bg); }
+.symbol-card .sym.input-output { border: 2.5px solid var(--primary); background: var(--primary-bg);
+  transform: skewX(-20deg); padding: 0 12px; }
+.symbol-card .sym.input-output span { transform: skewX(20deg); display: inline-block; }
+.symbol-card .sym.process { border: 2.5px solid var(--purple); background: var(--purple-bg); }
+.symbol-card .sym.decision { border: 2.5px solid var(--warning); background: var(--warning-bg);
+  transform: rotate(45deg); width: 50px; height: 50px; }
+.symbol-card .sym.decision span { transform: rotate(-45deg); display: inline-block; font-size: 0.75rem; }
+.symbol-card .sym.connector { border: 2.5px solid var(--pink); background: var(--pink-bg);
+  border-radius: 50%; width: 50px; height: 50px; }
+.symbol-card .sym-name { font-weight: 700; color: var(--text); margin-top: 6px; }
+.symbol-card .sym-desc { font-size: 0.82rem; color: var(--text-muted); margin-top: 4px; }
+.glossary-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px; margin: 20px 0; }
+.gloss-item { background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 12px; padding: 16px 18px; transition: all 0.2s; }
+.gloss-item:hover { border-color: var(--primary); background: var(--bg-card-hover); transform: translateY(-2px); }
+.gloss-term { font-weight: 700; color: var(--primary); font-size: 1rem; margin-bottom: 4px; }
+.gloss-def { font-size: 0.88rem; color: var(--text-muted); }
+.quiz-item { background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 20px 24px; margin: 18px 0; }
+.quiz-q { font-weight: 600; color: var(--text); margin-bottom: 12px; }
+details { margin-top: 12px; border-top: 1px dashed var(--border); padding-top: 12px; }
+summary { cursor: pointer; font-weight: 600; color: var(--accent); font-size: 0.9rem;
+  padding: 6px 0; user-select: none; }
+summary::marker { color: var(--accent); }
+details[open] summary { margin-bottom: 10px; }
+.answer-content { font-size: 0.92rem; color: var(--text-muted); background: var(--accent-bg);
+  border-radius: 8px; padding: 12px 16px; margin-top: 8px; }
+.answer-content strong { color: var(--accent); }
+footer { text-align: center; padding: 40px 20px; border-top: 1px solid var(--border);
+  margin-top: 80px; color: var(--text-muted); font-size: 0.88rem; }
+footer .heart { color: var(--danger); }
+kbd { background: var(--bg-elevated); border: 1px solid var(--border-strong);
+  border-radius: 4px; padding: 1px 6px; font-family: 'JetBrains Mono', monospace; font-size: 0.85em; }
+.formula-box { background: var(--purple-bg); border: 1px solid var(--purple);
+  border-radius: 10px; padding: 14px 20px; margin: 14px 0; text-align: center;
+  font-family: 'JetBrains Mono', monospace; font-size: 1rem; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-icon">🐧</div>
+    <div class="brand-text">
+      Pingüino · Fundamentos de Programación
+      <small>Guía de estudio · Semana 3</small>
+    </div>
+  </div>
+  <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+    <span class="icon" id="themeIcon">🌙</span>
+    <span id="themeLabel">Modo oscuro</span>
+  </button>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>📑 Contenido</h3>
+    <ul class="toc-list">
+      <li><a href="#intro">🏁 Introducción</a></li>
+      <li><a href="#bloque1">1️⃣ Instrucciones fundamentales</a></li>
+      <li><a href="#bloque2">2️⃣ Operadores y expresiones</a></li>
+      <li><a href="#bloque3">3️⃣ DIV y MOD a fondo</a></li>
+      <li><a href="#bloque4">4️⃣ Diagramas de flujo formales</a></li>
+      <li><a href="#bloque5">5️⃣ Algoritmos secuenciales</a></li>
+      <li><a href="#bloque6">6️⃣ Práctica calificada</a></li>
+      <li><a href="#ejercicios">💪 Ejercicios resueltos</a></li>
+      <li><a href="#glosario">📖 Glosario</a></li>
+      <li><a href="#autoevaluacion">✅ Autoevaluación</a></li>
+      <li><a href="#cierre">🎯 Cierre</a></li>
+    </ul>
+  </aside>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero" id="intro">
+      <div class="hero-badge">Semana 3 · Consolidación + Práctica calificada</div>
+      <h1>Instrucciones, operaciones y algoritmos secuenciales en profundidad</h1>
+      <p class="hero-sub">
+        Esta semana <strong>consolidas</strong> todo lo de Semana 2 con muchísimo más detalle:
+        los <strong>cinco tipos de instrucciones básicas</strong>, los operadores aritméticos/relacionales/lógicos
+        con su <strong>jerarquía</strong>, el dúo <strong>DIV y MOD a profundidad</strong>, las <strong>reglas
+        formales de diagramas de flujo</strong> y la resolución completa de la <strong>Práctica Calificada 1</strong>
+        del curso. Todo paso a paso, con el porqué detrás.
+      </p>
+      <div class="hero-meta">
+        <div class="meta-pill">⏱️ <span><strong>Lectura:</strong> ~80 min</span></div>
+        <div class="meta-pill">📚 <span><strong>Bloques:</strong> 6 + 8 ejercicios</span></div>
+        <div class="meta-pill">📝 <span><strong>Incluye:</strong> Práctica 1 resuelta</span></div>
+        <div class="meta-pill">🎨 <span><strong>Pseudocódigo:</strong> con colores</span></div>
+      </div>
+    </section>
+
+    <!-- ============ BLOQUE 1 ============ -->
+    <section class="block" id="bloque1">
+      <div class="block-header">
+        <div class="block-num">1</div>
+        <h2>Instrucciones fundamentales: los "ladrillos" del algoritmo</h2>
+      </div>
+
+      <div class="callout intuition">
+        <div class="callout-header"><span class="callout-icon">💡</span> Intuición primero</div>
+        <p>
+          Todo programa, por más complejo que parezca, está hecho de <strong>5 tipos de instrucciones básicas</strong>
+          que se combinan de mil formas. Es como con las letras: con apenas 27 caracteres puedes escribir desde una
+          lista de mercado hasta el Quijote. <em>Domina estos 5 ladrillos y podrás construir cualquier algoritmo.</em>
+        </p>
+      </div>
+
+      <h3>1.1. Los 5 tipos de instrucciones (clasificación de Joyanes)</h3>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>#</th><th>Tipo</th><th>Pseudocódigo (curso)</th><th>¿Para qué sirve?</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="center"><strong>1</strong></td><td>Inicio / Fin</td><td class="mono"><span class="kw">INICIO</span> ... <span class="kw">FIN</span></td><td>Marcan dónde empieza y termina el algoritmo</td></tr>
+            <tr><td class="center"><strong>2</strong></td><td>Asignación</td><td class="mono"><span class="var">x</span> <span class="op">=</span> <span class="num">5</span></td><td>Guardar un valor en una variable</td></tr>
+            <tr><td class="center"><strong>3</strong></td><td>Lectura (entrada)</td><td class="mono"><span class="fn">Leer</span> <span class="var">x</span></td><td>Recibir datos del usuario</td></tr>
+            <tr><td class="center"><strong>4</strong></td><td>Escritura (salida)</td><td class="mono"><span class="fn">Mostrar</span> <span class="var">x</span></td><td>Mostrar resultados</td></tr>
+            <tr><td class="center"><strong>5</strong></td><td>Bifurcación</td><td class="mono"><span class="kw">SI</span>, <span class="kw">MIENTRAS</span>, <span class="kw">PARA</span>...</td><td>Cambiar el flujo del programa (Semanas 4-5)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header"><span class="callout-icon">📌</span> En esta semana</div>
+        <p>
+          Trabajaremos a fondo los <strong>tipos 1 a 4</strong>. El tipo 5 (bifurcación) llega en
+          Semana 4 (<code>SI</code>) y Semana 5 (<code>MIENTRAS</code>, <code>PARA</code>, <code>REPETIR</code>).
+          Por eso los algoritmos de esta semana siguen siendo <strong>secuenciales</strong>: las
+          instrucciones se ejecutan <em>una tras otra, sin desvíos</em>.
+        </p>
+      </div>
+
+      <h3>1.2. La asignación con detalle</h3>
+
+      <div class="def-card">
+        <span class="def-label">Definición · Joyanes</span>
+        <div class="def-term">Asignación</div>
+        <div class="def-text">
+          Operación que <strong>almacena un valor en una variable</strong>. La sintaxis del curso usa el símbolo
+          <code><span class="op">=</span></code>; otros materiales usan <code>←</code> (flecha hacia la izquierda).
+          <strong>El valor se evalúa primero a la derecha y luego se guarda en la variable de la izquierda.</strong>
+        </div>
+      </div>
+
+      <h4>📐 Demostración: ¿cómo se ejecuta una asignación?</h4>
+
+      <p>Mira esta secuencia y predice el resultado <em>antes</em> de leer la solución:</p>
+
+<pre class="pseudo"><code><span class="kw">INICIO</span>
+    <span class="tipo">Entero</span>: <span class="var">A</span>, <span class="var">B</span>, <span class="var">C</span>
+    <span class="var">A</span> <span class="op">=</span> <span class="num">12</span>      <span class="cmt">// (1)</span>
+    <span class="var">B</span> <span class="op">=</span> <span class="var">A</span>       <span class="cmt">// (2)</span>
+    <span class="var">C</span> <span class="op">=</span> <span class="var">B</span>       <span class="cmt">// (3)</span>
+    <span class="fn">Mostrar</span> <span class="var">A</span>, <span class="var">B</span>, <span class="var">C</span>
+<span class="kw">FIN</span></code></pre>
+
+      <p>Trazado paso a paso:</p>
+
+      <div class="trace-table">
+        <table>
+          <thead><tr><th>Paso</th><th>Instrucción</th><th>A</th><th>B</th><th>C</th><th>Razonamiento</th></tr></thead>
+          <tbody>
+            <tr><td>0</td><td>Inicio</td><td>?</td><td>?</td><td>?</td><td>Variables sin valor inicial</td></tr>
+            <tr><td>1</td><td>A = 12</td><td>12</td><td>?</td><td>?</td><td>Se guarda el valor 12 en A</td></tr>
+            <tr><td>2</td><td>B = A</td><td>12</td><td>12</td><td>?</td><td>Se evalúa A (=12) y se guarda en B</td></tr>
+            <tr><td>3</td><td>C = B</td><td>12</td><td>12</td><td>12</td><td>Se evalúa B (=12) y se guarda en C</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout warning">
+        <div class="callout-header"><span class="callout-icon">⚠️</span> Cuidado: variable sin inicializar</div>
+        <p>
+          <strong>Antes de la primera asignación, una variable tiene un valor "indeterminado"</strong> (basura).
+          Si quieres que arranque en cero (por ejemplo, para un contador), <em>debes asignárselo explícitamente</em>:
+          <code><span class="var">contador</span> <span class="op">=</span> <span class="num">0</span></code>.
+          Olvidar esto es la causa #1 de bugs en algoritmos.
+        </p>
+      </div>
+
+      <h4>🔄 Caso especial: intercambio de valores con variable auxiliar</h4>
+
+      <p>Quiero intercambiar los valores de A y B. <strong>¿Por qué no puedo hacer esto?</strong></p>
+
+<pre class="pseudo"><code><span class="cmt">// ❌ MAL — esto NO intercambia los valores</span>
+<span class="var">A</span> <span class="op">=</span> <span class="var">B</span>     <span class="cmt">// A pierde su valor original, ahora es B</span>
+<span class="var">B</span> <span class="op">=</span> <span class="var">A</span>     <span class="cmt">// B se asigna con B (no cambia nada)</span></code></pre>
+
+      <p>Si A=10 y B=20, después del primer paso A=20 y B=20. <em>Perdí el 10 original</em>. La solución es usar
+      una <strong>variable auxiliar</strong> que "guarde el valor original" antes de pisarlo:</p>
+
+<pre class="pseudo"><code><span class="cmt">// ✅ CORRECTO — intercambio con variable auxiliar</span>
+<span class="var">AUX</span> <span class="op">=</span> <span class="var">A</span>    <span class="cmt">// Guardo el valor de A para no perderlo</span>
+<span class="var">A</span> <span class="op">=</span> <span class="var">B</span>      <span class="cmt">// Ahora A toma el valor de B</span>
+<span class="var">B</span> <span class="op">=</span> <span class="var">AUX</span>    <span class="cmt">// B toma el valor original de A (guardado en AUX)</span></code></pre>
+
+      <p>Trazado con A=10, B=20:</p>
+
+      <div class="trace-table">
+        <table>
+          <thead><tr><th>Paso</th><th>Instrucción</th><th>A</th><th>B</th><th>AUX</th></tr></thead>
+          <tbody>
+            <tr><td>0</td><td>Estado inicial</td><td>10</td><td>20</td><td>?</td></tr>
+            <tr><td>1</td><td>AUX = A</td><td>10</td><td>20</td><td>10</td></tr>
+            <tr><td>2</td><td>A = B</td><td>20</td><td>20</td><td>10</td></tr>
+            <tr><td>3</td><td>B = AUX</td><td>20</td><td>10</td><td>10</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header"><span class="callout-icon">🎯</span> Patrón a memorizar</div>
+        <p>
+          <strong>Para intercambiar dos variables siempre necesitas una tercera</strong>. Es como cambiar el agua
+          de dos vasos: necesitas un tercer vaso vacío como intermediario.
+        </p>
+      </div>
+
+      <h3>1.3. Lectura y escritura</h3>
+
+      <p>Las instrucciones de E/S (entrada/salida) son la <strong>"interfaz"</strong> entre tu algoritmo y el
+      mundo exterior:</p>
+
+      <div class="compare-grid">
+        <div class="compare-card">
+          <h4 style="color: var(--primary);">📥 Lectura (entrada)</h4>
+          <p>El algoritmo <em>recibe</em> datos. Por defecto, vienen del teclado.</p>
+<pre class="pseudo" style="margin-top:8px"><code><span class="fn">Leer</span> <span class="var">x</span>
+<span class="fn">Leer</span> <span class="var">a</span>, <span class="var">b</span>, <span class="var">c</span></code></pre>
+        </div>
+        <div class="compare-card">
+          <h4 style="color: var(--accent);">📤 Escritura (salida)</h4>
+          <p>El algoritmo <em>entrega</em> datos. Por defecto, van a la pantalla.</p>
+<pre class="pseudo" style="margin-top:8px"><code><span class="fn">Mostrar</span> <span class="var">resultado</span>
+<span class="fn">Mostrar</span> <span class="str">"Hola "</span>, <span class="var">nombre</span></code></pre>
+        </div>
+      </div>
+
+      <h3>1.4. Programa lineal vs. no lineal</h3>
+
+      <p>Joyanes hace una distinción importante:</p>
+
+      <div class="compare-grid">
+        <div class="compare-card">
+          <h4 style="color: var(--accent);">➡️ Programa lineal (secuencial)</h4>
+          <p>Las instrucciones se ejecutan <strong>una tras otra, sin desvíos</strong>. No hay decisiones ni repeticiones.</p>
+          <p style="font-style:italic;color:var(--text-muted)">Es lo que verás en TODA la Semana 3.</p>
+        </div>
+        <div class="compare-card">
+          <h4 style="color: var(--warning);">↪️ Programa no lineal</h4>
+          <p>Tiene <strong>bifurcaciones</strong> (decisiones) o <strong>ciclos</strong> (repeticiones) que cambian el flujo.</p>
+          <p style="font-style:italic;color:var(--text-muted)">Empieza en Semana 4 con <code>SI</code>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BLOQUE 2 ============ -->
+    <section class="block" id="bloque2">
+      <div class="block-header">
+        <div class="block-num">2</div>
+        <h2>Operadores y expresiones</h2>
+      </div>
+
+      <div class="def-card">
+        <span class="def-label">Definición</span>
+        <div class="def-term">Operadores</div>
+        <div class="def-text">
+          Son <strong>elementos que relacionan, de forma diferente, los valores de una o más variables y/o constantes</strong>.
+          Es decir, los operadores nos permiten <strong>manipular valores</strong> para producir nuevos valores.
+        </div>
+      </div>
+
+      <p>Hay tres familias principales de operadores:</p>
+
+      <div class="callout theory">
+        <div class="callout-header"><span class="callout-icon">🧮</span> Las 3 familias de operadores</div>
+        <ul>
+          <li><strong>Aritméticos</strong>: producen un número (+, −, ×, ÷, ^, mod, div).</li>
+          <li><strong>Relacionales</strong>: producen un valor lógico V/F (&lt;, &gt;, =, &lt;=, &gt;=, &lt;&gt;).</li>
+          <li><strong>Lógicos</strong>: combinan valores lógicos (AND, OR, NOT).</li>
+        </ul>
+      </div>
+
+      <h3>2.1. Operadores aritméticos</h3>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th class="center">Operador</th><th>Significado</th><th>Ejemplo</th><th>Resultado</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="center mono"><span class="op">^</span></td><td>Exponenciación (potencia)</td><td class="mono"><span class="num">2</span> <span class="op">^</span> <span class="num">3</span></td><td class="mono"><span class="num">8</span></td></tr>
+            <tr><td class="center mono"><span class="op">*</span></td><td>Multiplicación</td><td class="mono"><span class="num">5</span> <span class="op">*</span> <span class="num">3</span></td><td class="mono"><span class="num">15</span></td></tr>
+            <tr><td class="center mono"><span class="op">/</span></td><td>División (real)</td><td class="mono"><span class="num">10</span> <span class="op">/</span> <span class="num">3</span></td><td class="mono"><span class="num">3.333…</span></td></tr>
+            <tr><td class="center mono"><span class="op">div</span></td><td>División entera</td><td class="mono"><span class="num">10</span> <span class="op">div</span> <span class="num">3</span></td><td class="mono"><span class="num">3</span></td></tr>
+            <tr><td class="center mono"><span class="op">mod</span></td><td>Resto de la división entera</td><td class="mono"><span class="num">10</span> <span class="op">mod</span> <span class="num">3</span></td><td class="mono"><span class="num">1</span></td></tr>
+            <tr><td class="center mono"><span class="op">+</span></td><td>Suma</td><td class="mono"><span class="num">7</span> <span class="op">+</span> <span class="num">2</span></td><td class="mono"><span class="num">9</span></td></tr>
+            <tr><td class="center mono"><span class="op">-</span></td><td>Resta</td><td class="mono"><span class="num">7</span> <span class="op">-</span> <span class="num">2</span></td><td class="mono"><span class="num">5</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>2.2. Operadores relacionales</h3>
+
+      <p>Comparan dos valores y devuelven <strong>verdadero (V)</strong> o <strong>falso (F)</strong>:</p>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th class="center">Operador</th><th>Significado</th><th>Ejemplo</th><th>Resultado</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="center mono"><span class="op">&gt;</span></td><td>Mayor que</td><td class="mono"><span class="num">5</span> <span class="op">&gt;</span> <span class="num">3</span></td><td><strong>V</strong></td></tr>
+            <tr><td class="center mono"><span class="op">&lt;</span></td><td>Menor que</td><td class="mono"><span class="num">5</span> <span class="op">&lt;</span> <span class="num">3</span></td><td><strong>F</strong></td></tr>
+            <tr><td class="center mono"><span class="op">&gt;=</span></td><td>Mayor o igual que</td><td class="mono"><span class="num">5</span> <span class="op">&gt;=</span> <span class="num">5</span></td><td><strong>V</strong></td></tr>
+            <tr><td class="center mono"><span class="op">&lt;=</span></td><td>Menor o igual que</td><td class="mono"><span class="num">5</span> <span class="op">&lt;=</span> <span class="num">3</span></td><td><strong>F</strong></td></tr>
+            <tr><td class="center mono"><span class="op">=</span></td><td>Igual a</td><td class="mono"><span class="num">5</span> <span class="op">=</span> <span class="num">5</span></td><td><strong>V</strong></td></tr>
+            <tr><td class="center mono"><span class="op">&lt;&gt;</span></td><td>Diferente de</td><td class="mono"><span class="num">5</span> <span class="op">&lt;&gt;</span> <span class="num">3</span></td><td><strong>V</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout warning">
+        <div class="callout-header"><span class="callout-icon">⚠️</span> El doble uso de "="</div>
+        <p>
+          En pseudocódigo del curso, <code><span class="op">=</span></code> significa <strong>asignación</strong>
+          en una sentencia (<code><span class="var">x</span> <span class="op">=</span> <span class="num">5</span></code>)
+          y <strong>comparación</strong> dentro de una condición (<code><span class="kw">SI</span> <span class="var">x</span> <span class="op">=</span> <span class="num">5</span></code>).
+          El contexto te dice cuál es. <em>Joyanes y otros materiales usan <code>←</code> para asignar y <code>=</code> solo para comparar; tu profesor usa <code>=</code> para ambos.</em>
+        </p>
+      </div>
+
+      <h3>2.3. Operadores lógicos (vista previa)</h3>
+
+      <p>Combinan valores lógicos. Los verás a fondo en Semana 5, pero conviene reconocerlos:</p>
+
+      <div class="table-wrapper">
+        <table>
+          <thead><tr><th>Operador</th><th>Significado</th><th>Resultado V</th></tr></thead>
+          <tbody>
+            <tr><td class="mono"><strong>AND</strong> (Λ, "y")</td><td>Conjunción</td><td>Solo si <strong>ambas</strong> condiciones son V</td></tr>
+            <tr><td class="mono"><strong>OR</strong> (V, "o")</td><td>Disyunción</td><td>Si <strong>al menos una</strong> condición es V</td></tr>
+            <tr><td class="mono"><strong>NOT</strong> (¬, "no")</td><td>Negación</td><td>Invierte el valor (V→F, F→V)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>2.4. Jerarquía de operadores (¡crucial para el examen!)</h3>
+
+      <p>Cuando una expresión tiene varios operadores, se evalúan en este <strong>orden de prioridad</strong>:</p>
+
+      <div class="stepper">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h4>Paréntesis ( )</h4>
+            <p>Lo de dentro de paréntesis se evalúa primero. <em>Cuando dudes, pon paréntesis.</em></p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h4>Potencia (^)</h4>
+            <p>Después se evalúan las exponenciaciones (de derecha a izquierda).</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h4>Multiplicación (*), División (/), DIV, MOD</h4>
+            <p>Se evalúan de izquierda a derecha.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h4>Suma (+), Resta (−)</h4>
+            <p>Al final. También de izquierda a derecha.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <h4>Operadores relacionales</h4>
+            <p>Después de los aritméticos.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">6</div>
+          <div class="step-content">
+            <h4>Operadores lógicos</h4>
+            <p>Por último: NOT → AND → OR.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout example">
+        <div class="callout-header"><span class="callout-icon">🧪</span> Demostración paso a paso</div>
+        <p>Evalúa: <code>3 * A − 4 * B / A ^ 2</code> para <strong>A = 2, B = 5</strong></p>
+        <ol>
+          <li>Sustituyo: <code>3 * 2 − 4 * 5 / 2 ^ 2</code></li>
+          <li>Potencia primero: <code>2 ^ 2 = 4</code> → <code>3 * 2 − 4 * 5 / 4</code></li>
+          <li>De izq. a der.: <code>3 * 2 = 6</code> → <code>6 − 4 * 5 / 4</code></li>
+          <li>Sigue mult/div izq→der: <code>4 * 5 = 20</code> → <code>6 − 20 / 4</code></li>
+          <li>División: <code>20 / 4 = 5</code> → <code>6 − 5</code></li>
+          <li>Resta final: <strong><code>1</code></strong> ✓</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ BLOQUE 3 ============ -->
+    <section class="block" id="bloque3">
+      <div class="block-header">
+        <div class="block-num">3</div>
+        <h2>DIV y MOD a profundidad</h2>
+      </div>
+
+      <div class="callout intuition">
+        <div class="callout-header"><span class="callout-icon">💡</span> Intuición primero</div>
+        <p>
+          Cuando divides 17 ÷ 5 con la "división de toda la vida" (la del colegio), obtienes <strong>cociente 3
+          y resto 2</strong>. Bueno: <code>DIV</code> te da el cociente y <code>MOD</code> te da el resto.
+          <em>Son las dos mitades de la misma operación.</em>
+        </p>
+      </div>
+
+      <h3>3.1. Definición formal</h3>
+
+      <div class="formula-box">
+        <strong>Si A = B · q + r con 0 ≤ r &lt; B</strong><br/>
+        <span style="font-size:0.95rem;color:var(--text-muted)">entonces:</span><br/>
+        A <span class="op">div</span> B = <strong>q</strong> &nbsp;·&nbsp; A <span class="op">mod</span> B = <strong>r</strong>
+      </div>
+
+      <h3>3.2. Ejemplos paso a paso</h3>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>División</th><th>Cociente (DIV)</th><th>Resto (MOD)</th><th>Verificación</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="mono">75 ÷ 8</td><td class="center"><strong>75 div 8 = 9</strong></td><td class="center"><strong>75 mod 8 = 3</strong></td><td class="mono">8 × 9 + 3 = 75 ✓</td></tr>
+            <tr><td class="mono">99 ÷ 15</td><td class="center"><strong>99 div 15 = 6</strong></td><td class="center"><strong>99 mod 15 = 9</strong></td><td class="mono">15 × 6 + 9 = 99 ✓</td></tr>
+            <tr><td class="mono">154 ÷ 12</td><td class="center"><strong>154 div 12 = 12</strong></td><td class="center"><strong>154 mod 12 = 10</strong></td><td class="mono">12 × 12 + 10 = 154 ✓</td></tr>
+            <tr><td class="mono">257 ÷ 10</td><td class="center"><strong>257 div 10 = 25</strong></td><td class="center"><strong>257 mod 10 = 7</strong></td><td class="mono">10 × 25 + 7 = 257 ✓</td></tr>
+            <tr><td class="mono">55 ÷ 5</td><td class="center"><strong>55 div 5 = 11</strong></td><td class="center"><strong>55 mod 5 = 0</strong></td><td class="mono">5 × 11 + 0 = 55 ✓</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header"><span class="callout-icon">🎯</span> Truco mental</div>
+        <p>
+          <strong>Para calcular A div B:</strong> imagina la división larga del cole hasta donde "no entra más" sin pasarse.<br/>
+          <strong>Para calcular A mod B:</strong> es lo que <em>sobra</em> después de esa división.
+        </p>
+        <p>Si <code>A mod B = 0</code>, significa que <strong>A es divisible por B</strong> (no sobra nada).</p>
+      </div>
+
+      <h3>3.3. Aplicaciones típicas en algoritmos</h3>
+
+      <div class="compare-grid">
+        <div class="compare-card">
+          <h4 style="color: var(--primary);">🔢 Detectar par o impar</h4>
+          <p>Un número es par si <code>n mod 2 = 0</code>:</p>
+<pre class="pseudo" style="margin-top:8px"><code><span class="cmt">// es par si n mod 2 = 0</span>
+<span class="var">esPar</span> <span class="op">=</span> (<span class="var">n</span> <span class="op">mod</span> <span class="num">2</span> <span class="op">=</span> <span class="num">0</span>)</code></pre>
+        </div>
+        <div class="compare-card">
+          <h4 style="color: var(--accent);">⏰ Descomponer unidades</h4>
+          <p>Convertir 3725 segundos a h, min, s:</p>
+<pre class="pseudo" style="margin-top:8px"><code><span class="var">h</span> <span class="op">=</span> <span class="var">total</span> <span class="op">div</span> <span class="num">3600</span>
+<span class="var">resto</span> <span class="op">=</span> <span class="var">total</span> <span class="op">mod</span> <span class="num">3600</span>
+<span class="var">m</span> <span class="op">=</span> <span class="var">resto</span> <span class="op">div</span> <span class="num">60</span>
+<span class="var">s</span> <span class="op">=</span> <span class="var">resto</span> <span class="op">mod</span> <span class="num">60</span></code></pre>
+        </div>
+        <div class="compare-card">
+          <h4 style="color: var(--purple);">💵 Contar billetes</h4>
+          <p>Cuántos billetes de 100 caben en un monto:</p>
+<pre class="pseudo" style="margin-top:8px"><code><span class="var">b100</span> <span class="op">=</span> <span class="var">monto</span> <span class="op">div</span> <span class="num">100</span>
+<span class="var">resto</span> <span class="op">=</span> <span class="var">monto</span> <span class="op">mod</span> <span class="num">100</span></code></pre>
+        </div>
+      </div>
+
+      <h3>3.4. Ejercicio mental: evalúa expresiones combinadas</h3>
+
+      <div class="callout example">
+        <div class="callout-header"><span class="callout-icon">🧠</span> Evalúa esto: <code>11 mod 6 + 44 div 9 − 3</code></div>
+        <ol>
+          <li>Por jerarquía, <code>mod</code> y <code>div</code> tienen prioridad sobre <code>+</code> y <code>−</code>.</li>
+          <li><code>11 mod 6 = 5</code> (porque 6×1 + 5 = 11)</li>
+          <li><code>44 div 9 = 4</code> (porque 9×4 + 8 = 44)</li>
+          <li>Queda: <code>5 + 4 − 3</code></li>
+          <li>Resultado: <strong>6 ✓</strong></li>
+        </ol>
+      </div>
+
+      <div class="callout example">
+        <div class="callout-header"><span class="callout-icon">🧠</span> Para x=7, y=11: <code>(x + y) mod 7 + (3 * x) div y</code></div>
+        <ol>
+          <li>Paréntesis primero: <code>(7+11) = 18</code> y <code>(3*7) = 21</code></li>
+          <li>Queda: <code>18 mod 7 + 21 div 11</code></li>
+          <li><code>18 mod 7 = 4</code> (porque 7×2 + 4 = 18)</li>
+          <li><code>21 div 11 = 1</code> (porque 11×1 + 10 = 21)</li>
+          <li>Resultado: <strong>4 + 1 = 5 ✓</strong></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ BLOQUE 4 ============ -->
+    <section class="block" id="bloque4">
+      <div class="block-header">
+        <div class="block-num">4</div>
+        <h2>Diagramas de flujo: símbolos formales y reglas de diseño</h2>
+      </div>
+
+      <h3>4.1. Símbolos estándar (ANSI)</h3>
+
+      <p>Los <strong>símbolos están normalizados por ANSI</strong> (American National Standards Institute).
+      Los más utilizados en este curso son:</p>
+
+      <div class="symbol-grid">
+        <div class="symbol-card">
+          <div class="sym terminal">Inicio</div>
+          <div class="sym-name">Terminal</div>
+          <div class="sym-desc">Inicio o fin del algoritmo. Forma elíptica.</div>
+        </div>
+        <div class="symbol-card">
+          <div class="sym input-output"><span>leer X</span></div>
+          <div class="sym-name">Entrada / Salida</div>
+          <div class="sym-desc">Leer o mostrar datos. Paralelogramo.</div>
+        </div>
+        <div class="symbol-card">
+          <div class="sym process">x = a + b</div>
+          <div class="sym-name">Proceso</div>
+          <div class="sym-desc">Cálculo o asignación. Rectángulo.</div>
+        </div>
+        <div class="symbol-card">
+          <div class="sym decision"><span>x &gt; 0</span></div>
+          <div class="sym-name">Decisión</div>
+          <div class="sym-desc">Bifurcación V/F. Rombo. (Semana 4)</div>
+        </div>
+        <div class="symbol-card">
+          <div class="sym connector">A</div>
+          <div class="sym-name">Conector</div>
+          <div class="sym-desc">Une partes del diagrama en la misma página.</div>
+        </div>
+        <div class="symbol-card">
+          <div class="sym" style="color:var(--text);font-size:1.5rem;">→</div>
+          <div class="sym-name">Línea de flujo</div>
+          <div class="sym-desc">Indica el sentido de ejecución (con flecha).</div>
+        </div>
+      </div>
+
+      <h3>4.2. Reglas de oro para diseñar diagramas de flujo</h3>
+
+      <p>Tu material lista 7 reglas que debes respetar siempre:</p>
+
+      <ol>
+        <li><strong>Sentido de lectura</strong>: los DF se escriben de <strong>arriba hacia abajo</strong> y/o de
+        <strong>izquierda a derecha</strong>.</li>
+        <li><strong>Líneas con flecha</strong>: los símbolos se unen con líneas que tienen una <strong>flecha en la punta</strong>.
+        <em>Nunca uses líneas diagonales.</em></li>
+        <li><strong>Evita cruces</strong>: solo usa <strong>conectores</strong> cuando sea necesario.</li>
+        <li><strong>No dejes líneas sueltas</strong>: toda línea debe conectarse a un símbolo.</li>
+        <li><strong>Texto legible</strong>: todo lo escrito dentro de un símbolo debe ser claro y preciso.</li>
+        <li><strong>Entradas múltiples</strong>: todos los símbolos pueden tener varias líneas <em>entrando</em>,
+        <strong>excepto el símbolo final</strong>.</li>
+        <li><strong>Salidas múltiples solo en decisión</strong>: solo el símbolo de decisión (rombo) puede tener más
+        de una línea <em>saliendo</em>.</li>
+      </ol>
+
+      <h3>4.3. Equivalencia visual: pseudocódigo ↔ diagrama</h3>
+
+      <p>El siguiente algoritmo (suma de dos números) muestra la correspondencia exacta entre cada línea de
+      pseudocódigo y cada símbolo del diagrama:</p>
+
+      <div class="dual-view">
+        <div>
+<pre class="pseudo"><code><span class="kw">INICIO</span>
+    <span class="tipo">Entero</span>: <span class="var">a</span>, <span class="var">b</span>, <span class="var">suma</span>
+    <span class="fn">Leer</span> <span class="var">a</span>, <span class="var">b</span>
+    <span class="var">suma</span> <span class="op">=</span> <span class="var">a</span> <span class="op">+</span> <span class="var">b</span>
+    <span class="fn">Mostrar</span> <span class="var">suma</span>
+<span class="kw">FIN</span></code></pre>
+        </div>
+        <div class="flowchart-container">
+          <div class="mermaid-container" data-original='graph TB
+    I(["Inicio"])
+    D["Entero: a, b, suma"]
+    L[/"leer a, b"/]
+    P["suma = a + b"]
+    M[/"mostrar suma"/]
+    F(["Fin"])
+    I --> D --> L --> P --> M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style P fill:#a78bfa,stroke:#6d28d9,color:#fff'>
+            <div class="mermaid">
+graph TB
+    I(["Inicio"])
+    D["Entero: a, b, suma"]
+    L[/"leer a, b"/]
+    P["suma = a + b"]
+    M[/"mostrar suma"/]
+    F(["Fin"])
+    I --> D --> L --> P --> M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style P fill:#a78bfa,stroke:#6d28d9,color:#fff
+            </div>
+          </div>
+          <div class="flowchart-caption">📊 Equivalencia 1:1 entre pseudocódigo y diagrama</div>
+        </div>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header"><span class="callout-icon">🎨</span> Convención de colores en este documento</div>
+        <p>En los diagramas de flujo de esta guía uso colores para que reconozcas el tipo de operación de un vistazo:</p>
+        <ul>
+          <li>🟢 <strong>Verde</strong>: Inicio</li>
+          <li>🔴 <strong>Rojo</strong>: Fin</li>
+          <li>🟡 <strong>Amarillo</strong>: Declaración de variables</li>
+          <li>🔵 <strong>Azul</strong>: Lectura/Escritura (E/S)</li>
+          <li>🟣 <strong>Morado</strong>: Proceso (cálculo/asignación)</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ BLOQUE 5 ============ -->
+    <section class="block" id="bloque5">
+      <div class="block-header">
+        <div class="block-num">5</div>
+        <h2>Algoritmos secuenciales: patrones que se repiten</h2>
+      </div>
+
+      <div class="def-card">
+        <span class="def-label">Definición</span>
+        <div class="def-term">Algoritmo secuencial</div>
+        <div class="def-text">
+          Algoritmo en el que las <strong>instrucciones se ejecutan una tras otra, en el orden en que aparecen,
+          sin desvíos ni repeticiones</strong>. Es el tipo más simple y la base de todos los demás.
+        </div>
+      </div>
+
+      <h3>5.1. La estructura general</h3>
+
+      <p>Todo algoritmo secuencial sigue el mismo "esqueleto":</p>
+
+<pre class="pseudo"><code><span class="kw">INICIO</span>
+    <span class="cmt">// ① Declaración de variables y sus tipos</span>
+    <span class="tipo">Tipo</span>: <span class="var">var1</span>, <span class="var">var2</span>, ...
+
+    <span class="cmt">// ② Lectura de los datos de entrada</span>
+    <span class="fn">Leer</span> <span class="var">var1</span>, <span class="var">var2</span>
+
+    <span class="cmt">// ③ Procesamiento (cálculos / asignaciones)</span>
+    <span class="var">resultado1</span> <span class="op">=</span> ... fórmula ...
+    <span class="var">resultado2</span> <span class="op">=</span> ... otra fórmula ...
+
+    <span class="cmt">// ④ Salida de los resultados</span>
+    <span class="fn">Mostrar</span> <span class="var">resultado1</span>, <span class="var">resultado2</span>
+<span class="kw">FIN</span></code></pre>
+
+      <h3>5.2. Patrones secuenciales típicos</h3>
+
+      <p>La mayoría de los problemas de Semana 3 caen en uno de estos 5 patrones:</p>
+
+      <div class="table-wrapper">
+        <table>
+          <thead><tr><th>Patrón</th><th>Cuándo usarlo</th><th>Ejemplo</th></tr></thead>
+          <tbody>
+            <tr><td><strong>1. Cálculo directo</strong></td><td>Tienes una fórmula matemática</td><td>Área de figura, descuento, IVA</td></tr>
+            <tr><td><strong>2. Conversión de unidades</strong></td><td>Cambiar entre sistemas</td><td>°C ↔ °F, m ↔ ft, $ ↔ €</td></tr>
+            <tr><td><strong>3. Descomposición</strong></td><td>Partir un número en unidades</td><td>Segundos → h, min, s · Billetes</td></tr>
+            <tr><td><strong>4. Promedio ponderado</strong></td><td>Cuando los componentes pesan distinto</td><td>Nota final con %, sueldo con bonos</td></tr>
+            <tr><td><strong>5. Intercambio</strong></td><td>Permutar valores entre variables</td><td>Variable auxiliar AUX</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header"><span class="callout-icon">🧭</span> Cómo identificar el patrón</div>
+        <p>
+          Lee el enunciado y pregúntate: <em>¿el problema me da una fórmula? ¿me pide convertir unidades?
+          ¿me pide partir algo en pedazos? ¿hay porcentajes?</em> Identificar el patrón antes de empezar te
+          ahorra el 50% del trabajo.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ BLOQUE 6 ============ -->
+    <section class="block" id="bloque6">
+      <div class="block-header">
+        <div class="block-num">6</div>
+        <h2>Práctica calificada 1 · estructura y estrategia</h2>
+      </div>
+
+      <div class="callout intuition">
+        <div class="callout-header"><span class="callout-icon">📝</span> Cómo es la práctica del curso</div>
+        <p>
+          La <strong>Práctica Calificada 1</strong> de tu curso (que ya está liberada con solución) tiene esta estructura:
+        </p>
+        <ul>
+          <li><strong>2 preguntas teóricas</strong> (3 puntos cada una): pasos para construir un algoritmo + características de un algoritmo, ambas <em>con un ejemplo concreto que las relacione</em>.</li>
+          <li><strong>3 ejercicios prácticos</strong> (4, 5 y 5 puntos): elaborar pseudocódigo Y diagrama de flujo, indicando <em>siempre</em> la <strong>leyenda con el detalle de las variables</strong>.</li>
+        </ul>
+      </div>
+
+      <h3>6.1. Recomendaciones generales antes de empezar</h3>
+
+      <div class="stepper">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h4>Lee el enunciado dos veces</h4>
+            <p>La primera vez para entenderlo en general. La segunda vez subrayando: <em>qué te dan</em> (entradas)
+            y <em>qué te piden</em> (salidas).</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h4>Identifica las variables y haz la leyenda</h4>
+            <p>Da nombres descriptivos (<code>NEP</code> = Nota Examen Parcial, no <code>x</code>) y declara
+            la leyenda explícitamente. <strong>El profesor lo exige.</strong></p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h4>Decide los tipos de dato</h4>
+            <p>¿Es entero o real? ¿Cadena? Pregúntate: <em>¿puede tener decimales?</em></p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h4>Escribe primero el pseudocódigo</h4>
+            <p>Es más rápido. Una vez claro, traducir al diagrama de flujo es casi mecánico.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <h4>Haz una prueba de escritorio mental</h4>
+            <p>Inventa valores razonables y simula el algoritmo paso a paso. Si llegas al resultado esperado, vas bien.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3>6.2. Plantilla de respuesta ideal</h3>
+
+<pre class="pseudo"><code><span class="cmt">// Leyenda de variables (¡siempre!):</span>
+<span class="cmt">// X1 = descripción de qué representa</span>
+<span class="cmt">// X2 = descripción de qué representa</span>
+<span class="cmt">// ...</span>
+
+<span class="kw">INICIO</span>
+    <span class="tipo">Tipo</span>: <span class="var">var1</span>, <span class="var">var2</span>, ...
+    <span class="fn">Leer</span> <span class="var">datos_entrada</span>
+    <span class="cmt">// Cálculos</span>
+    <span class="var">resultado</span> <span class="op">=</span> ...
+    <span class="fn">Mostrar</span> <span class="var">resultado</span>
+<span class="kw">FIN</span></code></pre>
+
+      <p>+ <strong>Diagrama de flujo equivalente</strong> con todos los símbolos correctos.</p>
+
+      <h3>6.3. Las dos preguntas teóricas (con respuesta ejemplar)</h3>
+
+      <div class="exercise">
+        <div class="exercise-header">
+          <span class="exercise-num">Teoría 1</span>
+          <span>Los 5 pasos para construir un algoritmo (con ejemplo)</span>
+          <span class="exercise-tag">3 pts</span>
+        </div>
+        <div class="exercise-body">
+          <div class="statement-box">
+            <span class="statement-label">📝 Enunciado</span>
+            <p>Describa un ejemplo en el cual identifique los <strong>5 pasos para la construcción de un algoritmo</strong>.
+            Debe indicar y relacionar el ejemplo con cada uno de los pasos.</p>
+          </div>
+
+          <div class="solution-block">
+            <h4>🎯 Los 5 pasos según el material del curso</h4>
+            <ol>
+              <li>Se <strong>define el objetivo</strong>.</li>
+              <li>Se <strong>identifican los componentes</strong> o variables.</li>
+              <li>Se <strong>escriben las instrucciones</strong>.</li>
+              <li>Se <strong>prueba el algoritmo</strong>.</li>
+              <li>Se <strong>verifica el resultado</strong> obtenido.</li>
+            </ol>
+
+            <h4>🪜 Ejemplo aplicado: cálculo del IMC (Índice de Masa Corporal)</h4>
+
+            <div class="trace-table">
+              <table>
+                <thead><tr><th>Paso</th><th>Aplicación al IMC</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>1. Objetivo</strong></td><td>Calcular el IMC de una persona sabiendo su peso y altura.</td></tr>
+                  <tr><td><strong>2. Variables</strong></td><td><code>peso</code> (kg), <code>altura</code> (m) → entradas; <code>imc</code> → salida.</td></tr>
+                  <tr><td><strong>3. Instrucciones</strong></td><td>Leer peso y altura → calcular <code>imc = peso / (altura ^ 2)</code> → mostrar imc.</td></tr>
+                  <tr><td><strong>4. Prueba</strong></td><td>Para peso=70 kg, altura=1.75 m → imc = 70 / 3.0625 = 22.86.</td></tr>
+                  <tr><td><strong>5. Verificación</strong></td><td>22.86 está dentro del rango "normal" (18.5–24.9). ✓ Algoritmo correcto.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="exercise">
+        <div class="exercise-header">
+          <span class="exercise-num">Teoría 2</span>
+          <span>Características de un algoritmo (con ejemplo que las relacione)</span>
+          <span class="exercise-tag">3 pts</span>
+        </div>
+        <div class="exercise-body">
+          <div class="statement-box">
+            <span class="statement-label">📝 Enunciado</span>
+            <p>Indique las características de un algoritmo y coloque un ejemplo en el cual relacione cada una
+            de las características con el ejemplo dado.</p>
+          </div>
+
+          <div class="solution-block">
+            <h4>🎯 Las 3 características (Joyanes)</h4>
+            <ul>
+              <li><strong>Preciso</strong>: indica el orden de realización en cada paso.</li>
+              <li><strong>Definido</strong>: si se sigue dos veces, obtiene el mismo resultado.</li>
+              <li><strong>Finito</strong>: tiene un número determinado de pasos.</li>
+            </ul>
+
+            <h4>🪜 Ejemplo aplicado: receta para preparar arroz blanco</h4>
+
+            <div class="trace-table">
+              <table>
+                <thead><tr><th>Característica</th><th>Cómo se cumple en la receta</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Preciso</strong></td><td>Los pasos van en orden: lavar arroz → calentar aceite → agregar arroz → echar agua → tapar y cocer 18 min. Si cambio el orden (echar agua antes), el resultado es distinto.</td></tr>
+                  <tr><td><strong>Definido</strong></td><td>Con los mismos ingredientes y cantidades, mañana obtendré el mismo arroz que hoy.</td></tr>
+                  <tr><td><strong>Finito</strong></td><td>La receta termina después de 18 minutos de cocción + 5 de reposo. <em>No es una receta que dure infinito</em>; tiene fin claro.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ EJERCICIOS ============ -->
+    <section class="block" id="ejercicios">
+      <div class="block-header">
+        <div class="block-num">💪</div>
+        <h2>Ejercicios resueltos paso a paso</h2>
+      </div>
+
+      <p style="font-size:1.05rem;color:var(--text-muted);margin-bottom:24px;">
+        <strong>Los 3 primeros</strong> son los ejercicios <em>literales</em> de tu Práctica Calificada 1
+        (con su solución oficial). Los siguientes (4–8) refuerzan los mismos patrones con problemas adicionales
+        del libro Joyanes y de tu material.
+      </p>
+
+      <!-- EJERCICIO 1 -->
+      <div class="exercise">
+        <div class="exercise-header">
+          <span class="exercise-num">EJ. 1</span>
+          <span>Convertir estatura de metros a pies y pulgadas</span>
+          <span class="exercise-tag">📝 Práctica 1 · 4 pts</span>
+        </div>
+        <div class="exercise-body">
+          <div class="statement-box">
+            <span class="statement-label">📝 Enunciado oficial</span>
+            <p>Elabore el pseudocódigo y diagrama de flujo de un algoritmo que <strong>solicite la estatura de una
+            persona en metros</strong> y la convierta a <strong>pies y pulgadas</strong>.</p>
+            <p>Datos: <strong>1 metro = 3.28084 pies</strong> · <strong>1 pulgada = 2.54 cm</strong></p>
+            <p><em>Importante: indicar la leyenda con el detalle de las variables.</em></p>
+          </div>
+
+          <div class="solution-block">
+            <h4>🎯 ¿Qué nos están pidiendo?</h4>
+            <p>Tomar un valor en metros y producir <em>dos</em> conversiones: cuántos pies equivalen y cuántas pulgadas equivalen.</p>
+
+            <h4>🧠 Razonamiento de las fórmulas</h4>
+            <ul>
+              <li><strong>Pies</strong>: como 1 m = 3.28084 ft, entonces <code>pies = estatura × 3.28084</code>.</li>
+              <li><strong>Pulgadas</strong>: como 1 pulg = 2.54 cm, primero convierto m → cm (multiplicando por 100) y luego cm → pulg (dividiendo entre 2.54): <code>pulg = (estatura × 100) / 2.54</code>.</li>
+            </ul>
+
+            <h4>🧠 Identificar variables (leyenda)</h4>
+            <div class="legend-box">
+              <div class="legend-title">🏷️ Leyenda</div>
+              <ul style="margin:0">
+                <li><code>estatura</code> = estatura ingresada en metros (entrada)</li>
+                <li><code>pie</code> = equivalente en pies (salida)</li>
+                <li><code>pulg</code> = equivalente en pulgadas (salida)</li>
+                <li>Tipo: <span class="tipo">Real</span> (los valores tienen decimales)</li>
+              </ul>
+            </div>
+
+            <h4>🪜 Pseudocódigo</h4>
+<pre class="pseudo"><code><span class="kw">INICIO</span>
+    <span class="tipo">Real</span>: <span class="var">estatura</span>, <span class="var">pie</span>, <span class="var">pulg</span>
+    <span class="fn">Leer</span> <span class="var">estatura</span>
+    <span class="var">pie</span> <span class="op">=</span> <span class="var">estatura</span> <span class="op">*</span> <span class="num">3.28084</span>
+    <span class="var">pulg</span> <span class="op">=</span> (<span class="var">estatura</span> <span class="op">*</span> <span class="num">100</span>) <span class="op">/</span> <span class="num">2.54</span>
+    <span class="fn">Mostrar</span> <span class="var">pie</span>, <span class="var">pulg</span>
+<span class="kw">FIN</span></code></pre>
+
+            <h4>🔷 Diagrama de flujo</h4>
+            <div class="flowchart-container">
+              <div class="mermaid-container" data-original='graph TB
+    I(["Inicio"])
+    D["Real: estatura, pie, pulg"]
+    L[/"leer estatura"/]
+    P1["pie = estatura * 3.28084"]
+    P2["pulg = (estatura * 100) / 2.54"]
+    M[/"mostrar pie, pulg"/]
+    F(["Fin"])
+    I --> D --> L --> P1 --> P2 --> M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style P1 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P2 fill:#a78bfa,stroke:#6d28d9,color:#fff'>
+                <div class="mermaid">
+graph TB
+    I(["Inicio"])
+    D["Real: estatura, pie, pulg"]
+    L[/"leer estatura"/]
+    P1["pie = estatura * 3.28084"]
+    P2["pulg = (estatura * 100) / 2.54"]
+    M[/"mostrar pie, pulg"/]
+    F(["Fin"])
+    I --> D --> L --> P1 --> P2 --> M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style P1 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P2 fill:#a78bfa,stroke:#6d28d9,color:#fff
+                </div>
+              </div>
+            </div>
+
+            <h4>🧪 Prueba de escritorio</h4>
+            <p>Probemos con estatura = 1.75 m:</p>
+            <div class="trace-table">
+              <table>
+                <thead><tr><th>Paso</th><th>Cálculo</th><th>estatura</th><th>pie</th><th>pulg</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td>Leer estatura</td><td>1.75</td><td>—</td><td>—</td></tr>
+                  <tr><td>2</td><td>pie = 1.75 × 3.28084</td><td>1.75</td><td>5.7415</td><td>—</td></tr>
+                  <tr><td>3</td><td>pulg = (1.75 × 100) / 2.54 = 175 / 2.54</td><td>1.75</td><td>5.7415</td><td>68.898</td></tr>
+                  <tr><td>4</td><td>Mostrar</td><td colspan="3"><strong>5.74 pies y 68.90 pulgadas ✓</strong></td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="final-answer">
+              <div class="final-answer-label">✅ Resultado</div>
+              <p>1.75 m = <strong>5.74 pies</strong> = <strong>68.90 pulgadas</strong>.</p>
+            </div>
+
+            <div class="callout tip">
+              <div class="callout-header"><span class="callout-icon">💡</span> Lección</div>
+              <p>Cuando la conversión es directa (m → pies), <strong>multiplicas por la equivalencia</strong>.
+              Cuando hay un cambio de escala intermedio (m → cm → pulg), <strong>haces el cambio en cadena</strong>.
+              Los paréntesis no son adorno: <code>(estatura * 100) / 2.54</code> deja claro que primero se pasa
+              a centímetros y luego se divide.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EJERCICIO 2 -->
+      <div class="exercise">
+        <div class="exercise-header">
+          <span class="exercise-num">EJ. 2</span>
+          <span>Sueldo de 3 empleados según días trabajados</span>
+          <span class="exercise-tag">📝 Práctica 1 · 5 pts</span>
+        </div>
+        <div class="exercise-body">
+          <div class="statement-box">
+            <span class="statement-label">📝 Enunciado oficial</span>
+            <p>Una empresa desea determinar el <strong>sueldo</strong> que debe pagar a cada uno de sus 3 empleados
+            y la <strong>suma de los 3 sueldos</strong>. Datos:</p>
+            <ul>
+              <li>Empleado 1 trabajó <strong>un mes</strong>.</li>
+              <li>Empleado 2 trabajó <strong>17 días</strong>.</li>
+              <li>Empleado 3 trabajó <strong>12 días</strong>.</li>
+              <li>Pago por día = <strong>45 soles</strong>.</li>
+              <li>Un mes de trabajo = <strong>24 días</strong>.</li>
+            </ul>
+            <p>Elabore pseudocódigo + diagrama. Indicar leyenda.</p>
+          </div>
+
+          <div class="solution-block">
+            <h4>🎯 ¿Qué nos están pidiendo?</h4>
+            <p>Calcular 3 sueldos individuales (días trabajados × tarifa por día) y luego la suma total.</p>
+
+            <h4>🧠 Razonamiento clave</h4>
+            <p>El enunciado dice "el pago por día es de 45 soles" pero <strong>no aparece como dato a ingresar</strong>
+            en la solución oficial: el SPH (sueldo por hora… realmente "por día") <em>se lee</em>. Esto te da
+            <strong>flexibilidad</strong>: si la empresa cambia la tarifa, no hay que modificar el código.</p>
+            <p>Empleado 1 trabajó 1 mes = 24 días, así que su pago = 24 × SPH.</p>
+
+            <h4>🧠 Identificar variables (leyenda)</h4>
+            <div class="legend-box">
+              <div class="legend-title">🏷️ Leyenda</div>
+              <ul style="margin:0">
+                <li><code>SPH</code> = sueldo por día (lo que se paga por día trabajado)</li>
+                <li><code>SE1</code> = sueldo del empleado 1</li>
+                <li><code>SE2</code> = sueldo del empleado 2</li>
+                <li><code>SE3</code> = sueldo del empleado 3</li>
+                <li><code>SSE</code> = suma de los sueldos de los empleados</li>
+                <li>Tipo: <span class="tipo">Real</span></li>
+              </ul>
+            </div>
+
+            <h4>🪜 Pseudocódigo</h4>
+<pre class="pseudo"><code><span class="kw">INICIO</span>
+    <span class="tipo">Real</span>: <span class="var">SPH</span>, <span class="var">SE1</span>, <span class="var">SE2</span>, <span class="var">SE3</span>, <span class="var">SSE</span>
+    <span class="fn">Leer</span> <span class="var">SPH</span>
+    <span class="var">SE1</span> <span class="op">=</span> <span class="var">SPH</span> <span class="op">*</span> <span class="num">24</span>
+    <span class="var">SE2</span> <span class="op">=</span> <span class="var">SPH</span> <span class="op">*</span> <span class="num">17</span>
+    <span class="var">SE3</span> <span class="op">=</span> <span class="var">SPH</span> <span class="op">*</span> <span class="num">12</span>
+    <span class="var">SSE</span> <span class="op">=</span> <span class="var">SE1</span> <span class="op">+</span> <span class="var">SE2</span> <span class="op">+</span> <span class="var">SE3</span>
+    <span class="fn">Mostrar</span> <span class="var">SE1</span>, <span class="var">SE2</span>, <span class="var">SE3</span>, <span class="var">SSE</span>
+<span class="kw">FIN</span></code></pre>
+
+            <h4>🔷 Diagrama de flujo</h4>
+            <div class="flowchart-container">
+              <div class="mermaid-container" data-original='graph TB
+    I(["Inicio"])
+    D["Real: SPH, SE1, SE2, SE3, SSE"]
+    L[/"leer SPH"/]
+    P1["SE1 = SPH * 24"]
+    P2["SE2 = SPH * 17"]
+    P3["SE3 = SPH * 12"]
+    P4["SSE = SE1 + SE2 + SE3"]
+    M[/"mostrar SE1, SE2, SE3, SSE"/]
+    F(["Fin"])
+    I --> D --> L --> P1 --> P2 --> P3 --> P4 --> M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style P1 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P2 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P3 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P4 fill:#a78bfa,stroke:#6d28d9,color:#fff'>
+                <div class="mermaid">
+graph TB
+    I(["Inicio"])
+    D["Real: SPH, SE1, SE2, SE3, SSE"]
+    L[/"leer SPH"/]
+    P1["SE1 = SPH * 24"]
+    P2["SE2 = SPH * 17"]
+    P3["SE3 = SPH * 12"]
+    P4["SSE = SE1 + SE2 + SE3"]
+    M[/"mostrar SE1, SE2, SE3, SSE"/]
+    F(["Fin"])
+    I --> D --> L --> P1 --> P2 --> P3 --> P4 --> M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style P1 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P2 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P3 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P4 fill:#a78bfa,stroke:#6d28d9,color:#fff
+                </div>
+              </div>
+            </div>
+
+            <h4>🧪 Prueba de escritorio</h4>
+            <p>Con SPH = 45 soles:</p>
+            <div class="trace-table">
+              <table>
+                <thead><tr><th>Cálculo</th><th>Valor</th></tr></thead>
+                <tbody>
+                  <tr><td>SE1 = 45 × 24</td><td><strong>1,080 soles</strong></td></tr>
+                  <tr><td>SE2 = 45 × 17</td><td><strong>765 soles</strong></td></tr>
+                  <tr><td>SE3 = 45 × 12</td><td><strong>540 soles</strong></td></tr>
+                  <tr><td>SSE = 1,080 + 765 + 540</td><td><strong>2,385 soles ✓</strong></td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="final-answer">
+              <div class="final-answer-label">✅ Resultado</div>
+              <p>Sueldos: <strong>S/.1,080 + S/.765 + S/.540 = S/.2,385</strong> en total.</p>
+            </div>
+
+            <div class="callout tip">
+              <div class="callout-header"><span class="callout-icon">💡</span> Lección</div>
+              <p>Cuando un dato del enunciado <strong>puede cambiar en el futuro</strong> (la tarifa diaria),
+              conviene <em>leerlo</em> en lugar de incrustarlo como número fijo. Así el algoritmo es reutilizable.
+              Los datos que <em>nunca cambian</em> en el problema (24 días = 1 mes) sí pueden ir como constantes.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EJERCICIO 3 -->
+      <div class="exercise">
+        <div class="exercise-header">
+          <span class="exercise-num">EJ. 3</span>
+          <span>Nota final del curso (pesos 40-30-20-10)</span>
+          <span class="exercise-tag">📝 Práctica 1 · 5 pts</span>
+        </div>
+        <div class="exercise-body">
+          <div class="statement-box">
+            <span class="statement-label">📝 Enunciado oficial</span>
+            <p>Calcule la <strong>nota final del curso</strong> sabiendo que solamente hay un examen parcial que
+            equivale al <strong>40%</strong> de la nota final, dos prácticas que equivalen al <strong>30%</strong>
+            y <strong>20%</strong>, y una tarea que equivale al <strong>10%</strong>. Debe ingresar las notas del
+            examen, prácticas y tarea.</p>
+          </div>
+
+          <div class="solution-block">
+            <h4>🎯 ¿Qué nos están pidiendo?</h4>
+            <p>Una <strong>media ponderada</strong>: cada nota pesa distinto en el promedio final.</p>
+
+            <h4>🧠 Razonamiento de la fórmula</h4>
+            <p>Lo natural sería:</p>
+            <div class="formula-box">
+              NFC = NEP × 0.40 + NP1 × 0.30 + NP2 × 0.20 + NTA × 0.10
+            </div>
+
+            <p>Pero la solución oficial de tu profesor lo expresa <strong>sin decimales</strong> (más limpio):</p>
+            <div class="formula-box">
+              NFC = (NEP × 4 + NP1 × 3 + NP2 × 2 + NTA × 1) / 10
+            </div>
+
+            <p>¿Por qué son equivalentes? Porque <code>0.40 = 4/10</code>, <code>0.30 = 3/10</code>, etc.
+            Saco el <code>/10</code> como factor común:</p>
+            <pre style="background:var(--bg-code);padding:12px;border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:0.85rem;">
+NFC = NEP·(4/10) + NP1·(3/10) + NP2·(2/10) + NTA·(1/10)
+    = [NEP·4 + NP1·3 + NP2·2 + NTA·1] / 10  ✓</pre>
+
+            <h4>🧠 Identificar variables (leyenda)</h4>
+            <div class="legend-box">
+              <div class="legend-title">🏷️ Leyenda</div>
+              <ul style="margin:0">
+                <li><code>NEP</code> = nota del examen parcial</li>
+                <li><code>NP1</code> = nota de la práctica 1</li>
+                <li><code>NP2</code> = nota de la práctica 2</li>
+                <li><code>NTA</code> = nota de la tarea</li>
+                <li><code>NFC</code> = nota final del curso</li>
+                <li>Tipo: <span class="tipo">Real</span></li>
+              </ul>
+            </div>
+
+            <h4>🪜 Pseudocódigo</h4>
+<pre class="pseudo"><code><span class="kw">INICIO</span>
+    <span class="tipo">Real</span>: <span class="var">NEP</span>, <span class="var">NP1</span>, <span class="var">NP2</span>, <span class="var">NTA</span>, <span class="var">NFC</span>
+    <span class="fn">Leer</span> <span class="var">NEP</span>, <span class="var">NP1</span>, <span class="var">NP2</span>, <span class="var">NTA</span>
+    <span class="var">NFC</span> <span class="op">=</span> (<span class="var">NEP</span> <span class="op">*</span> <span class="num">4</span> <span class="op">+</span> <span class="var">NP1</span> <span class="op">*</span> <span class="num">3</span> <span class="op">+</span> <span class="var">NP2</span> <span class="op">*</span> <span class="num">2</span> <span class="op">+</span> <span class="var">NTA</span> <span class="op">*</span> <span class="num">1</span>) <span class="op">/</span> <span class="num">10</span>
+    <span class="fn">Mostrar</span> <span class="var">NFC</span>
+<span class="kw">FIN</span></code></pre>
+
+            <h4>🔷 Diagrama de flujo</h4>
+            <div class="flowchart-container">
+              <div class="mermaid-container" data-original='graph TB
+    I(["Inicio"])
+    D["Real: NEP, NP1, NP2, NTA, NFC"]
+    L[/"leer NEP, NP1, NP2, NTA"/]
+    P["NFC = (NEP*4 + NP1*3 + NP2*2 + NTA*1) / 10"]
+    M[/"mostrar NFC"/]
+    F(["Fin"])
+    I --> D --> L --> P --> M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style P fill:#a78bfa,stroke:#6d28d9,color:#fff'>
+                <div class="mermaid">
+graph TB
+    I(["Inicio"])
+    D["Real: NEP, NP1, NP2, NTA, NFC"]
+    L[/"leer NEP, NP1, NP2, NTA"/]
+    P["NFC = (NEP*4 + NP1*3 + NP2*2 + NTA*1) / 10"]
+    M[/"mostrar NFC"/]
+    F(["Fin"])
+    I --> D --> L --> P --> M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style P fill:#a78bfa,stroke:#6d28d9,color:#fff
+                </div>
+              </div>
+            </div>
+
+            <h4>🧪 Prueba de escritorio</h4>
+            <p>Con NEP=15, NP1=14, NP2=16, NTA=18:</p>
+            <div class="trace-table">
+              <table>
+                <thead><tr><th>Cálculo</th><th>Valor</th></tr></thead>
+                <tbody>
+                  <tr><td>NEP × 4 = 15 × 4</td><td>60</td></tr>
+                  <tr><td>NP1 × 3 = 14 × 3</td><td>42</td></tr>
+                  <tr><td>NP2 × 2 = 16 × 2</td><td>32</td></tr>
+                  <tr><td>NTA × 1 = 18 × 1</td><td>18</td></tr>
+                  <tr><td>Suma total</td><td>152</td></tr>
+                  <tr><td>NFC = 152 / 10</td><td><strong>15.2 ✓</strong></td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="final-answer">
+              <div class="final-answer-label">✅ Resultado</div>
+              <p>Para EP=15, P1=14, P2=16, T=18 → Nota final = <strong>15.2</strong>.</p>
+            </div>
+
+            <div class="callout tip">
+              <div class="callout-header"><span class="callout-icon">💡</span> Lección clave</div>
+              <p>El <strong>promedio ponderado</strong> es la suma de cada valor multiplicado por su peso, dividida
+              entre la suma de los pesos. Aquí los pesos son 4+3+2+1 = 10, por eso dividimos entre 10.
+              Si los pesos fueran 70+20+10 (ej. 70/100 + 20/100 + 10/100), divides entre 100.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EJERCICIO 4 -->
+      <div class="exercise">
+        <div class="exercise-header">
+          <span class="exercise-num">EJ. 4</span>
+          <span>Hipotenusa de un triángulo rectángulo</span>
+          <span class="exercise-tag">📚 S22 ejercicio 1</span>
+        </div>
+        <div class="exercise-body">
+          <div class="statement-box">
+            <span class="statement-label">📝 Enunciado</span>
+            <p>Hallar la <strong>hipotenusa</strong> de un triángulo rectángulo conociendo sus dos catetos.</p>
+          </div>
+
+          <div class="solution-block">
+            <h4>🎯 ¿Qué nos piden?</h4>
+            <p>Aplicar el <strong>teorema de Pitágoras</strong>: en un triángulo rectángulo, si los catetos son
+            a y b, la hipotenusa h cumple <strong>h² = a² + b²</strong>, es decir <strong>h = √(a² + b²)</strong>.</p>
+
+            <h4>🧠 Identificar variables (leyenda)</h4>
+            <div class="legend-box">
+              <div class="legend-title">🏷️ Leyenda</div>
+              <ul style="margin:0">
+                <li><code>a</code>, <code>b</code> = catetos del triángulo</li>
+                <li><code>h</code> = hipotenusa (resultado)</li>
+                <li>Tipo: <span class="tipo">Real</span></li>
+              </ul>
+            </div>
+
+            <h4>🪜 Pseudocódigo</h4>
+<pre class="pseudo"><code><span class="kw">INICIO</span>
+    <span class="tipo">Real</span>: <span class="var">a</span>, <span class="var">b</span>, <span class="var">h</span>
+    <span class="fn">Leer</span> <span class="var">a</span>, <span class="var">b</span>
+    <span class="var">h</span> <span class="op">=</span> (<span class="var">a</span> <span class="op">^</span> <span class="num">2</span> <span class="op">+</span> <span class="var">b</span> <span class="op">^</span> <span class="num">2</span>) <span class="op">^</span> <span class="num">0.5</span>
+    <span class="fn">Mostrar</span> <span class="str">"La hipotenusa es: "</span>, <span class="var">h</span>
+<span class="kw">FIN</span></code></pre>
+
+            <h4>🔷 Diagrama de flujo</h4>
+            <div class="flowchart-container">
+              <div class="mermaid-container" data-original='graph TB
+    I(["Inicio"])
+    D["Real: a, b, h"]
+    L[/"leer a, b"/]
+    P["h = (a^2 + b^2) ^ 0.5"]
+    M[/"mostrar h"/]
+    F(["Fin"])
+    I --> D --> L --> P --> M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style P fill:#a78bfa,stroke:#6d28d9,color:#fff'>
+                <div class="mermaid">
+graph TB
+    I(["Inicio"])
+    D["Real: a, b, h"]
+    L[/"leer a, b"/]
+    P["h = (a^2 + b^2) ^ 0.5"]
+    M[/"mostrar h"/]
+    F(["Fin"])
+    I --> D --> L --> P --> M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style P fill:#a78bfa,stroke:#6d28d9,color:#fff
+                </div>
+              </div>
+            </div>
+
+            <h4>🧪 Prueba con un triángulo conocido (3-4-5)</h4>
+            <p>Para a=3, b=4: h² = 9 + 16 = 25 → h = √25 = <strong>5 ✓</strong></p>
+
+            <div class="callout tip">
+              <div class="callout-header"><span class="callout-icon">💡</span> Lección</div>
+              <p>La <strong>raíz cuadrada</strong> en pseudocódigo se expresa como <code>x ^ 0.5</code>
+              (potencia de un medio). En Python usarás <code>math.sqrt(x)</code> o <code>x ** 0.5</code>;
+              en otros lenguajes hay funciones similares. <em>El concepto es el mismo.</em></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EJERCICIO 5 -->
+      <div class="exercise">
+        <div class="exercise-header">
+          <span class="exercise-num">EJ. 5</span>
+          <span>Puntaje de práctica con respuestas correctas / incorrectas / en blanco</span>
+          <span class="exercise-tag">📚 S22 ejercicio 2</span>
+        </div>
+        <div class="exercise-body">
+          <div class="statement-box">
+            <span class="statement-label">📝 Enunciado</span>
+            <p>Elaborar un algoritmo que solicite el número de respuestas <strong>correctas, incorrectas y en blanco</strong>
+            obtenidas en la práctica. Mostrar el puntaje final sabiendo que:</p>
+            <ul>
+              <li>Cada correcta = <strong>+3 puntos</strong></li>
+              <li>Cada incorrecta = <strong>−1 punto</strong></li>
+              <li>Cada en blanco = <strong>0 puntos</strong></li>
+            </ul>
+          </div>
+
+          <div class="solution-block">
+            <h4>🎯 ¿Qué nos piden?</h4>
+            <p>Calcular un puntaje aplicando reglas distintas a cada categoría. Es similar a un promedio ponderado,
+            pero en vez de dividir, simplemente sumamos cada categoría con su peso.</p>
+
+            <h4>🧠 Razonamiento</h4>
+            <div class="formula-box">
+              puntaje = NC × 3 + NI × (−1) + NB × 0<br/>
+              <span style="font-size:0.85rem;color:var(--text-muted)">simplificado:</span><br/>
+              puntaje = NC × 3 − NI
+            </div>
+
+            <p>(Como las en blanco aportan 0, se pueden omitir del cálculo, aunque el algoritmo igual debe leerlas.)</p>
+
+            <h4>🧠 Identificar variables (leyenda)</h4>
+            <div class="legend-box">
+              <div class="legend-title">🏷️ Leyenda</div>
+              <ul style="margin:0">
+                <li><code>NC</code> = número de respuestas correctas</li>
+                <li><code>NI</code> = número de respuestas incorrectas</li>
+                <li><code>NB</code> = número de respuestas en blanco</li>
+                <li><code>P</code> = puntaje final</li>
+                <li>Tipo: <span class="tipo">Entero</span> (no hay medias respuestas)</li>
+              </ul>
+            </div>
+
+            <h4>🪜 Pseudocódigo</h4>
+<pre class="pseudo"><code><span class="kw">INICIO</span>
+    <span class="tipo">Entero</span>: <span class="var">NC</span>, <span class="var">NI</span>, <span class="var">NB</span>, <span class="var">P</span>
+    <span class="fn">Leer</span> <span class="var">NC</span>, <span class="var">NI</span>, <span class="var">NB</span>
+    <span class="var">P</span> <span class="op">=</span> <span class="var">NC</span> <span class="op">*</span> <span class="num">3</span> <span class="op">+</span> <span class="var">NI</span> <span class="op">*</span> (<span class="op">-</span><span class="num">1</span>) <span class="op">+</span> <span class="var">NB</span> <span class="op">*</span> <span class="num">0</span>
+    <span class="fn">Mostrar</span> <span class="str">"Puntaje final: "</span>, <span class="var">P</span>
+<span class="kw">FIN</span></code></pre>
+
+            <h4>🔷 Diagrama de flujo</h4>
+            <div class="flowchart-container">
+              <div class="mermaid-container" data-original='graph TB
+    I(["Inicio"])
+    D["Entero: NC, NI, NB, P"]
+    L[/"leer NC, NI, NB"/]
+    P["P = NC*3 + NI*(-1) + NB*0"]
+    M[/"mostrar P"/]
+    F(["Fin"])
+    I --> D --> L --> P --> M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style P fill:#a78bfa,stroke:#6d28d9,color:#fff'>
+                <div class="mermaid">
+graph TB
+    I(["Inicio"])
+    D["Entero: NC, NI, NB, P"]
+    L[/"leer NC, NI, NB"/]
+    P["P = NC*3 + NI*(-1) + NB*0"]
+    M[/"mostrar P"/]
+    F(["Fin"])
+    I --> D --> L --> P --> M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style P fill:#a78bfa,stroke:#6d28d9,color:#fff
+                </div>
+              </div>
+            </div>
+
+            <h4>🧪 Prueba: 8 correctas, 3 incorrectas, 4 en blanco</h4>
+            <p>P = 8 × 3 + 3 × (−1) + 4 × 0 = 24 − 3 + 0 = <strong>21 puntos ✓</strong></p>
+
+            <div class="callout tip">
+              <div class="callout-header"><span class="callout-icon">💡</span> Lección</div>
+              <p>Aunque <code>NB × 0</code> siempre da 0, conviene <strong>dejarlo escrito</strong> para que el
+              algoritmo refleje fielmente las reglas del problema. Hace el código más auditable: cualquiera puede
+              ver <em>todas</em> las reglas reflejadas.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EJERCICIO 6 -->
+      <div class="exercise">
+        <div class="exercise-header">
+          <span class="exercise-num">EJ. 6</span>
+          <span>Nota final con pesos 70-20-10</span>
+          <span class="exercise-tag">📚 S22 ejercicio 3</span>
+        </div>
+        <div class="exercise-body">
+          <div class="statement-box">
+            <span class="statement-label">📝 Enunciado</span>
+            <p>El examen del curso es el <strong>70%</strong> de la nota total. Las prácticas constituyen el
+            <strong>20%</strong> y las tareas el <strong>10%</strong>. Ingrese como datos la nota del examen,
+            prácticas y tareas. Calcule la nota final del curso.</p>
+          </div>
+
+          <div class="solution-block">
+            <h4>🎯 ¿Qué nos piden?</h4>
+            <p>Otra media ponderada, con tres componentes esta vez. Aplicas el mismo razonamiento del Ejercicio 3.</p>
+
+            <h4>🧠 Identificar variables (leyenda)</h4>
+            <div class="legend-box">
+              <div class="legend-title">🏷️ Leyenda</div>
+              <ul style="margin:0">
+                <li><code>NE</code> = nota del examen</li>
+                <li><code>NP</code> = nota de prácticas</li>
+                <li><code>NT</code> = nota de tareas</li>
+                <li><code>NF</code> = nota final del curso</li>
+                <li>Tipo: <span class="tipo">Real</span></li>
+              </ul>
+            </div>
+
+            <h4>🪜 Pseudocódigo</h4>
+<pre class="pseudo"><code><span class="kw">INICIO</span>
+    <span class="tipo">Real</span>: <span class="var">NE</span>, <span class="var">NP</span>, <span class="var">NT</span>, <span class="var">NF</span>
+    <span class="fn">Leer</span> <span class="var">NE</span>, <span class="var">NP</span>, <span class="var">NT</span>
+    <span class="var">NF</span> <span class="op">=</span> <span class="var">NE</span> <span class="op">*</span> <span class="num">0.70</span> <span class="op">+</span> <span class="var">NP</span> <span class="op">*</span> <span class="num">0.20</span> <span class="op">+</span> <span class="var">NT</span> <span class="op">*</span> <span class="num">0.10</span>
+    <span class="fn">Mostrar</span> <span class="str">"Nota final: "</span>, <span class="var">NF</span>
+<span class="kw">FIN</span></code></pre>
+
+            <h4>🔷 Diagrama de flujo</h4>
+            <div class="flowchart-container">
+              <div class="mermaid-container" data-original='graph TB
+    I(["Inicio"])
+    D["Real: NE, NP, NT, NF"]
+    L[/"leer NE, NP, NT"/]
+    P["NF = NE*0.70 + NP*0.20 + NT*0.10"]
+    M[/"mostrar NF"/]
+    F(["Fin"])
+    I --> D --> L --> P --> M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style P fill:#a78bfa,stroke:#6d28d9,color:#fff'>
+                <div class="mermaid">
+graph TB
+    I(["Inicio"])
+    D["Real: NE, NP, NT, NF"]
+    L[/"leer NE, NP, NT"/]
+    P["NF = NE*0.70 + NP*0.20 + NT*0.10"]
+    M[/"mostrar NF"/]
+    F(["Fin"])
+    I --> D --> L --> P --> M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style P fill:#a78bfa,stroke:#6d28d9,color:#fff
+                </div>
+              </div>
+            </div>
+
+            <h4>🧪 Prueba con NE=14, NP=16, NT=18</h4>
+            <p>NF = 14×0.70 + 16×0.20 + 18×0.10 = 9.8 + 3.2 + 1.8 = <strong>14.8 ✓</strong></p>
+
+            <div class="callout tip">
+              <div class="callout-header"><span class="callout-icon">💡</span> Lección</div>
+              <p>Cuando los pesos suman <strong>100%</strong>, la fórmula sale "natural" multiplicando por decimales
+              (0.70, 0.20, 0.10). Cuando los pesos son enteros (4, 3, 2, 1) es mejor sumar todo y dividir entre la
+              suma. Las dos formas son <strong>matemáticamente equivalentes</strong>.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EJERCICIO 7 -->
+      <div class="exercise">
+        <div class="exercise-header">
+          <span class="exercise-num">EJ. 7</span>
+          <span>Intercambio de valores entre dos variables</span>
+          <span class="exercise-tag">📚 Joyanes 3.3.2</span>
+        </div>
+        <div class="exercise-body">
+          <div class="statement-box">
+            <span class="statement-label">📝 Enunciado</span>
+            <p>Diseñe un algoritmo que <strong>lea dos números enteros y los intercambie</strong> (que A tome
+            el valor de B y B tome el valor de A), luego los muestre.</p>
+          </div>
+
+          <div class="solution-block">
+            <h4>🎯 ¿Qué nos piden?</h4>
+            <p>Aplicar el patrón de <strong>intercambio con variable auxiliar</strong> que vimos en el Bloque 1.</p>
+
+            <h4>🧠 Identificar variables (leyenda)</h4>
+            <div class="legend-box">
+              <div class="legend-title">🏷️ Leyenda</div>
+              <ul style="margin:0">
+                <li><code>A</code>, <code>B</code> = los dos números a intercambiar</li>
+                <li><code>AUX</code> = variable auxiliar para preservar el valor original de A</li>
+                <li>Tipo: <span class="tipo">Entero</span></li>
+              </ul>
+            </div>
+
+            <h4>🪜 Pseudocódigo</h4>
+<pre class="pseudo"><code><span class="kw">INICIO</span>
+    <span class="tipo">Entero</span>: <span class="var">A</span>, <span class="var">B</span>, <span class="var">AUX</span>
+    <span class="fn">Leer</span> <span class="var">A</span>, <span class="var">B</span>
+    <span class="var">AUX</span> <span class="op">=</span> <span class="var">A</span>     <span class="cmt">// guardo A para no perderlo</span>
+    <span class="var">A</span> <span class="op">=</span> <span class="var">B</span>       <span class="cmt">// A toma el valor de B</span>
+    <span class="var">B</span> <span class="op">=</span> <span class="var">AUX</span>     <span class="cmt">// B toma el valor original de A</span>
+    <span class="fn">Mostrar</span> <span class="str">"A = "</span>, <span class="var">A</span>, <span class="str">", B = "</span>, <span class="var">B</span>
+<span class="kw">FIN</span></code></pre>
+
+            <h4>🔷 Diagrama de flujo</h4>
+            <div class="flowchart-container">
+              <div class="mermaid-container" data-original='graph TB
+    I(["Inicio"])
+    D["Entero: A, B, AUX"]
+    L[/"leer A, B"/]
+    P1["AUX = A"]
+    P2["A = B"]
+    P3["B = AUX"]
+    M[/"mostrar A, B"/]
+    F(["Fin"])
+    I --> D --> L --> P1 --> P2 --> P3 --> M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style P1 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P2 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P3 fill:#a78bfa,stroke:#6d28d9,color:#fff'>
+                <div class="mermaid">
+graph TB
+    I(["Inicio"])
+    D["Entero: A, B, AUX"]
+    L[/"leer A, B"/]
+    P1["AUX = A"]
+    P2["A = B"]
+    P3["B = AUX"]
+    M[/"mostrar A, B"/]
+    F(["Fin"])
+    I --> D --> L --> P1 --> P2 --> P3 --> M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style P1 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P2 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P3 fill:#a78bfa,stroke:#6d28d9,color:#fff
+                </div>
+              </div>
+            </div>
+
+            <h4>🧪 Prueba de escritorio con A=10, B=20</h4>
+            <div class="trace-table">
+              <table>
+                <thead><tr><th>Paso</th><th>Instrucción</th><th>A</th><th>B</th><th>AUX</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td>Leer A, B</td><td>10</td><td>20</td><td>?</td></tr>
+                  <tr><td>2</td><td>AUX = A</td><td>10</td><td>20</td><td>10</td></tr>
+                  <tr><td>3</td><td>A = B</td><td>20</td><td>20</td><td>10</td></tr>
+                  <tr><td>4</td><td>B = AUX</td><td>20</td><td>10</td><td>10</td></tr>
+                  <tr><td>5</td><td>Mostrar</td><td colspan="3"><strong>A = 20, B = 10 ✓</strong></td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="final-answer">
+              <div class="final-answer-label">✅ Resultado</div>
+              <p>Los valores quedaron intercambiados correctamente.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EJERCICIO 8 -->
+      <div class="exercise">
+        <div class="exercise-header">
+          <span class="exercise-num">EJ. 8</span>
+          <span>Descomposición de monto en billetes</span>
+          <span class="exercise-tag">🧩 Práctica DIV/MOD</span>
+        </div>
+        <div class="exercise-body">
+          <div class="statement-box">
+            <span class="statement-label">📝 Enunciado</span>
+            <p>Diseñe un algoritmo que <strong>lea un monto entero en soles</strong> y lo descomponga en la
+            <strong>menor cantidad de billetes</strong> de S/.100, S/.50, S/.20, S/.10 y S/.1 (asumir que siempre
+            se puede pagar exacto).</p>
+          </div>
+
+          <div class="solution-block">
+            <h4>🎯 ¿Qué nos piden?</h4>
+            <p>Descomponer un monto en denominaciones más pequeñas. Usaremos <code>div</code> para saber cuántos
+            billetes "caben" y <code>mod</code> para saber qué queda por pagar.</p>
+
+            <h4>🧠 Estrategia (de grande a pequeño)</h4>
+            <ol>
+              <li>Cuántos billetes de 100 caben → <code>m div 100</code>; lo que sobra → <code>m mod 100</code>.</li>
+              <li>De ese sobrante, cuántos de 50 caben → <code>resto div 50</code>; nuevo sobrante → <code>resto mod 50</code>.</li>
+              <li>Continúo hasta los billetes de S/.1.</li>
+            </ol>
+
+            <h4>🧠 Identificar variables (leyenda)</h4>
+            <div class="legend-box">
+              <div class="legend-title">🏷️ Leyenda</div>
+              <ul style="margin:0">
+                <li><code>monto</code> = cantidad total a descomponer (entrada)</li>
+                <li><code>b100, b50, b20, b10, b1</code> = cantidad de billetes de cada denominación</li>
+                <li><code>resto</code> = lo que queda por descomponer en cada paso</li>
+                <li>Tipo: <span class="tipo">Entero</span></li>
+              </ul>
+            </div>
+
+            <h4>🪜 Pseudocódigo</h4>
+<pre class="pseudo"><code><span class="kw">INICIO</span>
+    <span class="tipo">Entero</span>: <span class="var">monto</span>, <span class="var">resto</span>, <span class="var">b100</span>, <span class="var">b50</span>, <span class="var">b20</span>, <span class="var">b10</span>, <span class="var">b1</span>
+    <span class="fn">Leer</span> <span class="var">monto</span>
+    <span class="var">b100</span> <span class="op">=</span> <span class="var">monto</span> <span class="op">div</span> <span class="num">100</span>
+    <span class="var">resto</span> <span class="op">=</span> <span class="var">monto</span> <span class="op">mod</span> <span class="num">100</span>
+    <span class="var">b50</span> <span class="op">=</span> <span class="var">resto</span> <span class="op">div</span> <span class="num">50</span>
+    <span class="var">resto</span> <span class="op">=</span> <span class="var">resto</span> <span class="op">mod</span> <span class="num">50</span>
+    <span class="var">b20</span> <span class="op">=</span> <span class="var">resto</span> <span class="op">div</span> <span class="num">20</span>
+    <span class="var">resto</span> <span class="op">=</span> <span class="var">resto</span> <span class="op">mod</span> <span class="num">20</span>
+    <span class="var">b10</span> <span class="op">=</span> <span class="var">resto</span> <span class="op">div</span> <span class="num">10</span>
+    <span class="var">b1</span> <span class="op">=</span> <span class="var">resto</span> <span class="op">mod</span> <span class="num">10</span>
+    <span class="fn">Mostrar</span> <span class="var">b100</span>, <span class="var">b50</span>, <span class="var">b20</span>, <span class="var">b10</span>, <span class="var">b1</span>
+<span class="kw">FIN</span></code></pre>
+
+            <h4>🧪 Prueba con monto = 287 soles</h4>
+            <div class="trace-table">
+              <table>
+                <thead><tr><th>Paso</th><th>Cálculo</th><th>resto</th><th>b100</th><th>b50</th><th>b20</th><th>b10</th><th>b1</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td>b100 = 287 div 100 = 2</td><td>—</td><td>2</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+                  <tr><td>2</td><td>resto = 287 mod 100 = 87</td><td>87</td><td>2</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+                  <tr><td>3</td><td>b50 = 87 div 50 = 1</td><td>87</td><td>2</td><td>1</td><td>—</td><td>—</td><td>—</td></tr>
+                  <tr><td>4</td><td>resto = 87 mod 50 = 37</td><td>37</td><td>2</td><td>1</td><td>—</td><td>—</td><td>—</td></tr>
+                  <tr><td>5</td><td>b20 = 37 div 20 = 1</td><td>37</td><td>2</td><td>1</td><td>1</td><td>—</td><td>—</td></tr>
+                  <tr><td>6</td><td>resto = 37 mod 20 = 17</td><td>17</td><td>2</td><td>1</td><td>1</td><td>—</td><td>—</td></tr>
+                  <tr><td>7</td><td>b10 = 17 div 10 = 1</td><td>17</td><td>2</td><td>1</td><td>1</td><td>1</td><td>—</td></tr>
+                  <tr><td>8</td><td>b1 = 17 mod 10 = 7</td><td>17</td><td>2</td><td>1</td><td>1</td><td>1</td><td>7</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="final-answer">
+              <div class="final-answer-label">✅ Verificación</div>
+              <p>2×100 + 1×50 + 1×20 + 1×10 + 7×1 = 200 + 50 + 20 + 10 + 7 = <strong>287 ✓</strong></p>
+            </div>
+
+            <div class="callout tip">
+              <div class="callout-header"><span class="callout-icon">💡</span> Lección</div>
+              <p>El patrón <code>div</code> + <code>mod</code> repetido es muy potente: <strong>siempre que un total
+              pueda descomponerse en unidades de distinto tamaño</strong> (dinero, tiempo, peso), este patrón funciona.
+              <em>Importante: ir de la denominación más grande a la más pequeña</em>, para minimizar la cantidad total de billetes.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ GLOSARIO ============ -->
+    <section class="block" id="glosario">
+      <div class="block-header">
+        <div class="block-num">📖</div>
+        <h2>Glosario rápido</h2>
+      </div>
+
+      <div class="glossary-grid">
+        <div class="gloss-item"><div class="gloss-term">Instrucción</div><div class="gloss-def">Acción u orden que ejecuta un algoritmo.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Asignación</div><div class="gloss-def">Operación que guarda un valor en una variable. Símbolo: = (curso) o ← (Joyanes).</div></div>
+        <div class="gloss-item"><div class="gloss-term">Variable auxiliar</div><div class="gloss-def">Variable temporal usada para preservar un valor durante un intercambio.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Programa lineal</div><div class="gloss-def">Programa cuyas instrucciones se ejecutan una tras otra sin desvíos.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Programa no lineal</div><div class="gloss-def">Programa con bifurcaciones o ciclos que cambian el flujo.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Operador aritmético</div><div class="gloss-def">+, −, *, /, ^, mod, div. Operan sobre números.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Operador relacional</div><div class="gloss-def">&lt;, &gt;, &lt;=, &gt;=, =, &lt;&gt;. Comparan valores y devuelven V/F.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Operador lógico</div><div class="gloss-def">AND, OR, NOT. Combinan valores lógicos.</div></div>
+        <div class="gloss-item"><div class="gloss-term">DIV</div><div class="gloss-def">División entera: A div B = parte entera del cociente.</div></div>
+        <div class="gloss-item"><div class="gloss-term">MOD</div><div class="gloss-def">Resto de la división entera: A mod B = sobrante.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Jerarquía de operadores</div><div class="gloss-def">Orden en que se evalúan: () → ^ → * / div mod → + − → relacionales → lógicos.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Símbolo terminal</div><div class="gloss-def">Óvalo en diagramas de flujo. Marca Inicio o Fin.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Símbolo de proceso</div><div class="gloss-def">Rectángulo. Operaciones de cálculo o asignación.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Símbolo E/S</div><div class="gloss-def">Paralelogramo. Lectura o escritura de datos.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Símbolo de decisión</div><div class="gloss-def">Rombo. Bifurcación basada en una condición. (Semana 4)</div></div>
+        <div class="gloss-item"><div class="gloss-term">ANSI</div><div class="gloss-def">Instituto Americano de Estándares: define los símbolos del diagrama de flujo.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Algoritmo secuencial</div><div class="gloss-def">Algoritmo donde las instrucciones se ejecutan en orden estricto.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Promedio ponderado</div><div class="gloss-def">Promedio donde cada valor tiene un peso distinto.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Leyenda de variables</div><div class="gloss-def">Lista que explica qué representa cada variable. Exigida por el profesor.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Prueba de escritorio</div><div class="gloss-def">Simulación manual del algoritmo con valores de prueba.</div></div>
+      </div>
+    </section>
+
+    <!-- ============ AUTOEVALUACIÓN ============ -->
+    <section class="block" id="autoevaluacion">
+      <div class="block-header">
+        <div class="block-num">✅</div>
+        <h2>Autoevaluación · 12 preguntas</h2>
+      </div>
+
+      <p style="color:var(--text-muted);margin-bottom:20px;">
+        Responde mentalmente, luego abre la respuesta. <strong>Si fallas más de 3, repasa los bloques correspondientes</strong>.
+      </p>
+
+      <div class="quiz-item">
+        <div class="quiz-q">¿Cuáles son los 5 tipos de instrucciones básicas según Joyanes?</div>
+        <details><summary>Ver respuesta</summary><div class="answer-content">
+          <strong>Inicio/Fin, Asignación, Lectura, Escritura, Bifurcación.</strong>
+        </div></details>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">¿Por qué necesitas una variable auxiliar para intercambiar dos valores?</div>
+        <details><summary>Ver respuesta</summary><div class="answer-content">
+          Porque al hacer <code>A = B</code> <strong>pierdes el valor original de A</strong>. La variable auxiliar lo guarda para usarlo después.
+        </div></details>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">¿Cuánto da <code>23 div 7</code> y <code>23 mod 7</code>?</div>
+        <details><summary>Ver respuesta</summary><div class="answer-content">
+          <strong>23 div 7 = 3</strong> (cabe 3 veces) y <strong>23 mod 7 = 2</strong> (sobran 2). Verificación: 7×3 + 2 = 23 ✓
+        </div></details>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">¿Cuál es el orden de prioridad de los operadores aritméticos?</div>
+        <details><summary>Ver respuesta</summary><div class="answer-content">
+          1) Paréntesis <strong>()</strong>, 2) Potencia <strong>^</strong>, 3) <strong>* / div mod</strong> (izq→der), 4) <strong>+ −</strong> (izq→der).
+        </div></details>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">¿Qué símbolo del diagrama de flujo es el ÚNICO que puede tener más de una línea de salida?</div>
+        <details><summary>Ver respuesta</summary><div class="answer-content">
+          El <strong>rombo (decisión)</strong>. Todos los demás tienen exactamente una salida.
+        </div></details>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">¿Para qué sirve el operador <code>mod</code>?</div>
+        <details><summary>Ver respuesta</summary><div class="answer-content">
+          Para obtener el <strong>resto de una división entera</strong>. Útil para detectar pares/impares (n mod 2 = 0 → par), descomponer cantidades, etc.
+        </div></details>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">Evalúa: <code>(8 + 4) mod 5 + 2 ^ 3</code></div>
+        <details><summary>Ver respuesta</summary><div class="answer-content">
+          1) Paréntesis: (8+4) = 12. 2) Potencia: 2^3 = 8. 3) Mod: 12 mod 5 = 2. 4) Suma: 2 + 8 = <strong>10</strong>.
+        </div></details>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">¿Cuáles son las 7 reglas para diseñar un diagrama de flujo?</div>
+        <details><summary>Ver respuesta</summary><div class="answer-content">
+          1) Arriba→abajo / izq→der · 2) Líneas con flecha (no diagonales) · 3) Evitar cruces · 4) No dejar líneas sueltas · 5) Texto legible · 6) Múltiples entradas excepto símbolo final · 7) Solo decisión tiene múltiples salidas.
+        </div></details>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">¿Qué es un programa lineal y en qué se diferencia de uno no lineal?</div>
+        <details><summary>Ver respuesta</summary><div class="answer-content">
+          <strong>Lineal</strong>: instrucciones ejecutadas una tras otra sin desvíos (lo de Semana 3).
+          <strong>No lineal</strong>: tiene bifurcaciones (decisiones) o ciclos (Semanas 4-5).
+        </div></details>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">Si los pesos de una nota son 50%, 30% y 20%, ¿cómo escribirías la fórmula?</div>
+        <details><summary>Ver respuesta</summary><div class="answer-content">
+          <code>NF = N1 * 0.50 + N2 * 0.30 + N3 * 0.20</code> o equivalentemente <code>NF = (N1*5 + N2*3 + N3*2) / 10</code>.
+        </div></details>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">Para detectar si un número N es múltiplo de 5, ¿qué condición usas?</div>
+        <details><summary>Ver respuesta</summary><div class="answer-content">
+          <code>N mod 5 = 0</code>. Si el resto es 0, N se divide exactamente entre 5.
+        </div></details>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">¿Qué exige tu profesor SIEMPRE en cada ejercicio de la práctica calificada?</div>
+        <details><summary>Ver respuesta</summary><div class="answer-content">
+          <strong>Indicar la leyenda con el detalle de las variables</strong> que utilizas + el pseudocódigo + el diagrama de flujo. Sin la leyenda, pierdes puntos.
+        </div></details>
+      </div>
+    </section>
+
+    <!-- ============ CIERRE ============ -->
+    <section class="block" id="cierre">
+      <div class="block-header">
+        <div class="block-num">🎯</div>
+        <h2>Cierre y conexión con la siguiente semana</h2>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header"><span class="callout-icon">🏁</span> Lo que ya dominas</div>
+        <ul>
+          <li>Los <strong>5 tipos de instrucciones básicas</strong> (Joyanes).</li>
+          <li>Cómo funciona la <strong>asignación</strong> y el patrón de <strong>intercambio con variable auxiliar</strong>.</li>
+          <li>Los tres tipos de operadores (<strong>aritméticos, relacionales, lógicos</strong>) y su <strong>jerarquía</strong>.</li>
+          <li><strong>DIV y MOD</strong> a profundidad y sus aplicaciones (descomposición, paridad).</li>
+          <li>Los <strong>símbolos ANSI</strong> y las <strong>7 reglas</strong> para diseñar un diagrama de flujo.</li>
+          <li>Los <strong>5 patrones</strong> de algoritmos secuenciales (cálculo, conversión, descomposición, ponderado, intercambio).</li>
+          <li>La estructura de la <strong>Práctica Calificada 1</strong> y sus 3 ejercicios resueltos.</li>
+        </ul>
+      </div>
+
+      <div class="callout intuition">
+        <div class="callout-header"><span class="callout-icon">➡️</span> Qué viene en la Semana 4</div>
+        <p>
+          Hasta ahora todos tus algoritmos han sido <strong>secuenciales</strong> (línea por línea, sin desvíos).
+          En la <strong>Semana 4</strong> aprenderás las <strong>estructuras de control condicional</strong>:
+          <code>SI</code> simple, <code>SI-SINO</code> compuesta, y los <strong>operadores lógicos</strong>
+          (AND, OR, NOT) en acción. Es donde tu algoritmo empieza a <em>tomar decisiones</em>.
+        </p>
+      </div>
+
+      <div class="callout warning">
+        <div class="callout-header"><span class="callout-icon">📋</span> Antes del examen parcial</div>
+        <p>Asegúrate de poder <strong>sin ver apuntes</strong>:</p>
+        <ol>
+          <li>Listar y explicar los 5 tipos de instrucciones.</li>
+          <li>Resolver mentalmente <code>87 div 4</code> y <code>87 mod 4</code> (= 21 y 3).</li>
+          <li>Evaluar una expresión combinada respetando la jerarquía.</li>
+          <li>Dibujar el diagrama de flujo del intercambio con variable auxiliar.</li>
+          <li>Resolver de memoria los 3 ejercicios de la Práctica 1 (estatura, sueldos, nota final).</li>
+          <li>Listar las 7 reglas de los diagramas de flujo.</li>
+          <li>Identificar el patrón secuencial al que pertenece un problema dado.</li>
+          <li>Hacer una prueba de escritorio completa con al menos un caso de prueba.</li>
+        </ol>
+      </div>
+    </section>
+
+    <footer>
+      <p>📘 <strong>Semana 3 · Instrucciones, Diagramas y Algoritmos Secuenciales</strong></p>
+      <p>Hecho con <span class="heart">♥</span> para Pingüino · Universidad de Piura</p>
+      <p style="margin-top:8px;font-size:0.8rem;">Tip: usa <kbd>Ctrl</kbd>+<kbd>F</kbd> para buscar cualquier término dentro del documento.</p>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+const root = document.documentElement;
+const themeToggle = document.getElementById('themeToggle');
+const themeIcon = document.getElementById('themeIcon');
+const themeLabel = document.getElementById('themeLabel');
+
+function getSavedTheme() {
+  try { return localStorage.getItem('penguin-theme') || 'dark'; }
+  catch (e) { return 'dark'; }
+}
+function saveTheme(t) {
+  try { localStorage.setItem('penguin-theme', t); } catch (e) {}
+}
+function applyTheme(theme) {
+  root.setAttribute('data-theme', theme);
+  if (theme === 'dark') { themeIcon.textContent = '🌙'; themeLabel.textContent = 'Modo oscuro'; }
+  else { themeIcon.textContent = '☀️'; themeLabel.textContent = 'Modo claro'; }
+  initMermaid(theme);
+}
+themeToggle.addEventListener('click', () => {
+  const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  applyTheme(next); saveTheme(next);
+});
+
+function initMermaid(theme) {
+  if (typeof mermaid === 'undefined') return;
+  const isDark = (theme === 'dark');
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: isDark ? 'dark' : 'default',
+    securityLevel: 'loose',
+    themeVariables: isDark ? {
+      background: '#161c2f', primaryColor: '#1e293b', primaryTextColor: '#e8edf7',
+      primaryBorderColor: '#3d4870', lineColor: '#94a3b8', secondaryColor: '#a78bfa',
+      tertiaryColor: '#34d399', mainBkg: '#1a2138', nodeBkg: '#1a2138',
+      clusterBkg: '#0d1322', edgeLabelBackground: '#161c2f',
+      fontFamily: 'Inter, sans-serif',
+    } : {
+      background: '#ffffff', primaryColor: '#f1f5f9', primaryTextColor: '#0f172a',
+      primaryBorderColor: '#cbd5e1', lineColor: '#475569', mainBkg: '#ffffff',
+      clusterBkg: '#f8fafc', fontFamily: 'Inter, sans-serif',
+    },
+    flowchart: { curve: 'basis', padding: 20, useMaxWidth: true }
+  });
+  document.querySelectorAll('.mermaid-container').forEach(container => {
+    const original = container.dataset.original;
+    if (original) container.innerHTML = '<div class="mermaid">' + original + '</div>';
+  });
+  if (mermaid.run) mermaid.run();
+  else if (mermaid.init) mermaid.init(undefined, document.querySelectorAll('.mermaid'));
+}
+
+const tocLinks = document.querySelectorAll('.toc-list a');
+const sections = document.querySelectorAll('section.block, section.hero');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      tocLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+}, { rootMargin: '-30% 0px -60% 0px' });
+sections.forEach(s => observer.observe(s));
+
+window.addEventListener('DOMContentLoaded', () => { applyTheme(getSavedTheme()); });
+</script>
+</body>
+</html>
