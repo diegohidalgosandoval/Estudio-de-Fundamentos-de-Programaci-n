@@ -1,0 +1,1978 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Semana 5 · Anidación y Estructuras de Repetición · Pingüino</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<style>
+:root[data-theme="dark"]{--bg:#0a0e1a;--bg-elevated:#131829;--bg-card:#161c2f;--bg-card-hover:#1c2340;--bg-code:#0d1322;--border:#2a3354;--border-strong:#3d4870;--text:#e8edf7;--text-muted:#98a4c2;--text-dim:#6b7793;--primary:#60a5fa;--primary-strong:#3b82f6;--primary-bg:rgba(96,165,250,.12);--accent:#34d399;--accent-bg:rgba(52,211,153,.12);--warning:#fbbf24;--warning-bg:rgba(251,191,36,.12);--danger:#f87171;--danger-bg:rgba(248,113,113,.12);--purple:#a78bfa;--purple-bg:rgba(167,139,250,.12);--pink:#f472b6;--pink-bg:rgba(244,114,182,.12);--shadow:0 4px 24px rgba(0,0,0,.4);--syn-kw:#c586c0;--syn-fn:#dcdcaa;--syn-tipo:#4ec9b0;--syn-op:#ff79c6;--syn-num:#b5cea8;--syn-str:#ce9178;--syn-var:#9cdcfe;--syn-cmt:#6a9955;--syn-bg:#0d1322;--truth-true-bg:rgba(52,211,153,.18);--truth-false-bg:rgba(248,113,113,.18);--truth-true:#34d399;--truth-false:#f87171}
+:root[data-theme="light"]{--bg:#f8fafc;--bg-elevated:#fff;--bg-card:#fff;--bg-card-hover:#f1f5f9;--bg-code:#f8fafc;--border:#e2e8f0;--border-strong:#cbd5e1;--text:#0f172a;--text-muted:#475569;--text-dim:#94a3b8;--primary:#2563eb;--primary-strong:#1d4ed8;--primary-bg:rgba(37,99,235,.08);--accent:#059669;--accent-bg:rgba(5,150,105,.08);--warning:#d97706;--warning-bg:rgba(217,119,6,.08);--danger:#dc2626;--danger-bg:rgba(220,38,38,.08);--purple:#7c3aed;--purple-bg:rgba(124,58,237,.08);--pink:#db2777;--pink-bg:rgba(219,39,119,.08);--shadow:0 2px 8px rgba(15,23,42,.06);--syn-kw:#af00db;--syn-fn:#795e26;--syn-tipo:#267f99;--syn-op:#d73a49;--syn-num:#098658;--syn-str:#a31515;--syn-var:#001080;--syn-cmt:#008000;--syn-bg:#f6f8fa;--truth-true-bg:rgba(5,150,105,.12);--truth-false-bg:rgba(220,38,38,.12);--truth-true:#059669;--truth-false:#dc2626}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:16px;transition:background .3s,color .3s;min-height:100vh}
+::selection{background:var(--primary);color:#fff}
+.topbar{position:sticky;top:0;z-index:100;background:var(--bg-elevated);border-bottom:1px solid var(--border);padding:14px 32px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(12px);background:color-mix(in srgb,var(--bg-elevated) 85%,transparent)}
+.brand{display:flex;align-items:center;gap:12px;font-weight:700;font-size:1.05rem;color:var(--text)}
+.brand-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--primary),var(--purple));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;color:#fff;box-shadow:0 4px 12px var(--primary-bg)}
+.brand-text small{display:block;font-size:.75rem;font-weight:500;color:var(--text-muted);margin-top:-2px}
+.theme-toggle{background:var(--bg-card);border:1px solid var(--border);color:var(--text);padding:8px 14px;border-radius:999px;cursor:pointer;display:flex;align-items:center;gap:8px;font-size:.85rem;font-weight:500;font-family:inherit;transition:all .2s}
+.theme-toggle:hover{background:var(--bg-card-hover);border-color:var(--primary);transform:translateY(-1px)}
+.layout{display:grid;grid-template-columns:280px 1fr;max-width:1500px;margin:0 auto}
+@media(max-width:1024px){.layout{grid-template-columns:1fr}.sidebar{display:none}}
+.sidebar{position:sticky;top:64px;height:calc(100vh - 64px);overflow-y:auto;padding:24px 16px 24px 32px;border-right:1px solid var(--border);background:var(--bg)}
+.sidebar h3{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text-dim);margin-bottom:12px;font-weight:700}
+.toc-list{list-style:none}
+.toc-list li{margin:2px 0}
+.toc-list a{display:block;padding:8px 14px;color:var(--text-muted);text-decoration:none;border-radius:8px;font-size:.9rem;border-left:3px solid transparent;transition:all .15s}
+.toc-list a:hover{background:var(--bg-card);color:var(--text)}
+.toc-list a.active{background:var(--primary-bg);color:var(--primary);border-left-color:var(--primary);font-weight:600}
+main{padding:40px 56px 80px;max-width:100%;overflow-x:hidden}
+@media(max-width:768px){main{padding:24px 20px 60px}.topbar{padding:12px 16px}}
+.hero{padding:36px 0 48px;border-bottom:1px solid var(--border);margin-bottom:48px}
+.hero-badge{display:inline-block;padding:6px 14px;background:var(--primary-bg);color:var(--primary);border-radius:999px;font-size:.78rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;margin-bottom:16px}
+h1{font-size:clamp(2rem,5vw,3rem);font-weight:800;line-height:1.15;letter-spacing:-.02em;margin-bottom:16px;background:linear-gradient(135deg,var(--text) 0%,var(--primary) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:1.15rem;color:var(--text-muted);max-width:720px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:16px;margin-top:24px}
+.meta-pill{display:flex;align-items:center;gap:8px;padding:8px 14px;background:var(--bg-card);border:1px solid var(--border);border-radius:999px;font-size:.85rem;color:var(--text-muted)}
+.meta-pill strong{color:var(--text);font-weight:600}
+section.block{margin:64px 0;scroll-margin-top:80px}
+.block-header{display:flex;align-items:center;gap:16px;margin-bottom:28px}
+.block-num{width:48px;height:48px;background:linear-gradient(135deg,var(--primary),var(--purple));color:#fff;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:800;flex-shrink:0;box-shadow:0 6px 16px var(--primary-bg)}
+h2{font-size:clamp(1.6rem,3vw,2.1rem);font-weight:800;letter-spacing:-.01em;color:var(--text)}
+h3{font-size:1.35rem;font-weight:700;margin:36px 0 16px;color:var(--text)}
+h4{font-size:1.08rem;font-weight:700;margin:24px 0 12px;color:var(--text)}
+p{margin:12px 0;color:var(--text)}
+strong{color:var(--text);font-weight:600}
+em{color:var(--primary);font-style:normal;font-weight:500}
+ul,ol{margin:12px 0 12px 24px}
+li{margin:6px 0}
+a{color:var(--primary);text-decoration:none}
+a:hover{text-decoration:underline}
+.callout{margin:24px 0;padding:20px 24px;border-radius:14px;border-left:4px solid;background:var(--bg-card);position:relative}
+.callout-header{display:flex;align-items:center;gap:10px;font-weight:700;margin-bottom:8px;font-size:.95rem}
+.callout-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem}
+.callout p{margin:6px 0}
+.callout p:last-child{margin-bottom:0}
+.callout.intuition{border-color:var(--primary);background:var(--primary-bg)}.callout.intuition .callout-icon{background:var(--primary);color:#fff}.callout.intuition .callout-header{color:var(--primary)}
+.callout.theory{border-color:var(--purple);background:var(--purple-bg)}.callout.theory .callout-icon{background:var(--purple);color:#fff}.callout.theory .callout-header{color:var(--purple)}
+.callout.tip{border-color:var(--accent);background:var(--accent-bg)}.callout.tip .callout-icon{background:var(--accent);color:#fff}.callout.tip .callout-header{color:var(--accent)}
+.callout.warning{border-color:var(--warning);background:var(--warning-bg)}.callout.warning .callout-icon{background:var(--warning);color:#fff}.callout.warning .callout-header{color:var(--warning)}
+.callout.example{border-color:var(--pink);background:var(--pink-bg)}.callout.example .callout-icon{background:var(--pink);color:#fff}.callout.example .callout-header{color:var(--pink)}
+.def-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:22px 26px;margin:20px 0;position:relative;overflow:hidden}
+.def-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--primary),var(--purple))}
+.def-card .def-label{display:inline-block;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--primary);background:var(--primary-bg);padding:3px 10px;border-radius:6px;margin-bottom:8px}
+.def-card .def-term{font-size:1.15rem;font-weight:700;color:var(--text);margin-bottom:6px}
+.def-card .def-text{color:var(--text-muted)}
+.table-wrapper{overflow-x:auto;margin:20px 0;border-radius:12px;border:1px solid var(--border);background:var(--bg-card)}
+table{width:100%;border-collapse:collapse;font-size:.93rem}
+th,td{padding:12px 16px;text-align:left;border-bottom:1px solid var(--border)}
+th{background:var(--bg-elevated);color:var(--text);font-weight:700;font-size:.82rem;text-transform:uppercase;letter-spacing:.04em}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--bg-card-hover)}
+td.center,th.center{text-align:center}
+td.mono,th.mono{font-family:'JetBrains Mono',monospace;font-size:.95em}
+td.tv,th.tv{text-align:center;font-weight:700;font-family:'JetBrains Mono',monospace}
+td.tv.true{background:var(--truth-true-bg);color:var(--truth-true)}
+td.tv.false{background:var(--truth-false-bg);color:var(--truth-false)}
+code{font-family:'JetBrains Mono',monospace;background:var(--bg-code);border:1px solid var(--border);padding:2px 7px;border-radius:5px;font-size:.88em;color:var(--accent)}
+pre.pseudo{background:var(--syn-bg);border:1px solid var(--border);border-left:4px solid var(--purple);border-radius:12px;padding:20px 24px 18px;overflow-x:auto;margin:16px 0;font-family:'JetBrains Mono','Courier New',monospace;font-size:.92rem;line-height:1.85;position:relative;color:var(--text)}
+pre.pseudo::before{content:'⌨ pseudocódigo';position:absolute;top:6px;right:14px;font-size:.68rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em;font-family:'Inter',sans-serif;font-weight:600}
+pre.pseudo code{background:none;border:none;padding:0;color:inherit;font-size:inherit}
+.kw{color:var(--syn-kw);font-weight:700}
+.fn{color:var(--syn-fn);font-weight:600}
+.tipo{color:var(--syn-tipo);font-weight:600}
+.op{color:var(--syn-op);font-weight:500}
+.num{color:var(--syn-num)}
+.str{color:var(--syn-str)}
+.var{color:var(--syn-var)}
+.cmt{color:var(--syn-cmt);font-style:italic}
+.flowchart-container{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:24px;margin:20px 0;text-align:center;overflow-x:auto}
+.flowchart-container .mermaid{display:flex;justify-content:center;min-height:100px}
+.flowchart-caption{margin-top:12px;font-size:.85rem;color:var(--text-muted);font-style:italic}
+.dual-view{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:20px 0;align-items:start}
+@media(max-width:900px){.dual-view{grid-template-columns:1fr}}
+.dual-view .flowchart-container{margin:0}
+.dual-view pre.pseudo{margin:0}
+.exercise{background:var(--bg-card);border:2px solid var(--border-strong);border-radius:16px;margin:28px 0;overflow:hidden}
+.exercise-header{background:linear-gradient(135deg,var(--primary),var(--purple));color:#fff;padding:14px 24px;display:flex;align-items:center;gap:12px;font-weight:700;font-size:1.05rem;flex-wrap:wrap}
+.exercise-num{background:rgba(255,255,255,.25);padding:4px 10px;border-radius:6px;font-size:.85rem}
+.exercise-tag{background:rgba(255,255,255,.18);padding:3px 10px;border-radius:6px;font-size:.78rem;font-weight:500;margin-left:auto}
+.exercise-body{padding:24px 28px}
+.statement-box{background:var(--warning-bg);border-left:4px solid var(--warning);padding:16px 20px;border-radius:8px;margin:16px 0 24px}
+.statement-box .statement-label{font-weight:700;color:var(--warning);font-size:.82rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;display:block}
+.solution-block{margin-top:20px}
+.solution-block h4{display:flex;align-items:center;gap:8px;color:var(--accent);margin:24px 0 10px;font-size:1rem}
+.final-answer{background:var(--accent-bg);border-left:4px solid var(--accent);border-radius:8px;padding:16px 20px;margin:20px 0}
+.final-answer-label{font-weight:700;color:var(--accent);font-size:.82rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+.trace-table{background:var(--bg-card);border-radius:10px;overflow:hidden;margin:14px 0;border:1px solid var(--border)}
+.trace-table table{font-size:.88rem}
+.trace-table th{background:var(--purple-bg);color:var(--purple)}
+.legend-box{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin:12px 0;font-size:.9rem}
+.legend-box .legend-title{font-weight:700;color:var(--primary);margin-bottom:6px;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em}
+.compare-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin:20px 0}
+.compare-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:18px 20px}
+.compare-card h4{margin:0 0 10px;display:flex;align-items:center;gap:8px;font-size:1rem}
+.glossary-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin:20px 0}
+.gloss-item{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:16px 18px;transition:all .2s}
+.gloss-item:hover{border-color:var(--primary);background:var(--bg-card-hover);transform:translateY(-2px)}
+.gloss-term{font-weight:700;color:var(--primary);font-size:1rem;margin-bottom:4px}
+.gloss-def{font-size:.88rem;color:var(--text-muted)}
+.quiz-item{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin:18px 0}
+.quiz-q{font-weight:600;color:var(--text);margin-bottom:12px}
+details{margin-top:12px;border-top:1px dashed var(--border);padding-top:12px}
+summary{cursor:pointer;font-weight:600;color:var(--accent);font-size:.9rem;padding:6px 0;user-select:none}
+details[open] summary{margin-bottom:10px}
+.answer-content{font-size:.92rem;color:var(--text-muted);background:var(--accent-bg);border-radius:8px;padding:12px 16px;margin-top:8px}
+.answer-content strong{color:var(--accent)}
+footer{text-align:center;padding:40px 20px;border-top:1px solid var(--border);margin-top:80px;color:var(--text-muted);font-size:.88rem}
+footer .heart{color:var(--danger)}
+kbd{background:var(--bg-elevated);border:1px solid var(--border-strong);border-radius:4px;padding:1px 6px;font-family:'JetBrains Mono',monospace;font-size:.85em}
+.formula-box{background:var(--purple-bg);border:1px solid var(--purple);border-radius:10px;padding:14px 20px;margin:14px 0;text-align:center;font-family:'JetBrains Mono',monospace;font-size:1rem}
+.three-pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0}
+@media(max-width:800px){.three-pillars{grid-template-columns:1fr}}
+.pillar{padding:22px;border-radius:14px;border:2px solid;text-align:center}
+.pillar.mientras{background:var(--primary-bg);border-color:var(--primary)}
+.pillar.repetir{background:var(--accent-bg);border-color:var(--accent)}
+.pillar.para{background:var(--purple-bg);border-color:var(--purple)}
+.pillar h4{margin:0 0 8px;font-size:1.1rem}
+.pillar.mientras h4{color:var(--primary)}
+.pillar.repetir h4{color:var(--accent)}
+.pillar.para h4{color:var(--purple)}
+.pillar-list{font-size:.88rem;color:var(--text-muted);list-style:none;margin:0;padding:0}
+.pillar-list li{padding:4px 0}
+.pillar-tag{display:inline-block;padding:3px 10px;border-radius:6px;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+.pillar.mientras .pillar-tag{background:var(--primary);color:#fff}
+.pillar.repetir .pillar-tag{background:var(--accent);color:#000}
+.pillar.para .pillar-tag{background:var(--purple);color:#fff}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:10px}
+::-webkit-scrollbar-thumb:hover{background:var(--primary)}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-icon">🐧</div>
+    <div class="brand-text">Pingüino · Fundamentos de Programación<small>Guía de estudio · Semana 5</small></div>
+  </div>
+  <button class="theme-toggle" id="themeToggle"><span id="themeIcon">🌙</span><span id="themeLabel">Modo oscuro</span></button>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>📑 Contenido</h3>
+    <ul class="toc-list">
+      <li><a href="#intro">🏁 Introducción</a></li>
+      <li><a href="#bloque1">1️⃣ SI anidados a fondo</a></li>
+      <li><a href="#bloque2">2️⃣ ¿Qué es un ciclo?</a></li>
+      <li><a href="#bloque3">3️⃣ MIENTRAS</a></li>
+      <li><a href="#bloque4">4️⃣ REPETIR-HASTA</a></li>
+      <li><a href="#bloque5">5️⃣ PARA</a></li>
+      <li><a href="#bloque6">6️⃣ Patrones (contadores, De Morgan)</a></li>
+      <li><a href="#ejercicios">💪 Ejercicios resueltos</a></li>
+      <li><a href="#glosario">📖 Glosario</a></li>
+      <li><a href="#autoevaluacion">✅ Autoevaluación</a></li>
+      <li><a href="#cierre">🎯 Cierre</a></li>
+    </ul>
+  </aside>
+
+  <main>
+
+    <section class="hero" id="intro">
+      <div class="hero-badge">Semana 5 · Anidación + Ciclos</div>
+      <h1>Tu algoritmo aprende a repetir y a decidir en cascada</h1>
+      <p class="hero-sub">Esta es la semana <strong>más densa</strong> de la unidad. Vas a dominar los <strong>SI anidados</strong> para 3+ casos, las <strong>3 estructuras de repetición</strong> (MIENTRAS, REPETIR-HASTA, PARA), los patrones de <strong>contadores y acumuladores</strong>, las <strong>leyes de De Morgan</strong> para invertir condiciones, y el <strong>priming read</strong>. Todo paso a paso, con ejercicios reales del archivo S5 del curso.</p>
+      <div class="hero-meta">
+        <div class="meta-pill">⏱️ <span><strong>Lectura:</strong> ~100 min</span></div>
+        <div class="meta-pill">📚 <span><strong>Bloques:</strong> 6 + 8 ejercicios</span></div>
+        <div class="meta-pill">🔁 <span><strong>Ciclos:</strong> 3 estructuras</span></div>
+        <div class="meta-pill">🧮 <span><strong>Patrones:</strong> contador, acumulador</span></div>
+      </div>
+    </section>
+
+    <section class="block" id="bloque1">
+      <div class="block-header"><div class="block-num">1</div><h2>SI anidados a fondo: filtros en cascada</h2></div>
+
+      <div class="callout intuition">
+        <div class="callout-header"><span class="callout-icon">💡</span> Recordatorio</div>
+        <p>En la Semana 4 viste un avance de los SI anidados (ejercicio del triángulo). Ahora los profundizamos: son la herramienta clave cuando un problema tiene <strong>3 o más categorías</strong> mutuamente excluyentes (descuentos por niveles, tarifas por rangos, calificaciones por letras, etc.).</p>
+      </div>
+
+      <h3>1.1. ¿Qué es anidar?</h3>
+
+      <div class="def-card">
+        <span class="def-label">Definición</span>
+        <div class="def-term">SI anidado (encajado)</div>
+        <div class="def-text"><em>"Las estructuras SI interiores a otras estructuras SI se denominan anidadas o encajadas."</em> (Joyanes). Es decir: dentro de un SI (en su rama V o F), pones <strong>otro SI completo</strong>.</div>
+      </div>
+
+      <h3>1.2. Sintaxis del patrón "filtro en cascada"</h3>
+
+      <p>El patrón más útil: cuando tienes <strong>varios rangos excluyentes</strong>, anidas SI dentro del SINO sucesivamente:</p>
+
+<pre class="pseudo"><code><span class="kw">SI</span> condición1
+    <span class="cmt">// caso 1: condición1 es V</span>
+    bloque_P
+<span class="kw">SINO</span>
+    <span class="kw">SI</span> condición2
+        <span class="cmt">// caso 2: cond1 F, cond2 V</span>
+        bloque_Q
+    <span class="kw">SINO</span>
+        <span class="kw">SI</span> condición3
+            <span class="cmt">// caso 3: cond1 F, cond2 F, cond3 V</span>
+            bloque_R
+        <span class="kw">SINO</span>
+            <span class="cmt">// caso 4 "por defecto": ninguna se cumplió</span>
+            bloque_S
+        <span class="kw">FIN_SI</span>
+    <span class="kw">FIN_SI</span>
+<span class="kw">FIN_SI</span></code></pre>
+
+      <h3>1.3. Cómo "leer" un anidamiento (mentalmente)</h3>
+
+      <p>Imagínalo como una <strong>cadena de filtros</strong>: cada SINO te lleva a una nueva pregunta, y solo entras al siguiente filtro si fallaste el anterior:</p>
+
+      <div class="formula-box">
+        ¿condición1? ─sí→ ejecuta P y SAL<br/>
+        &nbsp;&nbsp;&nbsp;no ↓<br/>
+        ¿condición2? ─sí→ ejecuta Q y SAL<br/>
+        &nbsp;&nbsp;&nbsp;no ↓<br/>
+        ¿condición3? ─sí→ ejecuta R y SAL<br/>
+        &nbsp;&nbsp;&nbsp;no ↓<br/>
+        ejecuta S (caso por defecto)
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header"><span class="callout-icon">🎯</span> Regla de oro de la anidación</div>
+        <p><strong>Pon primero la condición MÁS RESTRICTIVA</strong>. Si pones primero la condición más amplia, los casos restrictivos nunca se ejecutan porque "se los come" la primera condición.</p>
+      </div>
+
+      <h3>1.4. El error clásico del orden incorrecto</h3>
+
+      <p>Imagina este enunciado: "<em>Si compras 50+ unidades, descuento 10%; si compras 20+, descuento 6%; sino, sin descuento</em>".</p>
+
+      <div class="compare-grid">
+        <div class="compare-card">
+          <h4 style="color:var(--danger)">❌ Orden incorrecto (de chico a grande)</h4>
+<pre class="pseudo" style="margin-top:8px"><code><span class="kw">SI</span> <span class="var">n</span> <span class="op">&gt;=</span> <span class="num">20</span>
+    <span class="var">d</span> <span class="op">=</span> <span class="num">0.06</span>
+<span class="kw">SINO</span>
+    <span class="kw">SI</span> <span class="var">n</span> <span class="op">&gt;=</span> <span class="num">50</span>
+        <span class="var">d</span> <span class="op">=</span> <span class="num">0.10</span>
+    <span class="kw">SINO</span>
+        <span class="var">d</span> <span class="op">=</span> <span class="num">0</span>
+    <span class="kw">FIN_SI</span>
+<span class="kw">FIN_SI</span></code></pre>
+          <p style="font-size:.85rem;color:var(--text-muted);margin-top:8px"><strong>Problema:</strong> si compras 60 unidades, primero entra al "≥ 20" y aplica 6%. <em>Nunca</em> se evalúa el "≥ 50". El descuento del 10% es código muerto.</p>
+        </div>
+        <div class="compare-card">
+          <h4 style="color:var(--accent)">✅ Orden correcto (de grande a chico)</h4>
+<pre class="pseudo" style="margin-top:8px"><code><span class="kw">SI</span> <span class="var">n</span> <span class="op">&gt;</span> <span class="num">50</span>
+    <span class="var">d</span> <span class="op">=</span> <span class="num">0.10</span>
+<span class="kw">SINO</span>
+    <span class="kw">SI</span> <span class="var">n</span> <span class="op">&gt;=</span> <span class="num">20</span>
+        <span class="var">d</span> <span class="op">=</span> <span class="num">0.06</span>
+    <span class="kw">SINO</span>
+        <span class="var">d</span> <span class="op">=</span> <span class="num">0</span>
+    <span class="kw">FIN_SI</span>
+<span class="kw">FIN_SI</span></code></pre>
+          <p style="font-size:.85rem;color:var(--text-muted);margin-top:8px"><strong>Funciona:</strong> compras 60 → "&gt; 50" V → 10%. Compras 25 → "&gt; 50" F → "≥ 20" V → 6%. Compras 10 → ambas F → 0%.</p>
+        </div>
+      </div>
+
+      <h3>1.5. Reglas de indentación en SI anidados</h3>
+
+      <p>Cada SI anidado se indenta <strong>4 espacios más</strong> que el de afuera. Esto hace que el código se "vea como una pirámide" y sea legible:</p>
+
+      <div class="callout warning">
+        <div class="callout-header"><span class="callout-icon">📐</span> Patrón visual</div>
+        <p>Si un FIN_SI no está alineado verticalmente con su SI correspondiente, casi seguro tienes un error. Cuenta los SI y los FIN_SI: deben coincidir.</p>
+      </div>
+    </section>
+
+    <section class="block" id="bloque2">
+      <div class="block-header"><div class="block-num">2</div><h2>¿Qué es un ciclo? El gran panorama</h2></div>
+
+      <div class="callout intuition">
+        <div class="callout-header"><span class="callout-icon">💡</span> Intuición</div>
+        <p>Hasta ahora tu algoritmo solo ejecutaba cada instrucción <strong>una vez</strong>. Pero piensa: ¿cómo procesarías las notas de 50 alumnos sin repetir? ¿Tendrías que escribir 50 instrucciones <code>Leer nota</code>? Sería absurdo. Los <strong>ciclos</strong> permiten <em>repetir el mismo bloque de instrucciones</em> con datos diferentes, controlando cuándo parar.</p>
+      </div>
+
+      <h3>2.1. Definición formal</h3>
+
+      <div class="def-card">
+        <span class="def-label">Definición</span>
+        <div class="def-term">Ciclo (bucle, lazo o loop)</div>
+        <div class="def-text">Sección de código que <strong>se repite varias veces</strong>, controlada por una <em>condición de parada</em>. Cada repetición se llama <strong>iteración</strong>. El objetivo es colocar el bloque dentro del ciclo y <em>agregar un elemento que permita salir</em> para que el algoritmo continúe.</div>
+      </div>
+
+      <h3>2.2. Las 3 estructuras de repetición</h3>
+
+      <div class="three-pillars">
+        <div class="pillar mientras">
+          <span class="pillar-tag">Pretest</span>
+          <h4>🔄 MIENTRAS</h4>
+          <p style="color:var(--text-muted);font-size:.9rem;margin:0 0 8px">Evalúa la condición <strong>al inicio</strong>. Puede ejecutarse <strong>0 veces</strong> si la condición es F desde el principio.</p>
+          <ul class="pillar-list">
+            <li>• Para repetir mientras X</li>
+            <li>• Cantidad desconocida</li>
+            <li>• Validación de datos</li>
+          </ul>
+        </div>
+        <div class="pillar repetir">
+          <span class="pillar-tag">Posttest</span>
+          <h4>🔁 REPETIR-HASTA</h4>
+          <p style="color:var(--text-muted);font-size:.9rem;margin:0 0 8px">Evalúa la condición <strong>al final</strong>. Garantiza que el bloque se ejecute <strong>al menos 1 vez</strong>.</p>
+          <ul class="pillar-list">
+            <li>• Para repetir hasta X</li>
+            <li>• Garantía de 1 ejecución</li>
+            <li>• Menús, contraseñas</li>
+          </ul>
+        </div>
+        <div class="pillar para">
+          <span class="pillar-tag">Conteo fijo</span>
+          <h4>🔢 PARA (DESDE)</h4>
+          <p style="color:var(--text-muted);font-size:.9rem;margin:0 0 8px">Repite un <strong>número exacto de veces</strong>. La variable de control se actualiza automáticamente.</p>
+          <ul class="pillar-list">
+            <li>• Cantidad conocida</li>
+            <li>• Procesar N elementos</li>
+            <li>• Tablas, listas</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>2.3. ¿Cuándo usar cada una? (decisión rápida)</h3>
+
+      <div class="callout tip">
+        <div class="callout-header"><span class="callout-icon">🧭</span> Árbol de decisión mental</div>
+        <ol>
+          <li>¿Sé exactamente <strong>cuántas veces</strong> debo repetir? → <strong>PARA</strong>.</li>
+          <li>¿La condición se evalúa <strong>antes</strong> de entrar (puede no ejecutarse)? → <strong>MIENTRAS</strong>.</li>
+          <li>¿Necesito ejecutar al menos una vez y revisar la condición <strong>después</strong>? → <strong>REPETIR-HASTA</strong>.</li>
+        </ol>
+      </div>
+
+      <h3>2.4. Lo que TODO ciclo necesita (no negociable)</h3>
+
+      <p>Independientemente de la estructura, <strong>todo ciclo bien hecho</strong> tiene 4 partes:</p>
+
+      <ol>
+        <li><strong>Inicialización</strong>: dar valor inicial a las variables de control (<code>contador = 0</code>, <code>suma = 0</code>).</li>
+        <li><strong>Condición de parada</strong>: una expresión lógica que algún día será F (o V para REPETIR).</li>
+        <li><strong>Cuerpo del ciclo</strong>: las instrucciones que se repiten.</li>
+        <li><strong>Actualización</strong>: cambiar algo dentro del ciclo para que la condición eventualmente termine. Si olvidas esto, tienes un <strong>bucle infinito</strong>.</li>
+      </ol>
+
+      <div class="callout warning">
+        <div class="callout-header"><span class="callout-icon">⚠️</span> Bucle infinito</div>
+        <p>Un bucle que <strong>nunca termina</strong> porque la condición nunca cambia o nunca se cumple la salida. Es el error más temido en programación. Solución: SIEMPRE asegúrate de que <em>algo</em> dentro del cuerpo modifique las variables de la condición.</p>
+      </div>
+    </section>
+
+    <section class="block" id="bloque3">
+      <div class="block-header"><div class="block-num">3</div><h2>MIENTRAS (while): "repite mientras se cumpla"</h2></div>
+
+      <div class="def-card">
+        <span class="def-label">Definición</span>
+        <div class="def-term">Estructura MIENTRAS</div>
+        <div class="def-text">Estructura de repetición controlada por una <strong>condición al inicio</strong>. Si la condición es V, ejecuta el bloque y vuelve a evaluar. Si es F, sale. <em>Si la condición es F desde el comienzo, el bloque NO se ejecuta nunca.</em></div>
+      </div>
+
+      <h3>3.1. Sintaxis del pseudocódigo (curso)</h3>
+
+<pre class="pseudo"><code><span class="kw">MIENTRAS</span> condición <span class="kw">HACER</span>
+    <span class="cmt">// bloque P (se repite mientras condición sea V)</span>
+    instrucción_1
+    instrucción_2
+    actualización_de_variables   <span class="cmt">// ¡crítico para no entrar en bucle infinito!</span>
+<span class="kw">FIN_MIENTRAS</span></code></pre>
+
+      <h3>3.2. Diagrama de flujo</h3>
+
+      <div class="flowchart-container">
+        <div class="mermaid-container" data-original='graph TB
+    I([Inicio del ciclo])
+    C{"¿condición?"}
+    P["bloque P + actualizar variables"]
+    F([Continúa el algoritmo])
+    I --> C
+    C -->|V| P
+    P --> C
+    C -->|F| F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#94a3b8,stroke:#475569,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000
+    style P fill:#a78bfa,stroke:#6d28d9,color:#fff'><div class="mermaid">
+graph TB
+    I([Inicio del ciclo])
+    C{"¿condición?"}
+    P["bloque P + actualizar variables"]
+    F([Continúa el algoritmo])
+    I --> C
+    C -->|V| P
+    P --> C
+    C -->|F| F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#94a3b8,stroke:#475569,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000
+    style P fill:#a78bfa,stroke:#6d28d9,color:#fff
+        </div></div>
+        <div class="flowchart-caption">📊 La flecha de P regresa al rombo: por eso "se repite". La salida solo es por la rama F.</div>
+      </div>
+
+      <h3>3.3. Las 4 partes del MIENTRAS (siempre)</h3>
+
+<pre class="pseudo"><code><span class="cmt">// 1. INICIALIZACIÓN (antes del MIENTRAS)</span>
+<span class="var">contador</span> <span class="op">=</span> <span class="num">0</span>
+<span class="fn">Leer</span> <span class="var">n</span>          <span class="cmt">// "priming read": lectura inicial</span>
+
+<span class="cmt">// 2. CONDICIÓN DE PARADA (en el MIENTRAS)</span>
+<span class="kw">MIENTRAS</span> <span class="var">n</span> <span class="op">&gt;</span> <span class="num">0</span> <span class="kw">HACER</span>
+    <span class="cmt">// 3. CUERPO (instrucciones que se repiten)</span>
+    <span class="var">contador</span> <span class="op">=</span> <span class="var">contador</span> <span class="op">+</span> <span class="num">1</span>
+    <span class="cmt">// 4. ACTUALIZACIÓN (cambia algo de la condición)</span>
+    <span class="fn">Leer</span> <span class="var">n</span>
+<span class="kw">FIN_MIENTRAS</span></code></pre>
+
+      <h3>3.4. El patrón "priming read" (lectura inicial)</h3>
+
+      <div class="callout intuition">
+        <div class="callout-header"><span class="callout-icon">🎓</span> Concepto avanzado pero esencial</div>
+        <p>Cuando un MIENTRAS depende de un dato leído del usuario, necesitas <strong>leerlo antes del ciclo</strong>. Es como "preparar la primera carta" antes de que comience el juego.</p>
+        <p>Patrón: <em>leer fuera → entrar al MIENTRAS → procesar → leer de nuevo dentro → repetir</em>.</p>
+      </div>
+
+      <p>Sin priming read tendrías que escribir el ciclo de forma rara. Con priming read, el código fluye naturalmente:</p>
+
+<pre class="pseudo"><code><span class="cmt">// Cuento positivos hasta que ingrese un negativo</span>
+<span class="var">cont</span> <span class="op">=</span> <span class="num">0</span>
+<span class="fn">Leer</span> <span class="var">n</span>                 <span class="cmt">// PRIMING READ (1ª lectura, fuera del ciclo)</span>
+<span class="kw">MIENTRAS</span> <span class="var">n</span> <span class="op">&gt;</span> <span class="num">0</span> <span class="kw">HACER</span>
+    <span class="var">cont</span> <span class="op">=</span> <span class="var">cont</span> <span class="op">+</span> <span class="num">1</span>
+    <span class="fn">Leer</span> <span class="var">n</span>             <span class="cmt">// LECTURA SUBSIGUIENTE (dentro)</span>
+<span class="kw">FIN_MIENTRAS</span></code></pre>
+
+      <h3>3.5. Característica clave: puede no ejecutarse nunca</h3>
+
+      <p>Si la condición es F desde el principio, el cuerpo del MIENTRAS <strong>jamás se ejecuta</strong>:</p>
+
+<pre class="pseudo"><code><span class="var">n</span> <span class="op">=</span> <span class="num">5</span>
+<span class="kw">MIENTRAS</span> <span class="var">n</span> <span class="op">&lt;=</span> <span class="num">4</span> <span class="kw">HACER</span>
+    <span class="cmt">// nunca entra: 5 NO es ≤ 4</span>
+    ...
+<span class="kw">FIN_MIENTRAS</span>
+<span class="cmt">// el algoritmo continúa aquí sin haber ejecutado nada</span></code></pre>
+
+      <p>Esto puede ser <strong>una ventaja o un defecto</strong> según el problema. Si quieres garantizar al menos una ejecución, usa REPETIR-HASTA (siguiente bloque).</p>
+    </section>
+
+
+    <section class="block" id="bloque4">
+      <div class="block-header"><div class="block-num">4</div><h2>REPETIR-HASTA: "ejecuta primero, pregunta después"</h2></div>
+
+      <div class="def-card">
+        <span class="def-label">Definición</span>
+        <div class="def-term">Estructura REPETIR-HASTA</div>
+        <div class="def-text">Estructura de repetición controlada por una <strong>condición al FINAL</strong>. Ejecuta el bloque, luego evalúa la condición. Si es <strong>F, vuelve a repetir</strong>; si es <strong>V, sale</strong>. <em>Garantiza que el cuerpo se ejecute al menos UNA vez.</em></div>
+      </div>
+
+      <h3>4.1. Sintaxis del pseudocódigo (curso)</h3>
+
+<pre class="pseudo"><code><span class="kw">REPETIR</span>
+    <span class="cmt">// bloque P (se ejecuta y luego se pregunta)</span>
+    instrucción_1
+    instrucción_2
+<span class="kw">HASTA QUE</span> condición</code></pre>
+
+      <h3>4.2. Diagrama de flujo</h3>
+
+      <div class="flowchart-container">
+        <div class="mermaid-container" data-original='graph TB
+    I([Inicio del ciclo])
+    P["bloque P"]
+    C{"¿condición?"}
+    F([Continúa el algoritmo])
+    I --> P
+    P --> C
+    C -->|F| P
+    C -->|V| F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#94a3b8,stroke:#475569,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000
+    style P fill:#a78bfa,stroke:#6d28d9,color:#fff'><div class="mermaid">
+graph TB
+    I([Inicio del ciclo])
+    P["bloque P"]
+    C{"¿condición?"}
+    F([Continúa el algoritmo])
+    I --> P
+    P --> C
+    C -->|F| P
+    C -->|V| F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#94a3b8,stroke:#475569,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000
+    style P fill:#a78bfa,stroke:#6d28d9,color:#fff
+        </div></div>
+        <div class="flowchart-caption">📊 La diferencia con MIENTRAS: P está antes del rombo. Por eso siempre se ejecuta al menos una vez.</div>
+      </div>
+
+      <h3>4.3. La gran trampa: condición invertida</h3>
+
+      <div class="callout warning">
+        <div class="callout-header"><span class="callout-icon">⚠️</span> Cuidado al traducir entre MIENTRAS y REPETIR</div>
+        <p>MIENTRAS sigue mientras la condición es <strong>VERDADERA</strong>. REPETIR sigue mientras la condición es <strong>FALSA</strong> (sale cuando es V).</p>
+        <p>Por eso, al traducir un MIENTRAS a REPETIR-HASTA, <strong>debes invertir la condición</strong>:</p>
+      </div>
+
+      <div class="compare-grid">
+        <div class="compare-card">
+          <h4 style="color:var(--primary)">🔄 MIENTRAS</h4>
+<pre class="pseudo" style="margin-top:8px"><code><span class="kw">MIENTRAS</span> <span class="var">n</span> <span class="op">&lt;=</span> <span class="num">100</span> <span class="kw">HACER</span>
+    ...
+<span class="kw">FIN_MIENTRAS</span></code></pre>
+          <p style="font-size:.85rem;color:var(--text-muted)">Sigue mientras n ≤ 100. Sale cuando n &gt; 100.</p>
+        </div>
+        <div class="compare-card">
+          <h4 style="color:var(--accent)">🔁 REPETIR-HASTA equivalente</h4>
+<pre class="pseudo" style="margin-top:8px"><code><span class="kw">REPETIR</span>
+    ...
+<span class="kw">HASTA QUE</span> <span class="var">n</span> <span class="op">&gt;</span> <span class="num">100</span></code></pre>
+          <p style="font-size:.85rem;color:var(--text-muted)">Sale cuando n &gt; 100 (la negación de n ≤ 100).</p>
+        </div>
+      </div>
+
+      <h3>4.4. MIENTRAS vs REPETIR: cuadro comparativo</h3>
+
+      <div class="table-wrapper">
+        <table>
+          <thead><tr><th>Característica</th><th>MIENTRAS</th><th>REPETIR-HASTA</th></tr></thead>
+          <tbody>
+            <tr><td>Condición se evalúa</td><td>Al inicio (pretest)</td><td>Al final (posttest)</td></tr>
+            <tr><td>¿Cuándo continúa?</td><td>Mientras condición es V</td><td>Mientras condición es F</td></tr>
+            <tr><td>¿Cuándo sale?</td><td>Cuando es F</td><td>Cuando es V</td></tr>
+            <tr><td>Mínimo de ejecuciones</td><td><strong>0</strong> (puede no entrar)</td><td><strong>1</strong> (siempre entra)</td></tr>
+            <tr><td>Caso de uso típico</td><td>Procesar mientras haya datos</td><td>Validar entrada, menús</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>4.5. Cuándo conviene REPETIR-HASTA</h3>
+
+      <p>El caso clásico: <strong>validación de entrada</strong>. Imagina que pides un mes (1-12). Quieres preguntar al menos una vez, y seguir preguntando si la respuesta es inválida:</p>
+
+<pre class="pseudo"><code><span class="kw">REPETIR</span>
+    <span class="fn">Leer</span> <span class="var">mes</span>
+    <span class="kw">SI</span> (<span class="var">mes</span> <span class="op">&lt;</span> <span class="num">1</span>) <span class="op">OR</span> (<span class="var">mes</span> <span class="op">&gt;</span> <span class="num">12</span>)
+        <span class="fn">Mostrar</span> <span class="str">"Valor entre 1 y 12"</span>
+    <span class="kw">FIN_SI</span>
+<span class="kw">HASTA QUE</span> (<span class="var">mes</span> <span class="op">&gt;=</span> <span class="num">1</span>) <span class="op">AND</span> (<span class="var">mes</span> <span class="op">&lt;=</span> <span class="num">12</span>)</code></pre>
+
+      <p>Con MIENTRAS sería incómodo: tendrías que hacer una lectura previa fuera del ciclo. Con REPETIR-HASTA, todo queda dentro y el flujo es natural.</p>
+    </section>
+
+    <section class="block" id="bloque5">
+      <div class="block-header"><div class="block-num">5</div><h2>PARA (DESDE / for): "repite N veces exactas"</h2></div>
+
+      <div class="def-card">
+        <span class="def-label">Definición</span>
+        <div class="def-term">Estructura PARA (DESDE)</div>
+        <div class="def-text">Estructura de repetición que ejecuta el bloque <strong>un número específico y conocido de veces</strong>. La <strong>variable de control</strong> (índice) se inicializa, se compara con el límite y se incrementa <em>automáticamente</em> en cada iteración.</div>
+      </div>
+
+      <h3>5.1. Sintaxis del pseudocódigo (curso)</h3>
+
+<pre class="pseudo"><code><span class="kw">PARA</span> <span class="var">i</span> <span class="op">=</span> <span class="num">1</span> <span class="kw">HASTA</span> <span class="var">N</span> <span class="kw">HACER</span>
+    <span class="cmt">// bloque P se ejecuta N veces</span>
+    instrucciones que usan i (o no)
+<span class="kw">FIN_PARA</span></code></pre>
+
+      <p>Variantes equivalentes que verás en otros materiales: <code>DESDE i = 1 HASTA N</code> o <code>desde i ← 1 hasta N hacer</code> (Joyanes). En el curso usamos <strong>PARA / FIN_PARA</strong>.</p>
+
+      <h3>5.2. Diagrama de flujo</h3>
+
+      <div class="flowchart-container">
+        <div class="mermaid-container" data-original='graph TB
+    I([Inicio del ciclo])
+    A["i = 1 (inicialización)"]
+    C{"¿i &lt;= N?"}
+    P["bloque P"]
+    Inc["i = i + 1 (automático)"]
+    F([Continúa el algoritmo])
+    I --> A --> C
+    C -->|V| P --> Inc --> C
+    C -->|F| F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#94a3b8,stroke:#475569,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000
+    style P fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style A fill:#fbbf24,stroke:#d97706,color:#000
+    style Inc fill:#fbbf24,stroke:#d97706,color:#000'><div class="mermaid">
+graph TB
+    I([Inicio del ciclo])
+    A["i = 1 (inicialización)"]
+    C{"¿i &lt;= N?"}
+    P["bloque P"]
+    Inc["i = i + 1 (automático)"]
+    F([Continúa el algoritmo])
+    I --> A --> C
+    C -->|V| P --> Inc --> C
+    C -->|F| F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#94a3b8,stroke:#475569,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000
+    style P fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style A fill:#fbbf24,stroke:#d97706,color:#000
+    style Inc fill:#fbbf24,stroke:#d97706,color:#000
+        </div></div>
+        <div class="flowchart-caption">📊 Lo que hace ahorrar el PARA: la inicialización, comparación e incremento se manejan automáticamente.</div>
+      </div>
+
+      <h3>5.3. ¿Qué pasa "por debajo" del PARA?</h3>
+
+      <p>El PARA es <strong>azúcar sintáctica</strong>: hace en una línea lo que el MIENTRAS necesita en tres pasos. Compara:</p>
+
+      <div class="compare-grid">
+        <div class="compare-card">
+          <h4 style="color:var(--purple)">🔢 PARA (compacto)</h4>
+<pre class="pseudo" style="margin-top:8px"><code><span class="kw">PARA</span> <span class="var">i</span> <span class="op">=</span> <span class="num">1</span> <span class="kw">HASTA</span> <span class="num">10</span> <span class="kw">HACER</span>
+    <span class="fn">Mostrar</span> <span class="var">i</span>
+<span class="kw">FIN_PARA</span></code></pre>
+        </div>
+        <div class="compare-card">
+          <h4 style="color:var(--primary)">🔄 MIENTRAS equivalente</h4>
+<pre class="pseudo" style="margin-top:8px"><code><span class="var">i</span> <span class="op">=</span> <span class="num">1</span>                    <span class="cmt">// inicialización</span>
+<span class="kw">MIENTRAS</span> <span class="var">i</span> <span class="op">&lt;=</span> <span class="num">10</span> <span class="kw">HACER</span>     <span class="cmt">// condición</span>
+    <span class="fn">Mostrar</span> <span class="var">i</span>
+    <span class="var">i</span> <span class="op">=</span> <span class="var">i</span> <span class="op">+</span> <span class="num">1</span>          <span class="cmt">// actualización</span>
+<span class="kw">FIN_MIENTRAS</span></code></pre>
+        </div>
+      </div>
+
+      <p>Hacen lo mismo. Pero el PARA tiene <strong>3 ventajas</strong>:</p>
+      <ol>
+        <li>Es más <strong>compacto</strong> (1 vs 5 líneas).</li>
+        <li>Es <strong>imposible olvidar la actualización</strong>; el incremento es automático.</li>
+        <li>Comunica la <strong>intención</strong>: "voy a repetir N veces" se ve a primera vista.</li>
+      </ol>
+
+      <h3>5.4. La variable de control "i"</h3>
+
+      <p>Por convención (y para no confundirte con tus variables), la variable de control de un PARA suele llamarse <code>i</code>, <code>j</code> o <code>k</code> (de <em>index</em> en inglés). Tiene tres usos típicos:</p>
+
+      <div class="compare-grid">
+        <div class="compare-card">
+          <h4 style="color:var(--primary)">📌 Uso 1: contador puro</h4>
+          <p>No usas <code>i</code> dentro del bloque, solo te interesa repetir N veces.</p>
+<pre class="pseudo" style="margin-top:8px"><code><span class="kw">PARA</span> <span class="var">i</span> <span class="op">=</span> <span class="num">1</span> <span class="kw">HASTA</span> <span class="num">5</span> <span class="kw">HACER</span>
+    <span class="fn">Leer</span> <span class="var">edad</span>
+    <span class="var">suma</span> <span class="op">=</span> <span class="var">suma</span> <span class="op">+</span> <span class="var">edad</span>
+<span class="kw">FIN_PARA</span></code></pre>
+        </div>
+        <div class="compare-card">
+          <h4 style="color:var(--accent)">📌 Uso 2: <code>i</code> como dato</h4>
+          <p>Usas <code>i</code> para calcular o mostrar.</p>
+<pre class="pseudo" style="margin-top:8px"><code><span class="kw">PARA</span> <span class="var">i</span> <span class="op">=</span> <span class="num">1</span> <span class="kw">HASTA</span> <span class="num">10</span> <span class="kw">HACER</span>
+    <span class="fn">Mostrar</span> <span class="var">N</span>, <span class="str">" x "</span>, <span class="var">i</span>, <span class="str">" = "</span>, <span class="var">N</span><span class="op">*</span><span class="var">i</span>
+<span class="kw">FIN_PARA</span></code></pre>
+        </div>
+      </div>
+
+      <h3>5.5. Cuándo usar PARA vs MIENTRAS</h3>
+
+      <div class="callout tip">
+        <div class="callout-header"><span class="callout-icon">🧭</span> Regla práctica</div>
+        <ul>
+          <li><strong>Cantidad CONOCIDA</strong> (al inicio sabes cuántas veces): <strong>PARA</strong>. Ej: "leer las notas de los 30 alumnos".</li>
+          <li><strong>Cantidad DESCONOCIDA</strong> (depende del usuario o de los datos): <strong>MIENTRAS</strong>. Ej: "leer notas hasta que ingrese -1".</li>
+          <li><strong>Ejecutar al menos 1 vez sí o sí</strong>: <strong>REPETIR-HASTA</strong>. Ej: "menú que se muestra hasta que el usuario elija salir".</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="block" id="bloque6">
+      <div class="block-header"><div class="block-num">6</div><h2>Patrones clave: contadores, acumuladores y De Morgan</h2></div>
+
+      <h3>6.1. CONTADOR vs ACUMULADOR (concepto fundamental)</h3>
+
+      <div class="compare-grid">
+        <div class="compare-card">
+          <h4 style="color:var(--primary)">🔢 Contador</h4>
+          <p>Variable que se incrementa o disminuye en una <strong>cantidad CONSTANTE</strong> cada iteración. Sirve para <em>contar cuántas veces</em> ocurre algo.</p>
+          <div class="formula-box" style="margin-top:8px">contador = contador + 1</div>
+          <p style="font-size:.85rem;color:var(--text-muted)">Ejemplo: contar cuántos números positivos se ingresaron.</p>
+        </div>
+        <div class="compare-card">
+          <h4 style="color:var(--accent)">➕ Acumulador (totalizador)</h4>
+          <p>Variable que <strong>suma sobre sí misma</strong> un conjunto de valores <em>variables</em>. Sirve para <em>obtener una suma total</em>.</p>
+          <div class="formula-box" style="margin-top:8px">suma = suma + N</div>
+          <p style="font-size:.85rem;color:var(--text-muted)">Ejemplo: sumar todas las notas para calcular el promedio.</p>
+        </div>
+      </div>
+
+      <div class="callout intuition">
+        <div class="callout-header"><span class="callout-icon">💡</span> La diferencia clave</div>
+        <p>El <strong>contador</strong> siempre suma <em>el mismo valor</em> (típicamente 1). El <strong>acumulador</strong> suma <em>valores que cambian</em> (las notas, los precios, etc.). Frecuentemente <strong>se usan juntos</strong>: un contador para saber cuántos elementos hay y un acumulador para tener su suma; con ambos calculas el promedio.</p>
+      </div>
+
+      <h3>6.2. Inicialización: ¿0 o 1?</h3>
+
+      <div class="table-wrapper">
+        <table>
+          <thead><tr><th>Variable</th><th>Inicializa en</th><th>¿Por qué?</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Contador</strong> que arranca de cero (cuántas veces ocurrió algo)</td><td><code>= 0</code></td><td>Si nunca ocurre, queda en 0 (correcto).</td></tr>
+            <tr><td><strong>Contador de iteraciones</strong> en PARA "1 hasta N"</td><td><code>= 1</code></td><td>La variable de control empieza en 1.</td></tr>
+            <tr><td><strong>Acumulador de suma</strong></td><td><code>= 0</code></td><td>Identidad de la suma: x + 0 = x.</td></tr>
+            <tr><td><strong>Acumulador de producto</strong></td><td><code>= 1</code></td><td>Identidad del producto: x × 1 = x. ¡Si lo pones en 0, todo el producto da 0!</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>6.3. Leyes de De Morgan: invertir condiciones complejas</h3>
+
+      <div class="callout theory">
+        <div class="callout-header"><span class="callout-icon">🧮</span> Las dos leyes</div>
+        <div class="formula-box" style="margin-top:8px">
+          <strong>NOT (a AND b)</strong> ≡ <strong>(NOT a) OR (NOT b)</strong><br/>
+          <span style="font-size:.85rem;color:var(--text-muted)">"No es cierto que A y B" = "No A, o no B"</span>
+        </div>
+        <div class="formula-box">
+          <strong>NOT (a OR b)</strong> ≡ <strong>(NOT a) AND (NOT b)</strong><br/>
+          <span style="font-size:.85rem;color:var(--text-muted)">"No es cierto que A o B" = "No A, y no B"</span>
+        </div>
+      </div>
+
+      <p><strong>¿Para qué sirven?</strong> Son la herramienta más útil para <strong>convertir un MIENTRAS en un REPETIR-HASTA</strong> (que requiere invertir la condición).</p>
+
+      <h4>📐 Demostración intuitiva</h4>
+
+      <p>Imagina la condición "<em>edad ≥ 18 AND tiene DNI</em>" (entrada permitida). Su negación, "<em>NO se permite la entrada</em>", se cumple si:</p>
+      <ul>
+        <li>NO tiene 18+ años (es menor de edad), <strong>O</strong></li>
+        <li>NO tiene DNI</li>
+      </ul>
+      <p>Es decir: <code>(edad &lt; 18) OR (NOT tieneDNI)</code>. Esto es exactamente lo que dice De Morgan.</p>
+
+      <h4>📐 Verificación con tabla de verdad</h4>
+
+      <div class="table-wrapper" style="max-width:700px">
+        <table>
+          <thead><tr><th class="center">a</th><th class="center">b</th><th class="center">a AND b</th><th class="center">NOT (a AND b)</th><th class="center">(NOT a) OR (NOT b)</th></tr></thead>
+          <tbody>
+            <tr><td class="tv true">V</td><td class="tv true">V</td><td class="tv true">V</td><td class="tv false">F</td><td class="tv false">F</td></tr>
+            <tr><td class="tv true">V</td><td class="tv false">F</td><td class="tv false">F</td><td class="tv true">V</td><td class="tv true">V</td></tr>
+            <tr><td class="tv false">F</td><td class="tv true">V</td><td class="tv false">F</td><td class="tv true">V</td><td class="tv true">V</td></tr>
+            <tr><td class="tv false">F</td><td class="tv false">F</td><td class="tv false">F</td><td class="tv true">V</td><td class="tv true">V</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>Las dos columnas finales son <strong>idénticas</strong> en todas las filas → las expresiones son equivalentes. ✓</p>
+
+      <h3>6.4. De Morgan en la práctica: pasar MIENTRAS a REPETIR-HASTA</h3>
+
+      <p>Recuerda: REPETIR-HASTA <em>sale</em> cuando la condición es V; MIENTRAS <em>continúa</em> cuando es V. Por eso, al traducir, hay que <strong>negar</strong> la condición:</p>
+
+      <div class="compare-grid">
+        <div class="compare-card">
+          <h4 style="color:var(--primary)">🔄 Versión MIENTRAS</h4>
+<pre class="pseudo" style="margin-top:8px"><code><span class="kw">MIENTRAS</span> (<span class="var">n</span> <span class="op">&gt;=</span> <span class="num">1</span>) <span class="op">AND</span> (<span class="var">n</span> <span class="op">&lt;=</span> <span class="num">12</span>) <span class="kw">HACER</span>
+    ...
+<span class="kw">FIN_MIENTRAS</span></code></pre>
+        </div>
+        <div class="compare-card">
+          <h4 style="color:var(--accent)">🔁 Versión REPETIR-HASTA equivalente</h4>
+<pre class="pseudo" style="margin-top:8px"><code><span class="kw">REPETIR</span>
+    ...
+<span class="kw">HASTA QUE</span> (<span class="var">n</span> <span class="op">&lt;</span> <span class="num">1</span>) <span class="op">OR</span> (<span class="var">n</span> <span class="op">&gt;</span> <span class="num">12</span>)</code></pre>
+        </div>
+      </div>
+
+      <p><strong>¿Por qué?</strong> Aplico De Morgan: NOT[(n≥1) AND (n≤12)] = (n&lt;1) OR (n&gt;12). El "AND" se convierte en "OR" y cada comparación se invierte.</p>
+    </section>
+
+    <section class="block" id="ejercicios">
+      <div class="block-header"><div class="block-num">💪</div><h2>Ejercicios resueltos paso a paso</h2></div>
+
+      <p style="font-size:1.05rem;color:var(--text-muted);margin-bottom:24px">Cada ejercicio sigue tu metodología completa. Los <strong>5 primeros</strong> son ejemplos resueltos del archivo S5; los últimos 3 refuerzan los patrones clave (anidación, descomposición y validación).</p>
+
+      <!-- EJERCICIO 1 -->
+      <div class="exercise">
+        <div class="exercise-header"><span class="exercise-num">EJ. 1</span><span>Contar números enteros positivos hasta ingresar uno negativo (MIENTRAS)</span><span class="exercise-tag">📚 S5 ejemplo</span></div>
+        <div class="exercise-body">
+          <div class="statement-box"><span class="statement-label">📝 Enunciado</span><p>Elabore un algoritmo que <strong>cuente los números enteros positivos</strong> que se ingresen. El programa finaliza cuando se ingrese un <strong>número negativo</strong>.</p></div>
+
+          <div class="solution-block">
+            <h4>🎯 ¿Qué nos están pidiendo?</h4>
+            <p>Procesar una cantidad <em>desconocida</em> de números (no sabemos cuántos ingresará el usuario), incrementando un contador cada vez que el número sea positivo, y parar cuando ingrese un negativo.</p>
+
+            <h4>🧠 Razonamiento: ¿qué estructura uso?</h4>
+            <p><strong>MIENTRAS</strong>, porque:</p>
+            <ul>
+              <li>No conozco la cantidad de iteraciones (el usuario decide cuándo parar) → no es PARA.</li>
+              <li>Si el usuario ingresa un negativo de entrada, el ciclo NO debe ejecutarse (contador = 0) → MIENTRAS, no REPETIR-HASTA.</li>
+            </ul>
+
+            <h4>🧠 Patrón clave: priming read</h4>
+            <p>Necesito leer el primer número <em>antes</em> del MIENTRAS para que la condición pueda evaluarse. Dentro del ciclo leo el siguiente número.</p>
+
+            <h4>🧠 Identificar variables (leyenda)</h4>
+            <div class="legend-box"><div class="legend-title">🏷️ Leyenda</div><ul style="margin:0">
+              <li><code>n</code> = número leído (entrada, <span class="tipo">Entero</span>)</li>
+              <li><code>cont</code> = contador de números positivos (salida, <span class="tipo">Entero</span>)</li>
+            </ul></div>
+
+            <h4>🪜 Pseudocódigo</h4>
+<pre class="pseudo"><code><span class="kw">INICIO</span>
+    <span class="tipo">Entero</span>: <span class="var">n</span>, <span class="var">cont</span>
+    <span class="var">cont</span> <span class="op">=</span> <span class="num">0</span>           <span class="cmt">// inicialización del contador</span>
+    <span class="fn">Leer</span> <span class="var">n</span>             <span class="cmt">// priming read (1ª lectura, fuera del ciclo)</span>
+    <span class="kw">MIENTRAS</span> <span class="var">n</span> <span class="op">&gt;</span> <span class="num">0</span> <span class="kw">HACER</span>
+        <span class="var">cont</span> <span class="op">=</span> <span class="var">cont</span> <span class="op">+</span> <span class="num">1</span>   <span class="cmt">// solo cuento si el número fue positivo</span>
+        <span class="fn">Leer</span> <span class="var">n</span>         <span class="cmt">// lectura subsiguiente (dentro del ciclo)</span>
+    <span class="kw">FIN_MIENTRAS</span>
+    <span class="fn">Mostrar</span> <span class="var">cont</span>
+<span class="kw">FIN</span></code></pre>
+
+            <h4>🔷 Diagrama de flujo</h4>
+            <div class="flowchart-container">
+              <div class="mermaid-container" data-original='graph TB
+    I([Inicio])
+    D["Entero: n, cont"]
+    Init["cont = 0"]
+    L1[/"leer n"/]
+    C{"n &gt; 0?"}
+    P["cont = cont + 1"]
+    L2[/"leer n"/]
+    M[/"mostrar cont"/]
+    F([Fin])
+    I --> D --> Init --> L1 --> C
+    C -->|Si| P --> L2 --> C
+    C -->|No| M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style Init fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style L1 fill:#60a5fa,stroke:#1e40af,color:#000
+    style L2 fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000
+    style P fill:#a78bfa,stroke:#6d28d9,color:#fff'><div class="mermaid">
+graph TB
+    I([Inicio])
+    D["Entero: n, cont"]
+    Init["cont = 0"]
+    L1[/"leer n"/]
+    C{"n &gt; 0?"}
+    P["cont = cont + 1"]
+    L2[/"leer n"/]
+    M[/"mostrar cont"/]
+    F([Fin])
+    I --> D --> Init --> L1 --> C
+    C -->|Si| P --> L2 --> C
+    C -->|No| M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style Init fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style L1 fill:#60a5fa,stroke:#1e40af,color:#000
+    style L2 fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000
+    style P fill:#a78bfa,stroke:#6d28d9,color:#fff
+              </div></div>
+              <div class="flowchart-caption">📊 Observa los DOS bloques de "leer n": uno antes del rombo (priming) y otro dentro del ciclo.</div>
+            </div>
+
+            <h4>🧪 Prueba de escritorio</h4>
+            <p>Ingresos: 5, 3, 8, -1 (en ese orden)</p>
+            <div class="trace-table"><table>
+              <thead><tr><th>Iter</th><th>Instrucción</th><th>n</th><th>cont</th></tr></thead>
+              <tbody>
+                <tr><td>—</td><td>cont = 0</td><td>—</td><td>0</td></tr>
+                <tr><td>—</td><td>Leer n (priming) → ingresa 5</td><td>5</td><td>0</td></tr>
+                <tr><td>1</td><td>SI 5 &gt; 0? V → cont = 0+1, leer n → ingresa 3</td><td>3</td><td>1</td></tr>
+                <tr><td>2</td><td>SI 3 &gt; 0? V → cont = 1+1, leer n → ingresa 8</td><td>8</td><td>2</td></tr>
+                <tr><td>3</td><td>SI 8 &gt; 0? V → cont = 2+1, leer n → ingresa -1</td><td>-1</td><td>3</td></tr>
+                <tr><td>—</td><td>SI -1 &gt; 0? F → sale del ciclo</td><td>-1</td><td>3</td></tr>
+                <tr><td>—</td><td>Mostrar cont</td><td colspan="2">Imprime: <strong>3 ✓</strong></td></tr>
+              </tbody>
+            </table></div>
+
+            <p><strong>Caso especial:</strong> si el primer número es −5 directamente, el MIENTRAS evalúa V−5&gt;0 → F y <em>nunca entra al cuerpo</em>. cont sigue en 0 y se imprime 0. ✓</p>
+
+            <div class="final-answer"><div class="final-answer-label">✅ Resultado</div><p>Para los datos 5, 3, 8, -1 → contador = <strong>3</strong>.</p></div>
+
+            <div class="callout tip"><div class="callout-header"><span class="callout-icon">💡</span> Lección clave</div><p>El <strong>priming read</strong> es esencial cuando la condición del MIENTRAS depende de un dato del usuario. Sin él, el algoritmo no sabría qué evaluar la primera vez. Patrón: <em>leer fuera → MIENTRAS → procesar → leer dentro → repetir</em>.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EJERCICIO 2 -->
+      <div class="exercise">
+        <div class="exercise-header"><span class="exercise-num">EJ. 2</span><span>Suma de números pares positivos hasta 100 (MIENTRAS y REPETIR)</span><span class="exercise-tag">📚 S5 ejemplo</span></div>
+        <div class="exercise-body">
+          <div class="statement-box"><span class="statement-label">📝 Enunciado</span><p>Obtenga la <strong>suma de los números pares positivos hasta 100</strong>. Resuelva primero con MIENTRAS y luego con REPETIR-HASTA. Elabore los diagramas de flujo para ambos casos.</p></div>
+
+          <div class="solution-block">
+            <h4>🎯 ¿Qué nos están pidiendo?</h4>
+            <p>Calcular 2 + 4 + 6 + ... + 100 (la suma de pares de 2 a 100). Aquí <em>sí</em> conocemos cuántas iteraciones (50), pero el ejercicio nos pide usar MIENTRAS y REPETIR para practicar.</p>
+
+            <h4>🧠 Razonamiento clave</h4>
+            <ul>
+              <li>Necesito un <strong>acumulador</strong> (<code>Suma</code>) para ir sumando.</li>
+              <li>Necesito una variable de control (<code>n</code>) que comienza en 2 y avanza de 2 en 2 (para saltar los impares).</li>
+              <li>El ciclo termina cuando <code>n</code> pase de 100.</li>
+            </ul>
+
+            <h4>🧠 Identificar variables (leyenda)</h4>
+            <div class="legend-box"><div class="legend-title">🏷️ Leyenda</div><ul style="margin:0">
+              <li><code>n</code> = número par actual (control, <span class="tipo">Entero</span>)</li>
+              <li><code>Suma</code> = acumulador de pares (salida, <span class="tipo">Entero</span>)</li>
+            </ul></div>
+
+            <h4>🪜 Versión 1 · Pseudocódigo MIENTRAS</h4>
+<pre class="pseudo"><code><span class="kw">INICIO</span>
+    <span class="tipo">Entero</span>: <span class="var">n</span>, <span class="var">Suma</span>
+    <span class="var">Suma</span> <span class="op">=</span> <span class="num">0</span>          <span class="cmt">// inicializo el acumulador en 0 (identidad de la suma)</span>
+    <span class="var">n</span> <span class="op">=</span> <span class="num">2</span>             <span class="cmt">// arranco en el primer par positivo</span>
+    <span class="kw">MIENTRAS</span> <span class="var">n</span> <span class="op">&lt;=</span> <span class="num">100</span> <span class="kw">HACER</span>
+        <span class="var">Suma</span> <span class="op">=</span> <span class="var">Suma</span> <span class="op">+</span> <span class="var">n</span>   <span class="cmt">// acumulo el par actual</span>
+        <span class="var">n</span> <span class="op">=</span> <span class="var">n</span> <span class="op">+</span> <span class="num">2</span>     <span class="cmt">// avanzo al siguiente par</span>
+    <span class="kw">FIN_MIENTRAS</span>
+    <span class="fn">Mostrar</span> <span class="var">Suma</span>
+<span class="kw">FIN</span></code></pre>
+
+            <h4>🪜 Versión 2 · Pseudocódigo REPETIR-HASTA</h4>
+<pre class="pseudo"><code><span class="kw">INICIO</span>
+    <span class="tipo">Entero</span>: <span class="var">n</span>, <span class="var">Suma</span>
+    <span class="var">Suma</span> <span class="op">=</span> <span class="num">0</span>
+    <span class="var">n</span> <span class="op">=</span> <span class="num">2</span>
+    <span class="kw">REPETIR</span>
+        <span class="var">Suma</span> <span class="op">=</span> <span class="var">Suma</span> <span class="op">+</span> <span class="var">n</span>
+        <span class="var">n</span> <span class="op">=</span> <span class="var">n</span> <span class="op">+</span> <span class="num">2</span>
+    <span class="kw">HASTA QUE</span> <span class="var">n</span> <span class="op">&gt;</span> <span class="num">100</span>     <span class="cmt">// negación de n &lt;= 100 (sale cuando n &gt; 100)</span>
+    <span class="fn">Mostrar</span> <span class="var">Suma</span>
+<span class="kw">FIN</span></code></pre>
+
+            <div class="callout tip" style="margin-top:12px">
+              <div class="callout-header"><span class="callout-icon">🎯</span> Punto clave: la inversión</div>
+              <p>Observa cómo <code>n &lt;= 100</code> (MIENTRAS, mientras es V) se convierte en <code>n &gt; 100</code> (REPETIR, sale cuando es V). Es la <em>negación</em> directa.</p>
+            </div>
+
+            <h4>🔷 Diagrama de flujo MIENTRAS</h4>
+            <div class="flowchart-container">
+              <div class="mermaid-container" data-original='graph TB
+    I([Inicio])
+    D["Entero: n, Suma"]
+    Init["Suma = 0<br/>n = 2"]
+    C{"n &lt;= 100?"}
+    P["Suma = Suma + n<br/>n = n + 2"]
+    M[/"mostrar Suma"/]
+    F([Fin])
+    I --> D --> Init --> C
+    C -->|Si| P --> C
+    C -->|No| M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style Init fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000
+    style P fill:#a78bfa,stroke:#6d28d9,color:#fff'><div class="mermaid">
+graph TB
+    I([Inicio])
+    D["Entero: n, Suma"]
+    Init["Suma = 0<br/>n = 2"]
+    C{"n &lt;= 100?"}
+    P["Suma = Suma + n<br/>n = n + 2"]
+    M[/"mostrar Suma"/]
+    F([Fin])
+    I --> D --> Init --> C
+    C -->|Si| P --> C
+    C -->|No| M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style Init fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000
+    style P fill:#a78bfa,stroke:#6d28d9,color:#fff
+              </div></div>
+            </div>
+
+            <h4>🔷 Diagrama de flujo REPETIR-HASTA</h4>
+            <div class="flowchart-container">
+              <div class="mermaid-container" data-original='graph TB
+    I([Inicio])
+    D["Entero: n, Suma"]
+    Init["Suma = 0<br/>n = 2"]
+    P["Suma = Suma + n<br/>n = n + 2"]
+    C{"n &gt; 100?"}
+    M[/"mostrar Suma"/]
+    F([Fin])
+    I --> D --> Init --> P --> C
+    C -->|F| P
+    C -->|V| M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style Init fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000
+    style P fill:#a78bfa,stroke:#6d28d9,color:#fff'><div class="mermaid">
+graph TB
+    I([Inicio])
+    D["Entero: n, Suma"]
+    Init["Suma = 0<br/>n = 2"]
+    P["Suma = Suma + n<br/>n = n + 2"]
+    C{"n &gt; 100?"}
+    M[/"mostrar Suma"/]
+    F([Fin])
+    I --> D --> Init --> P --> C
+    C -->|F| P
+    C -->|V| M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style Init fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000
+    style P fill:#a78bfa,stroke:#6d28d9,color:#fff
+              </div></div>
+              <div class="flowchart-caption">📊 La diferencia visual: en MIENTRAS el rombo está antes del proceso; en REPETIR está después.</div>
+            </div>
+
+            <h4>🧪 Prueba de escritorio (primeras 3 iteraciones, MIENTRAS)</h4>
+            <div class="trace-table"><table>
+              <thead><tr><th>Iter</th><th>n antes</th><th>Suma antes</th><th>Suma después</th><th>n después</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td>2</td><td>0</td><td>2</td><td>4</td></tr>
+                <tr><td>2</td><td>4</td><td>2</td><td>6</td><td>6</td></tr>
+                <tr><td>3</td><td>6</td><td>6</td><td>12</td><td>8</td></tr>
+                <tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+                <tr><td>50</td><td>100</td><td>2450</td><td>2550</td><td>102</td></tr>
+                <tr><td>—</td><td colspan="4">SI 102 &lt;= 100? F → sale</td></tr>
+              </tbody>
+            </table></div>
+
+            <div class="final-answer"><div class="final-answer-label">✅ Resultado</div><p>2 + 4 + 6 + ... + 100 = <strong>2550</strong>. (Verificación matemática: la suma de los pares de 1 a N es N(N+2)/4 si N es par. Para N=100: 100×102/4 = 2550 ✓.)</p></div>
+
+            <div class="callout tip"><div class="callout-header"><span class="callout-icon">💡</span> Lección clave</div><p>Para iterar de 2 en 2 (saltando impares), simplemente <strong>incrementa de 2 en 2</strong> en lugar de 1 en 1. El mismo truco funciona para múltiplos de 5, de 7, etc.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EJERCICIO 3 -->
+      <div class="exercise">
+        <div class="exercise-header"><span class="exercise-num">EJ. 3</span><span>Suma de edades de 20 alumnos (MIENTRAS con contador)</span><span class="exercise-tag">📚 S5 ejemplo</span></div>
+        <div class="exercise-body">
+          <div class="statement-box"><span class="statement-label">📝 Enunciado</span><p>Calcule y muestre la <strong>suma de las edades de los primeros 20 alumnos del aula</strong>. Use la estructura MIENTRAS.</p></div>
+
+          <div class="solution-block">
+            <h4>🎯 ¿Qué nos están pidiendo?</h4>
+            <p>Sumar 20 valores que se leen del usuario. Esta vez la <strong>cantidad SÍ es conocida</strong> (20). Naturalmente sería un PARA, pero el ejercicio pide MIENTRAS para practicar.</p>
+
+            <h4>🧠 Razonamiento clave: dos variables, dos roles</h4>
+            <ul>
+              <li><strong>Acumulador</strong> <code>suma</code>: empieza en 0, va sumando cada edad leída.</li>
+              <li><strong>Contador</strong> <code>n</code>: empieza en 1, controla cuándo parar.</li>
+            </ul>
+
+            <h4>🧠 Identificar variables (leyenda)</h4>
+            <div class="legend-box"><div class="legend-title">🏷️ Leyenda</div><ul style="margin:0">
+              <li><code>edad</code> = edad leída en cada iteración (entrada, <span class="tipo">Entero</span>)</li>
+              <li><code>suma</code> = acumulador de edades (salida, <span class="tipo">Entero</span>)</li>
+              <li><code>n</code> = contador de iteraciones (control, <span class="tipo">Entero</span>)</li>
+            </ul></div>
+
+            <h4>🪜 Pseudocódigo</h4>
+<pre class="pseudo"><code><span class="kw">INICIO</span>
+    <span class="tipo">Entero</span>: <span class="var">edad</span>, <span class="var">suma</span>, <span class="var">n</span>
+    <span class="var">suma</span> <span class="op">=</span> <span class="num">0</span>          <span class="cmt">// acumulador inicia en 0</span>
+    <span class="var">n</span> <span class="op">=</span> <span class="num">1</span>             <span class="cmt">// contador inicia en 1 (1ª iteración)</span>
+    <span class="kw">MIENTRAS</span> <span class="var">n</span> <span class="op">&lt;=</span> <span class="num">20</span> <span class="kw">HACER</span>
+        <span class="fn">Leer</span> <span class="var">edad</span>
+        <span class="var">suma</span> <span class="op">=</span> <span class="var">suma</span> <span class="op">+</span> <span class="var">edad</span>   <span class="cmt">// acumulo edad actual</span>
+        <span class="var">n</span> <span class="op">=</span> <span class="var">n</span> <span class="op">+</span> <span class="num">1</span>          <span class="cmt">// avanzo al siguiente alumno</span>
+    <span class="kw">FIN_MIENTRAS</span>
+    <span class="fn">Mostrar</span> <span class="str">"Suma de edades: "</span>, <span class="var">suma</span>
+<span class="kw">FIN</span></code></pre>
+
+            <h4>🔷 Diagrama de flujo</h4>
+            <div class="flowchart-container">
+              <div class="mermaid-container" data-original='graph TB
+    I([Inicio])
+    D["Entero: edad, suma, n"]
+    Init["suma = 0<br/>n = 1"]
+    C{"n &lt;= 20?"}
+    L[/"leer edad"/]
+    P["suma = suma + edad<br/>n = n + 1"]
+    M[/"mostrar suma"/]
+    F([Fin])
+    I --> D --> Init --> C
+    C -->|Si| L --> P --> C
+    C -->|No| M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style Init fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000
+    style P fill:#a78bfa,stroke:#6d28d9,color:#fff'><div class="mermaid">
+graph TB
+    I([Inicio])
+    D["Entero: edad, suma, n"]
+    Init["suma = 0<br/>n = 1"]
+    C{"n &lt;= 20?"}
+    L[/"leer edad"/]
+    P["suma = suma + edad<br/>n = n + 1"]
+    M[/"mostrar suma"/]
+    F([Fin])
+    I --> D --> Init --> C
+    C -->|Si| L --> P --> C
+    C -->|No| M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style Init fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000
+    style P fill:#a78bfa,stroke:#6d28d9,color:#fff
+              </div></div>
+            </div>
+
+            <h4>🧪 Prueba de escritorio (con edades 18, 20, 19, ...)</h4>
+            <div class="trace-table"><table>
+              <thead><tr><th>Iter</th><th>n antes</th><th>edad leída</th><th>suma después</th><th>n después</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td>1</td><td>18</td><td>18</td><td>2</td></tr>
+                <tr><td>2</td><td>2</td><td>20</td><td>38</td><td>3</td></tr>
+                <tr><td>3</td><td>3</td><td>19</td><td>57</td><td>4</td></tr>
+                <tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+                <tr><td>20</td><td>20</td><td>22</td><td>(suma final)</td><td>21</td></tr>
+                <tr><td>—</td><td colspan="4">SI 21 &lt;= 20? F → sale</td></tr>
+              </tbody>
+            </table></div>
+
+            <div class="callout tip"><div class="callout-header"><span class="callout-icon">💡</span> Lección clave</div><p>Cuando uses MIENTRAS para una cantidad fija, sigue siempre este patrón: <code>contador = 1</code> antes, condición <code>contador &lt;= N</code>, <code>contador = contador + 1</code> al final del cuerpo. Si lo haces con PARA, el código queda más corto pero sigue siendo lo mismo.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EJERCICIO 4 -->
+      <div class="exercise">
+        <div class="exercise-header"><span class="exercise-num">EJ. 4</span><span>Contar ceros en N números (PARA con SI anidado)</span><span class="exercise-tag">📚 S5 ejemplo</span></div>
+        <div class="exercise-body">
+          <div class="statement-box"><span class="statement-label">📝 Enunciado</span><p>Permita ingresar una cantidad <strong>n</strong> de números enteros y muestre la <strong>cantidad de números CEROS</strong> que ingresó. Ej: si ingreso 1, 4, 0, 33, 8, 0 → muestra <strong>2 ceros</strong>.</p></div>
+
+          <div class="solution-block">
+            <h4>🎯 ¿Qué nos están pidiendo?</h4>
+            <p>Procesar n números (cantidad conocida porque se lee al inicio), y contar cuántos de esos n son exactamente igual a 0.</p>
+
+            <h4>🧠 Razonamiento: ¿qué estructura?</h4>
+            <p><strong>PARA</strong>, porque conocemos exactamente cuántas iteraciones (n veces). Y dentro del PARA, un <strong>SI simple</strong> que solo incrementa el contador cuando el número leído es 0.</p>
+
+            <h4>🧠 Identificar variables (leyenda)</h4>
+            <div class="legend-box"><div class="legend-title">🏷️ Leyenda</div><ul style="margin:0">
+              <li><code>n</code> = cantidad de números a leer (entrada, <span class="tipo">Entero</span>)</li>
+              <li><code>num</code> = número leído en cada iteración (<span class="tipo">Entero</span>)</li>
+              <li><code>c</code> = contador de ceros (salida, <span class="tipo">Entero</span>)</li>
+              <li><code>i</code> = variable de control del PARA (<span class="tipo">Entero</span>)</li>
+            </ul></div>
+
+            <h4>🪜 Pseudocódigo</h4>
+<pre class="pseudo"><code><span class="kw">INICIO</span>
+    <span class="tipo">Entero</span>: <span class="var">n</span>, <span class="var">num</span>, <span class="var">c</span>, <span class="var">i</span>
+    <span class="fn">Leer</span> <span class="var">n</span>             <span class="cmt">// cuántos números voy a procesar</span>
+    <span class="var">c</span> <span class="op">=</span> <span class="num">0</span>             <span class="cmt">// contador de ceros inicia en 0</span>
+    <span class="kw">PARA</span> <span class="var">i</span> <span class="op">=</span> <span class="num">1</span> <span class="kw">HASTA</span> <span class="var">n</span> <span class="kw">HACER</span>
+        <span class="fn">Leer</span> <span class="var">num</span>
+        <span class="kw">SI</span> <span class="var">num</span> <span class="op">=</span> <span class="num">0</span>
+            <span class="var">c</span> <span class="op">=</span> <span class="var">c</span> <span class="op">+</span> <span class="num">1</span>
+        <span class="kw">FIN_SI</span>
+    <span class="kw">FIN_PARA</span>
+    <span class="fn">Mostrar</span> <span class="var">c</span>
+<span class="kw">FIN</span></code></pre>
+
+            <h4>🔷 Diagrama de flujo</h4>
+            <div class="flowchart-container">
+              <div class="mermaid-container" data-original='graph TB
+    I([Inicio])
+    D["Entero: n, num, c, i"]
+    L1[/"leer n"/]
+    Init["c = 0"]
+    Pi["i = 1"]
+    Cp{"i &lt;= n?"}
+    L2[/"leer num"/]
+    Cn{"num = 0?"}
+    Inc["c = c + 1"]
+    Inci["i = i + 1"]
+    M[/"mostrar c"/]
+    F([Fin])
+    I --> D --> L1 --> Init --> Pi --> Cp
+    Cp -->|Si| L2 --> Cn
+    Cn -->|Si| Inc --> Inci
+    Cn -->|No| Inci
+    Inci --> Cp
+    Cp -->|No| M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style Init fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style Pi fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style Inci fill:#fbbf24,stroke:#d97706,color:#000
+    style L1 fill:#60a5fa,stroke:#1e40af,color:#000
+    style L2 fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style Cp fill:#fbbf24,stroke:#d97706,color:#000
+    style Cn fill:#fbbf24,stroke:#d97706,color:#000
+    style Inc fill:#a78bfa,stroke:#6d28d9,color:#fff'><div class="mermaid">
+graph TB
+    I([Inicio])
+    D["Entero: n, num, c, i"]
+    L1[/"leer n"/]
+    Init["c = 0"]
+    Pi["i = 1"]
+    Cp{"i &lt;= n?"}
+    L2[/"leer num"/]
+    Cn{"num = 0?"}
+    Inc["c = c + 1"]
+    Inci["i = i + 1"]
+    M[/"mostrar c"/]
+    F([Fin])
+    I --> D --> L1 --> Init --> Pi --> Cp
+    Cp -->|Si| L2 --> Cn
+    Cn -->|Si| Inc --> Inci
+    Cn -->|No| Inci
+    Inci --> Cp
+    Cp -->|No| M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style Init fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style Pi fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style Inci fill:#fbbf24,stroke:#d97706,color:#000
+    style L1 fill:#60a5fa,stroke:#1e40af,color:#000
+    style L2 fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style Cp fill:#fbbf24,stroke:#d97706,color:#000
+    style Cn fill:#fbbf24,stroke:#d97706,color:#000
+    style Inc fill:#a78bfa,stroke:#6d28d9,color:#fff
+              </div></div>
+              <div class="flowchart-caption">📊 Dos rombos: el del PARA (control de iteración) y el del SI (verifica si num=0). Anidamiento clásico.</div>
+            </div>
+
+            <h4>🧪 Prueba de escritorio</h4>
+            <p>Datos: n=6, números 1, 4, 0, 33, 8, 0</p>
+            <div class="trace-table"><table>
+              <thead><tr><th>i</th><th>num</th><th>num = 0?</th><th>c después</th></tr></thead>
+              <tbody>
+                <tr><td>—</td><td>—</td><td>—</td><td>0 (inicial)</td></tr>
+                <tr><td>1</td><td>1</td><td>F</td><td>0</td></tr>
+                <tr><td>2</td><td>4</td><td>F</td><td>0</td></tr>
+                <tr><td>3</td><td>0</td><td><strong>V → c++</strong></td><td>1</td></tr>
+                <tr><td>4</td><td>33</td><td>F</td><td>1</td></tr>
+                <tr><td>5</td><td>8</td><td>F</td><td>1</td></tr>
+                <tr><td>6</td><td>0</td><td><strong>V → c++</strong></td><td>2</td></tr>
+                <tr><td>—</td><td colspan="3">i pasa a 7, 7 &gt; 6 → sale del PARA. Mostrar 2 ✓</td></tr>
+              </tbody>
+            </table></div>
+
+            <div class="final-answer"><div class="final-answer-label">✅ Resultado</div><p>De los 6 números, exactamente <strong>2 son ceros</strong>. ✓</p></div>
+
+            <div class="callout tip"><div class="callout-header"><span class="callout-icon">💡</span> Lección clave</div><p>Combinar PARA con SI dentro es el <strong>patrón más común</strong>: el PARA recorre todos los datos, el SI filtra los que cumplen una propiedad y los cuenta (o suma, o procesa). Esto se llama <em>"contar elementos que cumplen X"</em> y lo verás constantemente.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EJERCICIO 5 -->
+      <div class="exercise">
+        <div class="exercise-header"><span class="exercise-num">EJ. 5</span><span>Mostrar los números del 1 al 100 (REPETIR-HASTA)</span><span class="exercise-tag">📚 S5 ejemplo Joyanes</span></div>
+        <div class="exercise-body">
+          <div class="statement-box"><span class="statement-label">📝 Enunciado</span><p>Escriba un algoritmo que <strong>muestre los números del 1 al 100</strong> usando la estructura REPETIR-HASTA.</p></div>
+
+          <div class="solution-block">
+            <h4>🎯 ¿Qué nos están pidiendo?</h4>
+            <p>Imprimir 100 valores consecutivos: 1, 2, 3, ..., 100. Como vamos a imprimir al menos una vez (el 1), REPETIR-HASTA encaja perfectamente.</p>
+
+            <h4>🧠 Razonamiento clave</h4>
+            <p>Necesito una variable <code>num</code> que arranca en 1 y se incrementa de a uno hasta superar 100. La condición de salida es <code>num &gt; 100</code> (paro cuando ya pasé el 100).</p>
+
+            <h4>🧠 ¿Por qué REPETIR y no MIENTRAS o PARA?</h4>
+            <ul>
+              <li>Sería válido con PARA (lo más natural en realidad).</li>
+              <li>El ejercicio pide REPETIR-HASTA específicamente, para practicar.</li>
+              <li>Funciona bien porque sí o sí queremos imprimir al menos una vez (no hay caso "0 ejecuciones").</li>
+            </ul>
+
+            <h4>🧠 Identificar variables (leyenda)</h4>
+            <div class="legend-box"><div class="legend-title">🏷️ Leyenda</div><ul style="margin:0">
+              <li><code>num</code> = número actual a mostrar (control + salida, <span class="tipo">Entero</span>)</li>
+            </ul></div>
+
+            <h4>🪜 Pseudocódigo</h4>
+<pre class="pseudo"><code><span class="kw">INICIO</span>
+    <span class="tipo">Entero</span>: <span class="var">num</span>
+    <span class="var">num</span> <span class="op">=</span> <span class="num">1</span>           <span class="cmt">// arranco en 1</span>
+    <span class="kw">REPETIR</span>
+        <span class="fn">Mostrar</span> <span class="var">num</span>
+        <span class="var">num</span> <span class="op">=</span> <span class="var">num</span> <span class="op">+</span> <span class="num">1</span>   <span class="cmt">// avanzo (¡crítico, sino bucle infinito!)</span>
+    <span class="kw">HASTA QUE</span> <span class="var">num</span> <span class="op">&gt;</span> <span class="num">100</span>   <span class="cmt">// salgo cuando paso el 100</span>
+<span class="kw">FIN</span></code></pre>
+
+            <h4>🔷 Diagrama de flujo</h4>
+            <div class="flowchart-container">
+              <div class="mermaid-container" data-original='graph TB
+    I([Inicio])
+    D["Entero: num"]
+    Init["num = 1"]
+    M[/"mostrar num"/]
+    Inc["num = num + 1"]
+    C{"num &gt; 100?"}
+    F([Fin])
+    I --> D --> Init --> M --> Inc --> C
+    C -->|F| M
+    C -->|V| F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style Init fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style Inc fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000'><div class="mermaid">
+graph TB
+    I([Inicio])
+    D["Entero: num"]
+    Init["num = 1"]
+    M[/"mostrar num"/]
+    Inc["num = num + 1"]
+    C{"num &gt; 100?"}
+    F([Fin])
+    I --> D --> Init --> M --> Inc --> C
+    C -->|F| M
+    C -->|V| F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style Init fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style Inc fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000
+              </div></div>
+            </div>
+
+            <h4>🧪 Prueba de escritorio (primeras y últimas iteraciones)</h4>
+            <div class="trace-table"><table>
+              <thead><tr><th>Iter</th><th>num antes</th><th>imprime</th><th>num después</th><th>num &gt; 100?</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td>1</td><td>1</td><td>2</td><td>F → repite</td></tr>
+                <tr><td>2</td><td>2</td><td>2</td><td>3</td><td>F → repite</td></tr>
+                <tr><td>...</td><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+                <tr><td>99</td><td>99</td><td>99</td><td>100</td><td>F → repite</td></tr>
+                <tr><td>100</td><td>100</td><td>100</td><td>101</td><td><strong>V → sale</strong></td></tr>
+              </tbody>
+            </table></div>
+
+            <p>Total: 100 iteraciones, imprime del 1 al 100. ✓</p>
+
+            <h4>🪜 Versión PARA (alternativa más natural)</h4>
+
+            <p>El mismo problema con PARA queda en 3 líneas:</p>
+
+<pre class="pseudo"><code><span class="kw">INICIO</span>
+    <span class="tipo">Entero</span>: <span class="var">num</span>
+    <span class="kw">PARA</span> <span class="var">num</span> <span class="op">=</span> <span class="num">1</span> <span class="kw">HASTA</span> <span class="num">100</span> <span class="kw">HACER</span>
+        <span class="fn">Mostrar</span> <span class="var">num</span>
+    <span class="kw">FIN_PARA</span>
+<span class="kw">FIN</span></code></pre>
+
+            <div class="callout tip"><div class="callout-header"><span class="callout-icon">💡</span> Lección clave</div><p>Cuando conoces la cantidad exacta de iteraciones, el <strong>PARA es la elección natural</strong>. Pero saber resolver el mismo problema con MIENTRAS o REPETIR-HASTA te da flexibilidad cuando el examen específicamente pide una estructura.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EJERCICIO 6 -->
+      <div class="exercise">
+        <div class="exercise-header"><span class="exercise-num">EJ. 6</span><span>Descuento por unidades: 10%/6%/0% (SI anidado en cascada)</span><span class="exercise-tag">📚 S4 ejemplo · refuerza anidación</span></div>
+        <div class="exercise-body">
+          <div class="statement-box"><span class="statement-label">📝 Enunciado</span><p>Calcule el valor total que una persona debe pagar:</p>
+            <ul>
+              <li>Más de <strong>50 unidades</strong>: descuento <strong>10%</strong>.</li>
+              <li>Entre <strong>20 y 49</strong> unidades: descuento <strong>6%</strong>.</li>
+              <li>Caso contrario: <strong>sin descuento</strong>.</li>
+            </ul>
+            <p>Lea número de artículos y precio del artículo.</p>
+          </div>
+
+          <div class="solution-block">
+            <h4>🎯 ¿Qué nos están pidiendo?</h4>
+            <p>Caso clásico de <strong>3 rangos excluyentes</strong>. Es el ejemplo perfecto del patrón "filtro en cascada" del Bloque 1.</p>
+
+            <h4>🧠 Razonamiento clave: orden importa</h4>
+            <p>Como vimos en el Bloque 1, debo poner primero el caso <strong>más restrictivo</strong> (n &gt; 50). Si pongo primero "n &gt;= 20", todos los que compren más de 50 también caerán ahí y nunca se aplicará el 10%.</p>
+
+            <p>Las 3 condiciones (en orden):</p>
+            <ol>
+              <li><code>n &gt; 50</code> → descuento = 10% × p</li>
+              <li><code>n &gt;= 20</code> (esto ya implica n &lt;= 49 porque la primera falló) → descuento = 6% × p</li>
+              <li>caso por defecto → descuento = 0</li>
+            </ol>
+
+            <h4>🧠 Identificar variables (leyenda)</h4>
+            <div class="legend-box"><div class="legend-title">🏷️ Leyenda</div><ul style="margin:0">
+              <li><code>n</code> = número de unidades (entrada, <span class="tipo">Entero</span>)</li>
+              <li><code>p</code> = precio del artículo (entrada, <span class="tipo">Real</span>)</li>
+              <li><code>d</code> = descuento aplicado (intermedio, <span class="tipo">Real</span>)</li>
+              <li><code>pf</code> = precio final (salida, <span class="tipo">Real</span>)</li>
+            </ul></div>
+
+            <h4>🪜 Pseudocódigo</h4>
+<pre class="pseudo"><code><span class="kw">INICIO</span>
+    <span class="tipo">Entero</span>: <span class="var">n</span>
+    <span class="tipo">Real</span>: <span class="var">p</span>, <span class="var">d</span>, <span class="var">pf</span>
+    <span class="fn">Leer</span> <span class="var">n</span>, <span class="var">p</span>
+    <span class="kw">SI</span> <span class="var">n</span> <span class="op">&gt;</span> <span class="num">50</span>
+        <span class="var">d</span> <span class="op">=</span> <span class="num">0.10</span> <span class="op">*</span> <span class="var">p</span>
+    <span class="kw">SINO</span>
+        <span class="kw">SI</span> <span class="var">n</span> <span class="op">&gt;=</span> <span class="num">20</span>
+            <span class="var">d</span> <span class="op">=</span> <span class="num">0.06</span> <span class="op">*</span> <span class="var">p</span>
+        <span class="kw">SINO</span>
+            <span class="var">d</span> <span class="op">=</span> <span class="num">0</span>
+        <span class="kw">FIN_SI</span>
+    <span class="kw">FIN_SI</span>
+    <span class="var">pf</span> <span class="op">=</span> <span class="var">p</span> <span class="op">-</span> <span class="var">d</span>
+    <span class="fn">Mostrar</span> <span class="var">pf</span>
+<span class="kw">FIN</span></code></pre>
+
+            <h4>🔷 Diagrama de flujo</h4>
+            <div class="flowchart-container">
+              <div class="mermaid-container" data-original='graph TB
+    I([Inicio])
+    D["Entero: n · Real: p, d, pf"]
+    L[/"leer n, p"/]
+    C1{"n &gt; 50?"}
+    P1["d = 0.10 * p"]
+    C2{"n &gt;= 20?"}
+    P2["d = 0.06 * p"]
+    P3["d = 0"]
+    Pf["pf = p - d"]
+    M[/"mostrar pf"/]
+    F([Fin])
+    I --> D --> L --> C1
+    C1 -->|Si| P1 --> Pf
+    C1 -->|No| C2
+    C2 -->|Si| P2 --> Pf
+    C2 -->|No| P3 --> Pf
+    Pf --> M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style C1 fill:#fbbf24,stroke:#d97706,color:#000
+    style C2 fill:#fbbf24,stroke:#d97706,color:#000
+    style P1 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P2 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P3 fill:#94a3b8,stroke:#475569,color:#000
+    style Pf fill:#a78bfa,stroke:#6d28d9,color:#fff'><div class="mermaid">
+graph TB
+    I([Inicio])
+    D["Entero: n · Real: p, d, pf"]
+    L[/"leer n, p"/]
+    C1{"n &gt; 50?"}
+    P1["d = 0.10 * p"]
+    C2{"n &gt;= 20?"}
+    P2["d = 0.06 * p"]
+    P3["d = 0"]
+    Pf["pf = p - d"]
+    M[/"mostrar pf"/]
+    F([Fin])
+    I --> D --> L --> C1
+    C1 -->|Si| P1 --> Pf
+    C1 -->|No| C2
+    C2 -->|Si| P2 --> Pf
+    C2 -->|No| P3 --> Pf
+    Pf --> M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style C1 fill:#fbbf24,stroke:#d97706,color:#000
+    style C2 fill:#fbbf24,stroke:#d97706,color:#000
+    style P1 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P2 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P3 fill:#94a3b8,stroke:#475569,color:#000
+    style Pf fill:#a78bfa,stroke:#6d28d9,color:#fff
+              </div></div>
+              <div class="flowchart-caption">📊 Patrón "cascada": el SINO de C1 lleva a C2, el SINO de C2 al caso por defecto.</div>
+            </div>
+
+            <h4>🧪 Prueba de escritorio (los 3 escenarios)</h4>
+            <div class="trace-table"><table>
+              <thead><tr><th>n</th><th>p</th><th>n &gt; 50?</th><th>n &gt;= 20?</th><th>d</th><th>pf</th></tr></thead>
+              <tbody>
+                <tr><td>60</td><td>100</td><td>V → 10%</td><td>—</td><td>10</td><td>90</td></tr>
+                <tr><td>30</td><td>100</td><td>F</td><td>V → 6%</td><td>6</td><td>94</td></tr>
+                <tr><td>10</td><td>100</td><td>F</td><td>F</td><td>0</td><td>100</td></tr>
+                <tr><td>50</td><td>100</td><td>F (no es &gt; 50)</td><td>V → 6%</td><td>6</td><td>94</td></tr>
+              </tbody>
+            </table></div>
+
+            <div class="callout warning"><div class="callout-header"><span class="callout-icon">⚠️</span> Caso límite importante</div><p>Para n=50, la condición es <code>&gt; 50</code> (estricto). Como 50 NO es <em>mayor</em> que 50, va a la rama F y entra al "≥ 20", recibiendo el 6%. Si el enunciado hubiera dicho "50 unidades o más", la condición sería <code>&gt;= 50</code> y daría 10%.</p></div>
+
+            <div class="final-answer"><div class="final-answer-label">✅ Resultado</div><p>Los 3 rangos quedan correctamente separados gracias al orden "más estricto primero".</p></div>
+
+            <div class="callout tip"><div class="callout-header"><span class="callout-icon">💡</span> Lección clave</div><p>El SINO de un SI <strong>ya garantiza que su condición es F</strong>. Así, dentro del SINO no necesitas re-comprobarlo: cuando preguntas "n &gt;= 20" dentro del SINO, automáticamente sabes que también n &lt;= 50 (porque la primera era n &gt; 50 y falló).</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EJERCICIO 7 -->
+      <div class="exercise">
+        <div class="exercise-header"><span class="exercise-num">EJ. 7</span><span>Tabla de multiplicar de N (PARA básico)</span><span class="exercise-tag">🧠 patrón clásico</span></div>
+        <div class="exercise-body">
+          <div class="statement-box"><span class="statement-label">📝 Enunciado</span><p>Lea un número <strong>N</strong> y muestre su <strong>tabla de multiplicar del 1 al 10</strong>. Ejemplo, si N=7: <em>7×1=7, 7×2=14, ..., 7×10=70</em>.</p></div>
+
+          <div class="solution-block">
+            <h4>🎯 ¿Qué nos están pidiendo?</h4>
+            <p>Imprimir 10 líneas, una por cada multiplicación. Cantidad EXACTAMENTE conocida (10 iteraciones) → caso ideal para PARA.</p>
+
+            <h4>🧠 Razonamiento clave: usar la variable de control "i" como dato</h4>
+            <p>Aquí <code>i</code> NO es solo un contador "vacío": <strong>es el segundo factor</strong> de cada multiplicación. Para i=1 imprimo N×1, para i=2 imprimo N×2, etc.</p>
+
+            <h4>🧠 Identificar variables (leyenda)</h4>
+            <div class="legend-box"><div class="legend-title">🏷️ Leyenda</div><ul style="margin:0">
+              <li><code>N</code> = número del que se hace la tabla (entrada, <span class="tipo">Entero</span>)</li>
+              <li><code>i</code> = variable de control y segundo factor (<span class="tipo">Entero</span>)</li>
+              <li><code>resultado</code> = N × i, lo que se muestra (<span class="tipo">Entero</span>)</li>
+            </ul></div>
+
+            <h4>🪜 Pseudocódigo</h4>
+<pre class="pseudo"><code><span class="kw">INICIO</span>
+    <span class="tipo">Entero</span>: <span class="var">N</span>, <span class="var">i</span>, <span class="var">resultado</span>
+    <span class="fn">Leer</span> <span class="var">N</span>
+    <span class="kw">PARA</span> <span class="var">i</span> <span class="op">=</span> <span class="num">1</span> <span class="kw">HASTA</span> <span class="num">10</span> <span class="kw">HACER</span>
+        <span class="var">resultado</span> <span class="op">=</span> <span class="var">N</span> <span class="op">*</span> <span class="var">i</span>
+        <span class="fn">Mostrar</span> <span class="var">N</span>, <span class="str">" x "</span>, <span class="var">i</span>, <span class="str">" = "</span>, <span class="var">resultado</span>
+    <span class="kw">FIN_PARA</span>
+<span class="kw">FIN</span></code></pre>
+
+            <h4>🔷 Diagrama de flujo</h4>
+            <div class="flowchart-container">
+              <div class="mermaid-container" data-original='graph TB
+    I([Inicio])
+    D["Entero: N, i, resultado"]
+    L[/"leer N"/]
+    Pi["i = 1"]
+    C{"i &lt;= 10?"}
+    P["resultado = N * i"]
+    Mo[/"mostrar N x i = resultado"/]
+    Inc["i = i + 1"]
+    F([Fin])
+    I --> D --> L --> Pi --> C
+    C -->|Si| P --> Mo --> Inc --> C
+    C -->|No| F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style Mo fill:#60a5fa,stroke:#1e40af,color:#000
+    style Pi fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style Inc fill:#fbbf24,stroke:#d97706,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000
+    style P fill:#a78bfa,stroke:#6d28d9,color:#fff'><div class="mermaid">
+graph TB
+    I([Inicio])
+    D["Entero: N, i, resultado"]
+    L[/"leer N"/]
+    Pi["i = 1"]
+    C{"i &lt;= 10?"}
+    P["resultado = N * i"]
+    Mo[/"mostrar N x i = resultado"/]
+    Inc["i = i + 1"]
+    F([Fin])
+    I --> D --> L --> Pi --> C
+    C -->|Si| P --> Mo --> Inc --> C
+    C -->|No| F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style Mo fill:#60a5fa,stroke:#1e40af,color:#000
+    style Pi fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style Inc fill:#fbbf24,stroke:#d97706,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000
+    style P fill:#a78bfa,stroke:#6d28d9,color:#fff
+              </div></div>
+            </div>
+
+            <h4>🧪 Prueba de escritorio (con N=7)</h4>
+            <div class="trace-table"><table>
+              <thead><tr><th>i</th><th>resultado = N × i</th><th>imprime</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td>7 × 1 = 7</td><td>"7 x 1 = 7"</td></tr>
+                <tr><td>2</td><td>7 × 2 = 14</td><td>"7 x 2 = 14"</td></tr>
+                <tr><td>3</td><td>7 × 3 = 21</td><td>"7 x 3 = 21"</td></tr>
+                <tr><td>...</td><td>...</td><td>...</td></tr>
+                <tr><td>10</td><td>7 × 10 = 70</td><td>"7 x 10 = 70"</td></tr>
+                <tr><td>11</td><td colspan="2">11 &gt; 10 → sale del PARA</td></tr>
+              </tbody>
+            </table></div>
+
+            <div class="callout tip"><div class="callout-header"><span class="callout-icon">💡</span> Lección clave</div><p>La <strong>variable de control del PARA puede usarse como dato dentro del cuerpo</strong>. Es uno de los usos más potentes: en cada iteración, <code>i</code> tiene un valor distinto que aprovechas para los cálculos. Aquí, <code>i</code> es el "segundo factor" de la multiplicación.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EJERCICIO 8 -->
+      <div class="exercise">
+        <div class="exercise-header"><span class="exercise-num">EJ. 8</span><span>¿Es primo? (MIENTRAS con bandera/flag)</span><span class="exercise-tag">🧠 ejercicio integrador</span></div>
+        <div class="exercise-body">
+          <div class="statement-box"><span class="statement-label">📝 Enunciado</span><p>Lea un número entero positivo <strong>n &gt; 1</strong> y determine si es <strong>primo</strong> (solo divisible por 1 y por sí mismo) o <strong>compuesto</strong>.</p></div>
+
+          <div class="solution-block">
+            <h4>🎯 ¿Qué nos están pidiendo?</h4>
+            <p>Detectar si <code>n</code> tiene algún divisor entre 2 y n−1. Si encuentro alguno → es compuesto. Si recorro todos sin encontrar ninguno → es primo.</p>
+
+            <h4>🧠 Razonamiento clave: el patrón "bandera" (flag)</h4>
+            <p>Uso una variable <code>esPrimo</code> que arranca en V (asumo que es primo). Si en algún momento encuentro un divisor, la cambio a F. Al final, si sigue en V, no encontré ningún divisor → es primo.</p>
+
+            <h4>🧠 ¿Por qué MIENTRAS y no PARA?</h4>
+            <p>Porque puedo <strong>parar antes</strong> si ya encontré un divisor (no necesito seguir buscando). Con PARA tendría que recorrer todos los números obligatoriamente. Con MIENTRAS puedo poner una condición compuesta que me deje salir temprano.</p>
+
+            <h4>🧠 Identificar variables (leyenda)</h4>
+            <div class="legend-box"><div class="legend-title">🏷️ Leyenda</div><ul style="margin:0">
+              <li><code>n</code> = número a evaluar (entrada, <span class="tipo">Entero</span>)</li>
+              <li><code>i</code> = posible divisor que voy probando (control, <span class="tipo">Entero</span>)</li>
+              <li><code>esPrimo</code> = bandera lógica (intermedio, <span class="tipo">Lógico</span>)</li>
+            </ul></div>
+
+            <h4>🪜 Pseudocódigo</h4>
+<pre class="pseudo"><code><span class="kw">INICIO</span>
+    <span class="tipo">Entero</span>: <span class="var">n</span>, <span class="var">i</span>
+    <span class="tipo">Lógico</span>: <span class="var">esPrimo</span>
+    <span class="fn">Leer</span> <span class="var">n</span>
+    <span class="var">esPrimo</span> <span class="op">=</span> <span class="kw">V</span>      <span class="cmt">// asumo que es primo</span>
+    <span class="var">i</span> <span class="op">=</span> <span class="num">2</span>            <span class="cmt">// arranco probando divisores desde 2</span>
+    <span class="kw">MIENTRAS</span> (<span class="var">i</span> <span class="op">&lt;</span> <span class="var">n</span>) <span class="op">AND</span> (<span class="var">esPrimo</span> <span class="op">=</span> <span class="kw">V</span>) <span class="kw">HACER</span>
+        <span class="kw">SI</span> <span class="var">n</span> <span class="op">mod</span> <span class="var">i</span> <span class="op">=</span> <span class="num">0</span>     <span class="cmt">// si i divide a n exactamente</span>
+            <span class="var">esPrimo</span> <span class="op">=</span> <span class="kw">F</span>      <span class="cmt">// encontré un divisor → no es primo</span>
+        <span class="kw">FIN_SI</span>
+        <span class="var">i</span> <span class="op">=</span> <span class="var">i</span> <span class="op">+</span> <span class="num">1</span>
+    <span class="kw">FIN_MIENTRAS</span>
+    <span class="kw">SI</span> <span class="var">esPrimo</span> <span class="op">=</span> <span class="kw">V</span>
+        <span class="fn">Mostrar</span> <span class="var">n</span>, <span class="str">" es primo"</span>
+    <span class="kw">SINO</span>
+        <span class="fn">Mostrar</span> <span class="var">n</span>, <span class="str">" es compuesto"</span>
+    <span class="kw">FIN_SI</span>
+<span class="kw">FIN</span></code></pre>
+
+            <div class="callout intuition" style="margin-top:12px">
+              <div class="callout-header"><span class="callout-icon">🧮</span> ¿Qué es <code>n mod i</code>?</div>
+              <p><code>mod</code> es el <strong>resto</strong> de la división entera. Si <code>n mod i = 0</code> significa que <code>i</code> divide exactamente a <code>n</code> (sin resto). Por ejemplo: <code>10 mod 5 = 0</code> (5 divide a 10), <code>10 mod 3 = 1</code> (3 no divide exactamente).</p>
+            </div>
+
+            <h4>🔷 Diagrama de flujo</h4>
+            <div class="flowchart-container">
+              <div class="mermaid-container" data-original='graph TB
+    I([Inicio])
+    D["Entero: n, i · Logico: esPrimo"]
+    L[/"leer n"/]
+    Init["esPrimo = V<br/>i = 2"]
+    Cw{"i &lt; n AND esPrimo = V?"}
+    Cm{"n mod i = 0?"}
+    Set["esPrimo = F"]
+    Inc["i = i + 1"]
+    Cf{"esPrimo = V?"}
+    M1[/"mostrar primo"/]
+    M2[/"mostrar compuesto"/]
+    F([Fin])
+    I --> D --> L --> Init --> Cw
+    Cw -->|Si| Cm
+    Cm -->|Si| Set --> Inc
+    Cm -->|No| Inc
+    Inc --> Cw
+    Cw -->|No| Cf
+    Cf -->|Si| M1 --> F
+    Cf -->|No| M2 --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style Init fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M1 fill:#60a5fa,stroke:#1e40af,color:#000
+    style M2 fill:#60a5fa,stroke:#1e40af,color:#000
+    style Cw fill:#fbbf24,stroke:#d97706,color:#000
+    style Cm fill:#fbbf24,stroke:#d97706,color:#000
+    style Cf fill:#fbbf24,stroke:#d97706,color:#000
+    style Set fill:#f472b6,stroke:#be185d,color:#fff
+    style Inc fill:#a78bfa,stroke:#6d28d9,color:#fff'><div class="mermaid">
+graph TB
+    I([Inicio])
+    D["Entero: n, i · Logico: esPrimo"]
+    L[/"leer n"/]
+    Init["esPrimo = V<br/>i = 2"]
+    Cw{"i &lt; n AND esPrimo = V?"}
+    Cm{"n mod i = 0?"}
+    Set["esPrimo = F"]
+    Inc["i = i + 1"]
+    Cf{"esPrimo = V?"}
+    M1[/"mostrar primo"/]
+    M2[/"mostrar compuesto"/]
+    F([Fin])
+    I --> D --> L --> Init --> Cw
+    Cw -->|Si| Cm
+    Cm -->|Si| Set --> Inc
+    Cm -->|No| Inc
+    Inc --> Cw
+    Cw -->|No| Cf
+    Cf -->|Si| M1 --> F
+    Cf -->|No| M2 --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style Init fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M1 fill:#60a5fa,stroke:#1e40af,color:#000
+    style M2 fill:#60a5fa,stroke:#1e40af,color:#000
+    style Cw fill:#fbbf24,stroke:#d97706,color:#000
+    style Cm fill:#fbbf24,stroke:#d97706,color:#000
+    style Cf fill:#fbbf24,stroke:#d97706,color:#000
+    style Set fill:#f472b6,stroke:#be185d,color:#fff
+    style Inc fill:#a78bfa,stroke:#6d28d9,color:#fff
+              </div></div>
+            </div>
+
+            <h4>🧪 Prueba de escritorio (n = 7, primo)</h4>
+            <div class="trace-table"><table>
+              <thead><tr><th>i</th><th>i &lt; 7 AND esPrimo = V?</th><th>7 mod i</th><th>esPrimo</th></tr></thead>
+              <tbody>
+                <tr><td>2</td><td>V (2&lt;7 y V)</td><td>1 (no divide)</td><td>V</td></tr>
+                <tr><td>3</td><td>V</td><td>1</td><td>V</td></tr>
+                <tr><td>4</td><td>V</td><td>3</td><td>V</td></tr>
+                <tr><td>5</td><td>V</td><td>2</td><td>V</td></tr>
+                <tr><td>6</td><td>V</td><td>1</td><td>V</td></tr>
+                <tr><td>7</td><td>F (7&lt;7 es F) → sale</td><td>—</td><td>V</td></tr>
+                <tr><td>—</td><td colspan="3">esPrimo = V → muestra "7 es primo" ✓</td></tr>
+              </tbody>
+            </table></div>
+
+            <h4>🧪 Prueba de escritorio (n = 9, compuesto)</h4>
+            <div class="trace-table"><table>
+              <thead><tr><th>i</th><th>i &lt; 9 AND esPrimo = V?</th><th>9 mod i</th><th>esPrimo</th></tr></thead>
+              <tbody>
+                <tr><td>2</td><td>V</td><td>1</td><td>V</td></tr>
+                <tr><td>3</td><td>V</td><td><strong>0 (divide!)</strong></td><td><strong>F</strong></td></tr>
+                <tr><td>4</td><td>F (esPrimo=F) → sale</td><td>—</td><td>F</td></tr>
+                <tr><td>—</td><td colspan="3">esPrimo = F → muestra "9 es compuesto" ✓</td></tr>
+              </tbody>
+            </table></div>
+
+            <p>Observa cómo el ciclo se <strong>detuvo en cuanto encontró un divisor</strong> (cuando i=3 cambió esPrimo a F, en la siguiente vuelta la condición compuesta dio F y salió). Esa es la magia de usar la bandera en la condición.</p>
+
+            <div class="final-answer"><div class="final-answer-label">✅ Resultado</div><p>Para n=7 → "es primo". Para n=9 → "es compuesto". El algoritmo es eficiente porque sale en cuanto detecta un divisor.</p></div>
+
+            <div class="callout tip"><div class="callout-header"><span class="callout-icon">💡</span> Lección clave</div><p>El <strong>patrón bandera</strong> (flag) es uno de los más usados en algoritmos de búsqueda y verificación: <em>"asumo algo, intento contradecirlo, si no pude → era cierto"</em>. Aparece en problemas como "¿está ordenado?", "¿existe en la lista?", "¿son todos pares?", etc.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ GLOSARIO ============ -->
+    <section class="block" id="glosario">
+      <div class="block-header"><div class="block-num">📖</div><h2>Glosario rápido</h2></div>
+
+      <div class="glossary-grid">
+        <div class="gloss-item"><div class="gloss-term">Bucle (ciclo, loop)</div><div class="gloss-def">Sección de código que se repite varias veces controlada por una condición.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Iteración</div><div class="gloss-def">Cada pasada o ejecución del cuerpo del bucle.</div></div>
+        <div class="gloss-item"><div class="gloss-term">MIENTRAS (while)</div><div class="gloss-def">Bucle pretest: condición al inicio. Puede ejecutarse 0 veces.</div></div>
+        <div class="gloss-item"><div class="gloss-term">REPETIR-HASTA</div><div class="gloss-def">Bucle posttest: condición al final. Ejecuta al menos 1 vez.</div></div>
+        <div class="gloss-item"><div class="gloss-term">PARA (for, desde)</div><div class="gloss-def">Bucle de conteo fijo con variable de control automática.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Variable de control</div><div class="gloss-def">Variable que controla la cantidad de iteraciones (típicamente <code>i</code>, <code>j</code>, <code>k</code>).</div></div>
+        <div class="gloss-item"><div class="gloss-term">Contador</div><div class="gloss-def">Variable que se incrementa en cantidad constante (típicamente +1) cada iteración.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Acumulador</div><div class="gloss-def">Variable que suma sobre sí misma valores variables para totalizar.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Inicialización</div><div class="gloss-def">Dar valor inicial a contador/acumulador antes del ciclo (típicamente 0 o 1).</div></div>
+        <div class="gloss-item"><div class="gloss-term">Actualización</div><div class="gloss-def">Cambiar las variables dentro del ciclo para que la condición eventualmente termine.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Bucle infinito</div><div class="gloss-def">Bucle que nunca termina por error en su diseño (olvido de actualización).</div></div>
+        <div class="gloss-item"><div class="gloss-term">Priming read</div><div class="gloss-def">Lectura inicial antes del MIENTRAS para que la condición pueda evaluarse.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Pretest</div><div class="gloss-def">Bucle que evalúa la condición al inicio (MIENTRAS, PARA).</div></div>
+        <div class="gloss-item"><div class="gloss-term">Posttest</div><div class="gloss-def">Bucle que evalúa la condición al final (REPETIR-HASTA).</div></div>
+        <div class="gloss-item"><div class="gloss-term">Bandera (flag)</div><div class="gloss-def">Variable lógica (V/F) que registra si ocurrió un evento dentro del ciclo.</div></div>
+        <div class="gloss-item"><div class="gloss-term">SI anidado</div><div class="gloss-def">Un SI dentro de la rama V o F de otro SI.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Filtro en cascada</div><div class="gloss-def">Patrón de SI anidados donde cada SINO lleva a la siguiente pregunta.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Ley de De Morgan</div><div class="gloss-def">NOT(a AND b) = (NOT a) OR (NOT b); NOT(a OR b) = (NOT a) AND (NOT b).</div></div>
+        <div class="gloss-item"><div class="gloss-term">mod (módulo)</div><div class="gloss-def">Operador que devuelve el resto de la división entera.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Identidad de la suma/producto</div><div class="gloss-def">0 para sumar (no afecta), 1 para multiplicar (no afecta). Por eso se inicializan así.</div></div>
+      </div>
+    </section>
+
+    <!-- ============ AUTOEVALUACIÓN ============ -->
+    <section class="block" id="autoevaluacion">
+      <div class="block-header"><div class="block-num">✅</div><h2>Autoevaluación · 12 preguntas</h2></div>
+
+      <p style="color:var(--text-muted);margin-bottom:20px">Responde mentalmente, luego abre la respuesta. Si fallas más de 3, repasa los bloques correspondientes.</p>
+
+      <div class="quiz-item"><div class="quiz-q">¿Cuáles son las 3 estructuras de repetición?</div><details><summary>Ver respuesta</summary><div class="answer-content"><strong>MIENTRAS</strong> (pretest), <strong>REPETIR-HASTA</strong> (posttest) y <strong>PARA</strong> (conteo fijo).</div></details></div>
+
+      <div class="quiz-item"><div class="quiz-q">¿Cuál es la diferencia entre MIENTRAS y REPETIR-HASTA?</div><details><summary>Ver respuesta</summary><div class="answer-content"><strong>MIENTRAS</strong>: evalúa al inicio, puede ejecutarse 0 veces. <strong>REPETIR-HASTA</strong>: evalúa al final, ejecuta siempre al menos 1 vez. Además, MIENTRAS continúa cuando V; REPETIR-HASTA sale cuando V (condiciones invertidas).</div></details></div>
+
+      <div class="quiz-item"><div class="quiz-q">¿Qué es un contador y qué es un acumulador?</div><details><summary>Ver respuesta</summary><div class="answer-content"><strong>Contador</strong>: suma una cantidad constante (típicamente 1) cada iteración. <strong>Acumulador</strong>: suma valores variables sobre sí mismo. Ejemplo: <code>cont = cont + 1</code> vs <code>suma = suma + N</code>.</div></details></div>
+
+      <div class="quiz-item"><div class="quiz-q">¿En qué valor inicializo un acumulador de productos?</div><details><summary>Ver respuesta</summary><div class="answer-content">En <strong>1</strong>, no en 0. Si lo inicializas en 0, el primer producto da 0 y todo se vuelve 0. El 1 es la identidad del producto: x × 1 = x.</div></details></div>
+
+      <div class="quiz-item"><div class="quiz-q">Aplica De Morgan: ¿cuál es la negación de <code>(a &gt;= 1) AND (a &lt;= 12)</code>?</div><details><summary>Ver respuesta</summary><div class="answer-content"><code>(a &lt; 1) OR (a &gt; 12)</code>. El AND se vuelve OR, y cada comparación se invierte.</div></details></div>
+
+      <div class="quiz-item"><div class="quiz-q">¿Qué es un priming read y para qué sirve?</div><details><summary>Ver respuesta</summary><div class="answer-content">Una <strong>lectura inicial antes del MIENTRAS</strong>. Sirve cuando la condición depende de un dato del usuario: lo lees primero, evalúas, y luego dentro del ciclo lees el siguiente.</div></details></div>
+
+      <div class="quiz-item"><div class="quiz-q">¿Cuándo conviene usar PARA?</div><details><summary>Ver respuesta</summary><div class="answer-content">Cuando se conoce <strong>exactamente cuántas iteraciones</strong> se harán (cantidad fija o leída al inicio). Ejemplo: "procesar las notas de los 50 alumnos".</div></details></div>
+
+      <div class="quiz-item"><div class="quiz-q">En un SI anidado para 3 rangos (descuentos), ¿en qué orden van las condiciones?</div><details><summary>Ver respuesta</summary><div class="answer-content">De <strong>más restrictiva a menos restrictiva</strong>. Si pones primero la condición amplia, los casos restrictivos nunca se ejecutan.</div></details></div>
+
+      <div class="quiz-item"><div class="quiz-q">¿Qué es un bucle infinito y cómo lo evito?</div><details><summary>Ver respuesta</summary><div class="answer-content">Un bucle que nunca termina por error en el diseño. Se evita asegurando que <strong>siempre haya una instrucción dentro del cuerpo que modifique las variables de la condición</strong> (ej: <code>n = n + 1</code>).</div></details></div>
+
+      <div class="quiz-item"><div class="quiz-q">¿Qué es una bandera (flag) en un algoritmo?</div><details><summary>Ver respuesta</summary><div class="answer-content">Una variable lógica (V/F) que <strong>registra si ocurrió un evento</strong> durante el ciclo. Se usa típicamente cuando uno quiere saber "¿existió/se cumplió X durante todo el recorrido?".</div></details></div>
+
+      <div class="quiz-item"><div class="quiz-q">¿Qué hace <code>15 mod 4</code>?</div><details><summary>Ver respuesta</summary><div class="answer-content"><strong>3</strong>. Es el resto de dividir 15 entre 4 (15 = 4×3 + 3).</div></details></div>
+
+      <div class="quiz-item"><div class="quiz-q">Las 4 partes obligatorias de cualquier ciclo:</div><details><summary>Ver respuesta</summary><div class="answer-content">1) <strong>Inicialización</strong> de variables. 2) <strong>Condición</strong> de parada. 3) <strong>Cuerpo</strong> del ciclo. 4) <strong>Actualización</strong> de las variables de la condición.</div></details></div>
+    </section>
+
+    <!-- ============ CIERRE ============ -->
+    <section class="block" id="cierre">
+      <div class="block-header"><div class="block-num">🎯</div><h2>Cierre y conexión con la siguiente semana</h2></div>
+
+      <div class="callout tip">
+        <div class="callout-header"><span class="callout-icon">🏁</span> Lo que ya dominas</div>
+        <ul>
+          <li><strong>SI anidados a fondo</strong>: patrón "filtro en cascada" con orden correcto.</li>
+          <li>Las <strong>3 estructuras de repetición</strong> (MIENTRAS, REPETIR-HASTA, PARA) y sus diagramas.</li>
+          <li>Cuándo elegir cada una (cantidad conocida/desconocida, ejecución mínima 0/1).</li>
+          <li>Patrones <strong>contador</strong> vs <strong>acumulador</strong> y sus inicializaciones.</li>
+          <li><strong>Priming read</strong>: lectura inicial antes del MIENTRAS.</li>
+          <li>Las <strong>leyes de De Morgan</strong> para invertir condiciones (puente entre MIENTRAS y REPETIR).</li>
+          <li>El <strong>patrón bandera (flag)</strong> para detectar eventos durante el ciclo.</li>
+          <li>Cómo evitar <strong>bucles infinitos</strong> con la actualización correcta.</li>
+          <li>Combinar <strong>PARA + SI anidado</strong> para "contar elementos que cumplen X".</li>
+        </ul>
+      </div>
+
+      <div class="callout intuition">
+        <div class="callout-header"><span class="callout-icon">➡️</span> Qué viene en la Semana 6</div>
+        <p>Hasta ahora trabajaste con variables individuales. En <strong>Semana 6</strong> aparecen los <strong>arreglos (arrays)</strong>: estructuras que guardan <em>muchos valores</em> bajo un solo nombre, accesibles por índice. Verás:</p>
+        <ul>
+          <li><strong>Arreglos unidimensionales</strong>: vectores (lista lineal de elementos).</li>
+          <li><strong>Recorrido</strong> de arreglos con PARA (¡por eso PARA es tan importante!).</li>
+          <li><strong>Búsqueda</strong> de elementos en un arreglo (con bandera).</li>
+          <li><strong>Algoritmos</strong>: máximo, mínimo, suma, promedio sobre arreglos.</li>
+          <li><strong>Práctica calificada 2</strong> (la más importante antes del examen parcial).</li>
+        </ul>
+        <p>Todo lo de Semana 5 (ciclos, contadores, acumuladores, banderas) se aplicará directamente sobre arreglos.</p>
+      </div>
+
+      <div class="callout warning">
+        <div class="callout-header"><span class="callout-icon">📋</span> Antes del examen parcial</div>
+        <p>Asegúrate de poder responder <strong>sin ver apuntes</strong>:</p>
+        <ol>
+          <li>Las 3 estructuras de repetición con sus diagramas correctos (MIENTRAS antes, REPETIR-HASTA después, PARA con la variable de control).</li>
+          <li>Diferenciar las 3 (cantidad conocida vs desconocida, mínimo 0 vs 1 ejecuciones).</li>
+          <li>Convertir un MIENTRAS a REPETIR-HASTA (negar la condición usando De Morgan).</li>
+          <li>Resolver "contar positivos hasta negativo" de memoria (es el clásico).</li>
+          <li>Resolver "suma de pares hasta 100" en MIENTRAS y REPETIR.</li>
+          <li>Resolver el descuento por unidades con SI anidado en orden correcto.</li>
+          <li>Inicializar correctamente: contador en 0, acumulador de suma en 0, acumulador de producto en 1.</li>
+          <li>Usar <strong>priming read</strong> cuando el MIENTRAS depende de un dato del usuario.</li>
+          <li>Identificar y evitar bucles infinitos.</li>
+          <li>Interpretar <code>n mod i = 0</code> como "i divide a n exactamente".</li>
+        </ol>
+      </div>
+    </section>
+
+    <footer>
+      <p>📘 <strong>Semana 5 · Anidación y Estructuras de Repetición</strong></p>
+      <p>Hecho con <span class="heart">♥</span> para Pingüino · Universidad de Piura</p>
+      <p style="margin-top:8px;font-size:.8rem">Tip: usa <kbd>Ctrl</kbd>+<kbd>F</kbd> para buscar cualquier término.</p>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+const root = document.documentElement;
+const themeToggle = document.getElementById('themeToggle');
+const themeIcon = document.getElementById('themeIcon');
+const themeLabel = document.getElementById('themeLabel');
+
+function getSavedTheme() {
+  try { return localStorage.getItem('penguin-theme') || 'dark'; } catch (e) { return 'dark'; }
+}
+function saveTheme(t) {
+  try { localStorage.setItem('penguin-theme', t); } catch (e) {}
+}
+function applyTheme(theme) {
+  root.setAttribute('data-theme', theme);
+  if (theme === 'dark') { themeIcon.textContent = '🌙'; themeLabel.textContent = 'Modo oscuro'; }
+  else { themeIcon.textContent = '☀️'; themeLabel.textContent = 'Modo claro'; }
+  initMermaid(theme);
+}
+themeToggle.addEventListener('click', () => {
+  const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  applyTheme(next); saveTheme(next);
+});
+
+function initMermaid(theme) {
+  if (typeof mermaid === 'undefined') return;
+  const isDark = (theme === 'dark');
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: isDark ? 'dark' : 'default',
+    securityLevel: 'loose',
+    themeVariables: isDark ? {
+      background: '#161c2f', primaryColor: '#1e293b', primaryTextColor: '#e8edf7',
+      primaryBorderColor: '#3d4870', lineColor: '#94a3b8', secondaryColor: '#a78bfa',
+      tertiaryColor: '#34d399', mainBkg: '#1a2138', nodeBkg: '#1a2138',
+      clusterBkg: '#0d1322', edgeLabelBackground: '#161c2f',
+      fontFamily: 'Inter, sans-serif',
+    } : {
+      background: '#ffffff', primaryColor: '#f1f5f9', primaryTextColor: '#0f172a',
+      primaryBorderColor: '#cbd5e1', lineColor: '#475569', mainBkg: '#ffffff',
+      clusterBkg: '#f8fafc', fontFamily: 'Inter, sans-serif',
+    },
+    flowchart: { curve: 'basis', padding: 20, useMaxWidth: true }
+  });
+  document.querySelectorAll('.mermaid-container').forEach(container => {
+    const original = container.dataset.original;
+    if (original) container.innerHTML = '<div class="mermaid">' + original + '</div>';
+  });
+  if (mermaid.run) mermaid.run();
+  else if (mermaid.init) mermaid.init(undefined, document.querySelectorAll('.mermaid'));
+}
+
+const tocLinks = document.querySelectorAll('.toc-list a');
+const sections = document.querySelectorAll('section.block, section.hero');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      tocLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+}, { rootMargin: '-30% 0px -60% 0px' });
+sections.forEach(s => observer.observe(s));
+
+window.addEventListener('DOMContentLoaded', () => { applyTheme(getSavedTheme()); });
+</script>
+</body>
+</html>
