@@ -1,0 +1,1947 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Semana 6 · DIV/MOD, Descomposición y Arreglos · Pingüino</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<style>
+:root[data-theme="dark"]{--bg:#0a0e1a;--bg-elevated:#131829;--bg-card:#161c2f;--bg-card-hover:#1c2340;--bg-code:#0d1322;--border:#2a3354;--border-strong:#3d4870;--text:#e8edf7;--text-muted:#98a4c2;--text-dim:#6b7793;--primary:#60a5fa;--primary-strong:#3b82f6;--primary-bg:rgba(96,165,250,.12);--accent:#34d399;--accent-bg:rgba(52,211,153,.12);--warning:#fbbf24;--warning-bg:rgba(251,191,36,.12);--danger:#f87171;--danger-bg:rgba(248,113,113,.12);--purple:#a78bfa;--purple-bg:rgba(167,139,250,.12);--pink:#f472b6;--pink-bg:rgba(244,114,182,.12);--shadow:0 4px 24px rgba(0,0,0,.4);--syn-kw:#c586c0;--syn-fn:#dcdcaa;--syn-tipo:#4ec9b0;--syn-op:#ff79c6;--syn-num:#b5cea8;--syn-str:#ce9178;--syn-var:#9cdcfe;--syn-cmt:#6a9955;--syn-bg:#0d1322;--truth-true-bg:rgba(52,211,153,.18);--truth-false-bg:rgba(248,113,113,.18);--truth-true:#34d399;--truth-false:#f87171}
+:root[data-theme="light"]{--bg:#f8fafc;--bg-elevated:#fff;--bg-card:#fff;--bg-card-hover:#f1f5f9;--bg-code:#f8fafc;--border:#e2e8f0;--border-strong:#cbd5e1;--text:#0f172a;--text-muted:#475569;--text-dim:#94a3b8;--primary:#2563eb;--primary-strong:#1d4ed8;--primary-bg:rgba(37,99,235,.08);--accent:#059669;--accent-bg:rgba(5,150,105,.08);--warning:#d97706;--warning-bg:rgba(217,119,6,.08);--danger:#dc2626;--danger-bg:rgba(220,38,38,.08);--purple:#7c3aed;--purple-bg:rgba(124,58,237,.08);--pink:#db2777;--pink-bg:rgba(219,39,119,.08);--shadow:0 2px 8px rgba(15,23,42,.06);--syn-kw:#af00db;--syn-fn:#795e26;--syn-tipo:#267f99;--syn-op:#d73a49;--syn-num:#098658;--syn-str:#a31515;--syn-var:#001080;--syn-cmt:#008000;--syn-bg:#f6f8fa;--truth-true-bg:rgba(5,150,105,.12);--truth-false-bg:rgba(220,38,38,.12);--truth-true:#059669;--truth-false:#dc2626}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:16px;transition:background .3s,color .3s;min-height:100vh}
+::selection{background:var(--primary);color:#fff}
+.topbar{position:sticky;top:0;z-index:100;background:var(--bg-elevated);border-bottom:1px solid var(--border);padding:14px 32px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(12px);background:color-mix(in srgb,var(--bg-elevated) 85%,transparent)}
+.brand{display:flex;align-items:center;gap:12px;font-weight:700;font-size:1.05rem;color:var(--text)}
+.brand-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--primary),var(--purple));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;color:#fff;box-shadow:0 4px 12px var(--primary-bg)}
+.brand-text small{display:block;font-size:.75rem;font-weight:500;color:var(--text-muted);margin-top:-2px}
+.theme-toggle{background:var(--bg-card);border:1px solid var(--border);color:var(--text);padding:8px 14px;border-radius:999px;cursor:pointer;display:flex;align-items:center;gap:8px;font-size:.85rem;font-weight:500;font-family:inherit;transition:all .2s}
+.theme-toggle:hover{background:var(--bg-card-hover);border-color:var(--primary);transform:translateY(-1px)}
+.layout{display:grid;grid-template-columns:280px 1fr;max-width:1500px;margin:0 auto}
+@media(max-width:1024px){.layout{grid-template-columns:1fr}.sidebar{display:none}}
+.sidebar{position:sticky;top:64px;height:calc(100vh - 64px);overflow-y:auto;padding:24px 16px 24px 32px;border-right:1px solid var(--border);background:var(--bg)}
+.sidebar h3{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text-dim);margin-bottom:12px;font-weight:700}
+.toc-list{list-style:none}
+.toc-list li{margin:2px 0}
+.toc-list a{display:block;padding:8px 14px;color:var(--text-muted);text-decoration:none;border-radius:8px;font-size:.9rem;border-left:3px solid transparent;transition:all .15s}
+.toc-list a:hover{background:var(--bg-card);color:var(--text)}
+.toc-list a.active{background:var(--primary-bg);color:var(--primary);border-left-color:var(--primary);font-weight:600}
+main{padding:40px 56px 80px;max-width:100%;overflow-x:hidden}
+@media(max-width:768px){main{padding:24px 20px 60px}.topbar{padding:12px 16px}}
+.hero{padding:36px 0 48px;border-bottom:1px solid var(--border);margin-bottom:48px}
+.hero-badge{display:inline-block;padding:6px 14px;background:var(--primary-bg);color:var(--primary);border-radius:999px;font-size:.78rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;margin-bottom:16px}
+h1{font-size:clamp(2rem,5vw,3rem);font-weight:800;line-height:1.15;letter-spacing:-.02em;margin-bottom:16px;background:linear-gradient(135deg,var(--text) 0%,var(--primary) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:1.15rem;color:var(--text-muted);max-width:720px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:16px;margin-top:24px}
+.meta-pill{display:flex;align-items:center;gap:8px;padding:8px 14px;background:var(--bg-card);border:1px solid var(--border);border-radius:999px;font-size:.85rem;color:var(--text-muted)}
+.meta-pill strong{color:var(--text);font-weight:600}
+section.block{margin:64px 0;scroll-margin-top:80px}
+.block-header{display:flex;align-items:center;gap:16px;margin-bottom:28px}
+.block-num{width:48px;height:48px;background:linear-gradient(135deg,var(--primary),var(--purple));color:#fff;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:800;flex-shrink:0;box-shadow:0 6px 16px var(--primary-bg)}
+h2{font-size:clamp(1.6rem,3vw,2.1rem);font-weight:800;letter-spacing:-.01em;color:var(--text)}
+h3{font-size:1.35rem;font-weight:700;margin:36px 0 16px;color:var(--text)}
+h4{font-size:1.08rem;font-weight:700;margin:24px 0 12px;color:var(--text)}
+p{margin:12px 0;color:var(--text)}
+strong{color:var(--text);font-weight:600}
+em{color:var(--primary);font-style:normal;font-weight:500}
+ul,ol{margin:12px 0 12px 24px}
+li{margin:6px 0}
+a{color:var(--primary);text-decoration:none}
+a:hover{text-decoration:underline}
+.callout{margin:24px 0;padding:20px 24px;border-radius:14px;border-left:4px solid;background:var(--bg-card);position:relative}
+.callout-header{display:flex;align-items:center;gap:10px;font-weight:700;margin-bottom:8px;font-size:.95rem}
+.callout-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem}
+.callout p{margin:6px 0}
+.callout p:last-child{margin-bottom:0}
+.callout.intuition{border-color:var(--primary);background:var(--primary-bg)}.callout.intuition .callout-icon{background:var(--primary);color:#fff}.callout.intuition .callout-header{color:var(--primary)}
+.callout.theory{border-color:var(--purple);background:var(--purple-bg)}.callout.theory .callout-icon{background:var(--purple);color:#fff}.callout.theory .callout-header{color:var(--purple)}
+.callout.tip{border-color:var(--accent);background:var(--accent-bg)}.callout.tip .callout-icon{background:var(--accent);color:#fff}.callout.tip .callout-header{color:var(--accent)}
+.callout.warning{border-color:var(--warning);background:var(--warning-bg)}.callout.warning .callout-icon{background:var(--warning);color:#fff}.callout.warning .callout-header{color:var(--warning)}
+.callout.example{border-color:var(--pink);background:var(--pink-bg)}.callout.example .callout-icon{background:var(--pink);color:#fff}.callout.example .callout-header{color:var(--pink)}
+.def-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:22px 26px;margin:20px 0;position:relative;overflow:hidden}
+.def-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--primary),var(--purple))}
+.def-card .def-label{display:inline-block;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--primary);background:var(--primary-bg);padding:3px 10px;border-radius:6px;margin-bottom:8px}
+.def-card .def-term{font-size:1.15rem;font-weight:700;color:var(--text);margin-bottom:6px}
+.def-card .def-text{color:var(--text-muted)}
+.table-wrapper{overflow-x:auto;margin:20px 0;border-radius:12px;border:1px solid var(--border);background:var(--bg-card)}
+table{width:100%;border-collapse:collapse;font-size:.93rem}
+th,td{padding:12px 16px;text-align:left;border-bottom:1px solid var(--border)}
+th{background:var(--bg-elevated);color:var(--text);font-weight:700;font-size:.82rem;text-transform:uppercase;letter-spacing:.04em}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--bg-card-hover)}
+td.center,th.center{text-align:center}
+td.mono,th.mono{font-family:'JetBrains Mono',monospace;font-size:.95em}
+code{font-family:'JetBrains Mono',monospace;background:var(--bg-code);border:1px solid var(--border);padding:2px 7px;border-radius:5px;font-size:.88em;color:var(--accent)}
+pre.pseudo{background:var(--syn-bg);border:1px solid var(--border);border-left:4px solid var(--purple);border-radius:12px;padding:20px 24px 18px;overflow-x:auto;margin:16px 0;font-family:'JetBrains Mono','Courier New',monospace;font-size:.92rem;line-height:1.85;position:relative;color:var(--text)}
+pre.pseudo::before{content:'⌨ pseudocódigo';position:absolute;top:6px;right:14px;font-size:.68rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em;font-family:'Inter',sans-serif;font-weight:600}
+pre.pseudo code{background:none;border:none;padding:0;color:inherit;font-size:inherit}
+.kw{color:var(--syn-kw);font-weight:700}
+.fn{color:var(--syn-fn);font-weight:600}
+.tipo{color:var(--syn-tipo);font-weight:600}
+.op{color:var(--syn-op);font-weight:500}
+.num{color:var(--syn-num)}
+.str{color:var(--syn-str)}
+.var{color:var(--syn-var)}
+.cmt{color:var(--syn-cmt);font-style:italic}
+.flowchart-container{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:24px;margin:20px 0;text-align:center;overflow-x:auto}
+.flowchart-container .mermaid{display:flex;justify-content:center;min-height:100px}
+.flowchart-caption{margin-top:12px;font-size:.85rem;color:var(--text-muted);font-style:italic}
+.dual-view{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:20px 0;align-items:start}
+@media(max-width:900px){.dual-view{grid-template-columns:1fr}}
+.dual-view .flowchart-container{margin:0}
+.dual-view pre.pseudo{margin:0}
+.exercise{background:var(--bg-card);border:2px solid var(--border-strong);border-radius:16px;margin:28px 0;overflow:hidden}
+.exercise-header{background:linear-gradient(135deg,var(--primary),var(--purple));color:#fff;padding:14px 24px;display:flex;align-items:center;gap:12px;font-weight:700;font-size:1.05rem;flex-wrap:wrap}
+.exercise-num{background:rgba(255,255,255,.25);padding:4px 10px;border-radius:6px;font-size:.85rem}
+.exercise-tag{background:rgba(255,255,255,.18);padding:3px 10px;border-radius:6px;font-size:.78rem;font-weight:500;margin-left:auto}
+.exercise-body{padding:24px 28px}
+.statement-box{background:var(--warning-bg);border-left:4px solid var(--warning);padding:16px 20px;border-radius:8px;margin:16px 0 24px}
+.statement-box .statement-label{font-weight:700;color:var(--warning);font-size:.82rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;display:block}
+.solution-block{margin-top:20px}
+.solution-block h4{display:flex;align-items:center;gap:8px;color:var(--accent);margin:24px 0 10px;font-size:1rem}
+.final-answer{background:var(--accent-bg);border-left:4px solid var(--accent);border-radius:8px;padding:16px 20px;margin:20px 0}
+.final-answer-label{font-weight:700;color:var(--accent);font-size:.82rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+.trace-table{background:var(--bg-card);border-radius:10px;overflow:hidden;margin:14px 0;border:1px solid var(--border)}
+.trace-table table{font-size:.88rem}
+.trace-table th{background:var(--purple-bg);color:var(--purple)}
+.legend-box{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin:12px 0;font-size:.9rem}
+.legend-box .legend-title{font-weight:700;color:var(--primary);margin-bottom:6px;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em}
+.compare-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin:20px 0}
+.compare-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:18px 20px}
+.compare-card h4{margin:0 0 10px;display:flex;align-items:center;gap:8px;font-size:1rem}
+.glossary-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin:20px 0}
+.gloss-item{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:16px 18px;transition:all .2s}
+.gloss-item:hover{border-color:var(--primary);background:var(--bg-card-hover);transform:translateY(-2px)}
+.gloss-term{font-weight:700;color:var(--primary);font-size:1rem;margin-bottom:4px}
+.gloss-def{font-size:.88rem;color:var(--text-muted)}
+.quiz-item{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin:18px 0}
+.quiz-q{font-weight:600;color:var(--text);margin-bottom:12px}
+details{margin-top:12px;border-top:1px dashed var(--border);padding-top:12px}
+summary{cursor:pointer;font-weight:600;color:var(--accent);font-size:.9rem;padding:6px 0;user-select:none}
+details[open] summary{margin-bottom:10px}
+.answer-content{font-size:.92rem;color:var(--text-muted);background:var(--accent-bg);border-radius:8px;padding:12px 16px;margin-top:8px}
+.answer-content strong{color:var(--accent)}
+footer{text-align:center;padding:40px 20px;border-top:1px solid var(--border);margin-top:80px;color:var(--text-muted);font-size:.88rem}
+footer .heart{color:var(--danger)}
+kbd{background:var(--bg-elevated);border:1px solid var(--border-strong);border-radius:4px;padding:1px 6px;font-family:'JetBrains Mono',monospace;font-size:.85em}
+.formula-box{background:var(--purple-bg);border:1px solid var(--purple);border-radius:10px;padding:14px 20px;margin:14px 0;text-align:center;font-family:'JetBrains Mono',monospace;font-size:1rem}
+.array-visual{display:flex;gap:0;margin:20px 0;flex-wrap:wrap;justify-content:center}
+.array-cell{min-width:60px;height:60px;background:var(--bg-card);border:2px solid var(--border-strong);display:flex;flex-direction:column;justify-content:center;align-items:center;font-family:'JetBrains Mono',monospace;font-weight:700;position:relative;color:var(--text)}
+.array-cell:first-child{border-radius:8px 0 0 8px}
+.array-cell:last-child{border-radius:0 8px 8px 0}
+.array-cell + .array-cell{border-left:none}
+.array-cell .index{position:absolute;top:-22px;font-size:.7rem;color:var(--text-dim);font-weight:600}
+.array-cell .value{font-size:1.05rem;color:var(--primary)}
+.array-cell.highlight{background:var(--primary-bg);border-color:var(--primary)}
+.array-name{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--purple);margin-right:12px;align-self:center;font-size:1.1rem}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:10px}
+::-webkit-scrollbar-thumb:hover{background:var(--primary)}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-icon">🐧</div>
+    <div class="brand-text">Pingüino · Fundamentos de Programación<small>Guía de estudio · Semana 6</small></div>
+  </div>
+  <button class="theme-toggle" id="themeToggle"><span id="themeIcon">🌙</span><span id="themeLabel">Modo oscuro</span></button>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>📑 Contenido</h3>
+    <ul class="toc-list">
+      <li><a href="#intro">🏁 Introducción</a></li>
+      <li><a href="#bloque1">1️⃣ DIV y MOD</a></li>
+      <li><a href="#bloque2">2️⃣ Descomposición de números</a></li>
+      <li><a href="#bloque3">3️⃣ Introducción a arreglos</a></li>
+      <li><a href="#bloque4">4️⃣ Operaciones con vectores</a></li>
+      <li><a href="#bloque5">5️⃣ Algoritmos clásicos</a></li>
+      <li><a href="#bloque6">6️⃣ Estrategia Práctica 2</a></li>
+      <li><a href="#ejercicios">💪 Ejercicios resueltos</a></li>
+      <li><a href="#glosario">📖 Glosario</a></li>
+      <li><a href="#autoevaluacion">✅ Autoevaluación</a></li>
+      <li><a href="#cierre">🎯 Cierre</a></li>
+    </ul>
+  </aside>
+
+  <main>
+
+    <section class="hero" id="intro">
+      <div class="hero-badge">Semana 6 · DIV/MOD + Arreglos + Práctica 2</div>
+      <h1>Manipulación numérica avanzada y datos colectivos</h1>
+      <p class="hero-sub">Esta semana cierra la <strong>unidad pre-examen</strong> con dos temas clave: los operadores <strong>DIV y MOD</strong> (que te permiten descomponer números, detectar paridad, divisibilidad), y la <strong>introducción a los arreglos</strong> (vectores: una sola variable que guarda muchos valores). Y lo más importante: prepararte para la <strong>Práctica Calificada 2</strong> que cubre todo desde Semana 4.</p>
+      <div class="hero-meta">
+        <div class="meta-pill">⏱️ <span><strong>Lectura:</strong> ~90 min</span></div>
+        <div class="meta-pill">📚 <span><strong>Bloques:</strong> 6 + 8 ejercicios</span></div>
+        <div class="meta-pill">🧮 <span><strong>Ops:</strong> DIV, MOD</span></div>
+        <div class="meta-pill">📦 <span><strong>Concepto:</strong> Arreglos/Vectores</span></div>
+      </div>
+    </section>
+
+    <section class="block" id="bloque1">
+      <div class="block-header"><div class="block-num">1</div><h2>Operadores DIV y MOD: la división con dos resultados</h2></div>
+
+      <div class="callout intuition">
+        <div class="callout-header"><span class="callout-icon">💡</span> Intuición</div>
+        <p>Cuando divides 17 entre 5 a mano en la primaria, obtienes <strong>dos cosas</strong>: un cociente entero (3) y un resto (2). En programación pasa exactamente igual: <code>DIV</code> te da el cociente, <code>MOD</code> te da el resto. Estos operadores son la base para descomponer números, detectar paridad, divisibilidad, ciclos en cifras, etc.</p>
+      </div>
+
+      <h3>1.1. Definiciones formales</h3>
+
+      <div class="def-card">
+        <span class="def-label">Definición</span>
+        <div class="def-term">DIV (división entera)</div>
+        <div class="def-text">Devuelve el <strong>cociente entero</strong> de la división de dos números enteros (descarta los decimales). Ejemplo: <code>17 DIV 5 = 3</code>.</div>
+      </div>
+
+      <div class="def-card">
+        <span class="def-label">Definición</span>
+        <div class="def-term">MOD (módulo)</div>
+        <div class="def-text">Devuelve el <strong>resto (residuo)</strong> de la división entera. Ejemplo: <code>17 MOD 5 = 2</code> (porque 17 = 5×3 + 2).</div>
+      </div>
+
+      <h3>1.2. La identidad fundamental</h3>
+
+      <div class="callout theory">
+        <div class="callout-header"><span class="callout-icon">🧮</span> Relación matemática (memorízala)</div>
+        <div class="formula-box">
+          <strong>a = b × (a DIV b) + (a MOD b)</strong>
+        </div>
+        <p>Es decir: el dividendo es igual al divisor por el cociente, más el resto. Es exactamente la división de la primaria.</p>
+        <p>Verificación con 17 ÷ 5: &nbsp;<code>17 = 5 × 3 + 2</code> ✓</p>
+      </div>
+
+      <h3>1.3. Tabla de ejemplos clave</h3>
+
+      <div class="table-wrapper">
+        <table>
+          <thead><tr><th>Operación</th><th>DIV</th><th>MOD</th><th>Verificación</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">75 / 8</td><td class="mono">75 DIV 8 = 9</td><td class="mono">75 MOD 8 = 3</td><td>75 = 8×9 + 3</td></tr>
+            <tr><td class="mono">99 / 15</td><td class="mono">99 DIV 15 = 6</td><td class="mono">99 MOD 15 = 9</td><td>99 = 15×6 + 9</td></tr>
+            <tr><td class="mono">154 / 12</td><td class="mono">154 DIV 12 = 12</td><td class="mono">154 MOD 12 = 10</td><td>154 = 12×12 + 10</td></tr>
+            <tr><td class="mono">257 / 10</td><td class="mono">257 DIV 10 = 25</td><td class="mono">257 MOD 10 = 7</td><td>257 = 10×25 + 7</td></tr>
+            <tr><td class="mono">55 / 5</td><td class="mono">55 DIV 5 = 11</td><td class="mono">55 MOD 5 = 0</td><td>división exacta</td></tr>
+            <tr><td class="mono">8 / 10</td><td class="mono">8 DIV 10 = 0</td><td class="mono">8 MOD 10 = 8</td><td>cuando dividendo &lt; divisor</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>1.4. Prioridad de DIV y MOD</h3>
+
+      <p>Tienen la <strong>misma prioridad que la multiplicación y la división</strong>. Es decir, antes que <code>+</code> y <code>−</code>, después que paréntesis y potencia.</p>
+
+      <div class="callout example">
+        <div class="callout-header"><span class="callout-icon">📝</span> Ejemplo de evaluación</div>
+        <p><strong>Calcular:</strong> <code>11 MOD 6 + 44 DIV 9 − 3</code></p>
+        <ol style="margin-left:24px">
+          <li>Primero MOD y DIV (igual prioridad, izquierda a derecha): <code>11 MOD 6 = 5</code>; <code>44 DIV 9 = 4</code>.</li>
+          <li>Queda: <code>5 + 4 − 3</code></li>
+          <li>Sumas y restas (izquierda a derecha): <code>5 + 4 = 9</code>; <code>9 − 3 = 6</code></li>
+        </ol>
+        <div class="formula-box" style="margin-top:8px">Resultado: 6</div>
+      </div>
+
+      <div class="callout example">
+        <div class="callout-header"><span class="callout-icon">📝</span> Otro ejemplo con variables</div>
+        <p><strong>Si x = 7 e y = 11, hallar:</strong> <code>(x + y) MOD 7 + (3 * x) DIV y</code></p>
+        <ol style="margin-left:24px">
+          <li>Primero los paréntesis: <code>(7 + 11) = 18</code> y <code>(3 × 7) = 21</code>.</li>
+          <li>Luego MOD y DIV: <code>18 MOD 7 = 4</code> (porque 18 = 7×2 + 4); <code>21 DIV 11 = 1</code> (porque 21 = 11×1 + 10).</li>
+          <li>Suma final: <code>4 + 1 = 5</code></li>
+        </ol>
+      </div>
+
+      <h3>1.5. Aplicaciones más útiles de MOD</h3>
+
+      <div class="compare-grid">
+        <div class="compare-card">
+          <h4 style="color:var(--primary)">🎯 Detectar paridad</h4>
+          <p>Un número es <strong>par</strong> si <code>n MOD 2 = 0</code>. Es <strong>impar</strong> si <code>n MOD 2 = 1</code>.</p>
+<pre class="pseudo" style="margin-top:8px"><code><span class="kw">SI</span> <span class="var">n</span> <span class="op">MOD</span> <span class="num">2</span> <span class="op">=</span> <span class="num">0</span>
+    <span class="fn">Mostrar</span> <span class="str">"par"</span>
+<span class="kw">SINO</span>
+    <span class="fn">Mostrar</span> <span class="str">"impar"</span>
+<span class="kw">FIN_SI</span></code></pre>
+        </div>
+        <div class="compare-card">
+          <h4 style="color:var(--accent)">🎯 Detectar divisibilidad</h4>
+          <p><code>a</code> es divisible por <code>b</code> si <code>a MOD b = 0</code>.</p>
+<pre class="pseudo" style="margin-top:8px"><code><span class="kw">SI</span> <span class="var">año</span> <span class="op">MOD</span> <span class="num">4</span> <span class="op">=</span> <span class="num">0</span>
+    <span class="fn">Mostrar</span> <span class="str">"bisiesto"</span>
+<span class="kw">FIN_SI</span></code></pre>
+        </div>
+        <div class="compare-card">
+          <h4 style="color:var(--purple)">🎯 Extraer última cifra</h4>
+          <p><code>n MOD 10</code> te da el último dígito de un número.</p>
+          <p style="font-size:.88rem;color:var(--text-muted)">Ej: <code>847 MOD 10 = 7</code> (la unidad de 847).</p>
+        </div>
+        <div class="compare-card">
+          <h4 style="color:var(--warning)">🎯 Eliminar última cifra</h4>
+          <p><code>n DIV 10</code> te da el número sin su última cifra.</p>
+          <p style="font-size:.88rem;color:var(--text-muted)">Ej: <code>847 DIV 10 = 84</code>.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="bloque2">
+      <div class="block-header"><div class="block-num">2</div><h2>Descomposición de números: la técnica clave</h2></div>
+
+      <div class="callout intuition">
+        <div class="callout-header"><span class="callout-icon">💡</span> Intuición visual</div>
+        <p>Cuando ves el número <strong>847</strong>, naturalmente entiendes que tiene <em>"8 centenas, 4 decenas y 7 unidades"</em>. ¿Cómo le enseñas eso a un algoritmo? Con <strong>DIV y MOD</strong>. Esta es la técnica más útil para procesar números cifra por cifra.</p>
+      </div>
+
+      <h3>2.1. El "truco de las 10": separar cifras</h3>
+
+      <p>Para un número de <strong>3 cifras</strong> (entre 100 y 999):</p>
+
+      <div class="formula-box">
+        <strong>Centenas</strong> = num <span style="color:var(--syn-op)">DIV</span> 100<br/>
+        <strong>Decenas</strong> = (num <span style="color:var(--syn-op)">MOD</span> 100) <span style="color:var(--syn-op)">DIV</span> 10<br/>
+        <strong>Unidades</strong> = num <span style="color:var(--syn-op)">MOD</span> 10
+      </div>
+
+      <h3>2.2. ¿Por qué funciona? Intuición paso a paso</h3>
+
+      <p>Tomemos el número <strong>847</strong> y veamos qué hace cada operación:</p>
+
+      <h4>🪜 Centenas: <code>847 DIV 100</code></h4>
+      <p>"¿Cuántas veces cabe 100 en 847?" → cabe 8 veces enteras (sobran 47). Por eso <code>847 DIV 100 = 8</code>. ✓</p>
+
+      <h4>🪜 Decenas: <code>(847 MOD 100) DIV 10</code></h4>
+      <ol style="margin-left:24px">
+        <li><code>847 MOD 100 = 47</code> (lo que sobra después de quitar las 8 centenas).</li>
+        <li>Ahora con 47 hago el mismo truco para extraer la decena: <code>47 DIV 10 = 4</code>. ✓</li>
+      </ol>
+
+      <h4>🪜 Unidades: <code>847 MOD 10</code></h4>
+      <p>El resto al dividir entre 10 es exactamente la última cifra: <code>847 MOD 10 = 7</code>. ✓</p>
+
+      <div class="formula-box">
+        Verificación: 8 × 100 + 4 × 10 + 7 = 800 + 40 + 7 = <strong>847</strong> ✓
+      </div>
+
+      <h3>2.3. Generalización: número de N cifras</h3>
+
+      <p>Para un número de <strong>4 cifras</strong> (millares, centenas, decenas, unidades):</p>
+
+      <div class="formula-box">
+        <strong>Millares</strong> = num DIV 1000<br/>
+        <strong>Centenas</strong> = (num MOD 1000) DIV 100<br/>
+        <strong>Decenas</strong> = (num MOD 100) DIV 10<br/>
+        <strong>Unidades</strong> = num MOD 10
+      </div>
+
+      <p>El patrón es: <strong>DIV con la potencia de 10 correspondiente al lugar</strong>, después de quitar las cifras superiores con <strong>MOD de la potencia inmediatamente superior</strong>.</p>
+
+      <h3>2.4. Técnica alternativa: extraer cifras una por una con un ciclo</h3>
+
+      <p>En vez de usar fórmulas para cada posición, puedes hacer un <strong>bucle MIENTRAS</strong> que extrae la última cifra y la elimina, repetidamente, hasta que el número se haga 0:</p>
+
+<pre class="pseudo"><code><span class="cmt">// Extraer todas las cifras de un número (cualquier cantidad de dígitos)</span>
+<span class="kw">MIENTRAS</span> <span class="var">num</span> <span class="op">&gt;</span> <span class="num">0</span> <span class="kw">HACER</span>
+    <span class="var">cifra</span> <span class="op">=</span> <span class="var">num</span> <span class="op">MOD</span> <span class="num">10</span>      <span class="cmt">// extraigo la última cifra</span>
+    <span class="cmt">// ... hago algo con la cifra (sumarla, multiplicarla, etc.)</span>
+    <span class="var">num</span> <span class="op">=</span> <span class="var">num</span> <span class="op">DIV</span> <span class="num">10</span>       <span class="cmt">// elimino la última cifra del número</span>
+<span class="kw">FIN_MIENTRAS</span></code></pre>
+
+      <div class="callout tip">
+        <div class="callout-header"><span class="callout-icon">💡</span> Patrón útil para invertir números</div>
+        <p>Si quieres <strong>invertir</strong> un número (ej: 1234 → 4321), usas este patrón pero vas construyendo otro número multiplicando por 10:</p>
+<pre class="pseudo" style="margin-top:8px"><code><span class="var">inverso</span> <span class="op">=</span> <span class="num">0</span>
+<span class="kw">MIENTRAS</span> <span class="var">num</span> <span class="op">&gt;</span> <span class="num">0</span> <span class="kw">HACER</span>
+    <span class="var">cifra</span> <span class="op">=</span> <span class="var">num</span> <span class="op">MOD</span> <span class="num">10</span>
+    <span class="var">inverso</span> <span class="op">=</span> <span class="var">inverso</span> <span class="op">*</span> <span class="num">10</span> <span class="op">+</span> <span class="var">cifra</span>
+    <span class="var">num</span> <span class="op">=</span> <span class="var">num</span> <span class="op">DIV</span> <span class="num">10</span>
+<span class="kw">FIN_MIENTRAS</span></code></pre>
+      </div>
+    </section>
+
+    <section class="block" id="bloque3">
+      <div class="block-header"><div class="block-num">3</div><h2>Introducción a arreglos (vectores)</h2></div>
+
+      <div class="callout intuition">
+        <div class="callout-header"><span class="callout-icon">💡</span> El problema que resuelven</div>
+        <p>Imagina que tienes que guardar las notas de 30 alumnos. Hasta ahora tendrías que crear 30 variables: <code>nota1, nota2, nota3, ..., nota30</code>. Es un dolor. Los <strong>arreglos</strong> resuelven esto: <em>una sola variable que guarda muchos valores</em> bajo el mismo nombre, accesibles por un número (índice).</p>
+      </div>
+
+      <h3>3.1. Definición formal</h3>
+
+      <div class="def-card">
+        <span class="def-label">Definición</span>
+        <div class="def-term">Arreglo / Vector / Array</div>
+        <div class="def-text">Un <strong>conjunto finito y ordenado de elementos del mismo tipo</strong>, almacenados bajo un único nombre. Los elementos se acceden mediante un <strong>índice</strong> (subíndice) que indica su posición. Es una estructura de datos <em>estática</em>: el tamaño se define al inicio y no cambia.</div>
+      </div>
+
+      <h3>3.2. Visualización: NOTAS, un vector de 6 elementos</h3>
+
+      <p>Imagina un vector llamado <code>NOTAS</code> con 6 valores (las notas de 6 alumnos):</p>
+
+      <div style="display:flex;align-items:center;justify-content:center;flex-wrap:wrap;margin:24px 0">
+        <span class="array-name">NOTAS:</span>
+        <div class="array-visual" style="margin:0">
+          <div class="array-cell"><span class="index">[1]</span><span class="value">14</span></div>
+          <div class="array-cell"><span class="index">[2]</span><span class="value">11</span></div>
+          <div class="array-cell"><span class="index">[3]</span><span class="value">17</span></div>
+          <div class="array-cell"><span class="index">[4]</span><span class="value">9</span></div>
+          <div class="array-cell"><span class="index">[5]</span><span class="value">13</span></div>
+          <div class="array-cell"><span class="index">[6]</span><span class="value">15</span></div>
+        </div>
+      </div>
+
+      <p>Cómo lo lees:</p>
+      <ul>
+        <li><code>NOTAS[1]</code> = 14 (la nota del alumno 1)</li>
+        <li><code>NOTAS[3]</code> = 17 (la nota del alumno 3)</li>
+        <li><code>NOTAS[6]</code> = 15 (la nota del alumno 6)</li>
+        <li><code>NOTAS[i]</code> = la nota del alumno i (depende del valor de i)</li>
+      </ul>
+
+      <h3>3.3. Conceptos clave de un vector</h3>
+
+      <div class="table-wrapper">
+        <table>
+          <thead><tr><th>Concepto</th><th>Descripción</th><th>Ejemplo en NOTAS</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Nombre del vector</strong></td><td>Identificador del arreglo completo</td><td><code>NOTAS</code></td></tr>
+            <tr><td><strong>Elemento</strong></td><td>Cada valor individual del vector</td><td>14, 11, 17, ...</td></tr>
+            <tr><td><strong>Índice / Subíndice</strong></td><td>Número que identifica la posición</td><td>1, 2, 3, 4, 5, 6</td></tr>
+            <tr><td><strong>Tamaño / Rango / Longitud</strong></td><td>Cantidad total de elementos</td><td>6</td></tr>
+            <tr><td><strong>Tipo de datos</strong></td><td>Todos los elementos son del mismo tipo</td><td>Real (notas)</td></tr>
+            <tr><td><strong>Límite inferior</strong></td><td>Primer índice válido</td><td>1</td></tr>
+            <tr><td><strong>Límite superior</strong></td><td>Último índice válido</td><td>6</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout warning">
+        <div class="callout-header"><span class="callout-icon">⚠️</span> Convenio del índice (curso UDEP)</div>
+        <p>En este curso, los arreglos comienzan en <strong>índice 1</strong> (como en Fortran/Pascal). En lenguajes como C, C++, Java o Python, comienzan en <strong>índice 0</strong>. Cuando llegues a Python (Semana 9+), <em>todo se desplaza una posición</em>: el primer elemento es <code>arr[0]</code>.</p>
+      </div>
+
+      <h3>3.4. Sintaxis para declarar un vector</h3>
+
+<pre class="pseudo"><code><span class="cmt">// Notación del curso (estilo Joyanes)</span>
+<span class="tipo">array</span>[<span class="num">1</span>..<span class="var">N</span>] <span class="kw">de</span> <span class="tipo">Real</span>: <span class="var">NOTAS</span>
+
+<span class="cmt">// Otras notaciones equivalentes que verás</span>
+<span class="tipo">Real</span>: <span class="var">NOTAS</span>[<span class="num">30</span>]              <span class="cmt">// estilo C/Java</span>
+<span class="tipo">Real</span>: <span class="var">NOTAS</span>[<span class="num">1</span>..<span class="num">30</span>]           <span class="cmt">// estilo Pascal</span></code></pre>
+
+      <p>Significa: <em>"NOTAS es un arreglo de 30 elementos del tipo Real"</em>.</p>
+
+      <h3>3.5. ¿Por qué los vectores son tan poderosos?</h3>
+
+      <div class="compare-grid">
+        <div class="compare-card">
+          <h4 style="color:var(--danger)">❌ Sin vectores (sufrido)</h4>
+<pre class="pseudo" style="margin-top:8px"><code><span class="tipo">Real</span>: <span class="var">n1</span>, <span class="var">n2</span>, <span class="var">n3</span>, <span class="var">n4</span>, <span class="var">n5</span>
+<span class="fn">Leer</span> <span class="var">n1</span>
+<span class="fn">Leer</span> <span class="var">n2</span>
+<span class="fn">Leer</span> <span class="var">n3</span>
+<span class="fn">Leer</span> <span class="var">n4</span>
+<span class="fn">Leer</span> <span class="var">n5</span>
+<span class="cmt">// 5 instrucciones para 5 datos</span>
+<span class="cmt">// ¿y si fueran 1000?</span></code></pre>
+        </div>
+        <div class="compare-card">
+          <h4 style="color:var(--accent)">✅ Con vectores + PARA</h4>
+<pre class="pseudo" style="margin-top:8px"><code><span class="tipo">Real</span>: <span class="var">NOTAS</span>[<span class="num">1000</span>]
+<span class="kw">PARA</span> <span class="var">i</span> <span class="op">=</span> <span class="num">1</span> <span class="kw">HASTA</span> <span class="num">1000</span> <span class="kw">HACER</span>
+    <span class="fn">Leer</span> <span class="var">NOTAS</span>[<span class="var">i</span>]
+<span class="kw">FIN_PARA</span>
+<span class="cmt">// ¡Mismo código sirve para 5, 100 o 1000!</span></code></pre>
+        </div>
+      </div>
+
+      <p>Es <strong>la combinación natural</strong>: el índice <code>i</code> del PARA recorre cada posición del vector. Por eso el PARA es tan importante en Semana 5.</p>
+    </section>
+
+
+    <section class="block" id="bloque4">
+      <div class="block-header"><div class="block-num">4</div><h2>Operaciones básicas con vectores</h2></div>
+
+      <div class="callout intuition">
+        <div class="callout-header"><span class="callout-icon">💡</span> Las 4 operaciones esenciales</div>
+        <p>Trabajar con un vector se reduce a 4 cosas: <strong>declararlo</strong>, <strong>asignar</strong> valores a sus posiciones, <strong>leer/escribir</strong> elementos individuales, y <strong>recorrerlo</strong> con un ciclo (típicamente PARA).</p>
+      </div>
+
+      <h3>4.1. Asignación a una posición específica</h3>
+
+      <p>Para guardar un valor en una posición concreta del vector, usas su índice:</p>
+
+<pre class="pseudo"><code><span class="var">NOTAS</span>[<span class="num">3</span>] <span class="op">=</span> <span class="num">17</span>          <span class="cmt">// guarda 17 en la posición 3</span>
+<span class="var">NOTAS</span>[<span class="var">i</span>] <span class="op">=</span> <span class="num">15</span>          <span class="cmt">// guarda 15 en la posición que indique i</span>
+<span class="var">NOTAS</span>[<span class="num">5</span>] <span class="op">=</span> <span class="var">NOTAS</span>[<span class="num">3</span>]   <span class="cmt">// copia el valor de la posición 3 a la 5</span></code></pre>
+
+      <p>Antes de la asignación, esa posición tenía algún valor (basura o lo que sea); después, tiene el nuevo valor.</p>
+
+      <h3>4.2. Lectura: llenar el vector con datos del usuario</h3>
+
+      <p>El patrón estándar es <strong>PARA + Leer</strong>:</p>
+
+<pre class="pseudo"><code><span class="cmt">// Leer 6 notas y guardarlas en NOTAS[1] hasta NOTAS[6]</span>
+<span class="kw">PARA</span> <span class="var">i</span> <span class="op">=</span> <span class="num">1</span> <span class="kw">HASTA</span> <span class="num">6</span> <span class="kw">HACER</span>
+    <span class="fn">Leer</span> <span class="var">NOTAS</span>[<span class="var">i</span>]
+<span class="kw">FIN_PARA</span></code></pre>
+
+      <p><strong>¿Qué pasa en cada iteración?</strong></p>
+      <ul>
+        <li>Iteración 1: <code>i=1</code>, lee un valor y lo guarda en <code>NOTAS[1]</code>.</li>
+        <li>Iteración 2: <code>i=2</code>, lee un valor y lo guarda en <code>NOTAS[2]</code>.</li>
+        <li>... y así hasta <code>NOTAS[6]</code>.</li>
+      </ul>
+
+      <h3>4.3. Escritura: mostrar todos los elementos</h3>
+
+      <p>Mismo patrón pero con Mostrar:</p>
+
+<pre class="pseudo"><code><span class="kw">PARA</span> <span class="var">i</span> <span class="op">=</span> <span class="num">1</span> <span class="kw">HASTA</span> <span class="num">6</span> <span class="kw">HACER</span>
+    <span class="fn">Mostrar</span> <span class="str">"Posición "</span>, <span class="var">i</span>, <span class="str">": "</span>, <span class="var">NOTAS</span>[<span class="var">i</span>]
+<span class="kw">FIN_PARA</span></code></pre>
+
+      <h3>4.4. Recorrido: el patrón PARA + procesamiento</h3>
+
+      <p>Un <strong>recorrido</strong> es visitar todos los elementos del vector aplicándoles algún procesamiento (sumar, comparar, transformar):</p>
+
+<pre class="pseudo"><code><span class="cmt">// Sumar todos los elementos del vector</span>
+<span class="var">suma</span> <span class="op">=</span> <span class="num">0</span>
+<span class="kw">PARA</span> <span class="var">i</span> <span class="op">=</span> <span class="num">1</span> <span class="kw">HASTA</span> <span class="var">N</span> <span class="kw">HACER</span>
+    <span class="var">suma</span> <span class="op">=</span> <span class="var">suma</span> <span class="op">+</span> <span class="var">NOTAS</span>[<span class="var">i</span>]
+<span class="kw">FIN_PARA</span></code></pre>
+
+      <h3>4.5. Visualización del recorrido (paso a paso)</h3>
+
+      <p>Imagina que <code>NOTAS</code> es <code>[14, 11, 17, 9, 13, 15]</code> y queremos sumarlo. Aquí lo que pasa en cada iteración:</p>
+
+      <div class="trace-table"><table>
+        <thead><tr><th>i</th><th>NOTAS[i]</th><th>suma antes</th><th>suma después</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>14</td><td>0</td><td>14</td></tr>
+          <tr><td>2</td><td>11</td><td>14</td><td>25</td></tr>
+          <tr><td>3</td><td>17</td><td>25</td><td>42</td></tr>
+          <tr><td>4</td><td>9</td><td>42</td><td>51</td></tr>
+          <tr><td>5</td><td>13</td><td>51</td><td>64</td></tr>
+          <tr><td>6</td><td>15</td><td>64</td><td><strong>79</strong></td></tr>
+        </tbody>
+      </table></div>
+
+      <p>Al terminar, <code>suma = 79</code>. Si quisieras el promedio, harías <code>promedio = suma / 6</code>.</p>
+
+      <h3>4.6. Errores frecuentes con vectores</h3>
+
+      <div class="callout warning">
+        <div class="callout-header"><span class="callout-icon">⚠️</span> Errores típicos a evitar</div>
+        <ul>
+          <li><strong>Acceder fuera del rango</strong>: si el vector tiene 6 elementos y haces <code>NOTAS[7]</code> o <code>NOTAS[0]</code> (en este curso) → error.</li>
+          <li><strong>Confundir índice con valor</strong>: <code>i</code> es la <em>posición</em>; <code>NOTAS[i]</code> es el <em>valor en esa posición</em>. No los mezcles en cálculos.</li>
+          <li><strong>Olvidar inicializar contadores/acumuladores</strong> antes del PARA. Si no lo haces, los cálculos parten de "basura".</li>
+          <li><strong>Cambiar i dentro del PARA</strong>: nunca modifiques manualmente la variable de control del PARA. El ciclo se encarga.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="block" id="bloque5">
+      <div class="block-header"><div class="block-num">5</div><h2>Algoritmos clásicos sobre vectores y secuencias</h2></div>
+
+      <p style="color:var(--text-muted)">Estos 4 patrones aparecen una y otra vez. Memorízalos como <em>plantillas</em> que adaptas al problema concreto.</p>
+
+      <h3>5.1. Patrón "MÁXIMO"</h3>
+
+      <div class="callout intuition">
+        <div class="callout-header"><span class="callout-icon">🏆</span> Idea</div>
+        <p>Recorres todos los elementos. Tomas el primero como "máximo provisional". A cada nuevo elemento, lo comparas: si es mayor, lo reemplaza como nuevo máximo. Al final, has visto todos y tienes el verdadero máximo.</p>
+      </div>
+
+<pre class="pseudo"><code><span class="var">max</span> <span class="op">=</span> <span class="var">V</span>[<span class="num">1</span>]                    <span class="cmt">// el primero es el "candidato a máximo"</span>
+<span class="kw">PARA</span> <span class="var">i</span> <span class="op">=</span> <span class="num">2</span> <span class="kw">HASTA</span> <span class="var">N</span> <span class="kw">HACER</span>      <span class="cmt">// recorro desde el 2 (el 1 ya está en max)</span>
+    <span class="kw">SI</span> <span class="var">V</span>[<span class="var">i</span>] <span class="op">&gt;</span> <span class="var">max</span>
+        <span class="var">max</span> <span class="op">=</span> <span class="var">V</span>[<span class="var">i</span>]            <span class="cmt">// encontré uno mayor, lo reemplazo</span>
+    <span class="kw">FIN_SI</span>
+<span class="kw">FIN_PARA</span></code></pre>
+
+      <h3>5.2. Patrón "MÍNIMO"</h3>
+
+      <p>Idéntico al máximo, solo cambia la comparación:</p>
+
+<pre class="pseudo"><code><span class="var">min</span> <span class="op">=</span> <span class="var">V</span>[<span class="num">1</span>]
+<span class="kw">PARA</span> <span class="var">i</span> <span class="op">=</span> <span class="num">2</span> <span class="kw">HASTA</span> <span class="var">N</span> <span class="kw">HACER</span>
+    <span class="kw">SI</span> <span class="var">V</span>[<span class="var">i</span>] <span class="op">&lt;</span> <span class="var">min</span>
+        <span class="var">min</span> <span class="op">=</span> <span class="var">V</span>[<span class="var">i</span>]
+    <span class="kw">FIN_SI</span>
+<span class="kw">FIN_PARA</span></code></pre>
+
+      <div class="callout warning">
+        <div class="callout-header"><span class="callout-icon">⚠️</span> Error frecuente</div>
+        <p>NO inicialices <code>max = 0</code> ni <code>min = 0</code> sin más. Si todos los valores son negativos, <code>max = 0</code> queda incorrecto. <strong>Usa siempre el primer elemento del vector</strong> como punto de partida.</p>
+      </div>
+
+      <h3>5.3. Patrón "SUMA y PROMEDIO"</h3>
+
+<pre class="pseudo"><code><span class="var">suma</span> <span class="op">=</span> <span class="num">0</span>
+<span class="kw">PARA</span> <span class="var">i</span> <span class="op">=</span> <span class="num">1</span> <span class="kw">HASTA</span> <span class="var">N</span> <span class="kw">HACER</span>
+    <span class="var">suma</span> <span class="op">=</span> <span class="var">suma</span> <span class="op">+</span> <span class="var">V</span>[<span class="var">i</span>]
+<span class="kw">FIN_PARA</span>
+<span class="var">promedio</span> <span class="op">=</span> <span class="var">suma</span> <span class="op">/</span> <span class="var">N</span></code></pre>
+
+      <h3>5.4. Patrón "BÚSQUEDA con bandera"</h3>
+
+      <div class="callout intuition">
+        <div class="callout-header"><span class="callout-icon">🔍</span> Idea</div>
+        <p>"¿Existe en el vector un elemento que cumpla X?". Recorres el vector con una <strong>bandera</strong> que arranca en F. Si encuentras el elemento, la pones en V (y opcionalmente sales del ciclo).</p>
+      </div>
+
+<pre class="pseudo"><code><span class="var">encontrado</span> <span class="op">=</span> <span class="kw">F</span>
+<span class="var">i</span> <span class="op">=</span> <span class="num">1</span>
+<span class="kw">MIENTRAS</span> (<span class="var">i</span> <span class="op">&lt;=</span> <span class="var">N</span>) <span class="op">AND</span> (<span class="var">encontrado</span> <span class="op">=</span> <span class="kw">F</span>) <span class="kw">HACER</span>
+    <span class="kw">SI</span> <span class="var">V</span>[<span class="var">i</span>] <span class="op">=</span> <span class="var">buscado</span>
+        <span class="var">encontrado</span> <span class="op">=</span> <span class="kw">V</span>
+    <span class="kw">FIN_SI</span>
+    <span class="var">i</span> <span class="op">=</span> <span class="var">i</span> <span class="op">+</span> <span class="num">1</span>
+<span class="kw">FIN_MIENTRAS</span>
+
+<span class="kw">SI</span> <span class="var">encontrado</span> <span class="op">=</span> <span class="kw">V</span>
+    <span class="fn">Mostrar</span> <span class="str">"Sí está"</span>
+<span class="kw">SINO</span>
+    <span class="fn">Mostrar</span> <span class="str">"No está"</span>
+<span class="kw">FIN_SI</span></code></pre>
+
+      <h3>5.5. Patrón "CONTAR los que cumplen X"</h3>
+
+      <p>Combina PARA + SI + contador (lo viste en Semana 5):</p>
+
+<pre class="pseudo"><code><span class="var">cont</span> <span class="op">=</span> <span class="num">0</span>
+<span class="kw">PARA</span> <span class="var">i</span> <span class="op">=</span> <span class="num">1</span> <span class="kw">HASTA</span> <span class="var">N</span> <span class="kw">HACER</span>
+    <span class="kw">SI</span> <span class="var">V</span>[<span class="var">i</span>] <span class="op">MOD</span> <span class="num">2</span> <span class="op">=</span> <span class="num">0</span>     <span class="cmt">// criterio: que sea par</span>
+        <span class="var">cont</span> <span class="op">=</span> <span class="var">cont</span> <span class="op">+</span> <span class="num">1</span>
+    <span class="kw">FIN_SI</span>
+<span class="kw">FIN_PARA</span></code></pre>
+
+      <h3>5.6. Cuadro mental de los patrones</h3>
+
+      <div class="table-wrapper">
+        <table>
+          <thead><tr><th>Patrón</th><th>Variables</th><th>Inicialización</th><th>Operación clave en cada iteración</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Máximo</strong></td><td>max</td><td>max = V[1]</td><td>SI V[i] &gt; max → max = V[i]</td></tr>
+            <tr><td><strong>Mínimo</strong></td><td>min</td><td>min = V[1]</td><td>SI V[i] &lt; min → min = V[i]</td></tr>
+            <tr><td><strong>Suma</strong></td><td>suma (acumulador)</td><td>suma = 0</td><td>suma = suma + V[i]</td></tr>
+            <tr><td><strong>Producto</strong></td><td>prod (acumulador)</td><td>prod = <strong>1</strong></td><td>prod = prod × V[i]</td></tr>
+            <tr><td><strong>Contar</strong></td><td>cont (contador)</td><td>cont = 0</td><td>SI condición → cont = cont + 1</td></tr>
+            <tr><td><strong>Búsqueda</strong></td><td>flag (bandera)</td><td>flag = F</td><td>SI V[i] = buscado → flag = V</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="block" id="bloque6">
+      <div class="block-header"><div class="block-num">6</div><h2>Estrategia para la Práctica Calificada 2</h2></div>
+
+      <div class="callout warning">
+        <div class="callout-header"><span class="callout-icon">📋</span> Datos clave de la PC2</div>
+        <ul>
+          <li><strong>Fecha:</strong> Jueves 23 de abril, 09:00 AM</li>
+          <li><strong>Duración:</strong> 1 hora</li>
+          <li><strong>Sin libros ni apuntes</strong>, sin celular visible (anula la prueba)</li>
+          <li><strong>Total: 20 puntos</strong> (típicamente 3 ejercicios)</li>
+          <li><strong>Cada ejercicio</strong> requiere pseudocódigo + diagrama de flujo</li>
+          <li><strong>OBLIGATORIO</strong>: leyenda de variables en cada ejercicio</li>
+        </ul>
+      </div>
+
+      <h3>6.1. Tipos de ejercicios que aparecen (basado en filas A, B, C)</h3>
+
+      <div class="compare-grid">
+        <div class="compare-card">
+          <h4 style="color:var(--primary)">📌 Tipo 1: Comisión por ventas</h4>
+          <p>Calcular comisión y sueldo final según rangos de ventas (3-4 niveles). <strong>Patrón: SI anidado en cascada</strong>.</p>
+          <p style="font-size:.85rem;color:var(--text-muted)">Apareció en Fila A, Fila C.</p>
+        </div>
+        <div class="compare-card">
+          <h4 style="color:var(--accent)">📌 Tipo 2: Descuento por cantidad</h4>
+          <p>Precio por kilo según rangos comprados. <strong>Patrón: SI anidado en cascada</strong>.</p>
+          <p style="font-size:.85rem;color:var(--text-muted)">Apareció en Fila A, Fila B.</p>
+        </div>
+        <div class="compare-card">
+          <h4 style="color:var(--purple)">📌 Tipo 3: Mayor de 3 números</h4>
+          <p>Determinar el mayor de A, B, C. <strong>Patrón: SI anidado de 2 niveles</strong>.</p>
+          <p style="font-size:.85rem;color:var(--text-muted)">Apareció en Fila A, Fila B.</p>
+        </div>
+        <div class="compare-card">
+          <h4 style="color:var(--warning)">📌 Tipo 4: Contar carácter "a"</h4>
+          <p>Procesar 50 caracteres y contar cuántos son "a". <strong>Patrón: PARA + SI</strong>.</p>
+          <p style="font-size:.85rem;color:var(--text-muted)">Apareció en Fila A, Fila B.</p>
+        </div>
+        <div class="compare-card">
+          <h4 style="color:var(--pink)">📌 Tipo 5: Tarifa de estacionamiento</h4>
+          <p>Calcular cobro por horas con tramos. <strong>Patrón: SI anidado en cascada por horas</strong>.</p>
+          <p style="font-size:.85rem;color:var(--text-muted)">Apareció en Fila C.</p>
+        </div>
+      </div>
+
+      <h3>6.2. Tips de tiempo (1 hora, ~3 ejercicios)</h3>
+
+      <div class="callout tip">
+        <div class="callout-header"><span class="callout-icon">⏱️</span> Distribución sugerida</div>
+        <ul>
+          <li><strong>5 min</strong>: leer toda la prueba primero, identificar el orden óptimo (empieza por el que más dominas).</li>
+          <li><strong>15 min</strong> por ejercicio = 45 min para los 3 ejercicios.</li>
+          <li><strong>10 min</strong> al final para revisar pseudocódigos, diagramas, y trazas mentales con un caso pequeño.</li>
+        </ul>
+      </div>
+
+      <h3>6.3. Errores que cuestan puntos (cuídate de estos)</h3>
+
+      <div class="callout warning">
+        <div class="callout-header"><span class="callout-icon">⚠️</span> Lista de "no hacer"</div>
+        <ul>
+          <li>❌ Olvidar la <strong>leyenda de variables</strong> (es OBLIGATORIO).</li>
+          <li>❌ <strong>Orden incorrecto</strong> de SI anidados (de chico a grande en vez de grande a chico).</li>
+          <li>❌ Confundir <strong>"más de X"</strong> con <strong>"X o más"</strong>.</li>
+          <li>❌ <strong>FIN_SI faltantes o sobrantes</strong>: cuenta SI ↔ FIN_SI, deben coincidir.</li>
+          <li>❌ Diagrama sin <strong>etiquetas V/F en las ramas</strong> del rombo.</li>
+          <li>❌ Diagrama sin <strong>símbolos correctos</strong>: óvalos para Inicio/Fin, paralelogramo (↗) para entrada/salida, rectángulo para proceso, rombo para decisión.</li>
+          <li>❌ <strong>Olvidar inicializar</strong> contadores antes del PARA.</li>
+          <li>❌ Uso incorrecto de <strong>tipos de datos</strong> (Real vs Entero vs Cadena).</li>
+        </ul>
+      </div>
+
+      <h3>6.4. Plantilla de respuesta (sigue siempre este formato)</h3>
+
+      <div class="callout theory">
+        <div class="callout-header"><span class="callout-icon">📝</span> Estructura para cada ejercicio</div>
+        <ol>
+          <li><strong>Leyenda</strong>: lista las variables y qué representan (3-5 líneas).</li>
+          <li><strong>Pseudocódigo</strong>: INICIO, declaración de tipos, instrucciones, FIN.</li>
+          <li><strong>Diagrama de flujo</strong>: óvalos (Inicio/Fin), entrada/salida, procesos, decisiones (con etiquetas V/F).</li>
+        </ol>
+        <p style="margin-top:8px">Si te quedas sin tiempo, <strong>primero termina el pseudocódigo de los 3 ejercicios</strong>; los diagramas se hacen después (más rápido si ya tienes el pseudocódigo).</p>
+      </div>
+    </section>
+
+    <section class="block" id="ejercicios">
+      <div class="block-header"><div class="block-num">💪</div><h2>Ejercicios resueltos paso a paso</h2></div>
+
+      <p style="font-size:1.05rem;color:var(--text-muted);margin-bottom:24px">Los <strong>4 primeros</strong> ejercicios cubren DIV/MOD y descomposición (archivo S6 del curso). Los <strong>4 siguientes</strong> son los ejercicios oficiales de la Práctica Calificada 2 con sus soluciones.</p>
+
+      <!-- EJERCICIO 1 -->
+      <div class="exercise">
+        <div class="exercise-header"><span class="exercise-num">EJ. 1</span><span>Descomposición de un número de 3 cifras (DIV y MOD)</span><span class="exercise-tag">📚 S6 ejemplo</span></div>
+        <div class="exercise-body">
+          <div class="statement-box"><span class="statement-label">📝 Enunciado</span><p>Capture un número entero de <strong>3 cifras</strong> y descompóngalo en <strong>centenas, decenas y unidades</strong>. El programa debe indicar cuántas centenas, decenas y unidades tiene el número.</p></div>
+
+          <div class="solution-block">
+            <h4>🎯 ¿Qué nos están pidiendo?</h4>
+            <p>Tomar un número como 847 y separarlo en sus componentes posicionales: 8 centenas, 4 decenas, 7 unidades.</p>
+
+            <h4>🧠 Razonamiento: aplicar el "truco de las 10"</h4>
+            <p>Como vimos en el Bloque 2:</p>
+            <ul>
+              <li><strong>Centenas</strong>: <code>num DIV 100</code> (cuántas veces cabe 100 en el número).</li>
+              <li><strong>Decenas</strong>: <code>(num MOD 100) DIV 10</code> (lo que sobra después de las centenas, dividido entre 10).</li>
+              <li><strong>Unidades</strong>: <code>num MOD 10</code> (la última cifra).</li>
+            </ul>
+
+            <h4>🧠 Validación: garantizar 3 cifras</h4>
+            <p>Para que sea de 3 cifras, debe estar entre 100 y 999 (inclusive). Usamos un <strong>REPETIR-HASTA</strong> que valide la entrada (patrón clásico).</p>
+
+            <h4>🧠 Identificar variables (leyenda)</h4>
+            <div class="legend-box"><div class="legend-title">🏷️ Leyenda</div><ul style="margin:0">
+              <li><code>num</code> = número de 3 cifras (entrada, <span class="tipo">Entero</span>)</li>
+              <li><code>c</code> = centenas (salida, <span class="tipo">Entero</span>)</li>
+              <li><code>d</code> = decenas (salida, <span class="tipo">Entero</span>)</li>
+              <li><code>u</code> = unidades (salida, <span class="tipo">Entero</span>)</li>
+            </ul></div>
+
+            <h4>🪜 Pseudocódigo</h4>
+<pre class="pseudo"><code><span class="kw">INICIO</span>
+    <span class="tipo">Entero</span>: <span class="var">num</span>, <span class="var">c</span>, <span class="var">d</span>, <span class="var">u</span>
+    <span class="kw">REPETIR</span>
+        <span class="fn">Leer</span> <span class="var">num</span>
+    <span class="kw">HASTA QUE</span> (<span class="var">num</span> <span class="op">&gt;=</span> <span class="num">100</span>) <span class="op">AND</span> (<span class="var">num</span> <span class="op">&lt;=</span> <span class="num">999</span>)
+    <span class="var">c</span> <span class="op">=</span> <span class="var">num</span> <span class="op">DIV</span> <span class="num">100</span>
+    <span class="var">d</span> <span class="op">=</span> (<span class="var">num</span> <span class="op">MOD</span> <span class="num">100</span>) <span class="op">DIV</span> <span class="num">10</span>
+    <span class="var">u</span> <span class="op">=</span> <span class="var">num</span> <span class="op">MOD</span> <span class="num">10</span>
+    <span class="fn">Mostrar</span> <span class="var">c</span>, <span class="str">" centenas, "</span>, <span class="var">d</span>, <span class="str">" decenas, "</span>, <span class="var">u</span>, <span class="str">" unidades"</span>
+<span class="kw">FIN</span></code></pre>
+
+            <h4>🔷 Diagrama de flujo</h4>
+            <div class="flowchart-container">
+              <div class="mermaid-container" data-original='graph TB
+    I([Inicio])
+    D["Entero: num, c, d, u"]
+    L[/"leer num"/]
+    Cv{"num en [100, 999]?"}
+    P1["c = num DIV 100"]
+    P2["d = (num MOD 100) DIV 10"]
+    P3["u = num MOD 10"]
+    M[/"mostrar c, d, u"/]
+    F([Fin])
+    I --> D --> L --> Cv
+    Cv -->|F| L
+    Cv -->|V| P1 --> P2 --> P3 --> M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style Cv fill:#fbbf24,stroke:#d97706,color:#000
+    style P1 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P2 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P3 fill:#a78bfa,stroke:#6d28d9,color:#fff'><div class="mermaid">
+graph TB
+    I([Inicio])
+    D["Entero: num, c, d, u"]
+    L[/"leer num"/]
+    Cv{"num en [100, 999]?"}
+    P1["c = num DIV 100"]
+    P2["d = (num MOD 100) DIV 10"]
+    P3["u = num MOD 10"]
+    M[/"mostrar c, d, u"/]
+    F([Fin])
+    I --> D --> L --> Cv
+    Cv -->|F| L
+    Cv -->|V| P1 --> P2 --> P3 --> M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style Cv fill:#fbbf24,stroke:#d97706,color:#000
+    style P1 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P2 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P3 fill:#a78bfa,stroke:#6d28d9,color:#fff
+              </div></div>
+              <div class="flowchart-caption">📊 Validación con REPETIR (lee hasta que num esté en [100, 999]) + 3 cálculos posicionales.</div>
+            </div>
+
+            <h4>🧪 Prueba de escritorio (con num = 847)</h4>
+            <div class="trace-table"><table>
+              <thead><tr><th>Cálculo</th><th>Operación</th><th>Resultado</th></tr></thead>
+              <tbody>
+                <tr><td>c = num DIV 100</td><td>847 DIV 100</td><td><strong>8</strong></td></tr>
+                <tr><td>num MOD 100</td><td>847 MOD 100</td><td>47 (lo que queda)</td></tr>
+                <tr><td>d = (num MOD 100) DIV 10</td><td>47 DIV 10</td><td><strong>4</strong></td></tr>
+                <tr><td>u = num MOD 10</td><td>847 MOD 10</td><td><strong>7</strong></td></tr>
+              </tbody>
+            </table></div>
+
+            <p>Verificación: 8 × 100 + 4 × 10 + 7 = 800 + 40 + 7 = <strong>847</strong> ✓</p>
+
+            <div class="final-answer"><div class="final-answer-label">✅ Resultado</div><p>Para 847 → 8 centenas, 4 decenas, 7 unidades. Para 305 → 3 centenas, 0 decenas, 5 unidades. ✓</p></div>
+
+            <div class="callout tip"><div class="callout-header"><span class="callout-icon">💡</span> Lección clave</div><p>Esta técnica de <strong>extraer cifra a cifra con DIV y MOD</strong> es la base de muchos problemas: invertir números, sumar dígitos, verificar palíndromos numéricos, calcular dígito verificador, etc.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EJERCICIO 2 -->
+      <div class="exercise">
+        <div class="exercise-header"><span class="exercise-num">EJ. 2</span><span>Invertir número de 4 dígitos y multiplicar sus cifras</span><span class="exercise-tag">📚 S6 ejercicio 1</span></div>
+        <div class="exercise-body">
+          <div class="statement-box"><span class="statement-label">📝 Enunciado</span><p>Elabore un algoritmo que <strong>invierta un número de 4 dígitos</strong> y halle la <strong>multiplicación de sus cifras</strong>. Ejemplo: 1234 → invertido 4321, multiplicación 1×2×3×4 = 24.</p></div>
+
+          <div class="solution-block">
+            <h4>🎯 ¿Qué nos están pidiendo?</h4>
+            <p>Dos cosas a la vez: el número con sus cifras al revés, y el producto de todas sus cifras. Ambas usan el mismo patrón de extracción.</p>
+
+            <h4>🧠 Razonamiento: dos formas de hacerlo</h4>
+            <p><strong>Opción A (con ciclo):</strong> aplicar el patrón "extraer cifra + acumular en inverso + multiplicar" en un MIENTRAS hasta que el número se haga 0.</p>
+            <p><strong>Opción B (con DIV y MOD para 4 cifras fijas):</strong> sacar las 4 cifras directamente con fórmulas. Más rígido pero más rápido si sabemos que SIEMPRE son 4 cifras.</p>
+            <p>Como el enunciado dice "4 dígitos", uso la <strong>Opción A con ciclo</strong> (más general y robusta).</p>
+
+            <h4>🧠 Identificar variables (leyenda)</h4>
+            <div class="legend-box"><div class="legend-title">🏷️ Leyenda</div><ul style="margin:0">
+              <li><code>num</code> = número original (entrada, <span class="tipo">Entero</span>)</li>
+              <li><code>aux</code> = copia auxiliar para iterar (<span class="tipo">Entero</span>)</li>
+              <li><code>cifra</code> = cifra extraída en cada iteración (<span class="tipo">Entero</span>)</li>
+              <li><code>inv</code> = número invertido (acumulador, <span class="tipo">Entero</span>)</li>
+              <li><code>prod</code> = producto de cifras (acumulador, <span class="tipo">Entero</span>)</li>
+            </ul></div>
+
+            <h4>🪜 Pseudocódigo</h4>
+<pre class="pseudo"><code><span class="kw">INICIO</span>
+    <span class="tipo">Entero</span>: <span class="var">num</span>, <span class="var">aux</span>, <span class="var">cifra</span>, <span class="var">inv</span>, <span class="var">prod</span>
+    <span class="fn">Leer</span> <span class="var">num</span>
+    <span class="var">aux</span> <span class="op">=</span> <span class="var">num</span>          <span class="cmt">// guardo copia para no perder el original</span>
+    <span class="var">inv</span> <span class="op">=</span> <span class="num">0</span>            <span class="cmt">// acumulador del invertido (suma → 0)</span>
+    <span class="var">prod</span> <span class="op">=</span> <span class="num">1</span>           <span class="cmt">// acumulador del producto (mult → 1)</span>
+    <span class="kw">MIENTRAS</span> <span class="var">aux</span> <span class="op">&gt;</span> <span class="num">0</span> <span class="kw">HACER</span>
+        <span class="var">cifra</span> <span class="op">=</span> <span class="var">aux</span> <span class="op">MOD</span> <span class="num">10</span>     <span class="cmt">// última cifra</span>
+        <span class="var">inv</span> <span class="op">=</span> <span class="var">inv</span> <span class="op">*</span> <span class="num">10</span> <span class="op">+</span> <span class="var">cifra</span>
+        <span class="var">prod</span> <span class="op">=</span> <span class="var">prod</span> <span class="op">*</span> <span class="var">cifra</span>
+        <span class="var">aux</span> <span class="op">=</span> <span class="var">aux</span> <span class="op">DIV</span> <span class="num">10</span>     <span class="cmt">// elimino la última cifra</span>
+    <span class="kw">FIN_MIENTRAS</span>
+    <span class="fn">Mostrar</span> <span class="str">"Original: "</span>, <span class="var">num</span>
+    <span class="fn">Mostrar</span> <span class="str">"Invertido: "</span>, <span class="var">inv</span>
+    <span class="fn">Mostrar</span> <span class="str">"Producto cifras: "</span>, <span class="var">prod</span>
+<span class="kw">FIN</span></code></pre>
+
+            <div class="callout warning" style="margin-top:12px">
+              <div class="callout-header"><span class="callout-icon">⚠️</span> ¿Por qué prod = 1 y no 0?</div>
+              <p>Porque es un acumulador de <strong>multiplicación</strong>. Si lo inicializas en 0, el primer producto da 0 y todo se vuelve 0. El 1 es la <em>identidad del producto</em>: 1 × x = x.</p>
+            </div>
+
+            <h4>🔷 Diagrama de flujo</h4>
+            <div class="flowchart-container">
+              <div class="mermaid-container" data-original='graph TB
+    I([Inicio])
+    D["Entero: num, aux, cifra, inv, prod"]
+    L[/"leer num"/]
+    Init["aux = num<br/>inv = 0<br/>prod = 1"]
+    C{"aux &gt; 0?"}
+    P["cifra = aux MOD 10<br/>inv = inv * 10 + cifra<br/>prod = prod * cifra<br/>aux = aux DIV 10"]
+    M[/"mostrar num, inv, prod"/]
+    F([Fin])
+    I --> D --> L --> Init --> C
+    C -->|Si| P --> C
+    C -->|No| M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style Init fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000
+    style P fill:#a78bfa,stroke:#6d28d9,color:#fff'><div class="mermaid">
+graph TB
+    I([Inicio])
+    D["Entero: num, aux, cifra, inv, prod"]
+    L[/"leer num"/]
+    Init["aux = num<br/>inv = 0<br/>prod = 1"]
+    C{"aux &gt; 0?"}
+    P["cifra = aux MOD 10<br/>inv = inv * 10 + cifra<br/>prod = prod * cifra<br/>aux = aux DIV 10"]
+    M[/"mostrar num, inv, prod"/]
+    F([Fin])
+    I --> D --> L --> Init --> C
+    C -->|Si| P --> C
+    C -->|No| M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style Init fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000
+    style P fill:#a78bfa,stroke:#6d28d9,color:#fff
+              </div></div>
+            </div>
+
+            <h4>🧪 Prueba de escritorio (con num = 1234)</h4>
+            <div class="trace-table"><table>
+              <thead><tr><th>Iter</th><th>aux antes</th><th>cifra</th><th>inv después</th><th>prod después</th><th>aux después</th></tr></thead>
+              <tbody>
+                <tr><td>—</td><td>1234</td><td>—</td><td>0 (inicial)</td><td>1 (inicial)</td><td>—</td></tr>
+                <tr><td>1</td><td>1234</td><td>4</td><td>0×10+4 = 4</td><td>1×4 = 4</td><td>123</td></tr>
+                <tr><td>2</td><td>123</td><td>3</td><td>4×10+3 = 43</td><td>4×3 = 12</td><td>12</td></tr>
+                <tr><td>3</td><td>12</td><td>2</td><td>43×10+2 = 432</td><td>12×2 = 24</td><td>1</td></tr>
+                <tr><td>4</td><td>1</td><td>1</td><td>432×10+1 = 4321</td><td>24×1 = 24</td><td>0</td></tr>
+                <tr><td>—</td><td colspan="5">aux = 0, sale del MIENTRAS</td></tr>
+              </tbody>
+            </table></div>
+
+            <div class="final-answer"><div class="final-answer-label">✅ Resultado</div><p>Para 1234 → invertido <strong>4321</strong>, producto de cifras <strong>24</strong>. ✓</p></div>
+
+            <div class="callout tip"><div class="callout-header"><span class="callout-icon">💡</span> Lección clave</div><p>El truco para invertir es <code>inv = inv × 10 + cifra</code>: cada nueva cifra "empuja" las anteriores hacia la izquierda. Empiezas con 0, después tienes 4, luego 43, luego 432, luego 4321. <strong>Funciona para CUALQUIER cantidad de cifras, no solo 4</strong>.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EJERCICIO 3 -->
+      <div class="exercise">
+        <div class="exercise-header"><span class="exercise-num">EJ. 3</span><span>Suma de divisores hasta que ingrese un negativo</span><span class="exercise-tag">📚 S6 ejercicio 2</span></div>
+        <div class="exercise-body">
+          <div class="statement-box"><span class="statement-label">📝 Enunciado</span><p>Calcular la <strong>suma de los divisores</strong> de cada número introducido por teclado. Terminamos cuando el número ingresado sea <strong>negativo</strong>.</p></div>
+
+          <div class="solution-block">
+            <h4>🎯 ¿Qué nos están pidiendo?</h4>
+            <p>Para cada número ingresado (mientras sea positivo), calcular y mostrar la suma de TODOS sus divisores. Ejemplo: divisores de 12 son 1, 2, 3, 4, 6, 12; suma = 28.</p>
+
+            <h4>🧠 Razonamiento: dos ciclos anidados</h4>
+            <ul>
+              <li><strong>Ciclo externo (MIENTRAS)</strong>: lee números hasta que llegue uno negativo. Patrón priming read.</li>
+              <li><strong>Ciclo interno (PARA)</strong>: para cada número, prueba todos los divisores posibles del 1 al propio número. Si <code>num MOD i = 0</code> → es divisor, súmalo al acumulador.</li>
+            </ul>
+
+            <h4>🧠 Identificar variables (leyenda)</h4>
+            <div class="legend-box"><div class="legend-title">🏷️ Leyenda</div><ul style="margin:0">
+              <li><code>num</code> = número leído (entrada, <span class="tipo">Entero</span>)</li>
+              <li><code>i</code> = posible divisor que voy probando (control, <span class="tipo">Entero</span>)</li>
+              <li><code>suma</code> = acumulador de divisores (salida, <span class="tipo">Entero</span>)</li>
+            </ul></div>
+
+            <h4>🪜 Pseudocódigo</h4>
+<pre class="pseudo"><code><span class="kw">INICIO</span>
+    <span class="tipo">Entero</span>: <span class="var">num</span>, <span class="var">i</span>, <span class="var">suma</span>
+    <span class="fn">Leer</span> <span class="var">num</span>            <span class="cmt">// priming read</span>
+    <span class="kw">MIENTRAS</span> <span class="var">num</span> <span class="op">&gt;=</span> <span class="num">0</span> <span class="kw">HACER</span>
+        <span class="var">suma</span> <span class="op">=</span> <span class="num">0</span>          <span class="cmt">// reinicio el acumulador para cada número</span>
+        <span class="kw">PARA</span> <span class="var">i</span> <span class="op">=</span> <span class="num">1</span> <span class="kw">HASTA</span> <span class="var">num</span> <span class="kw">HACER</span>
+            <span class="kw">SI</span> <span class="var">num</span> <span class="op">MOD</span> <span class="var">i</span> <span class="op">=</span> <span class="num">0</span>
+                <span class="var">suma</span> <span class="op">=</span> <span class="var">suma</span> <span class="op">+</span> <span class="var">i</span>
+            <span class="kw">FIN_SI</span>
+        <span class="kw">FIN_PARA</span>
+        <span class="fn">Mostrar</span> <span class="str">"Suma divisores de "</span>, <span class="var">num</span>, <span class="str">": "</span>, <span class="var">suma</span>
+        <span class="fn">Leer</span> <span class="var">num</span>        <span class="cmt">// siguiente número</span>
+    <span class="kw">FIN_MIENTRAS</span>
+<span class="kw">FIN</span></code></pre>
+
+            <h4>🔷 Diagrama de flujo</h4>
+            <div class="flowchart-container">
+              <div class="mermaid-container" data-original='graph TB
+    I([Inicio])
+    D["Entero: num, i, suma"]
+    L1[/"leer num"/]
+    Cw{"num &gt;= 0?"}
+    Init["suma = 0"]
+    Pi["i = 1"]
+    Cp{"i &lt;= num?"}
+    Cm{"num MOD i = 0?"}
+    Add["suma = suma + i"]
+    Inci["i = i + 1"]
+    Mo[/"mostrar suma"/]
+    L2[/"leer num"/]
+    F([Fin])
+    I --> D --> L1 --> Cw
+    Cw -->|Si| Init --> Pi --> Cp
+    Cp -->|Si| Cm
+    Cm -->|Si| Add --> Inci
+    Cm -->|No| Inci
+    Inci --> Cp
+    Cp -->|No| Mo --> L2 --> Cw
+    Cw -->|No| F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style Init fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style Pi fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style Inci fill:#fbbf24,stroke:#d97706,color:#000
+    style L1 fill:#60a5fa,stroke:#1e40af,color:#000
+    style L2 fill:#60a5fa,stroke:#1e40af,color:#000
+    style Mo fill:#60a5fa,stroke:#1e40af,color:#000
+    style Cw fill:#fbbf24,stroke:#d97706,color:#000
+    style Cp fill:#fbbf24,stroke:#d97706,color:#000
+    style Cm fill:#fbbf24,stroke:#d97706,color:#000
+    style Add fill:#a78bfa,stroke:#6d28d9,color:#fff'><div class="mermaid">
+graph TB
+    I([Inicio])
+    D["Entero: num, i, suma"]
+    L1[/"leer num"/]
+    Cw{"num &gt;= 0?"}
+    Init["suma = 0"]
+    Pi["i = 1"]
+    Cp{"i &lt;= num?"}
+    Cm{"num MOD i = 0?"}
+    Add["suma = suma + i"]
+    Inci["i = i + 1"]
+    Mo[/"mostrar suma"/]
+    L2[/"leer num"/]
+    F([Fin])
+    I --> D --> L1 --> Cw
+    Cw -->|Si| Init --> Pi --> Cp
+    Cp -->|Si| Cm
+    Cm -->|Si| Add --> Inci
+    Cm -->|No| Inci
+    Inci --> Cp
+    Cp -->|No| Mo --> L2 --> Cw
+    Cw -->|No| F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style Init fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style Pi fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style Inci fill:#fbbf24,stroke:#d97706,color:#000
+    style L1 fill:#60a5fa,stroke:#1e40af,color:#000
+    style L2 fill:#60a5fa,stroke:#1e40af,color:#000
+    style Mo fill:#60a5fa,stroke:#1e40af,color:#000
+    style Cw fill:#fbbf24,stroke:#d97706,color:#000
+    style Cp fill:#fbbf24,stroke:#d97706,color:#000
+    style Cm fill:#fbbf24,stroke:#d97706,color:#000
+    style Add fill:#a78bfa,stroke:#6d28d9,color:#fff
+              </div></div>
+              <div class="flowchart-caption">📊 Dos ciclos anidados: el MIENTRAS de números, dentro el PARA de divisores.</div>
+            </div>
+
+            <h4>🧪 Prueba de escritorio (num = 12)</h4>
+            <div class="trace-table"><table>
+              <thead><tr><th>i</th><th>12 MOD i</th><th>¿Divide?</th><th>suma</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td>0</td><td>V → suma += 1</td><td>1</td></tr>
+                <tr><td>2</td><td>0</td><td>V → suma += 2</td><td>3</td></tr>
+                <tr><td>3</td><td>0</td><td>V → suma += 3</td><td>6</td></tr>
+                <tr><td>4</td><td>0</td><td>V → suma += 4</td><td>10</td></tr>
+                <tr><td>5</td><td>2</td><td>F</td><td>10</td></tr>
+                <tr><td>6</td><td>0</td><td>V → suma += 6</td><td>16</td></tr>
+                <tr><td>7-11</td><td>varios</td><td>F</td><td>16</td></tr>
+                <tr><td>12</td><td>0</td><td>V → suma += 12</td><td><strong>28</strong></td></tr>
+              </tbody>
+            </table></div>
+
+            <div class="final-answer"><div class="final-answer-label">✅ Resultado</div><p>Divisores de 12: 1, 2, 3, 4, 6, 12. Suma = <strong>28</strong>. ✓</p></div>
+
+            <div class="callout tip"><div class="callout-header"><span class="callout-icon">💡</span> Lección clave</div><p>Para cada número se hace un <strong>ciclo completo</strong> de búsqueda de divisores. Por eso es importante <strong>reiniciar suma = 0 dentro del MIENTRAS</strong> (no antes), o llevarías la suma del número anterior arrastrándose.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EJERCICIO 4 -->
+      <div class="exercise">
+        <div class="exercise-header"><span class="exercise-num">EJ. 4</span><span>Contar pares en 100 números (PARA + SI con MOD)</span><span class="exercise-tag">📚 S6 ejercicio 3</span></div>
+        <div class="exercise-body">
+          <div class="statement-box"><span class="statement-label">📝 Enunciado</span><p>Cree un algoritmo que permita ingresar por teclado <strong>100 números enteros</strong> y calcule <strong>cuántos de ellos son pares</strong>. Debe mostrar el resultado.</p></div>
+
+          <div class="solution-block">
+            <h4>🎯 ¿Qué nos están pidiendo?</h4>
+            <p>Procesar 100 números (cantidad fija → PARA) y contar cuántos cumplen la propiedad "ser par".</p>
+
+            <h4>🧠 Razonamiento clave</h4>
+            <p>Patrón <strong>"contar elementos que cumplen X"</strong> de Semana 5. Aquí X es <em>"ser par"</em>, lo cual se detecta con <code>num MOD 2 = 0</code>.</p>
+
+            <h4>🧠 Identificar variables (leyenda)</h4>
+            <div class="legend-box"><div class="legend-title">🏷️ Leyenda</div><ul style="margin:0">
+              <li><code>num</code> = número leído en cada iteración (<span class="tipo">Entero</span>)</li>
+              <li><code>cont</code> = contador de pares (salida, <span class="tipo">Entero</span>)</li>
+              <li><code>i</code> = variable de control del PARA (<span class="tipo">Entero</span>)</li>
+            </ul></div>
+
+            <h4>🪜 Pseudocódigo</h4>
+<pre class="pseudo"><code><span class="kw">INICIO</span>
+    <span class="tipo">Entero</span>: <span class="var">num</span>, <span class="var">cont</span>, <span class="var">i</span>
+    <span class="var">cont</span> <span class="op">=</span> <span class="num">0</span>
+    <span class="kw">PARA</span> <span class="var">i</span> <span class="op">=</span> <span class="num">1</span> <span class="kw">HASTA</span> <span class="num">100</span> <span class="kw">HACER</span>
+        <span class="fn">Leer</span> <span class="var">num</span>
+        <span class="kw">SI</span> <span class="var">num</span> <span class="op">MOD</span> <span class="num">2</span> <span class="op">=</span> <span class="num">0</span>
+            <span class="var">cont</span> <span class="op">=</span> <span class="var">cont</span> <span class="op">+</span> <span class="num">1</span>
+        <span class="kw">FIN_SI</span>
+    <span class="kw">FIN_PARA</span>
+    <span class="fn">Mostrar</span> <span class="str">"Cantidad de pares: "</span>, <span class="var">cont</span>
+<span class="kw">FIN</span></code></pre>
+
+            <h4>🔷 Diagrama de flujo</h4>
+            <div class="flowchart-container">
+              <div class="mermaid-container" data-original='graph TB
+    I([Inicio])
+    D["Entero: num, cont, i"]
+    Init["cont = 0<br/>i = 1"]
+    C{"i &lt;= 100?"}
+    L[/"leer num"/]
+    Cm{"num MOD 2 = 0?"}
+    Add["cont = cont + 1"]
+    Inc["i = i + 1"]
+    M[/"mostrar cont"/]
+    F([Fin])
+    I --> D --> Init --> C
+    C -->|Si| L --> Cm
+    Cm -->|Si| Add --> Inc
+    Cm -->|No| Inc
+    Inc --> C
+    C -->|No| M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style Init fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style Inc fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000
+    style Cm fill:#fbbf24,stroke:#d97706,color:#000
+    style Add fill:#a78bfa,stroke:#6d28d9,color:#fff'><div class="mermaid">
+graph TB
+    I([Inicio])
+    D["Entero: num, cont, i"]
+    Init["cont = 0<br/>i = 1"]
+    C{"i &lt;= 100?"}
+    L[/"leer num"/]
+    Cm{"num MOD 2 = 0?"}
+    Add["cont = cont + 1"]
+    Inc["i = i + 1"]
+    M[/"mostrar cont"/]
+    F([Fin])
+    I --> D --> Init --> C
+    C -->|Si| L --> Cm
+    Cm -->|Si| Add --> Inc
+    Cm -->|No| Inc
+    Inc --> C
+    C -->|No| M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style Init fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style Inc fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000
+    style Cm fill:#fbbf24,stroke:#d97706,color:#000
+    style Add fill:#a78bfa,stroke:#6d28d9,color:#fff
+              </div></div>
+            </div>
+
+            <h4>🧪 Prueba de escritorio (con datos pequeños: 10 números 4, 7, 2, 9, 6, 1, 8, 3, 12, 5)</h4>
+            <div class="trace-table"><table>
+              <thead><tr><th>i</th><th>num</th><th>num MOD 2</th><th>¿Par?</th><th>cont</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td>4</td><td>0</td><td>Sí</td><td>1</td></tr>
+                <tr><td>2</td><td>7</td><td>1</td><td>No</td><td>1</td></tr>
+                <tr><td>3</td><td>2</td><td>0</td><td>Sí</td><td>2</td></tr>
+                <tr><td>4</td><td>9</td><td>1</td><td>No</td><td>2</td></tr>
+                <tr><td>5</td><td>6</td><td>0</td><td>Sí</td><td>3</td></tr>
+                <tr><td>6</td><td>1</td><td>1</td><td>No</td><td>3</td></tr>
+                <tr><td>7</td><td>8</td><td>0</td><td>Sí</td><td>4</td></tr>
+                <tr><td>8</td><td>3</td><td>1</td><td>No</td><td>4</td></tr>
+                <tr><td>9</td><td>12</td><td>0</td><td>Sí</td><td>5</td></tr>
+                <tr><td>10</td><td>5</td><td>1</td><td>No</td><td>5</td></tr>
+              </tbody>
+            </table></div>
+
+            <div class="final-answer"><div class="final-answer-label">✅ Resultado</div><p>De los 10 números, <strong>5 son pares</strong> (4, 2, 6, 8, 12). Para 100 números, el algoritmo es idéntico, solo cambia el límite del PARA. ✓</p></div>
+
+            <div class="callout tip"><div class="callout-header"><span class="callout-icon">💡</span> Lección clave</div><p>Para detectar paridad, <code>num MOD 2 = 0</code> es la prueba estándar. Si quieres contar <strong>impares</strong>, simplemente cambias por <code>num MOD 2 = 1</code> (o equivalente, <code>num MOD 2 &lt;&gt; 0</code>).</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EJERCICIO 5 -->
+      <div class="exercise">
+        <div class="exercise-header"><span class="exercise-num">EJ. 5</span><span>Mayor y menor de N números (patrón max/min)</span><span class="exercise-tag">📚 S6 ejercicio 5</span></div>
+        <div class="exercise-body">
+          <div class="statement-box"><span class="statement-label">📝 Enunciado</span><p>Crear un algoritmo que permita ingresar una <strong>cantidad N de números enteros</strong> y determine cuál es el <strong>número menor</strong> y cuál es el <strong>número mayor</strong>.</p></div>
+
+          <div class="solution-block">
+            <h4>🎯 ¿Qué nos están pidiendo?</h4>
+            <p>Aplicar simultáneamente el patrón "máximo" y el patrón "mínimo" sobre N números leídos.</p>
+
+            <h4>🧠 Razonamiento clave: la inicialización</h4>
+            <p>El truco crítico: <strong>NO inicializar</strong> max y min en 0 (si todos son negativos, max queda mal; si todos son positivos &gt; 0, min queda mal). En cambio, <strong>lee el primer número</strong> e inicializa <em>ambos</em> con ese valor. Luego compara desde el segundo en adelante.</p>
+
+            <h4>🧠 Identificar variables (leyenda)</h4>
+            <div class="legend-box"><div class="legend-title">🏷️ Leyenda</div><ul style="margin:0">
+              <li><code>N</code> = cantidad de números a leer (entrada, <span class="tipo">Entero</span>)</li>
+              <li><code>num</code> = número leído en cada iteración (<span class="tipo">Entero</span>)</li>
+              <li><code>mayor</code> = el mayor encontrado (salida, <span class="tipo">Entero</span>)</li>
+              <li><code>menor</code> = el menor encontrado (salida, <span class="tipo">Entero</span>)</li>
+              <li><code>i</code> = variable de control del PARA (<span class="tipo">Entero</span>)</li>
+            </ul></div>
+
+            <h4>🪜 Pseudocódigo</h4>
+<pre class="pseudo"><code><span class="kw">INICIO</span>
+    <span class="tipo">Entero</span>: <span class="var">N</span>, <span class="var">num</span>, <span class="var">mayor</span>, <span class="var">menor</span>, <span class="var">i</span>
+    <span class="fn">Leer</span> <span class="var">N</span>
+    <span class="fn">Leer</span> <span class="var">num</span>           <span class="cmt">// leo el 1er número</span>
+    <span class="var">mayor</span> <span class="op">=</span> <span class="var">num</span>         <span class="cmt">// inicializo mayor con el 1er valor</span>
+    <span class="var">menor</span> <span class="op">=</span> <span class="var">num</span>         <span class="cmt">// inicializo menor con el 1er valor</span>
+    <span class="kw">PARA</span> <span class="var">i</span> <span class="op">=</span> <span class="num">2</span> <span class="kw">HASTA</span> <span class="var">N</span> <span class="kw">HACER</span>     <span class="cmt">// arranco en 2 (el 1 ya lo leí)</span>
+        <span class="fn">Leer</span> <span class="var">num</span>
+        <span class="kw">SI</span> <span class="var">num</span> <span class="op">&gt;</span> <span class="var">mayor</span>
+            <span class="var">mayor</span> <span class="op">=</span> <span class="var">num</span>
+        <span class="kw">FIN_SI</span>
+        <span class="kw">SI</span> <span class="var">num</span> <span class="op">&lt;</span> <span class="var">menor</span>
+            <span class="var">menor</span> <span class="op">=</span> <span class="var">num</span>
+        <span class="kw">FIN_SI</span>
+    <span class="kw">FIN_PARA</span>
+    <span class="fn">Mostrar</span> <span class="str">"Mayor: "</span>, <span class="var">mayor</span>
+    <span class="fn">Mostrar</span> <span class="str">"Menor: "</span>, <span class="var">menor</span>
+<span class="kw">FIN</span></code></pre>
+
+            <h4>🔷 Diagrama de flujo</h4>
+            <div class="flowchart-container">
+              <div class="mermaid-container" data-original='graph TB
+    I([Inicio])
+    D["Entero: N, num, mayor, menor, i"]
+    L1[/"leer N"/]
+    L2[/"leer num"/]
+    Init["mayor = num<br/>menor = num<br/>i = 2"]
+    Cp{"i &lt;= N?"}
+    L3[/"leer num"/]
+    Cmax{"num &gt; mayor?"}
+    Smax["mayor = num"]
+    Cmin{"num &lt; menor?"}
+    Smin["menor = num"]
+    Inc["i = i + 1"]
+    M[/"mostrar mayor, menor"/]
+    F([Fin])
+    I --> D --> L1 --> L2 --> Init --> Cp
+    Cp -->|Si| L3 --> Cmax
+    Cmax -->|Si| Smax --> Cmin
+    Cmax -->|No| Cmin
+    Cmin -->|Si| Smin --> Inc
+    Cmin -->|No| Inc
+    Inc --> Cp
+    Cp -->|No| M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style Init fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style Inc fill:#fbbf24,stroke:#d97706,color:#000
+    style L1 fill:#60a5fa,stroke:#1e40af,color:#000
+    style L2 fill:#60a5fa,stroke:#1e40af,color:#000
+    style L3 fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style Cp fill:#fbbf24,stroke:#d97706,color:#000
+    style Cmax fill:#fbbf24,stroke:#d97706,color:#000
+    style Cmin fill:#fbbf24,stroke:#d97706,color:#000
+    style Smax fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style Smin fill:#a78bfa,stroke:#6d28d9,color:#fff'><div class="mermaid">
+graph TB
+    I([Inicio])
+    D["Entero: N, num, mayor, menor, i"]
+    L1[/"leer N"/]
+    L2[/"leer num"/]
+    Init["mayor = num<br/>menor = num<br/>i = 2"]
+    Cp{"i &lt;= N?"}
+    L3[/"leer num"/]
+    Cmax{"num &gt; mayor?"}
+    Smax["mayor = num"]
+    Cmin{"num &lt; menor?"}
+    Smin["menor = num"]
+    Inc["i = i + 1"]
+    M[/"mostrar mayor, menor"/]
+    F([Fin])
+    I --> D --> L1 --> L2 --> Init --> Cp
+    Cp -->|Si| L3 --> Cmax
+    Cmax -->|Si| Smax --> Cmin
+    Cmax -->|No| Cmin
+    Cmin -->|Si| Smin --> Inc
+    Cmin -->|No| Inc
+    Inc --> Cp
+    Cp -->|No| M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style Init fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style Inc fill:#fbbf24,stroke:#d97706,color:#000
+    style L1 fill:#60a5fa,stroke:#1e40af,color:#000
+    style L2 fill:#60a5fa,stroke:#1e40af,color:#000
+    style L3 fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style Cp fill:#fbbf24,stroke:#d97706,color:#000
+    style Cmax fill:#fbbf24,stroke:#d97706,color:#000
+    style Cmin fill:#fbbf24,stroke:#d97706,color:#000
+    style Smax fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style Smin fill:#a78bfa,stroke:#6d28d9,color:#fff
+              </div></div>
+              <div class="flowchart-caption">📊 Dos comparaciones independientes en cada iteración: una para mayor, otra para menor.</div>
+            </div>
+
+            <h4>🧪 Prueba de escritorio (N=5, números: -3, 12, 7, -8, 5)</h4>
+            <div class="trace-table"><table>
+              <thead><tr><th>i</th><th>num</th><th>¿num &gt; mayor?</th><th>mayor</th><th>¿num &lt; menor?</th><th>menor</th></tr></thead>
+              <tbody>
+                <tr><td>—</td><td>-3 (1er leído)</td><td>—</td><td>-3 (init)</td><td>—</td><td>-3 (init)</td></tr>
+                <tr><td>2</td><td>12</td><td>V → mayor=12</td><td>12</td><td>F</td><td>-3</td></tr>
+                <tr><td>3</td><td>7</td><td>F</td><td>12</td><td>F</td><td>-3</td></tr>
+                <tr><td>4</td><td>-8</td><td>F</td><td>12</td><td>V → menor=-8</td><td>-8</td></tr>
+                <tr><td>5</td><td>5</td><td>F</td><td>12</td><td>F</td><td>-8</td></tr>
+              </tbody>
+            </table></div>
+
+            <div class="final-answer"><div class="final-answer-label">✅ Resultado</div><p>Mayor: <strong>12</strong>, Menor: <strong>-8</strong>. Funciona incluso con números negativos. ✓</p></div>
+
+            <div class="callout tip"><div class="callout-header"><span class="callout-icon">💡</span> Lección crítica</div><p><strong>Inicializar mayor y menor con el primer elemento</strong> garantiza que el algoritmo funcione siempre, sin importar si los números son positivos, negativos o mezclados. Es el detalle que distingue una solución elegante de una con bugs.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EJERCICIO 6 -->
+      <div class="exercise">
+        <div class="exercise-header"><span class="exercise-num">EJ. 6</span><span>Comisión vendedores por rangos de venta (PC2 Fila A · 7 pts)</span><span class="exercise-tag">📋 Práctica Calificada 2</span></div>
+        <div class="exercise-body">
+          <div class="statement-box"><span class="statement-label">📝 Enunciado oficial (PC2)</span><p>Los vendedores de un concesionario de automóviles ganan un porcentaje adicional a su sueldo base por las ventas que realizan:</p>
+            <ul>
+              <li>Ventas mensuales <strong>≥ $35 mil</strong> → comisión <strong>5%</strong> de la venta</li>
+              <li><strong>Entre $25 mil y $35 mil</strong> → comisión <strong>2.5%</strong></li>
+              <li><strong>Entre $15 mil y $25 mil</strong> → comisión <strong>1%</strong></li>
+            </ul>
+            <p>Elabore el pseudocódigo y diagrama de flujo que calcule la comisión que recibe y el sueldo final del trabajador.</p>
+          </div>
+
+          <div class="solution-block">
+            <h4>🎯 ¿Qué nos están pidiendo?</h4>
+            <p>Calcular comisión y sueldo final basándose en el rango de ventas mensuales. <strong>3 categorías excluyentes + un caso por defecto (sin comisión si vende menos de $15 mil)</strong>.</p>
+
+            <h4>🧠 Razonamiento: orden correcto en SI anidado</h4>
+            <p>Aplico la regla de oro: <strong>de mayor a menor restrictivo</strong>:</p>
+            <ol>
+              <li>Primero pregunto si vendió ≥ 35000 (la condición más exigente).</li>
+              <li>Si no, pregunto si vendió ≥ 25000 (en el SINO del primero — sé que es &lt; 35000).</li>
+              <li>Si tampoco, pregunto si vendió ≥ 15000.</li>
+              <li>Si tampoco → comisión = 0.</li>
+            </ol>
+
+            <h4>🧠 Identificar variables (leyenda)</h4>
+            <div class="legend-box"><div class="legend-title">🏷️ Leyenda</div><ul style="margin:0">
+              <li><code>VM</code> = ventas mensuales (entrada, <span class="tipo">Real</span>)</li>
+              <li><code>SB</code> = sueldo base (entrada, <span class="tipo">Real</span>)</li>
+              <li><code>C</code> = comisión calculada (intermedia, <span class="tipo">Real</span>)</li>
+              <li><code>SF</code> = sueldo final (salida, <span class="tipo">Real</span>)</li>
+            </ul></div>
+
+            <h4>🪜 Pseudocódigo</h4>
+<pre class="pseudo"><code><span class="kw">INICIO</span>
+    <span class="tipo">Real</span>: <span class="var">VM</span>, <span class="var">SB</span>, <span class="var">SF</span>, <span class="var">C</span>
+    <span class="fn">Leer</span> <span class="var">SB</span>, <span class="var">VM</span>
+    <span class="kw">SI</span> <span class="var">VM</span> <span class="op">&gt;=</span> <span class="num">35000</span>
+        <span class="var">C</span> <span class="op">=</span> <span class="var">VM</span> <span class="op">*</span> <span class="num">0.05</span>
+    <span class="kw">SINO</span>
+        <span class="kw">SI</span> <span class="var">VM</span> <span class="op">&gt;=</span> <span class="num">25000</span>
+            <span class="var">C</span> <span class="op">=</span> <span class="var">VM</span> <span class="op">*</span> <span class="num">0.025</span>
+        <span class="kw">SINO</span>
+            <span class="kw">SI</span> <span class="var">VM</span> <span class="op">&gt;=</span> <span class="num">15000</span>
+                <span class="var">C</span> <span class="op">=</span> <span class="var">VM</span> <span class="op">*</span> <span class="num">0.01</span>
+            <span class="kw">SINO</span>
+                <span class="var">C</span> <span class="op">=</span> <span class="num">0</span>
+            <span class="kw">FIN_SI</span>
+        <span class="kw">FIN_SI</span>
+    <span class="kw">FIN_SI</span>
+    <span class="var">SF</span> <span class="op">=</span> <span class="var">SB</span> <span class="op">+</span> <span class="var">C</span>
+    <span class="fn">Mostrar</span> <span class="str">"Comisión: "</span>, <span class="var">C</span>
+    <span class="fn">Mostrar</span> <span class="str">"Sueldo final: "</span>, <span class="var">SF</span>
+<span class="kw">FIN</span></code></pre>
+
+            <h4>🔷 Diagrama de flujo</h4>
+            <div class="flowchart-container">
+              <div class="mermaid-container" data-original='graph TB
+    I([Inicio])
+    D["Real: VM, SB, SF, C"]
+    L[/"leer SB, VM"/]
+    C1{"VM &gt;= 35000?"}
+    P1["C = VM * 0.05"]
+    C2{"VM &gt;= 25000?"}
+    P2["C = VM * 0.025"]
+    C3{"VM &gt;= 15000?"}
+    P3["C = VM * 0.01"]
+    P4["C = 0"]
+    Sf["SF = SB + C"]
+    M[/"mostrar C, SF"/]
+    F([Fin])
+    I --> D --> L --> C1
+    C1 -->|Si| P1 --> Sf
+    C1 -->|No| C2
+    C2 -->|Si| P2 --> Sf
+    C2 -->|No| C3
+    C3 -->|Si| P3 --> Sf
+    C3 -->|No| P4 --> Sf
+    Sf --> M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style C1 fill:#fbbf24,stroke:#d97706,color:#000
+    style C2 fill:#fbbf24,stroke:#d97706,color:#000
+    style C3 fill:#fbbf24,stroke:#d97706,color:#000
+    style P1 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P2 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P3 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P4 fill:#94a3b8,stroke:#475569,color:#000
+    style Sf fill:#a78bfa,stroke:#6d28d9,color:#fff'><div class="mermaid">
+graph TB
+    I([Inicio])
+    D["Real: VM, SB, SF, C"]
+    L[/"leer SB, VM"/]
+    C1{"VM &gt;= 35000?"}
+    P1["C = VM * 0.05"]
+    C2{"VM &gt;= 25000?"}
+    P2["C = VM * 0.025"]
+    C3{"VM &gt;= 15000?"}
+    P3["C = VM * 0.01"]
+    P4["C = 0"]
+    Sf["SF = SB + C"]
+    M[/"mostrar C, SF"/]
+    F([Fin])
+    I --> D --> L --> C1
+    C1 -->|Si| P1 --> Sf
+    C1 -->|No| C2
+    C2 -->|Si| P2 --> Sf
+    C2 -->|No| C3
+    C3 -->|Si| P3 --> Sf
+    C3 -->|No| P4 --> Sf
+    Sf --> M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style C1 fill:#fbbf24,stroke:#d97706,color:#000
+    style C2 fill:#fbbf24,stroke:#d97706,color:#000
+    style C3 fill:#fbbf24,stroke:#d97706,color:#000
+    style P1 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P2 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P3 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P4 fill:#94a3b8,stroke:#475569,color:#000
+    style Sf fill:#a78bfa,stroke:#6d28d9,color:#fff
+              </div></div>
+              <div class="flowchart-caption">📊 Filtro en cascada con 3 niveles de decisión + un caso por defecto.</div>
+            </div>
+
+            <h4>🧪 Prueba de escritorio (4 escenarios, SB = 2000)</h4>
+            <div class="trace-table"><table>
+              <thead><tr><th>VM</th><th>Cond. activada</th><th>C</th><th>SF</th></tr></thead>
+              <tbody>
+                <tr><td>40000</td><td>VM &gt;= 35000</td><td>2000</td><td>4000</td></tr>
+                <tr><td>30000</td><td>VM &gt;= 25000</td><td>750</td><td>2750</td></tr>
+                <tr><td>20000</td><td>VM &gt;= 15000</td><td>200</td><td>2200</td></tr>
+                <tr><td>10000</td><td>ninguna</td><td>0</td><td>2000</td></tr>
+              </tbody>
+            </table></div>
+
+            <div class="callout tip"><div class="callout-header"><span class="callout-icon">💡</span> Lección crítica</div><p>Si invirtieras el orden (preguntar primero "≥ 15000"), un vendedor que vendió 40000 caería en la condición del 1% (porque 40000 ≥ 15000) y nunca se aplicaría el 5%. <strong>El orden importa</strong>.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EJERCICIO 7 -->
+      <div class="exercise">
+        <div class="exercise-header"><span class="exercise-num">EJ. 7</span><span>Descuento por kilos (PC2 Fila B · 6 pts)</span><span class="exercise-tag">📋 Práctica Calificada 2</span></div>
+        <div class="exercise-body">
+          <div class="statement-box"><span class="statement-label">📝 Enunciado oficial (PC2)</span><p>En un almacén se ofrece un producto con descuento según el siguiente detalle:</p>
+            <div style="margin:12px 0">
+              <table style="width:auto;background:var(--bg-elevated);border-collapse:collapse">
+                <thead><tr><th style="padding:8px 16px">Kilos comprados</th><th style="padding:8px 16px">Precio por kilo</th></tr></thead>
+                <tbody>
+                  <tr><td style="padding:6px 16px">Menos de 12 kg</td><td style="padding:6px 16px">$2.5</td></tr>
+                  <tr><td style="padding:6px 16px">[12 a 16)</td><td style="padding:6px 16px">$2.3</td></tr>
+                  <tr><td style="padding:6px 16px">[16 a 20)</td><td style="padding:6px 16px">$2</td></tr>
+                  <tr><td style="padding:6px 16px">Más de 20</td><td style="padding:6px 16px">$1.8</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>Lea la cantidad de kilos comprados y determine cuánto debe pagar.</p>
+          </div>
+
+          <div class="solution-block">
+            <h4>🎯 ¿Qué nos están pidiendo?</h4>
+            <p><strong>4 niveles</strong> excluyentes según los kilos. Hay que entender bien la notación: <code>[12 a 16)</code> significa "12 incluido, 16 NO incluido" (intervalo cerrado-abierto).</p>
+
+            <h4>🧠 Razonamiento: notación de intervalos</h4>
+            <ul>
+              <li><strong>Menos de 12</strong>: <code>kg &lt; 12</code></li>
+              <li><strong>[12 a 16)</strong>: <code>(kg &gt;= 12) AND (kg &lt; 16)</code></li>
+              <li><strong>[16 a 20)</strong>: <code>(kg &gt;= 16) AND (kg &lt; 20)</code></li>
+              <li><strong>Más de 20</strong>: <code>kg &gt; 20</code> (estrictamente; el 20 exacto cae en el rango anterior)</li>
+            </ul>
+
+            <p><strong>Aplico orden de mayor a menor</strong> (igual que el ejercicio anterior):</p>
+
+            <h4>🧠 Identificar variables (leyenda)</h4>
+            <div class="legend-box"><div class="legend-title">🏷️ Leyenda</div><ul style="margin:0">
+              <li><code>Kg</code> = kilos comprados (entrada, <span class="tipo">Real</span>)</li>
+              <li><code>PF</code> = precio final a pagar (salida, <span class="tipo">Real</span>)</li>
+            </ul></div>
+
+            <h4>🪜 Pseudocódigo (solución oficial del curso)</h4>
+<pre class="pseudo"><code><span class="kw">INICIO</span>
+    <span class="tipo">Real</span>: <span class="var">Kg</span>, <span class="var">PF</span>
+    <span class="fn">Leer</span> <span class="var">Kg</span>
+    <span class="kw">SI</span> <span class="var">Kg</span> <span class="op">&gt;=</span> <span class="num">20</span>
+        <span class="var">PF</span> <span class="op">=</span> <span class="var">Kg</span> <span class="op">*</span> <span class="num">1.8</span>
+    <span class="kw">SINO</span>
+        <span class="kw">SI</span> <span class="var">Kg</span> <span class="op">&gt;=</span> <span class="num">16</span>
+            <span class="var">PF</span> <span class="op">=</span> <span class="var">Kg</span> <span class="op">*</span> <span class="num">2</span>
+        <span class="kw">SINO</span>
+            <span class="kw">SI</span> <span class="var">Kg</span> <span class="op">&gt;=</span> <span class="num">12</span>
+                <span class="var">PF</span> <span class="op">=</span> <span class="var">Kg</span> <span class="op">*</span> <span class="num">2.3</span>
+            <span class="kw">SINO</span>
+                <span class="var">PF</span> <span class="op">=</span> <span class="var">Kg</span> <span class="op">*</span> <span class="num">2.5</span>
+            <span class="kw">FIN_SI</span>
+        <span class="kw">FIN_SI</span>
+    <span class="kw">FIN_SI</span>
+    <span class="fn">Mostrar</span> <span class="var">Kg</span>, <span class="var">PF</span>
+<span class="kw">FIN</span></code></pre>
+
+            <h4>🔷 Diagrama de flujo</h4>
+            <div class="flowchart-container">
+              <div class="mermaid-container" data-original='graph TB
+    I([Inicio])
+    D["Real: Kg, PF"]
+    L[/"leer Kg"/]
+    C1{"Kg &gt;= 20?"}
+    P1["PF = Kg * 1.8"]
+    C2{"Kg &gt;= 16?"}
+    P2["PF = Kg * 2"]
+    C3{"Kg &gt;= 12?"}
+    P3["PF = Kg * 2.3"]
+    P4["PF = Kg * 2.5"]
+    M[/"mostrar Kg, PF"/]
+    F([Fin])
+    I --> D --> L --> C1
+    C1 -->|Si| P1 --> M
+    C1 -->|No| C2
+    C2 -->|Si| P2 --> M
+    C2 -->|No| C3
+    C3 -->|Si| P3 --> M
+    C3 -->|No| P4 --> M
+    M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style C1 fill:#fbbf24,stroke:#d97706,color:#000
+    style C2 fill:#fbbf24,stroke:#d97706,color:#000
+    style C3 fill:#fbbf24,stroke:#d97706,color:#000
+    style P1 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P2 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P3 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P4 fill:#94a3b8,stroke:#475569,color:#000'><div class="mermaid">
+graph TB
+    I([Inicio])
+    D["Real: Kg, PF"]
+    L[/"leer Kg"/]
+    C1{"Kg &gt;= 20?"}
+    P1["PF = Kg * 1.8"]
+    C2{"Kg &gt;= 16?"}
+    P2["PF = Kg * 2"]
+    C3{"Kg &gt;= 12?"}
+    P3["PF = Kg * 2.3"]
+    P4["PF = Kg * 2.5"]
+    M[/"mostrar Kg, PF"/]
+    F([Fin])
+    I --> D --> L --> C1
+    C1 -->|Si| P1 --> M
+    C1 -->|No| C2
+    C2 -->|Si| P2 --> M
+    C2 -->|No| C3
+    C3 -->|Si| P3 --> M
+    C3 -->|No| P4 --> M
+    M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style C1 fill:#fbbf24,stroke:#d97706,color:#000
+    style C2 fill:#fbbf24,stroke:#d97706,color:#000
+    style C3 fill:#fbbf24,stroke:#d97706,color:#000
+    style P1 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P2 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P3 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P4 fill:#94a3b8,stroke:#475569,color:#000
+              </div></div>
+            </div>
+
+            <h4>🧪 Prueba de escritorio (4 escenarios + casos límite)</h4>
+            <div class="trace-table"><table>
+              <thead><tr><th>Kg</th><th>Cond. activada</th><th>Precio/kg</th><th>PF</th></tr></thead>
+              <tbody>
+                <tr><td>25</td><td>Kg ≥ 20</td><td>1.8</td><td>45.00</td></tr>
+                <tr><td>20 (límite)</td><td>Kg ≥ 20 (sí, "más de 20" en el enunciado original es ambiguo, pero al usar ≥ 20 la solución oficial lo incluye)</td><td>1.8</td><td>36.00</td></tr>
+                <tr><td>18</td><td>Kg ≥ 16</td><td>2.0</td><td>36.00</td></tr>
+                <tr><td>14</td><td>Kg ≥ 12</td><td>2.3</td><td>32.20</td></tr>
+                <tr><td>8</td><td>caso por defecto</td><td>2.5</td><td>20.00</td></tr>
+              </tbody>
+            </table></div>
+
+            <div class="callout warning"><div class="callout-header"><span class="callout-icon">⚠️</span> Detalle sutil con el "más de 20"</div><p>El enunciado dice "Más de 20" (estrictamente). La solución oficial usa <code>Kg &gt;= 20</code> (incluyendo 20). Si tu profesor es estricto, podrías usar <code>Kg &gt; 20</code>; pero como en la tabla del enunciado el rango anterior es <code>[16 a 20)</code> (sin incluir el 20), <strong>el 20 exacto debe ir al siguiente rango</strong>, así que <code>Kg &gt;= 20</code> es coherente.</p></div>
+
+            <div class="callout tip"><div class="callout-header"><span class="callout-icon">💡</span> Lección clave</div><p>Cuando ves notaciones como <code>[12 a 16)</code>, recuerda: <strong>corchete = incluye, paréntesis = excluye</strong>. Para programar rangos así, <strong>siempre filtra de mayor a menor</strong> en SI anidados; el corchete se traduce a <code>≥</code> y el paréntesis a <code>&lt;</code>.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EJERCICIO 8 -->
+      <div class="exercise">
+        <div class="exercise-header"><span class="exercise-num">EJ. 8</span><span>Contar carácter "a" en 50 caracteres (PC2 · 7 pts)</span><span class="exercise-tag">📋 Práctica Calificada 2</span></div>
+        <div class="exercise-body">
+          <div class="statement-box"><span class="statement-label">📝 Enunciado oficial (PC2)</span><p>Elabore un algoritmo que permita el ingreso de <strong>50 caracteres</strong> e indique cuántas veces se repite el carácter <strong>"a"</strong>. Debe utilizar una instrucción repetitiva (usted elija la instrucción).</p></div>
+
+          <div class="solution-block">
+            <h4>🎯 ¿Qué nos están pidiendo?</h4>
+            <p>Procesar exactamente 50 caracteres (cantidad fija → PARA es lo natural) y contar cuántos son la letra "a".</p>
+
+            <h4>🧠 Razonamiento</h4>
+            <p>Patrón <strong>"contar elementos que cumplen X"</strong>. Aquí X es <em>"ser igual al carácter 'a'"</em>. Como es una cantidad fija de 50, uso PARA con un contador inicializado en 0.</p>
+
+            <h4>🧠 Identificar variables (leyenda)</h4>
+            <div class="legend-box"><div class="legend-title">🏷️ Leyenda</div><ul style="margin:0">
+              <li><code>C</code> = carácter leído en cada iteración (entrada, <span class="tipo">Carácter</span>)</li>
+              <li><code>CA</code> = contador de "a" (salida, <span class="tipo">Entero</span>)</li>
+              <li><code>i</code> = variable de control del PARA (<span class="tipo">Entero</span>)</li>
+            </ul></div>
+
+            <h4>🪜 Pseudocódigo (solución oficial del curso)</h4>
+<pre class="pseudo"><code><span class="kw">INICIO</span>
+    <span class="tipo">Entero</span>: <span class="var">CA</span>, <span class="var">i</span>
+    <span class="tipo">Carácter</span>: <span class="var">C</span>
+    <span class="var">CA</span> <span class="op">=</span> <span class="num">0</span>
+    <span class="kw">PARA</span> <span class="var">i</span> <span class="op">=</span> <span class="num">1</span> <span class="kw">HASTA</span> <span class="num">50</span> <span class="kw">HACER</span>
+        <span class="fn">Leer</span> <span class="var">C</span>
+        <span class="kw">SI</span> <span class="var">C</span> <span class="op">=</span> <span class="str">"a"</span>
+            <span class="var">CA</span> <span class="op">=</span> <span class="var">CA</span> <span class="op">+</span> <span class="num">1</span>
+        <span class="kw">FIN_SI</span>
+    <span class="kw">FIN_PARA</span>
+    <span class="fn">Mostrar</span> <span class="str">"Cantidad de 'a': "</span>, <span class="var">CA</span>
+<span class="kw">FIN</span></code></pre>
+
+            <h4>🔷 Diagrama de flujo</h4>
+            <div class="flowchart-container">
+              <div class="mermaid-container" data-original='graph TB
+    I([Inicio])
+    D["Entero: CA, i · Caracter: C"]
+    Init["CA = 0<br/>i = 1"]
+    Cp{"i &lt;= 50?"}
+    L[/"leer C"/]
+    Cm{"C = a?"}
+    Add["CA = CA + 1"]
+    Inc["i = i + 1"]
+    M[/"mostrar CA"/]
+    F([Fin])
+    I --> D --> Init --> Cp
+    Cp -->|Si| L --> Cm
+    Cm -->|Si| Add --> Inc
+    Cm -->|No| Inc
+    Inc --> Cp
+    Cp -->|No| M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style Init fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style Inc fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style Cp fill:#fbbf24,stroke:#d97706,color:#000
+    style Cm fill:#fbbf24,stroke:#d97706,color:#000
+    style Add fill:#a78bfa,stroke:#6d28d9,color:#fff'><div class="mermaid">
+graph TB
+    I([Inicio])
+    D["Entero: CA, i · Caracter: C"]
+    Init["CA = 0<br/>i = 1"]
+    Cp{"i &lt;= 50?"}
+    L[/"leer C"/]
+    Cm{"C = a?"}
+    Add["CA = CA + 1"]
+    Inc["i = i + 1"]
+    M[/"mostrar CA"/]
+    F([Fin])
+    I --> D --> Init --> Cp
+    Cp -->|Si| L --> Cm
+    Cm -->|Si| Add --> Inc
+    Cm -->|No| Inc
+    Inc --> Cp
+    Cp -->|No| M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style Init fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style Inc fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style Cp fill:#fbbf24,stroke:#d97706,color:#000
+    style Cm fill:#fbbf24,stroke:#d97706,color:#000
+    style Add fill:#a78bfa,stroke:#6d28d9,color:#fff
+              </div></div>
+            </div>
+
+            <h4>🧪 Prueba de escritorio (con 8 caracteres: c, a, s, a, b, l, a, n)</h4>
+            <div class="trace-table"><table>
+              <thead><tr><th>i</th><th>C</th><th>¿C = "a"?</th><th>CA</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td>'c'</td><td>F</td><td>0</td></tr>
+                <tr><td>2</td><td>'a'</td><td>V → CA++</td><td>1</td></tr>
+                <tr><td>3</td><td>'s'</td><td>F</td><td>1</td></tr>
+                <tr><td>4</td><td>'a'</td><td>V → CA++</td><td>2</td></tr>
+                <tr><td>5</td><td>'b'</td><td>F</td><td>2</td></tr>
+                <tr><td>6</td><td>'l'</td><td>F</td><td>2</td></tr>
+                <tr><td>7</td><td>'a'</td><td>V → CA++</td><td>3</td></tr>
+                <tr><td>8</td><td>'n'</td><td>F</td><td>3</td></tr>
+              </tbody>
+            </table></div>
+
+            <div class="final-answer"><div class="final-answer-label">✅ Resultado</div><p>En "casablan" (8 caracteres) hay <strong>3 letras "a"</strong>. Para 50 caracteres, el algoritmo es idéntico, solo cambia el límite del PARA. ✓</p></div>
+
+            <div class="callout tip"><div class="callout-header"><span class="callout-icon">💡</span> Lección clave</div><p>Las comparaciones de caracteres usan <strong>comillas</strong>: <code>C = "a"</code> (la "a" entre comillas). En este curso, <strong>"a" minúscula es DIFERENTE de "A" mayúscula</strong>. Si quisieras contar ambas, usarías <code>(C = "a") OR (C = "A")</code>.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ GLOSARIO ============ -->
+    <section class="block" id="glosario">
+      <div class="block-header"><div class="block-num">📖</div><h2>Glosario rápido</h2></div>
+
+      <div class="glossary-grid">
+        <div class="gloss-item"><div class="gloss-term">DIV</div><div class="gloss-def">División entera: devuelve el cociente entero (sin decimales).</div></div>
+        <div class="gloss-item"><div class="gloss-term">MOD</div><div class="gloss-def">Módulo: devuelve el resto (residuo) de la división entera.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Identidad fundamental</div><div class="gloss-def">a = b × (a DIV b) + (a MOD b). Relaciona DIV y MOD con la división.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Paridad</div><div class="gloss-def">Propiedad de ser par o impar. Se detecta con <code>n MOD 2</code>.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Divisibilidad</div><div class="gloss-def">a divide a b si <code>b MOD a = 0</code>.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Descomposición</div><div class="gloss-def">Separar un número en sus cifras posicionales (centenas, decenas, unidades).</div></div>
+        <div class="gloss-item"><div class="gloss-term">Truco de las 10</div><div class="gloss-def">Patrón <code>n MOD 10</code> (última cifra) y <code>n DIV 10</code> (sin última cifra).</div></div>
+        <div class="gloss-item"><div class="gloss-term">Arreglo / Vector / Array</div><div class="gloss-def">Conjunto finito y ordenado de elementos del mismo tipo bajo un nombre.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Índice / Subíndice</div><div class="gloss-def">Número que identifica la posición de un elemento dentro del vector.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Tamaño / Rango</div><div class="gloss-def">Cantidad total de elementos del vector.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Recorrido</div><div class="gloss-def">Visitar todos los elementos del vector con un ciclo (típicamente PARA).</div></div>
+        <div class="gloss-item"><div class="gloss-term">Patrón máximo</div><div class="gloss-def">Inicializar max con el 1er elemento y actualizar si V[i] &gt; max.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Patrón mínimo</div><div class="gloss-def">Idéntico al máximo pero con SI V[i] &lt; min.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Búsqueda con bandera</div><div class="gloss-def">Recorrer el vector hasta encontrar el elemento, marcando la bandera.</div></div>
+        <div class="gloss-item"><div class="gloss-term">[a, b)</div><div class="gloss-def">Intervalo cerrado-abierto: incluye a, no incluye b.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Filtro en cascada</div><div class="gloss-def">SI anidado donde cada SINO contiene un nuevo SI más restrictivo.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Carácter</div><div class="gloss-def">Tipo de dato que guarda una sola letra, dígito o símbolo. Ej: 'a', 'X', '7'.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Comparación de caracteres</div><div class="gloss-def">Se hace con <code>=</code> y comillas: <code>C = "a"</code>.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Identidad de la suma</div><div class="gloss-def">El 0. Por eso suma = 0 al inicializar acumuladores.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Identidad del producto</div><div class="gloss-def">El 1. Por eso prod = 1 al inicializar acumuladores de multiplicación.</div></div>
+      </div>
+    </section>
+
+    <!-- ============ AUTOEVALUACIÓN ============ -->
+    <section class="block" id="autoevaluacion">
+      <div class="block-header"><div class="block-num">✅</div><h2>Autoevaluación · 12 preguntas</h2></div>
+
+      <p style="color:var(--text-muted);margin-bottom:20px">Responde mentalmente, luego abre la respuesta. Si fallas más de 3, repasa los bloques correspondientes.</p>
+
+      <div class="quiz-item"><div class="quiz-q">¿Cuál es la diferencia entre DIV y MOD?</div><details><summary>Ver respuesta</summary><div class="answer-content"><strong>DIV</strong> devuelve el cociente entero de la división. <strong>MOD</strong> devuelve el resto. Ejemplo: <code>17 DIV 5 = 3</code>, <code>17 MOD 5 = 2</code>.</div></details></div>
+
+      <div class="quiz-item"><div class="quiz-q">¿Cómo se detecta si un número es par?</div><details><summary>Ver respuesta</summary><div class="answer-content">Con <code>n MOD 2 = 0</code>. Si el resto al dividir entre 2 es 0, es par.</div></details></div>
+
+      <div class="quiz-item"><div class="quiz-q">¿Cómo extraigo la última cifra de un número?</div><details><summary>Ver respuesta</summary><div class="answer-content">Con <code>n MOD 10</code>. Por ejemplo: <code>847 MOD 10 = 7</code>.</div></details></div>
+
+      <div class="quiz-item"><div class="quiz-q">¿Cómo elimino la última cifra de un número?</div><details><summary>Ver respuesta</summary><div class="answer-content">Con <code>n DIV 10</code>. Por ejemplo: <code>847 DIV 10 = 84</code>.</div></details></div>
+
+      <div class="quiz-item"><div class="quiz-q">¿Cuál es la fórmula para obtener las decenas de un número de 3 cifras?</div><details><summary>Ver respuesta</summary><div class="answer-content"><code>(num MOD 100) DIV 10</code>. Primero quito las centenas con MOD 100, luego extraigo decenas con DIV 10.</div></details></div>
+
+      <div class="quiz-item"><div class="quiz-q">¿Qué es un arreglo (vector)?</div><details><summary>Ver respuesta</summary><div class="answer-content">Un <strong>conjunto finito y ordenado de elementos del mismo tipo</strong> almacenados bajo un único nombre. Se acceden por índice.</div></details></div>
+
+      <div class="quiz-item"><div class="quiz-q">En este curso, ¿en qué índice empiezan los arreglos?</div><details><summary>Ver respuesta</summary><div class="answer-content">En <strong>1</strong> (estilo Pascal/Fortran). En Python (Sem 9+), empezarán en 0.</div></details></div>
+
+      <div class="quiz-item"><div class="quiz-q">¿Cómo inicializo correctamente "max" y "min" para encontrar el mayor/menor de N números?</div><details><summary>Ver respuesta</summary><div class="answer-content">Lee el primer número e inicializa AMBOS con ese valor. Luego compara desde el segundo en adelante. <strong>NO uses 0</strong>; falla con valores negativos o positivos extremos.</div></details></div>
+
+      <div class="quiz-item"><div class="quiz-q">¿Qué significa la notación de intervalo <code>[12 a 16)</code>?</div><details><summary>Ver respuesta</summary><div class="answer-content">Cerrado-abierto: incluye 12, NO incluye 16. En pseudocódigo: <code>(kg &gt;= 12) AND (kg &lt; 16)</code>.</div></details></div>
+
+      <div class="quiz-item"><div class="quiz-q">En la práctica calificada, ¿qué orden uso para SI anidados con rangos?</div><details><summary>Ver respuesta</summary><div class="answer-content"><strong>De mayor a menor restrictivo</strong>. Si pones primero la condición amplia, los casos restrictivos nunca se ejecutan (ejecuta primero la condición más exigente).</div></details></div>
+
+      <div class="quiz-item"><div class="quiz-q">¿Cuál es la condición para que un año sea bisiesto (regla simplificada)?</div><details><summary>Ver respuesta</summary><div class="answer-content"><code>año MOD 4 = 0</code>. La regla completa es más compleja (excluye múltiplos de 100 que no son múltiplos de 400), pero la regla simplificada del curso es esa.</div></details></div>
+
+      <div class="quiz-item"><div class="quiz-q">Para invertir un número de cualquier cantidad de cifras, ¿qué patrón uso?</div><details><summary>Ver respuesta</summary><div class="answer-content">MIENTRAS num &gt; 0: extraer cifra con MOD 10, acumular en inverso con <code>inv = inv × 10 + cifra</code>, eliminar la cifra con DIV 10.</div></details></div>
+    </section>
+
+    <!-- ============ CIERRE ============ -->
+    <section class="block" id="cierre">
+      <div class="block-header"><div class="block-num">🎯</div><h2>Cierre y conexión con la siguiente semana</h2></div>
+
+      <div class="callout tip">
+        <div class="callout-header"><span class="callout-icon">🏁</span> Lo que ya dominas</div>
+        <ul>
+          <li>Operadores <strong>DIV y MOD</strong> y la identidad fundamental que los relaciona.</li>
+          <li>Las <strong>4 aplicaciones clave de MOD</strong>: paridad, divisibilidad, última cifra, eliminar cifra.</li>
+          <li><strong>Descomposición de números</strong> en cifras posicionales (centenas/decenas/unidades).</li>
+          <li>El patrón <strong>extraer cifra a cifra con un ciclo</strong> (genérico para N dígitos).</li>
+          <li>El <strong>truco para invertir números</strong>: <code>inv = inv × 10 + cifra</code>.</li>
+          <li>Concepto de <strong>arreglo/vector</strong>: una sola variable que guarda muchos valores.</li>
+          <li><strong>Operaciones con vectores</strong>: declaración, asignación, lectura, recorrido.</li>
+          <li>Los <strong>6 patrones clásicos</strong> sobre vectores: máximo, mínimo, suma, producto, contar, búsqueda con bandera.</li>
+          <li><strong>Estrategia para la Práctica Calificada 2</strong>: tipos de ejercicios, errores frecuentes, distribución de tiempo.</li>
+          <li>Resolver los <strong>3 ejercicios oficiales</strong> de la PC2 (filas A, B, C).</li>
+        </ul>
+      </div>
+
+      <div class="callout intuition">
+        <div class="callout-header"><span class="callout-icon">➡️</span> Qué viene en la Semana 7</div>
+        <p>La <strong>Semana 7</strong> cierra la unidad de Fundamentos con un <strong>Proyecto Integrador</strong>: aplicas TODO lo aprendido (Sem 1-6) en un problema más grande. Después viene el <strong>Examen Parcial</strong>, que cubre las semanas 1-7. Luego empieza la unidad de <strong>Python</strong> (Sem 9+).</p>
+      </div>
+
+      <div class="callout warning">
+        <div class="callout-header"><span class="callout-icon">📋</span> Antes de la Práctica Calificada 2</div>
+        <p>Asegúrate de poder responder <strong>sin ver apuntes</strong>:</p>
+        <ol>
+          <li>Calcular <code>X DIV Y</code> y <code>X MOD Y</code> con valores como 17, 5; 75, 8; 99, 15.</li>
+          <li>Detectar si un número es par/impar.</li>
+          <li>Descomponer un número de 3 o 4 cifras en sus posiciones.</li>
+          <li>Resolver "comisión vendedores" con SI anidado en orden correcto.</li>
+          <li>Resolver "descuento por kilos" con notación de intervalos.</li>
+          <li>Resolver "mayor de 3 números" con SI anidado.</li>
+          <li>Resolver "contar carácter X en N caracteres" con PARA + SI.</li>
+          <li>Resolver "tarifa de estacionamiento" con SI anidado por horas.</li>
+          <li>Inicializar correctamente acumuladores: 0 para suma, 1 para producto.</li>
+          <li>Inicializar max y min con el PRIMER elemento, no con 0.</li>
+          <li>Hacer pruebas de escritorio con casos límite (valores exactos del umbral).</li>
+          <li>Recordar la <strong>leyenda obligatoria</strong> de variables en cada ejercicio.</li>
+        </ol>
+      </div>
+    </section>
+
+    <footer>
+      <p>📘 <strong>Semana 6 · DIV/MOD, Descomposición y Arreglos</strong></p>
+      <p>Hecho con <span class="heart">♥</span> para Pingüino · Universidad de Piura</p>
+      <p style="margin-top:8px;font-size:.8rem">Tip: usa <kbd>Ctrl</kbd>+<kbd>F</kbd> para buscar cualquier término.</p>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+const root = document.documentElement;
+const themeToggle = document.getElementById('themeToggle');
+const themeIcon = document.getElementById('themeIcon');
+const themeLabel = document.getElementById('themeLabel');
+
+function getSavedTheme() {
+  try { return localStorage.getItem('penguin-theme') || 'dark'; } catch (e) { return 'dark'; }
+}
+function saveTheme(t) {
+  try { localStorage.setItem('penguin-theme', t); } catch (e) {}
+}
+function applyTheme(theme) {
+  root.setAttribute('data-theme', theme);
+  if (theme === 'dark') { themeIcon.textContent = '🌙'; themeLabel.textContent = 'Modo oscuro'; }
+  else { themeIcon.textContent = '☀️'; themeLabel.textContent = 'Modo claro'; }
+  initMermaid(theme);
+}
+themeToggle.addEventListener('click', () => {
+  const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  applyTheme(next); saveTheme(next);
+});
+
+function initMermaid(theme) {
+  if (typeof mermaid === 'undefined') return;
+  const isDark = (theme === 'dark');
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: isDark ? 'dark' : 'default',
+    securityLevel: 'loose',
+    themeVariables: isDark ? {
+      background: '#161c2f', primaryColor: '#1e293b', primaryTextColor: '#e8edf7',
+      primaryBorderColor: '#3d4870', lineColor: '#94a3b8', secondaryColor: '#a78bfa',
+      tertiaryColor: '#34d399', mainBkg: '#1a2138', nodeBkg: '#1a2138',
+      clusterBkg: '#0d1322', edgeLabelBackground: '#161c2f',
+      fontFamily: 'Inter, sans-serif',
+    } : {
+      background: '#ffffff', primaryColor: '#f1f5f9', primaryTextColor: '#0f172a',
+      primaryBorderColor: '#cbd5e1', lineColor: '#475569', mainBkg: '#ffffff',
+      clusterBkg: '#f8fafc', fontFamily: 'Inter, sans-serif',
+    },
+    flowchart: { curve: 'basis', padding: 20, useMaxWidth: true }
+  });
+  document.querySelectorAll('.mermaid-container').forEach(container => {
+    const original = container.dataset.original;
+    if (original) container.innerHTML = '<div class="mermaid">' + original + '</div>';
+  });
+  if (mermaid.run) mermaid.run();
+  else if (mermaid.init) mermaid.init(undefined, document.querySelectorAll('.mermaid'));
+}
+
+const tocLinks = document.querySelectorAll('.toc-list a');
+const sections = document.querySelectorAll('section.block, section.hero');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      tocLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+}, { rootMargin: '-30% 0px -60% 0px' });
+sections.forEach(s => observer.observe(s));
+
+window.addEventListener('DOMContentLoaded', () => { applyTheme(getSavedTheme()); });
+</script>
+</body>
+</html>

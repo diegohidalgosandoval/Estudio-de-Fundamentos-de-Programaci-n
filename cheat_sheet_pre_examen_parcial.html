@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>📋 Cheat Sheet Pre-Examen Parcial · Pingüino</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<style>
+:root[data-theme="dark"]{--bg:#0a0e1a;--bg-elevated:#131829;--bg-card:#161c2f;--bg-card-hover:#1c2340;--bg-code:#0d1322;--border:#2a3354;--border-strong:#3d4870;--text:#e8edf7;--text-muted:#98a4c2;--text-dim:#6b7793;--primary:#60a5fa;--primary-strong:#3b82f6;--primary-bg:rgba(96,165,250,.12);--accent:#34d399;--accent-bg:rgba(52,211,153,.12);--warning:#fbbf24;--warning-bg:rgba(251,191,36,.12);--danger:#f87171;--danger-bg:rgba(248,113,113,.12);--purple:#a78bfa;--purple-bg:rgba(167,139,250,.12);--pink:#f472b6;--pink-bg:rgba(244,114,182,.12);--shadow:0 4px 24px rgba(0,0,0,.4);--syn-kw:#c586c0;--syn-fn:#dcdcaa;--syn-tipo:#4ec9b0;--syn-op:#ff79c6;--syn-num:#b5cea8;--syn-str:#ce9178;--syn-var:#9cdcfe;--syn-cmt:#6a9955;--syn-bg:#0d1322;--truth-true-bg:rgba(52,211,153,.18);--truth-false-bg:rgba(248,113,113,.18);--truth-true:#34d399;--truth-false:#f87171}
+:root[data-theme="light"]{--bg:#f8fafc;--bg-elevated:#fff;--bg-card:#fff;--bg-card-hover:#f1f5f9;--bg-code:#f8fafc;--border:#e2e8f0;--border-strong:#cbd5e1;--text:#0f172a;--text-muted:#475569;--text-dim:#94a3b8;--primary:#2563eb;--primary-strong:#1d4ed8;--primary-bg:rgba(37,99,235,.08);--accent:#059669;--accent-bg:rgba(5,150,105,.08);--warning:#d97706;--warning-bg:rgba(217,119,6,.08);--danger:#dc2626;--danger-bg:rgba(220,38,38,.08);--purple:#7c3aed;--purple-bg:rgba(124,58,237,.08);--pink:#db2777;--pink-bg:rgba(219,39,119,.08);--shadow:0 2px 8px rgba(15,23,42,.06);--syn-kw:#af00db;--syn-fn:#795e26;--syn-tipo:#267f99;--syn-op:#d73a49;--syn-num:#098658;--syn-str:#a31515;--syn-var:#001080;--syn-cmt:#008000;--syn-bg:#f6f8fa;--truth-true-bg:rgba(5,150,105,.12);--truth-false-bg:rgba(220,38,38,.12);--truth-true:#059669;--truth-false:#dc2626}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;font-size:15px;transition:background .3s,color .3s;min-height:100vh}
+::selection{background:var(--primary);color:#fff}
+.topbar{position:sticky;top:0;z-index:100;background:var(--bg-elevated);border-bottom:1px solid var(--border);padding:14px 32px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(12px);background:color-mix(in srgb,var(--bg-elevated) 85%,transparent)}
+.brand{display:flex;align-items:center;gap:12px;font-weight:700;font-size:1.05rem;color:var(--text)}
+.brand-icon{width:38px;height:38px;background:linear-gradient(135deg,#f87171,#fbbf24,#34d399,#60a5fa,#a78bfa);background-size:300% 300%;animation:gradientShift 6s ease infinite;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:#fff;box-shadow:0 4px 16px rgba(96,165,250,.3)}
+@keyframes gradientShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.brand-text small{display:block;font-size:.74rem;font-weight:500;color:var(--text-muted);margin-top:-2px}
+.theme-toggle{background:var(--bg-card);border:1px solid var(--border);color:var(--text);padding:8px 14px;border-radius:999px;cursor:pointer;display:flex;align-items:center;gap:8px;font-size:.85rem;font-weight:500;font-family:inherit;transition:all .2s}
+.theme-toggle:hover{background:var(--bg-card-hover);border-color:var(--primary);transform:translateY(-1px)}
+.layout{display:grid;grid-template-columns:260px 1fr;max-width:1500px;margin:0 auto}
+@media(max-width:1024px){.layout{grid-template-columns:1fr}.sidebar{display:none}}
+.sidebar{position:sticky;top:64px;height:calc(100vh - 64px);overflow-y:auto;padding:24px 16px 24px 32px;border-right:1px solid var(--border);background:var(--bg)}
+.sidebar h3{font-size:.74rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text-dim);margin-bottom:12px;font-weight:700}
+.toc-list{list-style:none}
+.toc-list li{margin:1px 0}
+.toc-list a{display:block;padding:7px 12px;color:var(--text-muted);text-decoration:none;border-radius:8px;font-size:.85rem;border-left:3px solid transparent;transition:all .15s}
+.toc-list a:hover{background:var(--bg-card);color:var(--text)}
+.toc-list a.active{background:var(--primary-bg);color:var(--primary);border-left-color:var(--primary);font-weight:600}
+main{padding:36px 48px 80px;max-width:100%;overflow-x:hidden}
+@media(max-width:768px){main{padding:24px 16px 60px}.topbar{padding:12px 16px}}
+.hero{padding:32px 0 36px;border-bottom:1px solid var(--border);margin-bottom:36px;text-align:center}
+.hero-badge{display:inline-block;padding:6px 14px;background:linear-gradient(90deg,var(--danger),var(--warning),var(--accent),var(--primary),var(--purple));color:#fff;border-radius:999px;font-size:.78rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:16px}
+h1{font-size:clamp(1.9rem,5vw,2.8rem);font-weight:900;line-height:1.1;letter-spacing:-.02em;margin-bottom:14px;background:linear-gradient(135deg,var(--text) 0%,var(--primary) 50%,var(--purple) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:1.05rem;color:var(--text-muted);max-width:680px;margin:0 auto}
+.hero-meta{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px;justify-content:center}
+.meta-pill{display:flex;align-items:center;gap:8px;padding:7px 14px;background:var(--bg-card);border:1px solid var(--border);border-radius:999px;font-size:.82rem;color:var(--text-muted)}
+.meta-pill strong{color:var(--text);font-weight:600}
+section.block{margin:48px 0;scroll-margin-top:80px}
+.block-header{display:flex;align-items:center;gap:14px;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(--border)}
+.block-num{width:42px;height:42px;background:linear-gradient(135deg,var(--primary),var(--purple));color:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:800;flex-shrink:0;box-shadow:0 4px 12px var(--primary-bg)}
+h2{font-size:clamp(1.4rem,2.5vw,1.8rem);font-weight:800;letter-spacing:-.01em;color:var(--text)}
+h3{font-size:1.1rem;font-weight:700;margin:24px 0 12px;color:var(--text);display:flex;align-items:center;gap:8px}
+h4{font-size:.98rem;font-weight:700;margin:16px 0 8px;color:var(--text)}
+p{margin:8px 0;color:var(--text)}
+strong{color:var(--text);font-weight:600}
+em{color:var(--primary);font-style:normal;font-weight:500}
+ul,ol{margin:8px 0 8px 24px}
+li{margin:4px 0}
+a{color:var(--primary);text-decoration:none}
+a:hover{text-decoration:underline}
+code{font-family:'JetBrains Mono',monospace;background:var(--bg-code);border:1px solid var(--border);padding:1px 6px;border-radius:4px;font-size:.85em;color:var(--accent)}
+.callout{margin:16px 0;padding:14px 18px;border-radius:10px;border-left:4px solid;background:var(--bg-card)}
+.callout-header{display:flex;align-items:center;gap:8px;font-weight:700;margin-bottom:6px;font-size:.92rem}
+.callout-icon{width:24px;height:24px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.95rem}
+.callout p{margin:4px 0}
+.callout p:last-child{margin-bottom:0}
+.callout.intuition{border-color:var(--primary);background:var(--primary-bg)}.callout.intuition .callout-icon{background:var(--primary);color:#fff}.callout.intuition .callout-header{color:var(--primary)}
+.callout.tip{border-color:var(--accent);background:var(--accent-bg)}.callout.tip .callout-icon{background:var(--accent);color:#fff}.callout.tip .callout-header{color:var(--accent)}
+.callout.warning{border-color:var(--warning);background:var(--warning-bg)}.callout.warning .callout-icon{background:var(--warning);color:#fff}.callout.warning .callout-header{color:var(--warning)}
+.callout.danger{border-color:var(--danger);background:var(--danger-bg)}.callout.danger .callout-icon{background:var(--danger);color:#fff}.callout.danger .callout-header{color:var(--danger)}
+.callout.theory{border-color:var(--purple);background:var(--purple-bg)}.callout.theory .callout-icon{background:var(--purple);color:#fff}.callout.theory .callout-header{color:var(--purple)}
+.table-wrapper{overflow-x:auto;margin:14px 0;border-radius:10px;border:1px solid var(--border);background:var(--bg-card)}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+th,td{padding:9px 14px;text-align:left;border-bottom:1px solid var(--border)}
+th{background:var(--bg-elevated);color:var(--text);font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:.04em}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--bg-card-hover)}
+td.center,th.center{text-align:center}
+td.mono,th.mono{font-family:'JetBrains Mono',monospace;font-size:.92em}
+td.tv,th.tv{text-align:center;font-weight:700;font-family:'JetBrains Mono',monospace}
+td.tv.true{background:var(--truth-true-bg);color:var(--truth-true)}
+td.tv.false{background:var(--truth-false-bg);color:var(--truth-false)}
+pre.pseudo{background:var(--syn-bg);border:1px solid var(--border);border-left:4px solid var(--purple);border-radius:10px;padding:14px 18px;overflow-x:auto;margin:10px 0;font-family:'JetBrains Mono','Courier New',monospace;font-size:.86rem;line-height:1.7;color:var(--text)}
+pre.pseudo code{background:none;border:none;padding:0;color:inherit;font-size:inherit}
+.kw{color:var(--syn-kw);font-weight:700}
+.fn{color:var(--syn-fn);font-weight:600}
+.tipo{color:var(--syn-tipo);font-weight:600}
+.op{color:var(--syn-op);font-weight:500}
+.num{color:var(--syn-num)}
+.str{color:var(--syn-str)}
+.var{color:var(--syn-var)}
+.cmt{color:var(--syn-cmt);font-style:italic}
+.flowchart-container{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:18px;margin:14px 0;text-align:center;overflow-x:auto}
+.flowchart-container .mermaid{display:flex;justify-content:center;min-height:80px}
+.col2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+.col3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0}
+@media(max-width:900px){.col2,.col3{grid-template-columns:1fr}}
+.col2 pre.pseudo,.col3 pre.pseudo{margin:0}
+.cheat-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:14px 18px}
+.cheat-card h4{margin:0 0 8px;font-size:.95rem;display:flex;align-items:center;gap:8px}
+.cheat-card.primary{border-left:4px solid var(--primary)}
+.cheat-card.accent{border-left:4px solid var(--accent)}
+.cheat-card.warning{border-left:4px solid var(--warning)}
+.cheat-card.danger{border-left:4px solid var(--danger)}
+.cheat-card.purple{border-left:4px solid var(--purple)}
+.cheat-card.pink{border-left:4px solid var(--pink)}
+.formula-box{background:var(--purple-bg);border:1px solid var(--purple);border-radius:8px;padding:10px 14px;margin:10px 0;text-align:center;font-family:'JetBrains Mono',monospace;font-size:.95rem}
+.cheat-strip{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.cheat-strip span{padding:5px 11px;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:.82rem}
+.symbol-card{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;text-align:center}
+.symbol-card .sym{width:80px;height:50px;display:flex;align-items:center;justify-content:center;font-weight:700;font-family:'JetBrains Mono',monospace;font-size:.8rem;background:#a78bfa;color:#fff}
+.symbol-card .sym.start{border-radius:25px;background:#34d399;color:#000}
+.symbol-card .sym.end{border-radius:25px;background:#f87171;color:#fff}
+.symbol-card .sym.io{transform:skewX(-15deg);background:#60a5fa;color:#000;width:90px}
+.symbol-card .sym.io span{transform:skewX(15deg);display:inline-block}
+.symbol-card .sym.decision{width:80px;height:60px;background:#fbbf24;color:#000;clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
+.symbol-card .label{font-size:.78rem;font-weight:600;color:var(--text)}
+.symbol-card .desc{font-size:.72rem;color:var(--text-muted)}
+.shortcut-table th:first-child,.shortcut-table td:first-child{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--primary);width:30%}
+.priority-list{list-style:none;margin:10px 0;padding:0;counter-reset:item}
+.priority-list li{padding:8px 12px;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;margin:5px 0;display:flex;align-items:center;gap:12px;counter-increment:item}
+.priority-list li::before{content:counter(item);background:var(--primary);color:#fff;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.75rem;flex-shrink:0}
+.priority-list .ops{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--accent);min-width:140px}
+.priority-list .desc{color:var(--text-muted);font-size:.85rem}
+footer{text-align:center;padding:32px 20px;border-top:1px solid var(--border);margin-top:60px;color:var(--text-muted);font-size:.85rem}
+footer .heart{color:var(--danger)}
+kbd{background:var(--bg-elevated);border:1px solid var(--border-strong);border-radius:4px;padding:1px 6px;font-family:'JetBrains Mono',monospace;font-size:.85em}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:10px}
+::-webkit-scrollbar-thumb:hover{background:var(--primary)}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-icon">📋</div>
+    <div class="brand-text">Cheat Sheet · Pre-Examen Parcial<small>Resumen de las semanas 1-6</small></div>
+  </div>
+  <button class="theme-toggle" id="themeToggle"><span id="themeIcon">🌙</span><span id="themeLabel">Modo oscuro</span></button>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>📑 Contenido</h3>
+    <ul class="toc-list">
+      <li><a href="#intro">🏁 Cómo usar este cheat sheet</a></li>
+      <li><a href="#bloque1">1️⃣ Pseudocódigo 101</a></li>
+      <li><a href="#bloque2">2️⃣ Operadores y prioridad</a></li>
+      <li><a href="#bloque3">3️⃣ Tablas de verdad</a></li>
+      <li><a href="#bloque4">4️⃣ Decisiones SI/SI-SINO</a></li>
+      <li><a href="#bloque5">5️⃣ Repetición (3 ciclos)</a></li>
+      <li><a href="#bloque6">6️⃣ Patrones esenciales</a></li>
+      <li><a href="#bloque7">7️⃣ Diagramas de flujo</a></li>
+      <li><a href="#bloque8">8️⃣ DIV / MOD</a></li>
+      <li><a href="#bloque9">9️⃣ Plantillas de problemas</a></li>
+      <li><a href="#bloque10">🔟 Errores que cuestan puntos</a></li>
+      <li><a href="#checklist">✅ Checklist final</a></li>
+    </ul>
+  </aside>
+
+  <main>
+
+    <section class="hero" id="intro">
+      <div class="hero-badge">📋 Cheat Sheet · Pre-Examen Parcial</div>
+      <h1>Todo lo que necesitas en una sola hoja</h1>
+      <p class="hero-sub">Resumen visual y denso de las <strong>semanas 1 a 6</strong>. Está optimizado para <strong>repaso</strong> (no para aprender desde cero — para eso, vuelve a las guías individuales). Úsalo el día antes del examen, en la mañana del examen, o después de dudar en algo concreto.</p>
+      <div class="hero-meta">
+        <div class="meta-pill">⏱️ <span><strong>Repaso:</strong> ~30 min</span></div>
+        <div class="meta-pill">📚 <span><strong>Bloques:</strong> 10 + checklist</span></div>
+        <div class="meta-pill">🎯 <span><strong>Foco:</strong> referencia rápida</span></div>
+        <div class="meta-pill">📋 <span><strong>Cubre:</strong> Sem 1-6</span></div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- BLOQUE 1: PSEUDOCÓDIGO 101 -->
+    <!-- ============================================================ -->
+    <section class="block" id="bloque1">
+      <div class="block-header"><div class="block-num">1</div><h2>Pseudocódigo 101 · Sintaxis del curso</h2></div>
+
+      <h3>📐 Estructura mínima de cualquier algoritmo</h3>
+
+<pre class="pseudo"><code><span class="kw">INICIO</span>
+    <span class="cmt">// 1. Declaración de variables (con sus tipos)</span>
+    <span class="tipo">Tipo</span>: <span class="var">var1</span>, <span class="var">var2</span>, ...
+
+    <span class="cmt">// 2. Entrada de datos</span>
+    <span class="fn">Leer</span> <span class="var">var1</span>, <span class="var">var2</span>
+
+    <span class="cmt">// 3. Procesamiento (asignaciones, decisiones, ciclos)</span>
+    <span class="var">resultado</span> <span class="op">=</span> <span class="var">var1</span> <span class="op">+</span> <span class="var">var2</span>
+
+    <span class="cmt">// 4. Salida</span>
+    <span class="fn">Mostrar</span> <span class="var">resultado</span>
+<span class="kw">FIN</span></code></pre>
+
+      <div class="callout danger">
+        <div class="callout-header"><span class="callout-icon">⚠️</span> NO OLVIDES (en cada ejercicio del examen)</div>
+        <p>Es <strong>obligatorio</strong> incluir una <strong>leyenda de variables</strong> (qué representa cada nombre). Sin leyenda → puntos perdidos automáticamente.</p>
+      </div>
+
+      <h3>🏷️ Tipos de datos</h3>
+
+      <div class="table-wrapper">
+        <table>
+          <thead><tr><th>Tipo</th><th>Qué guarda</th><th>Ejemplos</th></tr></thead>
+          <tbody>
+            <tr><td><code>Entero</code></td><td>Números sin decimales</td><td>5, -3, 0, 100</td></tr>
+            <tr><td><code>Real</code></td><td>Números con decimales</td><td>3.14, -0.5, 10.0</td></tr>
+            <tr><td><code>Carácter</code></td><td>Una sola letra/símbolo</td><td>'a', 'X', '7'</td></tr>
+            <tr><td><code>Cadena</code></td><td>Texto (varios caracteres)</td><td>"hola", "aprobado"</td></tr>
+            <tr><td><code>Lógico</code></td><td>Verdadero o falso</td><td>V, F</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>📋 Palabras clave reservadas</h3>
+
+      <div class="cheat-strip">
+        <span><code>INICIO</code></span>
+        <span><code>FIN</code></span>
+        <span><code>Leer</code></span>
+        <span><code>Mostrar</code></span>
+        <span><code>SI</code></span>
+        <span><code>SINO</code></span>
+        <span><code>FIN_SI</code></span>
+        <span><code>MIENTRAS</code></span>
+        <span><code>HACER</code></span>
+        <span><code>FIN_MIENTRAS</code></span>
+        <span><code>REPETIR</code></span>
+        <span><code>HASTA QUE</code></span>
+        <span><code>PARA</code></span>
+        <span><code>FIN_PARA</code></span>
+      </div>
+
+      <h3>📝 Convenciones del curso</h3>
+
+      <div class="col2">
+        <div class="cheat-card primary">
+          <h4>✅ Hacer</h4>
+          <ul style="margin:0;padding-left:20px;font-size:.88rem">
+            <li><code>=</code> para <strong>asignación</strong> y <strong>comparación</strong></li>
+            <li>INICIO/FIN en <strong>mayúsculas</strong></li>
+            <li>Leer/Mostrar con <strong>primera mayúscula</strong></li>
+            <li><strong>Indentar 4 espacios</strong> dentro de SI, MIENTRAS, etc.</li>
+            <li>Comentarios con <code>//</code></li>
+            <li>Cadenas con <strong>comillas</strong>: <code>"texto"</code></li>
+          </ul>
+        </div>
+        <div class="cheat-card warning">
+          <h4>⚠️ Errores típicos</h4>
+          <ul style="margin:0;padding-left:20px;font-size:.88rem">
+            <li>Olvidar declarar tipos antes de usar</li>
+            <li>Olvidar FIN_SI / FIN_MIENTRAS / FIN_PARA</li>
+            <li>Mal indentado (puntos perdidos)</li>
+            <li>Confundir <code>=</code> con <code>:=</code> o <code>←</code></li>
+            <li>Usar tipo Entero cuando hay decimales</li>
+            <li>Olvidar la leyenda de variables</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- BLOQUE 2: OPERADORES Y PRIORIDAD -->
+    <!-- ============================================================ -->
+    <section class="block" id="bloque2">
+      <div class="block-header"><div class="block-num">2</div><h2>Operadores y jerarquía de prioridad</h2></div>
+
+      <h3>🧮 Aritméticos</h3>
+
+      <div class="table-wrapper">
+        <table>
+          <thead><tr><th class="center">Operador</th><th>Significado</th><th>Ejemplo</th><th>Resultado</th></tr></thead>
+          <tbody>
+            <tr><td class="center mono">+</td><td>Suma</td><td><code>5 + 3</code></td><td>8</td></tr>
+            <tr><td class="center mono">−</td><td>Resta</td><td><code>5 − 3</code></td><td>2</td></tr>
+            <tr><td class="center mono">*</td><td>Multiplicación</td><td><code>5 * 3</code></td><td>15</td></tr>
+            <tr><td class="center mono">/</td><td>División real</td><td><code>5 / 2</code></td><td>2.5</td></tr>
+            <tr><td class="center mono">^</td><td>Potencia</td><td><code>5 ^ 2</code></td><td>25</td></tr>
+            <tr><td class="center mono">DIV</td><td>División entera (cociente)</td><td><code>17 DIV 5</code></td><td>3</td></tr>
+            <tr><td class="center mono">MOD</td><td>Resto de la división entera</td><td><code>17 MOD 5</code></td><td>2</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>⚖️ Relacionales (devuelven V o F)</h3>
+
+      <div class="cheat-strip">
+        <span><code>&gt;</code> mayor que</span>
+        <span><code>&lt;</code> menor que</span>
+        <span><code>&gt;=</code> mayor o igual</span>
+        <span><code>&lt;=</code> menor o igual</span>
+        <span><code>=</code> igual</span>
+        <span><code>&lt;&gt;</code> distinto</span>
+      </div>
+
+      <h3>🔣 Lógicos</h3>
+
+      <div class="col3">
+        <div class="cheat-card primary">
+          <h4>🔗 AND (Y)</h4>
+          <p style="font-size:.85rem;color:var(--text-muted);margin:0">V solo si <strong>las DOS</strong> son V. <em>Exigente</em>.</p>
+          <p style="font-size:.85rem;margin:6px 0 0"><code>(edad &gt;= 18) AND (DNI = V)</code></p>
+        </div>
+        <div class="cheat-card accent">
+          <h4>🔀 OR (O)</h4>
+          <p style="font-size:.85rem;color:var(--text-muted);margin:0">V si <strong>al menos una</strong> es V. <em>Permisivo</em>.</p>
+          <p style="font-size:.85rem;margin:6px 0 0"><code>(dia = "sab") OR (dia = "dom")</code></p>
+        </div>
+        <div class="cheat-card warning">
+          <h4>🔄 NOT (NO)</h4>
+          <p style="font-size:.85rem;color:var(--text-muted);margin:0"><strong>Invierte</strong>: V→F, F→V.</p>
+          <p style="font-size:.85rem;margin:6px 0 0"><code>NOT (n &gt; 0)</code> = <code>n &lt;= 0</code></p>
+        </div>
+      </div>
+
+      <h3>🏆 Jerarquía completa (de mayor a menor prioridad)</h3>
+
+      <ol class="priority-list">
+        <li><span class="ops">( )</span><span class="desc">Paréntesis (siempre primero)</span></li>
+        <li><span class="ops">^</span><span class="desc">Potencia</span></li>
+        <li><span class="ops">NOT</span><span class="desc">Negación lógica</span></li>
+        <li><span class="ops">* / DIV MOD AND</span><span class="desc">Multiplicación, división y AND</span></li>
+        <li><span class="ops">+ − OR</span><span class="desc">Suma, resta y OR</span></li>
+        <li><span class="ops">&lt; &gt; &lt;= &gt;= = &lt;&gt;</span><span class="desc">Relacionales (al final)</span></li>
+      </ol>
+
+      <div class="callout warning">
+        <div class="callout-header"><span class="callout-icon">⚠️</span> Regla práctica</div>
+        <p>Cuando combines relacionales y lógicos, <strong>SIEMPRE usa paréntesis</strong> alrededor de cada comparación. Te ahorra errores y hace el código más legible.</p>
+        <p>❌ <code>edad &gt;= 18 AND DNI = V</code> &nbsp;&nbsp; ✅ <code>(edad &gt;= 18) AND (DNI = V)</code></p>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- BLOQUE 3: TABLAS DE VERDAD -->
+    <!-- ============================================================ -->
+    <section class="block" id="bloque3">
+      <div class="block-header"><div class="block-num">3</div><h2>Tablas de verdad y leyes de De Morgan</h2></div>
+
+      <div class="col3">
+        <div>
+          <h4 style="text-align:center">NOT a</h4>
+          <div class="table-wrapper" style="margin:0"><table>
+            <thead><tr><th class="center">a</th><th class="center">NOT a</th></tr></thead>
+            <tbody>
+              <tr><td class="tv true">V</td><td class="tv false">F</td></tr>
+              <tr><td class="tv false">F</td><td class="tv true">V</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+        <div>
+          <h4 style="text-align:center">a AND b</h4>
+          <div class="table-wrapper" style="margin:0"><table>
+            <thead><tr><th class="center">a</th><th class="center">b</th><th class="center">a AND b</th></tr></thead>
+            <tbody>
+              <tr><td class="tv true">V</td><td class="tv true">V</td><td class="tv true">V</td></tr>
+              <tr><td class="tv true">V</td><td class="tv false">F</td><td class="tv false">F</td></tr>
+              <tr><td class="tv false">F</td><td class="tv true">V</td><td class="tv false">F</td></tr>
+              <tr><td class="tv false">F</td><td class="tv false">F</td><td class="tv false">F</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+        <div>
+          <h4 style="text-align:center">a OR b</h4>
+          <div class="table-wrapper" style="margin:0"><table>
+            <thead><tr><th class="center">a</th><th class="center">b</th><th class="center">a OR b</th></tr></thead>
+            <tbody>
+              <tr><td class="tv true">V</td><td class="tv true">V</td><td class="tv true">V</td></tr>
+              <tr><td class="tv true">V</td><td class="tv false">F</td><td class="tv true">V</td></tr>
+              <tr><td class="tv false">F</td><td class="tv true">V</td><td class="tv true">V</td></tr>
+              <tr><td class="tv false">F</td><td class="tv false">F</td><td class="tv false">F</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <h3>🧮 Leyes de De Morgan (para invertir condiciones)</h3>
+
+      <div class="callout theory">
+        <div class="callout-header"><span class="callout-icon">📐</span> Las dos leyes</div>
+        <div class="formula-box"><strong>NOT (a AND b)</strong> ≡ <strong>(NOT a) OR (NOT b)</strong></div>
+        <div class="formula-box"><strong>NOT (a OR b)</strong> ≡ <strong>(NOT a) AND (NOT b)</strong></div>
+        <p style="text-align:center;font-size:.88rem">El AND se vuelve OR (y viceversa), y cada parte se niega.</p>
+      </div>
+
+      <h3>🔁 Aplicación: convertir MIENTRAS ↔ REPETIR</h3>
+
+      <div class="col2">
+        <div>
+<pre class="pseudo"><code><span class="cmt">// MIENTRAS continúa cuando V</span>
+<span class="kw">MIENTRAS</span> (<span class="var">n</span> <span class="op">&gt;=</span> <span class="num">1</span>) <span class="op">AND</span> (<span class="var">n</span> <span class="op">&lt;=</span> <span class="num">12</span>) <span class="kw">HACER</span>
+    ...
+<span class="kw">FIN_MIENTRAS</span></code></pre>
+        </div>
+        <div>
+<pre class="pseudo"><code><span class="cmt">// REPETIR sale cuando V (negar la cond)</span>
+<span class="kw">REPETIR</span>
+    ...
+<span class="kw">HASTA QUE</span> (<span class="var">n</span> <span class="op">&lt;</span> <span class="num">1</span>) <span class="op">OR</span> (<span class="var">n</span> <span class="op">&gt;</span> <span class="num">12</span>)</code></pre>
+        </div>
+      </div>
+
+      <h3>🔣 Negaciones rápidas (memorizar)</h3>
+
+      <div class="table-wrapper">
+        <table class="shortcut-table">
+          <thead><tr><th>Condición</th><th>Negación</th></tr></thead>
+          <tbody>
+            <tr><td><code>n &gt; 0</code></td><td><code>n &lt;= 0</code></td></tr>
+            <tr><td><code>n &gt;= 0</code></td><td><code>n &lt; 0</code></td></tr>
+            <tr><td><code>a = b</code></td><td><code>a &lt;&gt; b</code></td></tr>
+            <tr><td><code>a AND b</code></td><td><code>(NOT a) OR (NOT b)</code></td></tr>
+            <tr><td><code>a OR b</code></td><td><code>(NOT a) AND (NOT b)</code></td></tr>
+            <tr><td><code>NOT a</code></td><td><code>a</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- BLOQUE 4: DECISIONES -->
+    <!-- ============================================================ -->
+    <section class="block" id="bloque4">
+      <div class="block-header"><div class="block-num">4</div><h2>Decisiones: SI / SI-SINO / SI anidado</h2></div>
+
+      <div class="col2">
+        <div class="cheat-card primary">
+          <h4>📌 SI simple</h4>
+          <p style="font-size:.85rem;color:var(--text-muted)">Solo UN caso requiere acción.</p>
+<pre class="pseudo" style="margin-top:8px"><code><span class="kw">SI</span> condición
+    <span class="cmt">// se ejecuta solo si V</span>
+    bloque_P
+<span class="kw">FIN_SI</span></code></pre>
+        </div>
+        <div class="cheat-card accent">
+          <h4>📌 SI-SINO</h4>
+          <p style="font-size:.85rem;color:var(--text-muted)">AMBOS casos requieren acción distinta.</p>
+<pre class="pseudo" style="margin-top:8px"><code><span class="kw">SI</span> condición
+    bloque_V
+<span class="kw">SINO</span>
+    bloque_F
+<span class="kw">FIN_SI</span></code></pre>
+        </div>
+      </div>
+
+      <h3>🪜 SI anidado (3+ casos): patrón "filtro en cascada"</h3>
+
+<pre class="pseudo"><code><span class="kw">SI</span> condición1            <span class="cmt">// la MÁS restrictiva</span>
+    bloque_P
+<span class="kw">SINO</span>
+    <span class="kw">SI</span> condición2
+        bloque_Q
+    <span class="kw">SINO</span>
+        <span class="kw">SI</span> condición3
+            bloque_R
+        <span class="kw">SINO</span>
+            bloque_S         <span class="cmt">// caso por defecto</span>
+        <span class="kw">FIN_SI</span>
+    <span class="kw">FIN_SI</span>
+<span class="kw">FIN_SI</span></code></pre>
+
+      <div class="callout danger">
+        <div class="callout-header"><span class="callout-icon">🎯</span> Regla de oro de la anidación</div>
+        <p><strong>Pon primero la condición MÁS restrictiva</strong>. Si pones primero la más amplia, los casos restrictivos nunca se ejecutan.</p>
+        <p style="font-size:.85rem;color:var(--text-muted)">Ejemplo: para descuentos por cantidad, primero <code>n &gt; 50</code> (10%), luego <code>n &gt;= 20</code> (6%), luego sin descuento.</p>
+      </div>
+
+      <h3>🌍 Traducciones más comunes (español → pseudocódigo)</h3>
+
+      <div class="table-wrapper">
+        <table class="shortcut-table">
+          <thead><tr><th>Frase en español</th><th>Pseudocódigo</th></tr></thead>
+          <tbody>
+            <tr><td>"mayor o igual a 10.5"</td><td><code>x &gt;= 10.5</code></td></tr>
+            <tr><td>"5 o más", "al menos 5"</td><td><code>x &gt;= 5</code></td></tr>
+            <tr><td>"más de 50" (estricto)</td><td><code>x &gt; 50</code></td></tr>
+            <tr><td>"inferior a 2000" (estricto)</td><td><code>x &lt; 2000</code></td></tr>
+            <tr><td>"entre 7 y 9" (incluye ambos)</td><td><code>(x &gt;= 7) AND (x &lt;= 9)</code></td></tr>
+            <tr><td>"[12 a 16)" (cerrado-abierto)</td><td><code>(x &gt;= 12) AND (x &lt; 16)</code></td></tr>
+            <tr><td>"sábado o domingo"</td><td><code>(d = "sab") OR (d = "dom")</code></td></tr>
+            <tr><td>"NO es positivo"</td><td><code>x &lt;= 0</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- BLOQUE 5: REPETICIÓN -->
+    <!-- ============================================================ -->
+    <section class="block" id="bloque5">
+      <div class="block-header"><div class="block-num">5</div><h2>Repetición: MIENTRAS / REPETIR-HASTA / PARA</h2></div>
+
+      <h3>📊 Cuadro comparativo (memorízalo)</h3>
+
+      <div class="table-wrapper">
+        <table>
+          <thead><tr><th>Característica</th><th>MIENTRAS</th><th>REPETIR-HASTA</th><th>PARA</th></tr></thead>
+          <tbody>
+            <tr><td>Condición evalúa</td><td>Al inicio</td><td>Al final</td><td>Al inicio (auto)</td></tr>
+            <tr><td>¿Cuándo continúa?</td><td>Si V</td><td>Si F</td><td>Si i ≤ N</td></tr>
+            <tr><td>Mín. ejecuciones</td><td><strong>0</strong></td><td><strong>1</strong></td><td>0 (si N&lt;1)</td></tr>
+            <tr><td>Cantidad iteraciones</td><td>Desconocida</td><td>Desconocida</td><td><strong>Conocida</strong></td></tr>
+            <tr><td>Caso típico</td><td>Lectura hasta sentinela</td><td>Validación, menús</td><td>Procesar N elementos</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>🪜 Sintaxis lado a lado</h3>
+
+      <div class="col3">
+        <div>
+<pre class="pseudo"><code><span class="cmt">// MIENTRAS</span>
+<span class="kw">MIENTRAS</span> condición <span class="kw">HACER</span>
+    cuerpo
+    actualización
+<span class="kw">FIN_MIENTRAS</span></code></pre>
+        </div>
+        <div>
+<pre class="pseudo"><code><span class="cmt">// REPETIR-HASTA</span>
+<span class="kw">REPETIR</span>
+    cuerpo
+    actualización
+<span class="kw">HASTA QUE</span> condición</code></pre>
+        </div>
+        <div>
+<pre class="pseudo"><code><span class="cmt">// PARA (auto-incrementa i)</span>
+<span class="kw">PARA</span> <span class="var">i</span> <span class="op">=</span> <span class="num">1</span> <span class="kw">HASTA</span> <span class="var">N</span> <span class="kw">HACER</span>
+    cuerpo
+<span class="kw">FIN_PARA</span></code></pre>
+        </div>
+      </div>
+
+      <h3>🧭 Árbol de decisión (¿cuál uso?)</h3>
+
+      <div class="callout tip">
+        <div class="callout-header"><span class="callout-icon">🌲</span> Pregúntate en este orden</div>
+        <ol style="margin:0">
+          <li>¿Conozco <strong>EXACTAMENTE</strong> cuántas iteraciones? (ej: "los 30 alumnos") → <strong>PARA</strong>.</li>
+          <li>¿Quiero ejecutar <strong>al menos UNA vez</strong> y revisar después? (ej: validar entrada) → <strong>REPETIR-HASTA</strong>.</li>
+          <li>En cualquier otro caso (cantidad desconocida, depende del usuario o datos) → <strong>MIENTRAS</strong>.</li>
+        </ol>
+      </div>
+
+      <h3>📋 Las 4 partes obligatorias de TODO ciclo</h3>
+
+      <div class="col2">
+        <div class="cheat-card purple">
+          <h4>1️⃣ Inicialización</h4>
+          <p style="font-size:.85rem;margin:0">Variables de control y acumuladores (antes del ciclo).</p>
+<pre class="pseudo" style="margin-top:6px"><code><span class="var">cont</span> <span class="op">=</span> <span class="num">0</span>
+<span class="var">suma</span> <span class="op">=</span> <span class="num">0</span></code></pre>
+        </div>
+        <div class="cheat-card primary">
+          <h4>2️⃣ Condición de parada</h4>
+          <p style="font-size:.85rem;margin:0">Una expresión lógica que algún día cambiará y permitirá salir.</p>
+<pre class="pseudo" style="margin-top:6px"><code><span class="kw">MIENTRAS</span> <span class="var">i</span> <span class="op">&lt;=</span> <span class="num">10</span> <span class="kw">HACER</span></code></pre>
+        </div>
+        <div class="cheat-card accent">
+          <h4>3️⃣ Cuerpo del ciclo</h4>
+          <p style="font-size:.85rem;margin:0">Las instrucciones que se repiten.</p>
+<pre class="pseudo" style="margin-top:6px"><code><span class="fn">Leer</span> <span class="var">x</span>
+<span class="var">suma</span> <span class="op">=</span> <span class="var">suma</span> <span class="op">+</span> <span class="var">x</span></code></pre>
+        </div>
+        <div class="cheat-card warning">
+          <h4>4️⃣ Actualización</h4>
+          <p style="font-size:.85rem;margin:0">Cambiar las variables de la condición. Sin esto → bucle infinito.</p>
+<pre class="pseudo" style="margin-top:6px"><code><span class="var">i</span> <span class="op">=</span> <span class="var">i</span> <span class="op">+</span> <span class="num">1</span></code></pre>
+        </div>
+      </div>
+
+      <div class="callout danger">
+        <div class="callout-header"><span class="callout-icon">🔥</span> Bucle infinito</div>
+        <p>El error más temido. Olvidaste actualizar la variable de la condición → el ciclo nunca termina. <strong>SIEMPRE asegura</strong> que algo dentro del cuerpo modifique las variables que pregunta la condición.</p>
+      </div>
+    </section>
+
+
+    <!-- ============================================================ -->
+    <!-- BLOQUE 6: PATRONES ESENCIALES -->
+    <!-- ============================================================ -->
+    <section class="block" id="bloque6">
+      <div class="block-header"><div class="block-num">6</div><h2>Patrones esenciales (memorízalos como plantillas)</h2></div>
+
+      <h3>🔢 Contador vs Acumulador (la diferencia clave)</h3>
+
+      <div class="col2">
+        <div class="cheat-card primary">
+          <h4>🔢 Contador</h4>
+          <p style="font-size:.85rem;color:var(--text-muted);margin:0">Suma una <strong>cantidad CONSTANTE</strong> (típicamente 1) cada iteración. Cuenta CUÁNTAS veces ocurre algo.</p>
+          <div class="formula-box" style="margin:10px 0">cont = cont + 1</div>
+          <p style="font-size:.82rem;margin:0"><strong>Inicializa en:</strong> <code>0</code></p>
+        </div>
+        <div class="cheat-card accent">
+          <h4>➕ Acumulador (totalizador)</h4>
+          <p style="font-size:.85rem;color:var(--text-muted);margin:0">Suma <strong>valores VARIABLES</strong> (los que se leen). Calcula la SUMA total.</p>
+          <div class="formula-box" style="margin:10px 0">suma = suma + N</div>
+          <p style="font-size:.82rem;margin:0"><strong>Inicializa en:</strong> <code>0</code> (suma) o <code>1</code> (producto)</p>
+        </div>
+      </div>
+
+      <div class="callout warning">
+        <div class="callout-header"><span class="callout-icon">⚠️</span> ¡CRUCIAL!</div>
+        <p><strong>Acumulador de PRODUCTO va inicializado en 1, NO en 0</strong>. Si pones 0, el primer producto da 0 y todo se vuelve 0. El 1 es la <em>identidad del producto</em>: 1 × x = x.</p>
+      </div>
+
+      <h3>📚 Las 6 plantillas que SIEMPRE debes recordar</h3>
+
+      <div class="cheat-card primary">
+        <h4>1. CONTAR cuántos cumplen X (PARA + SI + contador)</h4>
+<pre class="pseudo"><code><span class="var">cont</span> <span class="op">=</span> <span class="num">0</span>
+<span class="kw">PARA</span> <span class="var">i</span> <span class="op">=</span> <span class="num">1</span> <span class="kw">HASTA</span> <span class="var">N</span> <span class="kw">HACER</span>
+    <span class="fn">Leer</span> <span class="var">x</span>
+    <span class="kw">SI</span> condición(<span class="var">x</span>)        <span class="cmt">// ej: x MOD 2 = 0 (es par)</span>
+        <span class="var">cont</span> <span class="op">=</span> <span class="var">cont</span> <span class="op">+</span> <span class="num">1</span>
+    <span class="kw">FIN_SI</span>
+<span class="kw">FIN_PARA</span></code></pre>
+      </div>
+
+      <div class="cheat-card accent">
+        <h4>2. SUMAR todos / calcular PROMEDIO</h4>
+<pre class="pseudo"><code><span class="var">suma</span> <span class="op">=</span> <span class="num">0</span>
+<span class="kw">PARA</span> <span class="var">i</span> <span class="op">=</span> <span class="num">1</span> <span class="kw">HASTA</span> <span class="var">N</span> <span class="kw">HACER</span>
+    <span class="fn">Leer</span> <span class="var">x</span>
+    <span class="var">suma</span> <span class="op">=</span> <span class="var">suma</span> <span class="op">+</span> <span class="var">x</span>
+<span class="kw">FIN_PARA</span>
+<span class="var">promedio</span> <span class="op">=</span> <span class="var">suma</span> <span class="op">/</span> <span class="var">N</span></code></pre>
+      </div>
+
+      <div class="cheat-card warning">
+        <h4>3. MÁXIMO y MÍNIMO (inicializa con 1er elemento, NUNCA con 0)</h4>
+<pre class="pseudo"><code><span class="fn">Leer</span> <span class="var">x</span>
+<span class="var">max</span> <span class="op">=</span> <span class="var">x</span>
+<span class="var">min</span> <span class="op">=</span> <span class="var">x</span>
+<span class="kw">PARA</span> <span class="var">i</span> <span class="op">=</span> <span class="num">2</span> <span class="kw">HASTA</span> <span class="var">N</span> <span class="kw">HACER</span>      <span class="cmt">// arranco en 2 (el 1 ya lo leí)</span>
+    <span class="fn">Leer</span> <span class="var">x</span>
+    <span class="kw">SI</span> <span class="var">x</span> <span class="op">&gt;</span> <span class="var">max</span>
+        <span class="var">max</span> <span class="op">=</span> <span class="var">x</span>
+    <span class="kw">FIN_SI</span>
+    <span class="kw">SI</span> <span class="var">x</span> <span class="op">&lt;</span> <span class="var">min</span>
+        <span class="var">min</span> <span class="op">=</span> <span class="var">x</span>
+    <span class="kw">FIN_SI</span>
+<span class="kw">FIN_PARA</span></code></pre>
+      </div>
+
+      <div class="cheat-card purple">
+        <h4>4. LECTURA HASTA SENTINELA (priming read + MIENTRAS)</h4>
+<pre class="pseudo"><code><span class="var">cont</span> <span class="op">=</span> <span class="num">0</span>
+<span class="fn">Leer</span> <span class="var">n</span>                  <span class="cmt">// PRIMING READ (1ª lectura, fuera del ciclo)</span>
+<span class="kw">MIENTRAS</span> <span class="var">n</span> <span class="op">&gt;</span> <span class="num">0</span> <span class="kw">HACER</span>      <span class="cmt">// hasta que ingrese un negativo</span>
+    <span class="var">cont</span> <span class="op">=</span> <span class="var">cont</span> <span class="op">+</span> <span class="num">1</span>
+    <span class="fn">Leer</span> <span class="var">n</span>              <span class="cmt">// LECTURA SUBSIGUIENTE (dentro)</span>
+<span class="kw">FIN_MIENTRAS</span></code></pre>
+      </div>
+
+      <div class="cheat-card pink">
+        <h4>5. BÚSQUEDA con bandera (flag)</h4>
+<pre class="pseudo"><code><span class="var">encontrado</span> <span class="op">=</span> <span class="kw">F</span>
+<span class="var">i</span> <span class="op">=</span> <span class="num">1</span>
+<span class="kw">MIENTRAS</span> (<span class="var">i</span> <span class="op">&lt;=</span> <span class="var">N</span>) <span class="op">AND</span> (<span class="var">encontrado</span> <span class="op">=</span> <span class="kw">F</span>) <span class="kw">HACER</span>
+    <span class="kw">SI</span> <span class="var">V</span>[<span class="var">i</span>] <span class="op">=</span> <span class="var">buscado</span>
+        <span class="var">encontrado</span> <span class="op">=</span> <span class="kw">V</span>
+    <span class="kw">FIN_SI</span>
+    <span class="var">i</span> <span class="op">=</span> <span class="var">i</span> <span class="op">+</span> <span class="num">1</span>
+<span class="kw">FIN_MIENTRAS</span></code></pre>
+      </div>
+
+      <div class="cheat-card danger">
+        <h4>6. EXTRAER CIFRAS de un número (DIV/MOD + MIENTRAS)</h4>
+<pre class="pseudo"><code><span class="kw">MIENTRAS</span> <span class="var">num</span> <span class="op">&gt;</span> <span class="num">0</span> <span class="kw">HACER</span>
+    <span class="var">cifra</span> <span class="op">=</span> <span class="var">num</span> <span class="op">MOD</span> <span class="num">10</span>      <span class="cmt">// extraigo la última cifra</span>
+    <span class="cmt">// procesar la cifra (sumarla, multiplicarla, etc.)</span>
+    <span class="var">num</span> <span class="op">=</span> <span class="var">num</span> <span class="op">DIV</span> <span class="num">10</span>       <span class="cmt">// elimino la última cifra</span>
+<span class="kw">FIN_MIENTRAS</span></code></pre>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- BLOQUE 7: DIAGRAMAS DE FLUJO -->
+    <!-- ============================================================ -->
+    <section class="block" id="bloque7">
+      <div class="block-header"><div class="block-num">7</div><h2>Diagramas de flujo · Símbolos estándar</h2></div>
+
+      <h3>🔷 Los símbolos que SIEMPRE usarás</h3>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin:14px 0">
+        <div class="symbol-card">
+          <div class="sym start">Inicio</div>
+          <div class="label">Inicio</div>
+          <div class="desc">Óvalo verde<br/>Solo 1 por algoritmo</div>
+        </div>
+        <div class="symbol-card">
+          <div class="sym end">Fin</div>
+          <div class="label">Fin</div>
+          <div class="desc">Óvalo rojo<br/>Cierre del algoritmo</div>
+        </div>
+        <div class="symbol-card">
+          <div class="sym io"><span>Leer x</span></div>
+          <div class="label">Entrada / Salida</div>
+          <div class="desc">Paralelogramo<br/>Leer / Mostrar</div>
+        </div>
+        <div class="symbol-card">
+          <div class="sym">x = a + b</div>
+          <div class="label">Proceso</div>
+          <div class="desc">Rectángulo<br/>Asignaciones</div>
+        </div>
+        <div class="symbol-card">
+          <div class="sym decision">¿x&gt;0?</div>
+          <div class="label">Decisión</div>
+          <div class="desc">Rombo<br/>2 salidas (V/F)</div>
+        </div>
+      </div>
+
+      <h3>🎨 Convenciones de color (recomendadas)</h3>
+
+      <div class="table-wrapper">
+        <table>
+          <thead><tr><th>Color</th><th>Símbolo</th><th>Uso</th></tr></thead>
+          <tbody>
+            <tr><td>🟢 Verde</td><td>Óvalo</td><td>Inicio</td></tr>
+            <tr><td>🔴 Rojo</td><td>Óvalo</td><td>Fin</td></tr>
+            <tr><td>🟡 Amarillo</td><td>Rombo / Rect</td><td>Decisiones, declaraciones</td></tr>
+            <tr><td>🔵 Azul</td><td>Paralelogramo</td><td>Entrada / Salida</td></tr>
+            <tr><td>🟣 Morado</td><td>Rectángulo</td><td>Procesos / asignaciones</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>📌 Reglas de oro</h3>
+
+      <div class="callout tip">
+        <div class="callout-header"><span class="callout-icon">✓</span> Lo que NUNCA debe faltar</div>
+        <ul style="margin:0">
+          <li><strong>Etiquetas V/F (o Sí/No)</strong> en cada salida del rombo de decisión.</li>
+          <li>Las flechas tienen <strong>cabeza visible</strong> (no son solo líneas).</li>
+          <li>Solo el <strong>rombo</strong> tiene 2 salidas. Los demás tienen 1.</li>
+          <li>Inicio y Fin son <strong>únicos</strong> en cada algoritmo.</li>
+          <li>Las flechas fluyen <strong>de arriba hacia abajo</strong> (lectura natural).</li>
+        </ul>
+      </div>
+
+      <h3>🔁 Diagrama mental de cada estructura</h3>
+
+      <div class="col3">
+        <div class="cheat-card primary">
+          <h4>SI / SI-SINO</h4>
+          <p style="font-size:.85rem;margin:0">Rombo → si V, va a un proceso; si F, salta o va a otro proceso. Las dos ramas <strong>se reúnen</strong> después.</p>
+        </div>
+        <div class="cheat-card accent">
+          <h4>MIENTRAS</h4>
+          <p style="font-size:.85rem;margin:0">Rombo PRIMERO → si V, ejecuta proceso → vuelve al rombo (forma un lazo). Si F, sale.</p>
+        </div>
+        <div class="cheat-card purple">
+          <h4>REPETIR-HASTA</h4>
+          <p style="font-size:.85rem;margin:0">Proceso PRIMERO → rombo → si F, vuelve al proceso. Si V, sale. <strong>El lazo es por la rama F</strong>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- BLOQUE 8: DIV / MOD -->
+    <!-- ============================================================ -->
+    <section class="block" id="bloque8">
+      <div class="block-header"><div class="block-num">8</div><h2>DIV y MOD · Manipulación numérica</h2></div>
+
+      <div class="callout theory">
+        <div class="callout-header"><span class="callout-icon">🧮</span> Identidad fundamental</div>
+        <div class="formula-box"><strong>a = b × (a DIV b) + (a MOD b)</strong></div>
+        <p style="font-size:.85rem;margin:6px 0 0;text-align:center">Verificación: 17 = 5 × 3 + 2 ✓</p>
+      </div>
+
+      <h3>📊 Tabla de referencia rápida</h3>
+
+      <div class="table-wrapper">
+        <table>
+          <thead><tr><th>Operación</th><th>DIV (cociente)</th><th>MOD (resto)</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">17 / 5</td><td class="mono">3</td><td class="mono">2</td></tr>
+            <tr><td class="mono">75 / 8</td><td class="mono">9</td><td class="mono">3</td></tr>
+            <tr><td class="mono">99 / 15</td><td class="mono">6</td><td class="mono">9</td></tr>
+            <tr><td class="mono">154 / 12</td><td class="mono">12</td><td class="mono">10</td></tr>
+            <tr><td class="mono">847 / 10</td><td class="mono">84</td><td class="mono">7</td></tr>
+            <tr><td class="mono">8 / 10</td><td class="mono">0</td><td class="mono">8</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>🎯 Las 5 aplicaciones más útiles de MOD</h3>
+
+      <div class="col2">
+        <div class="cheat-card primary">
+          <h4>1️⃣ Detectar paridad</h4>
+          <p><code>n MOD 2 = 0</code> → par<br/><code>n MOD 2 = 1</code> → impar</p>
+        </div>
+        <div class="cheat-card accent">
+          <h4>2️⃣ Detectar divisibilidad</h4>
+          <p><code>a MOD b = 0</code> → b divide a a<br/>Ej: bisiesto → <code>año MOD 4 = 0</code></p>
+        </div>
+        <div class="cheat-card purple">
+          <h4>3️⃣ Última cifra</h4>
+          <p><code>n MOD 10</code> = última cifra<br/>Ej: <code>847 MOD 10 = 7</code></p>
+        </div>
+        <div class="cheat-card warning">
+          <h4>4️⃣ Eliminar última cifra</h4>
+          <p><code>n DIV 10</code> = sin última cifra<br/>Ej: <code>847 DIV 10 = 84</code></p>
+        </div>
+      </div>
+
+      <div class="cheat-card pink">
+        <h4>5️⃣ Descomposición de número de 3 cifras</h4>
+        <div class="formula-box">
+          c = num DIV 100<br/>
+          d = (num MOD 100) DIV 10<br/>
+          u = num MOD 10
+        </div>
+        <p style="font-size:.82rem;color:var(--text-muted);margin:0">Para 4 cifras: añade <code>m = num DIV 1000</code> y ajusta los demás.</p>
+      </div>
+
+      <h3>💡 Patrón "invertir un número" (cualquier cantidad de cifras)</h3>
+
+<pre class="pseudo"><code><span class="var">inv</span> <span class="op">=</span> <span class="num">0</span>
+<span class="kw">MIENTRAS</span> <span class="var">num</span> <span class="op">&gt;</span> <span class="num">0</span> <span class="kw">HACER</span>
+    <span class="var">cifra</span> <span class="op">=</span> <span class="var">num</span> <span class="op">MOD</span> <span class="num">10</span>
+    <span class="var">inv</span> <span class="op">=</span> <span class="var">inv</span> <span class="op">*</span> <span class="num">10</span> <span class="op">+</span> <span class="var">cifra</span>     <span class="cmt">// "empuja" cifras a la izquierda</span>
+    <span class="var">num</span> <span class="op">=</span> <span class="var">num</span> <span class="op">DIV</span> <span class="num">10</span>
+<span class="kw">FIN_MIENTRAS</span>
+<span class="cmt">// 1234 → 4321</span></code></pre>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- BLOQUE 9: PLANTILLAS DE PROBLEMAS TÍPICOS -->
+    <!-- ============================================================ -->
+    <section class="block" id="bloque9">
+      <div class="block-header"><div class="block-num">9</div><h2>Plantillas de problemas típicos del examen</h2></div>
+
+      <p style="color:var(--text-muted)">Reconoce el tipo de problema y aplica la plantilla. Estos son los <strong>5 tipos</strong> que aparecen una y otra vez.</p>
+
+      <h3>🎯 Tipo 1: "Descuento/comisión por rangos"</h3>
+
+      <div class="cheat-card primary">
+        <p style="font-size:.85rem;color:var(--text-muted);margin:0 0 8px"><strong>Identifícalo:</strong> hay 3+ rangos excluyentes (ventas, kilos, horas, etc.) con tarifas distintas.</p>
+        <p style="font-size:.85rem;margin:0 0 8px"><strong>Patrón:</strong> SI anidado en cascada, <strong>de mayor a menor restrictivo</strong>.</p>
+<pre class="pseudo"><code><span class="kw">SI</span> <span class="var">x</span> <span class="op">&gt;=</span> <span class="num">UMBRAL_ALTO</span>
+    aplicar tarifa alta
+<span class="kw">SINO</span>
+    <span class="kw">SI</span> <span class="var">x</span> <span class="op">&gt;=</span> <span class="num">UMBRAL_MEDIO</span>
+        aplicar tarifa media
+    <span class="kw">SINO</span>
+        <span class="kw">SI</span> <span class="var">x</span> <span class="op">&gt;=</span> <span class="num">UMBRAL_BAJO</span>
+            aplicar tarifa baja
+        <span class="kw">SINO</span>
+            sin tarifa / por defecto
+        <span class="kw">FIN_SI</span>
+    <span class="kw">FIN_SI</span>
+<span class="kw">FIN_SI</span></code></pre>
+      </div>
+
+      <h3>🏆 Tipo 2: "Mayor / Menor de N números"</h3>
+
+      <div class="cheat-card warning">
+        <p style="font-size:.85rem;color:var(--text-muted);margin:0 0 8px"><strong>Identifícalo:</strong> "determine el mayor", "el menor", "el más alto", de N valores.</p>
+        <p style="font-size:.85rem;margin:0 0 8px"><strong>Patrón:</strong> inicializa max/min con el 1er elemento, compara desde el 2°.</p>
+<pre class="pseudo"><code><span class="fn">Leer</span> <span class="var">N</span>
+<span class="fn">Leer</span> <span class="var">x</span>
+<span class="var">mayor</span> <span class="op">=</span> <span class="var">x</span>
+<span class="kw">PARA</span> <span class="var">i</span> <span class="op">=</span> <span class="num">2</span> <span class="kw">HASTA</span> <span class="var">N</span> <span class="kw">HACER</span>
+    <span class="fn">Leer</span> <span class="var">x</span>
+    <span class="kw">SI</span> <span class="var">x</span> <span class="op">&gt;</span> <span class="var">mayor</span>
+        <span class="var">mayor</span> <span class="op">=</span> <span class="var">x</span>
+    <span class="kw">FIN_SI</span>
+<span class="kw">FIN_PARA</span></code></pre>
+      </div>
+
+      <h3>🔢 Tipo 3: "Contar X en N elementos"</h3>
+
+      <div class="cheat-card accent">
+        <p style="font-size:.85rem;color:var(--text-muted);margin:0 0 8px"><strong>Identifícalo:</strong> "cuántos pares hay", "cuántas 'a'", "cuántos aprobados".</p>
+        <p style="font-size:.85rem;margin:0 0 8px"><strong>Patrón:</strong> PARA + SI + contador.</p>
+<pre class="pseudo"><code><span class="var">cont</span> <span class="op">=</span> <span class="num">0</span>
+<span class="kw">PARA</span> <span class="var">i</span> <span class="op">=</span> <span class="num">1</span> <span class="kw">HASTA</span> <span class="var">N</span> <span class="kw">HACER</span>
+    <span class="fn">Leer</span> <span class="var">x</span>
+    <span class="kw">SI</span> condición(<span class="var">x</span>)
+        <span class="var">cont</span> <span class="op">=</span> <span class="var">cont</span> <span class="op">+</span> <span class="num">1</span>
+    <span class="kw">FIN_SI</span>
+<span class="kw">FIN_PARA</span></code></pre>
+      </div>
+
+      <h3>🔁 Tipo 4: "Procesar hasta sentinela"</h3>
+
+      <div class="cheat-card purple">
+        <p style="font-size:.85rem;color:var(--text-muted);margin:0 0 8px"><strong>Identifícalo:</strong> "hasta que ingrese un negativo", "hasta que escriba 0", cantidad desconocida.</p>
+        <p style="font-size:.85rem;margin:0 0 8px"><strong>Patrón:</strong> MIENTRAS con priming read.</p>
+<pre class="pseudo"><code><span class="fn">Leer</span> <span class="var">n</span>                <span class="cmt">// PRIMING READ</span>
+<span class="kw">MIENTRAS</span> <span class="var">n</span> <span class="op">&gt;=</span> <span class="num">0</span> <span class="kw">HACER</span>
+    procesar <span class="var">n</span>
+    <span class="fn">Leer</span> <span class="var">n</span>            <span class="cmt">// siguiente lectura</span>
+<span class="kw">FIN_MIENTRAS</span></code></pre>
+      </div>
+
+      <h3>🎯 Tipo 5: "Mayor de 3 números (A, B, C)"</h3>
+
+      <div class="cheat-card pink">
+        <p style="font-size:.85rem;color:var(--text-muted);margin:0 0 8px"><strong>Identifícalo:</strong> "el mayor de tres números diferentes".</p>
+        <p style="font-size:.85rem;margin:0 0 8px"><strong>Patrón:</strong> SI anidado de 2 niveles.</p>
+<pre class="pseudo"><code><span class="kw">SI</span> <span class="var">A</span> <span class="op">&gt;</span> <span class="var">B</span>
+    <span class="kw">SI</span> <span class="var">A</span> <span class="op">&gt;</span> <span class="var">C</span>
+        <span class="var">mayor</span> <span class="op">=</span> <span class="var">A</span>
+    <span class="kw">SINO</span>
+        <span class="var">mayor</span> <span class="op">=</span> <span class="var">C</span>
+    <span class="kw">FIN_SI</span>
+<span class="kw">SINO</span>
+    <span class="kw">SI</span> <span class="var">B</span> <span class="op">&gt;</span> <span class="var">C</span>
+        <span class="var">mayor</span> <span class="op">=</span> <span class="var">B</span>
+    <span class="kw">SINO</span>
+        <span class="var">mayor</span> <span class="op">=</span> <span class="var">C</span>
+    <span class="kw">FIN_SI</span>
+<span class="kw">FIN_SI</span></code></pre>
+      </div>
+
+      <h3>🧪 Tabla de prueba de escritorio para "mayor de 3"</h3>
+
+      <div class="table-wrapper">
+        <table>
+          <thead><tr><th class="center">A</th><th class="center">B</th><th class="center">C</th><th class="center">Mayor</th></tr></thead>
+          <tbody>
+            <tr><td class="center">5</td><td class="center">3</td><td class="center">2</td><td class="center"><strong>A=5</strong></td></tr>
+            <tr><td class="center">5</td><td class="center">3</td><td class="center">7</td><td class="center"><strong>C=7</strong></td></tr>
+            <tr><td class="center">5</td><td class="center">7</td><td class="center">4</td><td class="center"><strong>B=7</strong></td></tr>
+            <tr><td class="center">5</td><td class="center">7</td><td class="center">9</td><td class="center"><strong>C=9</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- BLOQUE 10: ERRORES QUE CUESTAN PUNTOS -->
+    <!-- ============================================================ -->
+    <section class="block" id="bloque10">
+      <div class="block-header"><div class="block-num">10</div><h2>🔥 Top 15 errores que cuestan puntos en el examen</h2></div>
+
+      <div class="callout danger">
+        <div class="callout-header"><span class="callout-icon">⚠️</span> Lee esta sección 3 veces antes del examen</div>
+        <p>Estos son los errores más comunes que el profesor descuenta. Si los evitas, ganas puntos automáticos.</p>
+      </div>
+
+      <div class="col2">
+        <div class="cheat-card danger">
+          <h4>❌ 1. Olvidar la leyenda de variables</h4>
+          <p style="font-size:.85rem;margin:0">Es <strong>obligatorio</strong>. Lista qué representa cada variable antes del pseudocódigo.</p>
+        </div>
+        <div class="cheat-card danger">
+          <h4>❌ 2. Orden incorrecto en SI anidado</h4>
+          <p style="font-size:.85rem;margin:0">Pones primero la cond. amplia → los casos restrictivos nunca corren. <strong>Siempre de mayor a menor</strong>.</p>
+        </div>
+        <div class="cheat-card danger">
+          <h4>❌ 3. Confundir "más de" con "o más"</h4>
+          <p style="font-size:.85rem;margin:0">"Más de 50" = <code>&gt; 50</code> (NO incluye 50). "50 o más" = <code>&gt;= 50</code> (SÍ incluye 50).</p>
+        </div>
+        <div class="cheat-card danger">
+          <h4>❌ 4. FIN_SI / FIN_MIENTRAS faltantes</h4>
+          <p style="font-size:.85rem;margin:0">Cuenta SI ↔ FIN_SI: deben coincidir 1 a 1. Igual para MIENTRAS y PARA.</p>
+        </div>
+        <div class="cheat-card danger">
+          <h4>❌ 5. No inicializar contadores</h4>
+          <p style="font-size:.85rem;margin:0"><code>cont = 0</code> ANTES del ciclo. Si no, el cálculo parte de "basura".</p>
+        </div>
+        <div class="cheat-card danger">
+          <h4>❌ 6. Acumulador de producto en 0</h4>
+          <p style="font-size:.85rem;margin:0">Producto va en <strong>1</strong> (identidad). En 0, todo se vuelve 0.</p>
+        </div>
+        <div class="cheat-card danger">
+          <h4>❌ 7. max/min inicializado en 0</h4>
+          <p style="font-size:.85rem;margin:0">Falla con valores negativos. <strong>Inicializa con el 1er elemento</strong>.</p>
+        </div>
+        <div class="cheat-card danger">
+          <h4>❌ 8. Bucle infinito (olvido actualizar)</h4>
+          <p style="font-size:.85rem;margin:0">SIEMPRE asegura que algo del cuerpo cambie las variables de la condición.</p>
+        </div>
+        <div class="cheat-card danger">
+          <h4>❌ 9. Diagrama sin etiquetas V/F</h4>
+          <p style="font-size:.85rem;margin:0">Cada salida del rombo debe estar marcada con V (Sí) o F (No).</p>
+        </div>
+        <div class="cheat-card danger">
+          <h4>❌ 10. Símbolos incorrectos en diagrama</h4>
+          <p style="font-size:.85rem;margin:0">Inicio/Fin = óvalo. E/S = paralelogramo. Proceso = rectángulo. Decisión = rombo.</p>
+        </div>
+        <div class="cheat-card danger">
+          <h4>❌ 11. Mal indentado</h4>
+          <p style="font-size:.85rem;margin:0">Indenta 4 espacios dentro de SI, MIENTRAS, etc. Hace el código legible y se valora.</p>
+        </div>
+        <div class="cheat-card danger">
+          <h4>❌ 12. Olvidar priming read</h4>
+          <p style="font-size:.85rem;margin:0">En MIENTRAS donde la cond. depende del usuario, lee fuera ANTES y dentro DESPUÉS.</p>
+        </div>
+        <div class="cheat-card danger">
+          <h4>❌ 13. Usar tipo Entero para decimales</h4>
+          <p style="font-size:.85rem;margin:0">Promedios, precios, sueldos → <code>Real</code>. Cantidades discretas → <code>Entero</code>.</p>
+        </div>
+        <div class="cheat-card danger">
+          <h4>❌ 14. Confundir índice con valor</h4>
+          <p style="font-size:.85rem;margin:0"><code>i</code> es la <em>posición</em>; <code>V[i]</code> es el <em>valor</em> en esa posición. No los mezcles.</p>
+        </div>
+        <div class="cheat-card danger">
+          <h4>❌ 15. No probar caso límite</h4>
+          <p style="font-size:.85rem;margin:0">Si la cond. es <code>≥ 10.5</code>, prueba con 10.5 EXACTO. Es donde más fallan los algoritmos.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- CHECKLIST FINAL -->
+    <!-- ============================================================ -->
+    <section class="block" id="checklist">
+      <div class="block-header"><div class="block-num">✅</div><h2>Checklist final · Domínalos antes del examen</h2></div>
+
+      <p style="color:var(--text-muted)">Marca mentalmente cada uno. Si no puedes hacer alguno SIN ver apuntes, vuelve al cheat sheet.</p>
+
+      <h3>📐 Sintaxis básica</h3>
+
+      <div class="cheat-card primary">
+        <ul style="margin:0;font-size:.92rem">
+          <li>☐ Escribir un algoritmo con INICIO/FIN, declaración de tipos, Leer/Mostrar.</li>
+          <li>☐ Identificar cuándo usar Entero vs Real vs Cadena.</li>
+          <li>☐ Hacer la leyenda de variables correctamente.</li>
+        </ul>
+      </div>
+
+      <h3>🧮 Operadores y lógica</h3>
+
+      <div class="cheat-card accent">
+        <ul style="margin:0;font-size:.92rem">
+          <li>☐ Calcular <code>17 DIV 5</code> y <code>17 MOD 5</code> sin pensar.</li>
+          <li>☐ Recordar la jerarquía: paréntesis → ^ → NOT → * / DIV MOD AND → + − OR → relacionales.</li>
+          <li>☐ Las 3 tablas de verdad (NOT, AND, OR) de memoria.</li>
+          <li>☐ Aplicar De Morgan para invertir <code>(a AND b)</code> → <code>(NOT a) OR (NOT b)</code>.</li>
+          <li>☐ Traducir frases en español a condiciones (más de, o más, entre X e Y, etc.).</li>
+        </ul>
+      </div>
+
+      <h3>🔀 Decisiones</h3>
+
+      <div class="cheat-card warning">
+        <ul style="margin:0;font-size:.92rem">
+          <li>☐ Diferenciar SI simple de SI-SINO.</li>
+          <li>☐ Construir un SI anidado de 3-4 niveles en orden correcto (de mayor a menor restrictivo).</li>
+          <li>☐ Resolver "promedio aprobado/desaprobado" con caso límite 10.5.</li>
+          <li>☐ Resolver "mayor de 3 números" con SI anidado de 2 niveles.</li>
+        </ul>
+      </div>
+
+      <h3>🔁 Repetición</h3>
+
+      <div class="cheat-card purple">
+        <ul style="margin:0;font-size:.92rem">
+          <li>☐ Saber cuándo usar MIENTRAS, REPETIR-HASTA o PARA (cantidad conocida vs no).</li>
+          <li>☐ Convertir un MIENTRAS a REPETIR-HASTA y viceversa (negar la condición).</li>
+          <li>☐ Identificar las 4 partes obligatorias de un ciclo (init, cond, cuerpo, actualización).</li>
+          <li>☐ Aplicar el patrón priming read en MIENTRAS.</li>
+          <li>☐ Reconocer y evitar bucles infinitos.</li>
+        </ul>
+      </div>
+
+      <h3>🧠 Patrones esenciales</h3>
+
+      <div class="cheat-card pink">
+        <ul style="margin:0;font-size:.92rem">
+          <li>☐ Diferenciar contador (suma constante) de acumulador (suma variable).</li>
+          <li>☐ Inicializar correctamente: contador en 0, suma en 0, producto en 1.</li>
+          <li>☐ Implementar el patrón "contar X en N elementos" de memoria.</li>
+          <li>☐ Implementar el patrón max/min con inicialización correcta (1er elemento, no 0).</li>
+          <li>☐ Implementar búsqueda con bandera (flag).</li>
+          <li>☐ Implementar el patrón de extracción de cifras con MIENTRAS + DIV/MOD.</li>
+        </ul>
+      </div>
+
+      <h3>🔢 DIV / MOD</h3>
+
+      <div class="cheat-card primary">
+        <ul style="margin:0;font-size:.92rem">
+          <li>☐ Detectar si un número es par/impar.</li>
+          <li>☐ Detectar divisibilidad (año bisiesto, etc.).</li>
+          <li>☐ Descomponer un número de 3 cifras en centenas/decenas/unidades.</li>
+          <li>☐ Invertir un número de cualquier cantidad de cifras.</li>
+        </ul>
+      </div>
+
+      <h3>📊 Diagramas de flujo</h3>
+
+      <div class="cheat-card accent">
+        <ul style="margin:0;font-size:.92rem">
+          <li>☐ Dibujar los 5 símbolos correctamente (Inicio/Fin/E-S/Proceso/Decisión).</li>
+          <li>☐ Etiquetar V/F en las salidas del rombo.</li>
+          <li>☐ Dibujar el lazo correcto en MIENTRAS (rombo antes) y REPETIR-HASTA (rombo después).</li>
+        </ul>
+      </div>
+
+      <h3>📋 Práctica Calificada 2 / Examen Parcial</h3>
+
+      <div class="cheat-card warning">
+        <ul style="margin:0;font-size:.92rem">
+          <li>☐ Resolver "comisión por rangos de venta" con 3-4 niveles.</li>
+          <li>☐ Resolver "descuento por kilos/cantidades" con notación de intervalos.</li>
+          <li>☐ Resolver "mayor de 3 números diferentes".</li>
+          <li>☐ Resolver "contar carácter X en N caracteres" con PARA + SI.</li>
+          <li>☐ Resolver "tarifa de estacionamiento" con SI anidado por horas.</li>
+          <li>☐ Hacer prueba de escritorio con casos límite SIEMPRE.</li>
+          <li>☐ Distribuir el tiempo: 5 min lectura + 15 min × 3 ej + 10 min revisión.</li>
+        </ul>
+      </div>
+
+      <div class="callout tip" style="margin-top:24px">
+        <div class="callout-header"><span class="callout-icon">🎯</span> Estrategia el día del examen</div>
+        <ol style="margin:0">
+          <li><strong>Lee toda la prueba primero</strong> (5 min) para identificar dificultad.</li>
+          <li><strong>Empieza por el ejercicio que más dominas</strong>. Gana confianza.</li>
+          <li><strong>En cada ejercicio</strong>: leyenda → pseudocódigo → diagrama. NO inviertas el orden.</li>
+          <li><strong>Usa lápiz</strong> para borrador, pero entrega en lapicero (sin enmendaduras).</li>
+          <li>Si te quedas atascado, <strong>pasa al siguiente</strong> y vuelve después.</li>
+          <li>Reserva los <strong>últimos 10 min</strong> para revisar trazas y verificar cierres FIN_SI/FIN_MIENTRAS.</li>
+          <li><strong>Respira</strong>. Si dominas las plantillas, los problemas son variaciones de lo mismo.</li>
+        </ol>
+      </div>
+
+      <div class="callout intuition" style="margin-top:16px">
+        <div class="callout-header"><span class="callout-icon">🐧</span> Mensaje final, Pingüino</div>
+        <p>Has trabajado 6 semanas en esto. Has visto 6 guías completas con 48 ejercicios resueltos paso a paso. <strong>Ya sabes lo que hay que saber</strong>. El examen no te va a sorprender — solo te va a pedir que apliques lo mismo que ya practicaste.</p>
+        <p>El día del examen, respira hondo, lee con calma y aplica las plantillas. Vas a salir bien.</p>
+      </div>
+    </section>
+
+    <footer>
+      <p>📋 <strong>Cheat Sheet Pre-Examen Parcial · Fundamentos de Programación</strong></p>
+      <p>Hecho con <span class="heart">♥</span> para Pingüino · Universidad de Piura</p>
+      <p style="margin-top:8px;font-size:.78rem">Tip: usa <kbd>Ctrl</kbd>+<kbd>F</kbd> para buscar cualquier término · Imprímelo si lo necesitas en papel</p>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+const root = document.documentElement;
+const themeToggle = document.getElementById('themeToggle');
+const themeIcon = document.getElementById('themeIcon');
+const themeLabel = document.getElementById('themeLabel');
+
+function getSavedTheme() {
+  try { return localStorage.getItem('penguin-theme') || 'dark'; } catch (e) { return 'dark'; }
+}
+function saveTheme(t) {
+  try { localStorage.setItem('penguin-theme', t); } catch (e) {}
+}
+function applyTheme(theme) {
+  root.setAttribute('data-theme', theme);
+  if (theme === 'dark') { themeIcon.textContent = '🌙'; themeLabel.textContent = 'Modo oscuro'; }
+  else { themeIcon.textContent = '☀️'; themeLabel.textContent = 'Modo claro'; }
+  initMermaid(theme);
+}
+themeToggle.addEventListener('click', () => {
+  const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  applyTheme(next); saveTheme(next);
+});
+
+function initMermaid(theme) {
+  if (typeof mermaid === 'undefined') return;
+  const isDark = (theme === 'dark');
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: isDark ? 'dark' : 'default',
+    securityLevel: 'loose',
+    themeVariables: isDark ? {
+      background: '#161c2f', primaryColor: '#1e293b', primaryTextColor: '#e8edf7',
+      primaryBorderColor: '#3d4870', lineColor: '#94a3b8', secondaryColor: '#a78bfa',
+      tertiaryColor: '#34d399', mainBkg: '#1a2138', nodeBkg: '#1a2138',
+      clusterBkg: '#0d1322', edgeLabelBackground: '#161c2f',
+      fontFamily: 'Inter, sans-serif',
+    } : {
+      background: '#ffffff', primaryColor: '#f1f5f9', primaryTextColor: '#0f172a',
+      primaryBorderColor: '#cbd5e1', lineColor: '#475569', mainBkg: '#ffffff',
+      clusterBkg: '#f8fafc', fontFamily: 'Inter, sans-serif',
+    },
+    flowchart: { curve: 'basis', padding: 20, useMaxWidth: true }
+  });
+  document.querySelectorAll('.mermaid-container').forEach(container => {
+    const original = container.dataset.original;
+    if (original) container.innerHTML = '<div class="mermaid">' + original + '</div>';
+  });
+  if (mermaid.run) mermaid.run();
+  else if (mermaid.init) mermaid.init(undefined, document.querySelectorAll('.mermaid'));
+}
+
+const tocLinks = document.querySelectorAll('.toc-list a');
+const sections = document.querySelectorAll('section.block, section.hero');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      tocLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+}, { rootMargin: '-30% 0px -60% 0px' });
+sections.forEach(s => observer.observe(s));
+
+window.addEventListener('DOMContentLoaded', () => { applyTheme(getSavedTheme()); });
+</script>
+</body>
+</html>

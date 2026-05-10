@@ -1,0 +1,1962 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Semana 7 · Proyecto: Reestructuración de Algoritmos · Pingüino</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<style>
+:root[data-theme="dark"]{--bg:#0a0e1a;--bg-elevated:#131829;--bg-card:#161c2f;--bg-card-hover:#1c2340;--bg-code:#0d1322;--border:#2a3354;--border-strong:#3d4870;--text:#e8edf7;--text-muted:#98a4c2;--text-dim:#6b7793;--primary:#60a5fa;--primary-strong:#3b82f6;--primary-bg:rgba(96,165,250,.12);--accent:#34d399;--accent-bg:rgba(52,211,153,.12);--warning:#fbbf24;--warning-bg:rgba(251,191,36,.12);--danger:#f87171;--danger-bg:rgba(248,113,113,.12);--purple:#a78bfa;--purple-bg:rgba(167,139,250,.12);--pink:#f472b6;--pink-bg:rgba(244,114,182,.12);--shadow:0 4px 24px rgba(0,0,0,.4);--syn-kw:#c586c0;--syn-fn:#dcdcaa;--syn-tipo:#4ec9b0;--syn-op:#ff79c6;--syn-num:#b5cea8;--syn-str:#ce9178;--syn-var:#9cdcfe;--syn-cmt:#6a9955;--syn-bg:#0d1322;--label-num:#a78bfa;--label-jmp:#f472b6}
+:root[data-theme="light"]{--bg:#f8fafc;--bg-elevated:#fff;--bg-card:#fff;--bg-card-hover:#f1f5f9;--bg-code:#f8fafc;--border:#e2e8f0;--border-strong:#cbd5e1;--text:#0f172a;--text-muted:#475569;--text-dim:#94a3b8;--primary:#2563eb;--primary-strong:#1d4ed8;--primary-bg:rgba(37,99,235,.08);--accent:#059669;--accent-bg:rgba(5,150,105,.08);--warning:#d97706;--warning-bg:rgba(217,119,6,.08);--danger:#dc2626;--danger-bg:rgba(220,38,38,.08);--purple:#7c3aed;--purple-bg:rgba(124,58,237,.08);--pink:#db2777;--pink-bg:rgba(219,39,119,.08);--shadow:0 2px 8px rgba(15,23,42,.06);--syn-kw:#af00db;--syn-fn:#795e26;--syn-tipo:#267f99;--syn-op:#d73a49;--syn-num:#098658;--syn-str:#a31515;--syn-var:#001080;--syn-cmt:#008000;--syn-bg:#f6f8fa;--label-num:#7c3aed;--label-jmp:#db2777}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:16px;transition:background .3s,color .3s;min-height:100vh}
+::selection{background:var(--primary);color:#fff}
+.topbar{position:sticky;top:0;z-index:100;background:var(--bg-elevated);border-bottom:1px solid var(--border);padding:14px 32px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(12px);background:color-mix(in srgb,var(--bg-elevated) 85%,transparent)}
+.brand{display:flex;align-items:center;gap:12px;font-weight:700;font-size:1.05rem;color:var(--text)}
+.brand-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--primary),var(--purple));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;color:#fff;box-shadow:0 4px 12px var(--primary-bg)}
+.brand-text small{display:block;font-size:.75rem;font-weight:500;color:var(--text-muted);margin-top:-2px}
+.theme-toggle{background:var(--bg-card);border:1px solid var(--border);color:var(--text);padding:8px 14px;border-radius:999px;cursor:pointer;display:flex;align-items:center;gap:8px;font-size:.85rem;font-weight:500;font-family:inherit;transition:all .2s}
+.theme-toggle:hover{background:var(--bg-card-hover);border-color:var(--primary);transform:translateY(-1px)}
+.layout{display:grid;grid-template-columns:280px 1fr;max-width:1500px;margin:0 auto}
+@media(max-width:1024px){.layout{grid-template-columns:1fr}.sidebar{display:none}}
+.sidebar{position:sticky;top:64px;height:calc(100vh - 64px);overflow-y:auto;padding:24px 16px 24px 32px;border-right:1px solid var(--border);background:var(--bg)}
+.sidebar h3{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text-dim);margin-bottom:12px;font-weight:700}
+.toc-list{list-style:none}
+.toc-list li{margin:2px 0}
+.toc-list a{display:block;padding:8px 14px;color:var(--text-muted);text-decoration:none;border-radius:8px;font-size:.9rem;border-left:3px solid transparent;transition:all .15s}
+.toc-list a:hover{background:var(--bg-card);color:var(--text)}
+.toc-list a.active{background:var(--primary-bg);color:var(--primary);border-left-color:var(--primary);font-weight:600}
+main{padding:40px 56px 80px;max-width:100%;overflow-x:hidden}
+@media(max-width:768px){main{padding:24px 20px 60px}.topbar{padding:12px 16px}}
+.hero{padding:36px 0 48px;border-bottom:1px solid var(--border);margin-bottom:48px}
+.hero-badge{display:inline-block;padding:6px 14px;background:var(--primary-bg);color:var(--primary);border-radius:999px;font-size:.78rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;margin-bottom:16px}
+h1{font-size:clamp(2rem,5vw,3rem);font-weight:800;line-height:1.15;letter-spacing:-.02em;margin-bottom:16px;background:linear-gradient(135deg,var(--text) 0%,var(--primary) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:1.15rem;color:var(--text-muted);max-width:720px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:16px;margin-top:24px}
+.meta-pill{display:flex;align-items:center;gap:8px;padding:8px 14px;background:var(--bg-card);border:1px solid var(--border);border-radius:999px;font-size:.85rem;color:var(--text-muted)}
+.meta-pill strong{color:var(--text);font-weight:600}
+section.block{margin:64px 0;scroll-margin-top:80px}
+.block-header{display:flex;align-items:center;gap:16px;margin-bottom:28px}
+.block-num{width:48px;height:48px;background:linear-gradient(135deg,var(--primary),var(--purple));color:#fff;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:800;flex-shrink:0;box-shadow:0 6px 16px var(--primary-bg)}
+h2{font-size:clamp(1.6rem,3vw,2.1rem);font-weight:800;letter-spacing:-.01em;color:var(--text)}
+h3{font-size:1.35rem;font-weight:700;margin:36px 0 16px;color:var(--text)}
+h4{font-size:1.08rem;font-weight:700;margin:24px 0 12px;color:var(--text)}
+p{margin:12px 0;color:var(--text)}
+strong{color:var(--text);font-weight:600}
+em{color:var(--primary);font-style:normal;font-weight:500}
+ul,ol{margin:12px 0 12px 24px}
+li{margin:6px 0}
+a{color:var(--primary);text-decoration:none}
+a:hover{text-decoration:underline}
+.callout{margin:24px 0;padding:20px 24px;border-radius:14px;border-left:4px solid;background:var(--bg-card);position:relative}
+.callout-header{display:flex;align-items:center;gap:10px;font-weight:700;margin-bottom:8px;font-size:.95rem}
+.callout-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem}
+.callout p{margin:6px 0}
+.callout p:last-child{margin-bottom:0}
+.callout.intuition{border-color:var(--primary);background:var(--primary-bg)}.callout.intuition .callout-icon{background:var(--primary);color:#fff}.callout.intuition .callout-header{color:var(--primary)}
+.callout.theory{border-color:var(--purple);background:var(--purple-bg)}.callout.theory .callout-icon{background:var(--purple);color:#fff}.callout.theory .callout-header{color:var(--purple)}
+.callout.tip{border-color:var(--accent);background:var(--accent-bg)}.callout.tip .callout-icon{background:var(--accent);color:#fff}.callout.tip .callout-header{color:var(--accent)}
+.callout.warning{border-color:var(--warning);background:var(--warning-bg)}.callout.warning .callout-icon{background:var(--warning);color:#fff}.callout.warning .callout-header{color:var(--warning)}
+.callout.example{border-color:var(--pink);background:var(--pink-bg)}.callout.example .callout-icon{background:var(--pink);color:#fff}.callout.example .callout-header{color:var(--pink)}
+.callout.danger{border-color:var(--danger);background:var(--danger-bg)}.callout.danger .callout-icon{background:var(--danger);color:#fff}.callout.danger .callout-header{color:var(--danger)}
+.def-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:22px 26px;margin:20px 0;position:relative;overflow:hidden}
+.def-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--primary),var(--purple))}
+.def-card .def-label{display:inline-block;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--primary);background:var(--primary-bg);padding:3px 10px;border-radius:6px;margin-bottom:8px}
+.def-card .def-term{font-size:1.15rem;font-weight:700;color:var(--text);margin-bottom:6px}
+.def-card .def-text{color:var(--text-muted)}
+.table-wrapper{overflow-x:auto;margin:20px 0;border-radius:12px;border:1px solid var(--border);background:var(--bg-card)}
+table{width:100%;border-collapse:collapse;font-size:.93rem}
+th,td{padding:12px 16px;text-align:left;border-bottom:1px solid var(--border)}
+th{background:var(--bg-elevated);color:var(--text);font-weight:700;font-size:.82rem;text-transform:uppercase;letter-spacing:.04em}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--bg-card-hover)}
+td.center,th.center{text-align:center}
+td.mono,th.mono{font-family:'JetBrains Mono',monospace;font-size:.95em}
+code{font-family:'JetBrains Mono',monospace;background:var(--bg-code);border:1px solid var(--border);padding:2px 7px;border-radius:5px;font-size:.88em;color:var(--accent)}
+pre.pseudo{background:var(--syn-bg);border:1px solid var(--border);border-left:4px solid var(--purple);border-radius:12px;padding:20px 24px 18px;overflow-x:auto;margin:16px 0;font-family:'JetBrains Mono','Courier New',monospace;font-size:.92rem;line-height:1.85;position:relative;color:var(--text)}
+pre.pseudo::before{content:'⌨ pseudocódigo';position:absolute;top:6px;right:14px;font-size:.68rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em;font-family:'Inter',sans-serif;font-weight:600}
+pre.pseudo.numbered::before{content:'📜 con saltos (NO estructurado)';color:var(--danger)}
+pre.pseudo.numbered{border-left-color:var(--danger)}
+pre.pseudo.structured::before{content:'✨ estructurado'}
+pre.pseudo.structured{border-left-color:var(--accent)}
+pre.pseudo code{background:none;border:none;padding:0;color:inherit;font-size:inherit}
+.kw{color:var(--syn-kw);font-weight:700}
+.fn{color:var(--syn-fn);font-weight:600}
+.tipo{color:var(--syn-tipo);font-weight:600}
+.op{color:var(--syn-op);font-weight:500}
+.num{color:var(--syn-num)}
+.str{color:var(--syn-str)}
+.var{color:var(--syn-var)}
+.cmt{color:var(--syn-cmt);font-style:italic}
+.lblnum{color:var(--label-num);font-weight:700;display:inline-block;min-width:32px}
+.jmp{color:var(--label-jmp);font-weight:700}
+.flowchart-container{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:24px;margin:20px 0;text-align:center;overflow-x:auto}
+.flowchart-container .mermaid{display:flex;justify-content:center;min-height:100px}
+.flowchart-caption{margin-top:12px;font-size:.85rem;color:var(--text-muted);font-style:italic}
+.dual-view{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:20px 0;align-items:start}
+@media(max-width:900px){.dual-view{grid-template-columns:1fr}}
+.dual-view .flowchart-container{margin:0}
+.dual-view pre.pseudo{margin:0}
+.exercise{background:var(--bg-card);border:2px solid var(--border-strong);border-radius:16px;margin:28px 0;overflow:hidden}
+.exercise-header{background:linear-gradient(135deg,var(--primary),var(--purple));color:#fff;padding:14px 24px;display:flex;align-items:center;gap:12px;font-weight:700;font-size:1.05rem;flex-wrap:wrap}
+.exercise-num{background:rgba(255,255,255,.25);padding:4px 10px;border-radius:6px;font-size:.85rem}
+.exercise-tag{background:rgba(255,255,255,.18);padding:3px 10px;border-radius:6px;font-size:.78rem;font-weight:500;margin-left:auto}
+.exercise-body{padding:24px 28px}
+.statement-box{background:var(--warning-bg);border-left:4px solid var(--warning);padding:16px 20px;border-radius:8px;margin:16px 0 24px}
+.statement-box .statement-label{font-weight:700;color:var(--warning);font-size:.82rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;display:block}
+.solution-block{margin-top:20px}
+.solution-block h4{display:flex;align-items:center;gap:8px;color:var(--accent);margin:24px 0 10px;font-size:1rem}
+.final-answer{background:var(--accent-bg);border-left:4px solid var(--accent);border-radius:8px;padding:16px 20px;margin:20px 0}
+.final-answer-label{font-weight:700;color:var(--accent);font-size:.82rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+.trace-table{background:var(--bg-card);border-radius:10px;overflow:hidden;margin:14px 0;border:1px solid var(--border)}
+.trace-table table{font-size:.88rem}
+.trace-table th{background:var(--purple-bg);color:var(--purple)}
+.legend-box{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin:12px 0;font-size:.9rem}
+.legend-box .legend-title{font-weight:700;color:var(--primary);margin-bottom:6px;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em}
+.compare-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin:20px 0}
+.compare-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:18px 20px}
+.compare-card h4{margin:0 0 10px;display:flex;align-items:center;gap:8px;font-size:1rem}
+.glossary-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin:20px 0}
+.gloss-item{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:16px 18px;transition:all .2s}
+.gloss-item:hover{border-color:var(--primary);background:var(--bg-card-hover);transform:translateY(-2px)}
+.gloss-term{font-weight:700;color:var(--primary);font-size:1rem;margin-bottom:4px}
+.gloss-def{font-size:.88rem;color:var(--text-muted)}
+.quiz-item{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin:18px 0}
+.quiz-q{font-weight:600;color:var(--text);margin-bottom:12px}
+details{margin-top:12px;border-top:1px dashed var(--border);padding-top:12px}
+summary{cursor:pointer;font-weight:600;color:var(--accent);font-size:.9rem;padding:6px 0;user-select:none}
+details[open] summary{margin-bottom:10px}
+.answer-content{font-size:.92rem;color:var(--text-muted);background:var(--accent-bg);border-radius:8px;padding:12px 16px;margin-top:8px}
+.answer-content strong{color:var(--accent)}
+footer{text-align:center;padding:40px 20px;border-top:1px solid var(--border);margin-top:80px;color:var(--text-muted);font-size:.88rem}
+footer .heart{color:var(--danger)}
+kbd{background:var(--bg-elevated);border:1px solid var(--border-strong);border-radius:4px;padding:1px 6px;font-family:'JetBrains Mono',monospace;font-size:.85em}
+.formula-box{background:var(--purple-bg);border:1px solid var(--purple);border-radius:10px;padding:14px 20px;margin:14px 0;text-align:center;font-family:'JetBrains Mono',monospace;font-size:1rem}
+.phases-flow{display:flex;flex-wrap:wrap;gap:10px;margin:20px 0;justify-content:center}
+.phase-card{flex:1;min-width:140px;background:var(--bg-card);border:2px solid var(--border-strong);border-radius:10px;padding:14px;text-align:center;position:relative}
+.phase-card::after{content:'→';position:absolute;right:-14px;top:50%;transform:translateY(-50%);font-size:1.5rem;color:var(--primary);font-weight:700;z-index:1}
+.phase-card:last-child::after{content:''}
+.phase-card .phase-num{background:var(--primary);color:#fff;width:24px;height:24px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:700;margin-bottom:6px}
+.phase-card .phase-title{font-weight:700;color:var(--text);font-size:.88rem;margin-bottom:4px}
+.phase-card .phase-desc{font-size:.75rem;color:var(--text-muted)}
+@media(max-width:700px){.phase-card::after{content:'↓';right:50%;top:auto;bottom:-14px;transform:translateX(50%)}.phases-flow{flex-direction:column}}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:10px}
+::-webkit-scrollbar-thumb:hover{background:var(--primary)}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-icon">🐧</div>
+    <div class="brand-text">Pingüino · Fundamentos de Programación<small>Guía de estudio · Semana 7</small></div>
+  </div>
+  <button class="theme-toggle" id="themeToggle"><span id="themeIcon">🌙</span><span id="themeLabel">Modo oscuro</span></button>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>📑 Contenido</h3>
+    <ul class="toc-list">
+      <li><a href="#intro">🏁 Introducción</a></li>
+      <li><a href="#bloque1">1️⃣ Algoritmos estructurados</a></li>
+      <li><a href="#bloque2">2️⃣ El problema del GOTO</a></li>
+      <li><a href="#bloque3">3️⃣ Teorema Böhm-Jacopini</a></li>
+      <li><a href="#bloque4">4️⃣ Estrategia de reestructuración</a></li>
+      <li><a href="#bloque5">5️⃣ Patrones de conversión</a></li>
+      <li><a href="#bloque6">6️⃣ Las 6 fases del proyecto</a></li>
+      <li><a href="#ejercicios">💪 Ejercicios resueltos</a></li>
+      <li><a href="#glosario">📖 Glosario</a></li>
+      <li><a href="#autoevaluacion">✅ Autoevaluación</a></li>
+      <li><a href="#cierre">🎯 Cierre</a></li>
+    </ul>
+  </aside>
+
+  <main>
+
+    <section class="hero" id="intro">
+      <div class="hero-badge">Semana 7 · Proyecto Integrador</div>
+      <h1>Reestructuración de algoritmos: del caos al orden</h1>
+      <p class="hero-sub">Esta semana cierra la <strong>unidad de Fundamentos</strong>. Aprenderás a tomar algoritmos escritos con <strong>saltos numerados (estilo "salte a la línea X")</strong> y convertirlos en algoritmos elegantes y legibles usando solo las <em>tres estructuras básicas</em>: secuencial, selectiva y repetitiva. Es la culminación de todo lo aprendido y la antesala del Examen Parcial.</p>
+      <div class="hero-meta">
+        <div class="meta-pill">⏱️ <span><strong>Lectura:</strong> ~75 min</span></div>
+        <div class="meta-pill">📚 <span><strong>Bloques:</strong> 6 + 8 ejercicios</span></div>
+        <div class="meta-pill">🔄 <span><strong>Tema central:</strong> reestructurar</span></div>
+        <div class="meta-pill">🎓 <span><strong>Cierra:</strong> Unidad 1</span></div>
+      </div>
+    </section>
+
+    <section class="block" id="bloque1">
+      <div class="block-header"><div class="block-num">1</div><h2>¿Qué es un algoritmo estructurado?</h2></div>
+
+      <div class="callout intuition">
+        <div class="callout-header"><span class="callout-icon">💡</span> Intuición</div>
+        <p>Hasta ahora todos los algoritmos que has escrito son <strong>estructurados</strong>: usan SI, MIENTRAS, PARA, REPETIR. Pero esa no es la única forma de programar. Hace 60 años, los programadores usaban <strong>saltos directos</strong> ("ve a la línea 47") como cuando das instrucciones tipo <em>"si está lloviendo, anda al paso 4; si no, sigue al paso 8"</em>. El resultado era código imposible de leer, llamado <strong>"código espagueti"</strong>. La <em>programación estructurada</em> resolvió ese caos.</p>
+      </div>
+
+      <h3>1.1. Definición formal</h3>
+
+      <div class="def-card">
+        <span class="def-label">Definición</span>
+        <div class="def-term">Algoritmo estructurado</div>
+        <div class="def-text">Algoritmo cuyo flujo de control se gobierna <strong>únicamente</strong> mediante las tres estructuras básicas: <strong>secuencial</strong> (instrucciones una tras otra), <strong>selectiva</strong> (SI / SI-SINO) y <strong>repetitiva</strong> (MIENTRAS, REPETIR, PARA). NO contiene saltos arbitrarios entre líneas (GOTO).</div>
+      </div>
+
+      <h3>1.2. Las 3 estructuras básicas (recordatorio)</h3>
+
+      <div class="compare-grid">
+        <div class="compare-card">
+          <h4 style="color:var(--primary)">📜 Secuencial</h4>
+          <p style="font-size:.88rem;color:var(--text-muted)">Las instrucciones se ejecutan <strong>una tras otra</strong>, en el orden en que están escritas. Es el flujo "natural" del programa.</p>
+<pre class="pseudo" style="margin-top:8px"><code><span class="fn">Leer</span> <span class="var">a</span>
+<span class="fn">Leer</span> <span class="var">b</span>
+<span class="var">suma</span> <span class="op">=</span> <span class="var">a</span> <span class="op">+</span> <span class="var">b</span>
+<span class="fn">Mostrar</span> <span class="var">suma</span></code></pre>
+        </div>
+        <div class="compare-card">
+          <h4 style="color:var(--accent)">🔀 Selectiva</h4>
+          <p style="font-size:.88rem;color:var(--text-muted)">Toma decisiones: <strong>SI</strong> simple, <strong>SI-SINO</strong>, anidaciones. Permite que el flujo elija entre dos o más caminos.</p>
+<pre class="pseudo" style="margin-top:8px"><code><span class="kw">SI</span> <span class="var">edad</span> <span class="op">&gt;=</span> <span class="num">18</span>
+    <span class="fn">Mostrar</span> <span class="str">"adulto"</span>
+<span class="kw">SINO</span>
+    <span class="fn">Mostrar</span> <span class="str">"menor"</span>
+<span class="kw">FIN_SI</span></code></pre>
+        </div>
+        <div class="compare-card">
+          <h4 style="color:var(--purple)">🔁 Repetitiva</h4>
+          <p style="font-size:.88rem;color:var(--text-muted)">Permite repetir instrucciones: <strong>MIENTRAS</strong>, <strong>REPETIR-HASTA</strong>, <strong>PARA</strong>. El flujo "vuelve atrás" controladamente.</p>
+<pre class="pseudo" style="margin-top:8px"><code><span class="kw">PARA</span> <span class="var">i</span> <span class="op">=</span> <span class="num">1</span> <span class="kw">HASTA</span> <span class="num">10</span> <span class="kw">HACER</span>
+    <span class="fn">Mostrar</span> <span class="var">i</span>
+<span class="kw">FIN_PARA</span></code></pre>
+        </div>
+      </div>
+
+      <div class="callout theory">
+        <div class="callout-header"><span class="callout-icon">📐</span> Lo poderoso de esto</div>
+        <p>En 1966, los matemáticos italianos <strong>Corrado Böhm</strong> y <strong>Giuseppe Jacopini</strong> demostraron formalmente algo asombroso: <em>cualquier algoritmo, por complejo que sea, puede escribirse usando SOLO estas tres estructuras</em>. No necesitas saltos GOTO para nada. Este resultado se conoce como el <strong>Teorema de Böhm-Jacopini</strong> (lo veremos en detalle en el bloque 3).</p>
+      </div>
+
+      <h3>1.3. ¿Por qué importa esto en tu curso?</h3>
+
+      <p>El sílabo de la Semana 5 menciona <em>"Ejercicios de reestructuración de algoritmos"</em>, y el archivo S7 del curso (Proyecto) contiene <strong>ejercicios donde te dan algoritmos con saltos numerados ("salte a la línea X")</strong> y debes <strong>reescribirlos</strong> como algoritmos estructurados. Eso es lo que cubre esta semana.</p>
+
+      <p>Es también <strong>una habilidad clave</strong> en el examen parcial: si entiendes cómo "traducir" un flujo desordenado en estructuras claras, dominas el control de flujo. Esto te prepara para Python (Sem 9+) donde TODO es estructurado.</p>
+    </section>
+
+    <section class="block" id="bloque2">
+      <div class="block-header"><div class="block-num">2</div><h2>El problema del GOTO ("código espagueti")</h2></div>
+
+      <div class="callout intuition">
+        <div class="callout-header"><span class="callout-icon">🍝</span> ¿Por qué "espagueti"?</div>
+        <p>Imagina un plato de espaguetis: cuando jalas un fideo, salen 50 enredados. Así eran los programas de los años 60: cada salto GOTO conectaba una línea con otra arbitrariamente, formando una <strong>maraña inseguible</strong>. Ver un GOTO, seguirlo, ver otro GOTO desde ahí, otro... y al final no sabías dónde estabas ni cómo llegaste.</p>
+      </div>
+
+      <h3>2.1. ¿Qué es un GOTO?</h3>
+
+      <div class="def-card">
+        <span class="def-label">Definición</span>
+        <div class="def-term">GOTO / "salte a la línea X" / ir_a</div>
+        <div class="def-text">Instrucción que <strong>transfiere el control directamente</strong> a otra línea numerada del programa, sin volver. Es una "bifurcación incondicional" o "salto directo". En el curso UDEP aparece como <em>"salte a la línea N"</em>.</div>
+      </div>
+
+      <h3>2.2. Ejemplo de algoritmo NO estructurado (con saltos)</h3>
+
+      <p>Mira este algoritmo que aparece en el archivo S7 del curso:</p>
+
+<pre class="pseudo numbered"><code><span class="lblnum">1.</span> <span class="fn">Leer</span> <span class="var">a</span>, <span class="var">b</span>, <span class="var">c</span>
+<span class="lblnum">2.</span> <span class="kw">Si</span> <span class="var">a</span> <span class="op">&lt;</span> <span class="var">b</span> <span class="jmp">salte a la línea 4</span>
+<span class="lblnum">3.</span> <span class="jmp">Salte a la línea 5</span>
+<span class="lblnum">4.</span> <span class="kw">Si</span> <span class="var">b</span> <span class="op">&gt;</span> <span class="var">c</span> <span class="jmp">salte a la línea 6</span>
+<span class="lblnum">5.</span> <span class="jmp">Salte a la línea 7</span>
+<span class="lblnum">6.</span> <span class="fn">Mostrar</span> <span class="var">a</span>
+<span class="lblnum">7.</span> <span class="fn">Mostrar</span> <span class="var">b</span>
+<span class="lblnum">8.</span> <span class="fn">Mostrar</span> <span class="var">c</span></code></pre>
+
+      <h3>2.3. El esfuerzo cognitivo de "leer" un GOTO</h3>
+
+      <p>Para entender qué hace ese algoritmo, tienes que <strong>simular su ejecución mentalmente</strong>:</p>
+      <ul>
+        <li>Línea 1: leer a, b, c. ✓</li>
+        <li>Línea 2: si a&lt;b ¿qué? "salte a 4". Si NO se cumple, sigo a la línea 3.</li>
+        <li>Línea 3: salto a la línea 5. (Salto incondicional)</li>
+        <li>Línea 4: si b&gt;c ¿qué? "salte a 6". Si NO se cumple, sigo a la línea 5.</li>
+        <li>Línea 5: salto a la línea 7. (Otro salto)</li>
+        <li>Línea 6: mostrar a. Después caigo en la 7 (las líneas siguen secuencialmente cuando no hay salto).</li>
+        <li>Línea 7: mostrar b.</li>
+        <li>Línea 8: mostrar c.</li>
+      </ul>
+
+      <p>¡Caos! Para una máquina, sigue reglas simples. Para un humano que lee, es una pesadilla.</p>
+
+      <h3>2.4. La crítica histórica</h3>
+
+      <div class="callout warning">
+        <div class="callout-header"><span class="callout-icon">📜</span> Edsger Dijkstra (1968)</div>
+        <p>El famoso informático <strong>Edsger Dijkstra</strong> publicó una carta titulada <em>"Go To Statement Considered Harmful"</em> (la sentencia GOTO considerada nociva). Argumentó que el GOTO hace que los programas sean prácticamente imposibles de razonar correctamente. Esa carta cambió la forma en que se programa para siempre.</p>
+      </div>
+
+      <p><strong>Lenguajes modernos:</strong></p>
+      <ul>
+        <li><strong>Java</strong>: tiene <code>goto</code> como palabra reservada pero NO la implementa (no se puede usar).</li>
+        <li><strong>Python</strong>: ni siquiera tiene la palabra <code>goto</code>.</li>
+        <li><strong>C, C++, C#</strong>: aún la tienen pero su uso está fuertemente desaconsejado.</li>
+        <li><strong>Pascal</strong>: la tiene pero los programadores responsables la evitan.</li>
+      </ul>
+
+      <h3>2.5. ¿Cuándo es aceptable el GOTO?</h3>
+
+      <p>En la práctica casi nunca. Las únicas excepciones razonables son:</p>
+      <ul>
+        <li>Salir abruptamente de bucles muy anidados ante errores graves.</li>
+        <li>Saltar al final de un procedimiento por una condición de error.</li>
+        <li>En código de bajo nivel (assembly, drivers de hardware) donde el rendimiento extremo lo exige.</li>
+      </ul>
+
+      <p>En programación moderna y educativa: <strong>NUNCA uses GOTO</strong>. Y si te dan un algoritmo con GOTO, tu trabajo es <em>reescribirlo</em> sin él. Eso es <strong>reestructurar</strong>.</p>
+    </section>
+
+    <section class="block" id="bloque3">
+      <div class="block-header"><div class="block-num">3</div><h2>Teorema de Böhm-Jacopini: el fundamento matemático</h2></div>
+
+      <div class="callout theory">
+        <div class="callout-header"><span class="callout-icon">📐</span> Enunciado del teorema (1966)</div>
+        <p style="font-size:1.05rem;text-align:center;margin:12px 0;color:var(--purple);font-weight:600">Cualquier algoritmo computable puede expresarse usando ÚNICAMENTE tres estructuras de control:</p>
+        <div class="formula-box">
+          <strong>Secuencial</strong> &nbsp;+&nbsp; <strong>Selectiva (SI)</strong> &nbsp;+&nbsp; <strong>Repetitiva (MIENTRAS)</strong>
+        </div>
+        <p style="text-align:center;font-size:.88rem;margin-top:8px">No se necesitan GOTO. Punto.</p>
+      </div>
+
+      <h3>3.1. ¿Por qué es importante este teorema?</h3>
+
+      <p>Porque te da una <strong>garantía matemática</strong>: <em>cualquier algoritmo escrito con saltos puede reescribirse sin saltos</em>. No importa lo enrevesado que esté el original; existe SIEMPRE una versión estructurada equivalente.</p>
+
+      <p>En la práctica, también usamos REPETIR-HASTA y PARA, pero estos son "azúcar sintáctica" de MIENTRAS (se pueden expresar usando solo MIENTRAS). Lo esencial es que las tres estructuras (secuencia, selección, repetición) son <strong>universales</strong>.</p>
+
+      <h3>3.2. Equivalencias (lo que ya sabes desde la Sem 5)</h3>
+
+      <div class="table-wrapper">
+        <table>
+          <thead><tr><th>Estructura</th><th>Equivalente con MIENTRAS</th></tr></thead>
+          <tbody>
+            <tr><td><strong>PARA i = 1 HASTA N</strong></td><td><code>i = 1; MIENTRAS i &lt;= N HACER ... ; i = i + 1; FIN_MIENTRAS</code></td></tr>
+            <tr><td><strong>REPETIR ... HASTA cond</strong></td><td>Ejecutar el cuerpo una vez, después <code>MIENTRAS NOT(cond) HACER cuerpo FIN_MIENTRAS</code></td></tr>
+            <tr><td><strong>SI cond ... FIN_SI</strong></td><td>Esto NO se puede convertir a MIENTRAS — es selección, no repetición. Pero también es básico.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>3.3. Visualización: la diferencia entre flujo "espagueti" y flujo "estructurado"</h3>
+
+      <div class="dual-view">
+        <div>
+          <h4 style="color:var(--danger);text-align:center">❌ Flujo NO estructurado (con saltos)</h4>
+          <div class="flowchart-container">
+            <div class="mermaid-container" data-original='graph TD
+    A[Línea 1] --> B[Línea 2]
+    B -.->|salto si V| D[Línea 4]
+    B --> C[Línea 3]
+    C -.->|salto incond.| E[Línea 5]
+    D -.->|salto si V| F[Línea 6]
+    D --> E
+    E -.->|salto incond.| G[Línea 7]
+    F --> G
+    G --> H[Línea 8]
+    style A fill:#f87171,stroke:#dc2626,color:#fff
+    style B fill:#fbbf24,stroke:#d97706,color:#000
+    style C fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style E fill:#f87171,stroke:#dc2626,color:#fff
+    style F fill:#fbbf24,stroke:#d97706,color:#000
+    style G fill:#fbbf24,stroke:#d97706,color:#000
+    style H fill:#fbbf24,stroke:#d97706,color:#000'><div class="mermaid">
+graph TD
+    A[Línea 1] --> B[Línea 2]
+    B -.->|salto si V| D[Línea 4]
+    B --> C[Línea 3]
+    C -.->|salto incond.| E[Línea 5]
+    D -.->|salto si V| F[Línea 6]
+    D --> E
+    E -.->|salto incond.| G[Línea 7]
+    F --> G
+    G --> H[Línea 8]
+    style A fill:#f87171,stroke:#dc2626,color:#fff
+    style B fill:#fbbf24,stroke:#d97706,color:#000
+    style C fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style E fill:#f87171,stroke:#dc2626,color:#fff
+    style F fill:#fbbf24,stroke:#d97706,color:#000
+    style G fill:#fbbf24,stroke:#d97706,color:#000
+    style H fill:#fbbf24,stroke:#d97706,color:#000
+            </div></div>
+            <div class="flowchart-caption">📊 Las flechas punteadas son saltos directos. Múltiples cruces, difícil de seguir.</div>
+          </div>
+        </div>
+        <div>
+          <h4 style="color:var(--accent);text-align:center">✅ Flujo estructurado (equivalente)</h4>
+          <div class="flowchart-container">
+            <div class="mermaid-container" data-original='graph TD
+    A[Inicio] --> B[Leer a, b, c]
+    B --> C{a&lt;b AND b&gt;c?}
+    C -->|V| D[Mostrar a]
+    C -->|F| E[Mostrar b, c]
+    D --> E
+    E --> F[Fin]
+    style A fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style B fill:#60a5fa,stroke:#1e40af,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000
+    style D fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style E fill:#60a5fa,stroke:#1e40af,color:#000'><div class="mermaid">
+graph TD
+    A[Inicio] --> B[Leer a, b, c]
+    B --> C{a&lt;b AND b&gt;c?}
+    C -->|V| D[Mostrar a]
+    C -->|F| E[Mostrar b, c]
+    D --> E
+    E --> F[Fin]
+    style A fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style B fill:#60a5fa,stroke:#1e40af,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000
+    style D fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style E fill:#60a5fa,stroke:#1e40af,color:#000
+            </div></div>
+            <div class="flowchart-caption">📊 Mismo comportamiento, lectura natural de arriba hacia abajo.</div>
+          </div>
+        </div>
+      </div>
+
+      <p style="text-align:center;font-style:italic;color:var(--text-muted);margin-top:16px">↑ <strong>El mismo programa</strong> en dos formas. La de la izquierda es el original; la de la derecha es lo que vas a producir tú.</p>
+    </section>
+
+
+    <section class="block" id="bloque4">
+      <div class="block-header"><div class="block-num">4</div><h2>Estrategia para reestructurar algoritmos</h2></div>
+
+      <div class="callout intuition">
+        <div class="callout-header"><span class="callout-icon">🧭</span> El método de los 5 pasos</div>
+        <p>Cuando te dan un algoritmo con saltos numerados, sigue siempre <strong>este orden</strong>. Te ahorra confusión y te lleva al resultado correcto.</p>
+      </div>
+
+      <h3>4.1. Los 5 pasos para reestructurar</h3>
+
+      <div class="phases-flow" style="flex-wrap:wrap;gap:8px">
+        <div class="phase-card"><span class="phase-num">1</span><div class="phase-title">Trazar el flujo</div><div class="phase-desc">Sigue manualmente con un caso ejemplo</div></div>
+        <div class="phase-card"><span class="phase-num">2</span><div class="phase-title">Detectar el patrón</div><div class="phase-desc">¿SI? ¿SI-SINO? ¿bucle?</div></div>
+        <div class="phase-card"><span class="phase-num">3</span><div class="phase-title">Identificar condición</div><div class="phase-desc">Combina las condiciones de los saltos</div></div>
+        <div class="phase-card"><span class="phase-num">4</span><div class="phase-title">Reescribir</div><div class="phase-desc">Pseudocódigo estructurado</div></div>
+        <div class="phase-card"><span class="phase-num">5</span><div class="phase-title">Verificar</div><div class="phase-desc">Mismo resultado en todos los casos</div></div>
+      </div>
+
+      <h3>4.2. Paso 1 — Trazar el flujo</h3>
+
+      <p>Toma un <strong>caso de prueba simple</strong> (ej: a=3, b=5, c=2) y simula la ejecución. Anota qué líneas se ejecutan y en qué orden. Esto te da una primera intuición de qué hace el algoritmo.</p>
+
+      <div class="callout tip">
+        <div class="callout-header"><span class="callout-icon">📝</span> Tip práctico</div>
+        <p>Haz tabla con columnas: <em>línea actual</em> | <em>condición</em> | <em>resultado</em> | <em>siguiente línea</em>. Llénala paso a paso. Cuando completes 1-2 escenarios distintos, ya entenderás la lógica global.</p>
+      </div>
+
+      <h3>4.3. Paso 2 — Detectar el patrón</h3>
+
+      <p>Pregúntate:</p>
+      <ul>
+        <li><strong>¿El flujo solo va hacia adelante?</strong> → Es un SI o SI-SINO simple.</li>
+        <li><strong>¿Hay saltos hacia atrás (a líneas anteriores)?</strong> → Hay un <strong>bucle</strong> (MIENTRAS o REPETIR-HASTA).</li>
+        <li><strong>¿Hay condiciones múltiples encadenadas?</strong> → Probablemente SI anidado o condiciones con AND/OR.</li>
+      </ul>
+
+      <h3>4.4. Paso 3 — Identificar la condición global</h3>
+
+      <p>Esta es la parte más sutil. A menudo, varios saltos consecutivos representan <strong>una sola condición compuesta</strong> con AND/OR. Por ejemplo:</p>
+
+      <div class="dual-view">
+        <pre class="pseudo numbered" style="margin:0"><code><span class="lblnum">2.</span> <span class="kw">Si</span> <span class="var">a</span> <span class="op">&lt;</span> <span class="var">b</span> <span class="jmp">salte a 4</span>
+<span class="lblnum">3.</span> <span class="jmp">Salte a 5</span>
+<span class="lblnum">4.</span> <span class="kw">Si</span> <span class="var">b</span> <span class="op">&gt;</span> <span class="var">c</span> <span class="jmp">salte a 6</span>
+<span class="lblnum">5.</span> <span class="jmp">Salte a 7</span>
+<span class="lblnum">6.</span> <span class="fn">Mostrar</span> <span class="var">a</span></code></pre>
+        <pre class="pseudo structured" style="margin:0"><code><span class="cmt">// llegar a 6 requiere DOS condiciones V</span>
+<span class="kw">SI</span> (<span class="var">a</span> <span class="op">&lt;</span> <span class="var">b</span>) <span class="op">AND</span> (<span class="var">b</span> <span class="op">&gt;</span> <span class="var">c</span>)
+    <span class="fn">Mostrar</span> <span class="var">a</span>
+<span class="kw">FIN_SI</span></code></pre>
+      </div>
+
+      <p>Aquí, llegar a la línea 6 (mostrar a) requiere que se cumplan <em>ambas</em> condiciones (a&lt;b Y b&gt;c). Por eso se traduce a un <strong>SI con AND</strong>.</p>
+
+      <h3>4.5. Paso 4 — Reescribir con estructuras</h3>
+
+      <p>Ya con la condición clara, escribes el algoritmo nuevo. Sigue las convenciones del curso:</p>
+      <ul>
+        <li>INICIO / FIN, declaración de tipos, leyenda.</li>
+        <li>Indentación consistente.</li>
+        <li>FIN_SI, FIN_MIENTRAS, FIN_PARA cerrando cada bloque.</li>
+      </ul>
+
+      <h3>4.6. Paso 5 — Verificar con casos de prueba</h3>
+
+      <p>Haz una <strong>prueba de escritorio comparativa</strong>: para los mismos valores de entrada, ¿el algoritmo original (con saltos) y el nuevo (estructurado) producen la misma salida? Prueba al menos 3 casos:</p>
+      <ul>
+        <li>Un caso donde la condición sea V.</li>
+        <li>Un caso donde la condición sea F.</li>
+        <li>Un caso límite (valores en la frontera de las desigualdades).</li>
+      </ul>
+
+      <p>Si los 3 coinciden, tu reestructuración es correcta. Si no, regresa al paso 1 y revisa el trazado.</p>
+    </section>
+
+    <section class="block" id="bloque5">
+      <div class="block-header"><div class="block-num">5</div><h2>Patrones comunes de conversión</h2></div>
+
+      <p style="color:var(--text-muted)">Estos son los <strong>4 patrones más frecuentes</strong> que verás. Reconocerlos al instante te ahorra tiempo.</p>
+
+      <h3>5.1. Patrón A: SI simple (un solo salto condicional al frente)</h3>
+
+      <div class="dual-view">
+        <pre class="pseudo numbered" style="margin:0"><code><span class="lblnum">1.</span> <span class="fn">Leer</span> <span class="var">x</span>
+<span class="lblnum">2.</span> <span class="kw">Si</span> <span class="var">x</span> <span class="op">&gt;</span> <span class="num">0</span> <span class="jmp">salte a 4</span>
+<span class="lblnum">3.</span> <span class="jmp">Salte a 5</span>
+<span class="lblnum">4.</span> <span class="fn">Mostrar</span> <span class="str">"positivo"</span>
+<span class="lblnum">5.</span> <span class="fn">Mostrar</span> <span class="str">"fin"</span></code></pre>
+        <pre class="pseudo structured" style="margin:0"><code><span class="kw">INICIO</span>
+    <span class="tipo">Real</span>: <span class="var">x</span>
+    <span class="fn">Leer</span> <span class="var">x</span>
+    <span class="kw">SI</span> <span class="var">x</span> <span class="op">&gt;</span> <span class="num">0</span>
+        <span class="fn">Mostrar</span> <span class="str">"positivo"</span>
+    <span class="kw">FIN_SI</span>
+    <span class="fn">Mostrar</span> <span class="str">"fin"</span>
+<span class="kw">FIN</span></code></pre>
+      </div>
+
+      <p style="font-size:.88rem;color:var(--text-muted)"><strong>Reconocimiento:</strong> hay un punto donde <em>solo si la condición es V</em> se ejecuta una acción extra; ambos caminos convergen después en una línea común.</p>
+
+      <h3>5.2. Patrón B: SI-SINO (cada rama hace algo distinto)</h3>
+
+      <div class="dual-view">
+        <pre class="pseudo numbered" style="margin:0"><code><span class="lblnum">1.</span> <span class="fn">Leer</span> <span class="var">a</span>, <span class="var">b</span>
+<span class="lblnum">2.</span> <span class="kw">Si</span> <span class="var">a</span> <span class="op">&gt;</span> <span class="var">b</span> <span class="jmp">salte a 5</span>
+<span class="lblnum">3.</span> <span class="var">x</span> <span class="op">=</span> <span class="var">b</span>
+<span class="lblnum">4.</span> <span class="jmp">Salte a 6</span>
+<span class="lblnum">5.</span> <span class="var">x</span> <span class="op">=</span> <span class="var">a</span>
+<span class="lblnum">6.</span> <span class="fn">Mostrar</span> <span class="var">x</span></code></pre>
+        <pre class="pseudo structured" style="margin:0"><code><span class="kw">INICIO</span>
+    <span class="tipo">Real</span>: <span class="var">a</span>, <span class="var">b</span>, <span class="var">x</span>
+    <span class="fn">Leer</span> <span class="var">a</span>, <span class="var">b</span>
+    <span class="kw">SI</span> <span class="var">a</span> <span class="op">&gt;</span> <span class="var">b</span>
+        <span class="var">x</span> <span class="op">=</span> <span class="var">a</span>
+    <span class="kw">SINO</span>
+        <span class="var">x</span> <span class="op">=</span> <span class="var">b</span>
+    <span class="kw">FIN_SI</span>
+    <span class="fn">Mostrar</span> <span class="var">x</span>
+<span class="kw">FIN</span></code></pre>
+      </div>
+
+      <p style="font-size:.88rem;color:var(--text-muted)"><strong>Reconocimiento:</strong> <em>cada rama (V y F) ejecuta una acción distinta</em>, después convergen.</p>
+
+      <h3>5.3. Patrón C: condición compuesta con AND</h3>
+
+      <p>Cuando hay <strong>varios SI consecutivos</strong> donde llegar al objetivo requiere que TODOS sean V:</p>
+
+      <div class="dual-view">
+        <pre class="pseudo numbered" style="margin:0"><code><span class="lblnum">2.</span> <span class="kw">Si</span> cond1 <span class="jmp">salte a 4</span>
+<span class="lblnum">3.</span> <span class="jmp">Salte a final</span>
+<span class="lblnum">4.</span> <span class="kw">Si</span> cond2 <span class="jmp">salte a 6</span>
+<span class="lblnum">5.</span> <span class="jmp">Salte a final</span>
+<span class="lblnum">6.</span> <span class="fn">acción</span></code></pre>
+        <pre class="pseudo structured" style="margin:0"><code><span class="kw">SI</span> cond1 <span class="op">AND</span> cond2
+    acción
+<span class="kw">FIN_SI</span>
+<span class="cmt">// solo se ejecuta cuando AMBAS son V</span></code></pre>
+      </div>
+
+      <h3>5.4. Patrón D: condición compuesta con OR</h3>
+
+      <p>Cuando hay <strong>varios SI consecutivos</strong> donde llegar al objetivo se cumple si CUALQUIERA es V:</p>
+
+      <div class="dual-view">
+        <pre class="pseudo numbered" style="margin:0"><code><span class="lblnum">2.</span> <span class="kw">Si</span> cond1 <span class="jmp">salte a 4</span>
+<span class="lblnum">3.</span> <span class="kw">Si</span> cond2 <span class="jmp">salte a 4</span>
+<span class="lblnum">4.</span> acción A
+<span class="lblnum">5.</span> <span class="jmp">salte a final</span>
+<span class="lblnum">6.</span> acción B</code></pre>
+        <pre class="pseudo structured" style="margin:0"><code><span class="kw">SI</span> cond1 <span class="op">OR</span> cond2
+    acción A
+<span class="kw">SINO</span>
+    acción B
+<span class="kw">FIN_SI</span></code></pre>
+      </div>
+
+      <h3>5.5. Patrón E: bucle (salto hacia atrás)</h3>
+
+      <p>El indicador clave es un <strong>"salte a una línea anterior"</strong> (número menor). Eso siempre representa un bucle.</p>
+
+      <div class="dual-view">
+        <pre class="pseudo numbered" style="margin:0"><code><span class="lblnum">1.</span> <span class="var">i</span> <span class="op">=</span> <span class="num">1</span>
+<span class="lblnum">2.</span> <span class="fn">Mostrar</span> <span class="var">i</span>
+<span class="lblnum">3.</span> <span class="var">i</span> <span class="op">=</span> <span class="var">i</span> <span class="op">+</span> <span class="num">1</span>
+<span class="lblnum">4.</span> <span class="kw">Si</span> <span class="var">i</span> <span class="op">&lt;=</span> <span class="num">10</span> <span class="jmp">salte a 2</span>
+<span class="lblnum">5.</span> <span class="kw">Fin</span></code></pre>
+        <pre class="pseudo structured" style="margin:0"><code><span class="cmt">// El salto hacia atrás es un MIENTRAS</span>
+<span class="var">i</span> <span class="op">=</span> <span class="num">1</span>
+<span class="kw">MIENTRAS</span> <span class="var">i</span> <span class="op">&lt;=</span> <span class="num">10</span> <span class="kw">HACER</span>
+    <span class="fn">Mostrar</span> <span class="var">i</span>
+    <span class="var">i</span> <span class="op">=</span> <span class="var">i</span> <span class="op">+</span> <span class="num">1</span>
+<span class="kw">FIN_MIENTRAS</span>
+<span class="cmt">// O equivalentemente:</span>
+<span class="kw">PARA</span> <span class="var">i</span> <span class="op">=</span> <span class="num">1</span> <span class="kw">HASTA</span> <span class="num">10</span> <span class="kw">HACER</span>
+    <span class="fn">Mostrar</span> <span class="var">i</span>
+<span class="kw">FIN_PARA</span></code></pre>
+      </div>
+
+      <div class="callout warning">
+        <div class="callout-header"><span class="callout-icon">⚠️</span> Detalle clave para bucles</div>
+        <p>Si el salto hacia atrás está al <strong>FINAL</strong> del bucle, normalmente es <strong>REPETIR-HASTA</strong> (la condición se evalúa después de ejecutar el cuerpo). Si está cerca del <strong>INICIO</strong> con salto al final, normalmente es <strong>MIENTRAS</strong>. Pregúntate: <em>¿el cuerpo se ejecuta SIEMPRE al menos una vez? Si sí → REPETIR-HASTA. Si depende, podría no ejecutarse → MIENTRAS</em>.</p>
+      </div>
+    </section>
+
+    <section class="block" id="bloque6">
+      <div class="block-header"><div class="block-num">6</div><h2>El proyecto integrador: las 6 fases del desarrollo de software</h2></div>
+
+      <div class="callout intuition">
+        <div class="callout-header"><span class="callout-icon">🏗️</span> ¿Por qué importa esto?</div>
+        <p>Hasta ahora has hecho algoritmos pequeños, casi de un golpe. Pero un <strong>proyecto real</strong> (incluso uno académico) requiere seguir <em>fases ordenadas</em>. Esto es lo que verás en los proyectos finales del curso. El profesor lo mencionó como "Aplicación de algoritmos en programación".</p>
+      </div>
+
+      <h3>6.1. Las 6 fases del proceso de programación</h3>
+
+      <div class="phases-flow">
+        <div class="phase-card"><span class="phase-num">1</span><div class="phase-title">Definición</div><div class="phase-desc">¿Qué problema resuelvo?</div></div>
+        <div class="phase-card"><span class="phase-num">2</span><div class="phase-title">Análisis</div><div class="phase-desc">¿Qué datos entran y salen?</div></div>
+        <div class="phase-card"><span class="phase-num">3</span><div class="phase-title">Diseño</div><div class="phase-desc">Pseudocódigo + diagrama</div></div>
+        <div class="phase-card"><span class="phase-num">4</span><div class="phase-title">Codificación</div><div class="phase-desc">Traducir a Python</div></div>
+        <div class="phase-card"><span class="phase-num">5</span><div class="phase-title">Implantación</div><div class="phase-desc">Probar el programa</div></div>
+        <div class="phase-card"><span class="phase-num">6</span><div class="phase-title">Mantenimiento</div><div class="phase-desc">Ajustes posteriores</div></div>
+      </div>
+
+      <h3>6.2. Detalle de cada fase</h3>
+
+      <div class="table-wrapper">
+        <table>
+          <thead><tr><th>Fase</th><th>Qué se hace</th><th>Entregables típicos</th></tr></thead>
+          <tbody>
+            <tr><td><strong>1. Definición del problema</strong></td><td>Entender claramente <em>qué</em> hay que resolver. Traducir el problema en términos precisos.</td><td>Enunciado depurado, restricciones, supuestos</td></tr>
+            <tr><td><strong>2. Análisis del problema</strong></td><td>Identificar entradas, salidas, fórmulas, casos especiales y reglas de negocio.</td><td>Tabla de variables, casos límite, reglas</td></tr>
+            <tr><td><strong>3. Diseño del programa</strong></td><td>Diseñar la <em>solución</em>. Aquí entran pseudocódigo, diagrama de flujo, descomposición en módulos.</td><td>Pseudocódigo, diagrama, leyenda</td></tr>
+            <tr><td><strong>4. Codificación</strong></td><td>Transformar el pseudocódigo a un <strong>lenguaje de programación real</strong> (Python en sem 9+).</td><td>Código fuente compilable</td></tr>
+            <tr><td><strong>5. Implantación / Prueba</strong></td><td>Ejecutar el programa con datos de prueba. Verificar que se comporta como se espera.</td><td>Casos de prueba ejecutados, errores corregidos</td></tr>
+            <tr><td><strong>6. Mantenimiento</strong></td><td>Cuando cambian requisitos o se descubren errores nuevos, se modifica el programa.</td><td>Versiones nuevas, correcciones</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>6.3. Aplicación al proyecto integrador</h3>
+
+      <p>En esta semana, el "proyecto" del curso es <strong>aplicar todo lo aprendido</strong> en problemas más complejos. Para cada uno:</p>
+      <ol>
+        <li><strong>Lee dos veces</strong> el enunciado (Definición).</li>
+        <li><strong>Identifica entradas, salidas, fórmulas, restricciones</strong> (Análisis).</li>
+        <li><strong>Diseña</strong> la leyenda + pseudocódigo + diagrama.</li>
+        <li>Aún no codificas en Python (eso es Sem 9+), pero conceptualmente harías el paso 4.</li>
+        <li><strong>Haz prueba de escritorio</strong> con casos representativos (Implantación/prueba).</li>
+      </ol>
+
+      <h3>6.4. Estructura de un algoritmo (refuerzo del archivo S7)</h3>
+
+      <p>Recordatorio del archivo del curso: <strong>todo algoritmo se descompone en 3 secciones principales</strong>:</p>
+
+      <div class="compare-grid">
+        <div class="compare-card">
+          <h4 style="color:var(--primary)">📥 Ingreso de datos</h4>
+          <p style="font-size:.88rem;color:var(--text-muted);margin:0">Las <strong>entradas</strong> que el algoritmo recibirá. Típicamente con <code>Leer</code>.</p>
+        </div>
+        <div class="compare-card">
+          <h4 style="color:var(--purple)">⚙️ Procesamiento</h4>
+          <p style="font-size:.88rem;color:var(--text-muted);margin:0">Cálculos, decisiones, ciclos. <strong>El cuerpo del algoritmo</strong>.</p>
+        </div>
+        <div class="compare-card">
+          <h4 style="color:var(--accent)">📤 Impresión de resultados</h4>
+          <p style="font-size:.88rem;color:var(--text-muted);margin:0">Las <strong>salidas</strong> que el algoritmo proporcionará. Típicamente con <code>Mostrar</code>.</p>
+        </div>
+      </div>
+
+      <p>Esta estructura simple <em>siempre</em> está presente, sin importar lo complejo del problema.</p>
+    </section>
+
+    <section class="block" id="ejercicios">
+      <div class="block-header"><div class="block-num">💪</div><h2>Ejercicios resueltos paso a paso</h2></div>
+
+      <p style="font-size:1.05rem;color:var(--text-muted);margin-bottom:24px">Los <strong>3 primeros</strong> ejercicios son los <em>oficiales del archivo S7</em> del curso. Los <strong>5 siguientes</strong> son nuevos para reforzar y aplicar los patrones a casos diversos.</p>
+
+      <!-- EJERCICIO 1 -->
+      <div class="exercise">
+        <div class="exercise-header"><span class="exercise-num">EJ. 1</span><span>Reestructurar: condición AND oculta en saltos</span><span class="exercise-tag">📚 S7 oficial</span></div>
+        <div class="exercise-body">
+          <div class="statement-box"><span class="statement-label">📝 Enunciado oficial (S7)</span>
+            <p>Analizar el siguiente algoritmo, luego elaborar su <strong>diagrama de flujo y pseudocódigo</strong> (estructurado):</p>
+<pre class="pseudo numbered" style="margin-top:8px"><code><span class="lblnum">1.</span> <span class="fn">Leer</span> <span class="var">a</span>, <span class="var">b</span>, <span class="var">c</span>
+<span class="lblnum">2.</span> <span class="kw">Si</span> <span class="var">a</span> <span class="op">&lt;</span> <span class="var">b</span> <span class="jmp">salte a la línea 4</span>
+<span class="lblnum">3.</span> <span class="jmp">Salte a la línea 5</span>
+<span class="lblnum">4.</span> <span class="kw">Si</span> <span class="var">b</span> <span class="op">&gt;</span> <span class="var">c</span> <span class="jmp">salte a la línea 6</span>
+<span class="lblnum">5.</span> <span class="jmp">Salte a la línea 7</span>
+<span class="lblnum">6.</span> <span class="fn">Mostrar</span> <span class="var">a</span>
+<span class="lblnum">7.</span> <span class="fn">Mostrar</span> <span class="var">b</span>
+<span class="lblnum">8.</span> <span class="fn">Mostrar</span> <span class="var">c</span></code></pre>
+          </div>
+
+          <div class="solution-block">
+            <h4>🪜 Paso 1: Trazar el flujo (caso a=3, b=5, c=2)</h4>
+            <div class="trace-table"><table>
+              <thead><tr><th>Línea actual</th><th>Acción</th><th>Siguiente línea</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td>Lee a=3, b=5, c=2</td><td>2 (siguiente)</td></tr>
+                <tr><td>2</td><td>¿3 &lt; 5? V → "salte a 4"</td><td>4</td></tr>
+                <tr><td>4</td><td>¿5 &gt; 2? V → "salte a 6"</td><td>6</td></tr>
+                <tr><td>6</td><td>Mostrar a (=3)</td><td>7 (siguiente)</td></tr>
+                <tr><td>7</td><td>Mostrar b (=5)</td><td>8</td></tr>
+                <tr><td>8</td><td>Mostrar c (=2)</td><td>fin</td></tr>
+              </tbody>
+            </table></div>
+            <p>Salida: <strong>3, 5, 2</strong> (mostró las 3 variables).</p>
+
+            <h4>🪜 Paso 1b: Otro caso (a=10, b=5, c=2)</h4>
+            <div class="trace-table"><table>
+              <thead><tr><th>Línea</th><th>Acción</th><th>Siguiente</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td>Lee a=10, b=5, c=2</td><td>2</td></tr>
+                <tr><td>2</td><td>¿10 &lt; 5? F → cae a 3</td><td>3</td></tr>
+                <tr><td>3</td><td>"Salte a 5"</td><td>5</td></tr>
+                <tr><td>5</td><td>"Salte a 7"</td><td>7</td></tr>
+                <tr><td>7</td><td>Mostrar b (=5)</td><td>8</td></tr>
+                <tr><td>8</td><td>Mostrar c (=2)</td><td>fin</td></tr>
+              </tbody>
+            </table></div>
+            <p>Salida: <strong>5, 2</strong> (NO mostró a). El "Mostrar a" se saltó.</p>
+
+            <h4>🧠 Paso 2 y 3: Detectar el patrón y la condición</h4>
+            <p>Observación clave: <strong>Mostrar a se ejecuta SOLO cuando ambas condiciones son V</strong>. Si falla cualquiera (ya sea a&lt;b o b&gt;c), se brinca al "Mostrar b". Esto es <strong>Patrón C: AND</strong>.</p>
+            <p>Mostrar b y Mostrar c se ejecutan <strong>siempre</strong> (no hay forma de saltárselos).</p>
+
+            <h4>🏷️ Leyenda</h4>
+            <div class="legend-box"><div class="legend-title">🏷️ Leyenda</div><ul style="margin:0">
+              <li><code>a, b, c</code> = números a comparar y mostrar (<span class="tipo">Real</span>)</li>
+            </ul></div>
+
+            <h4>🪜 Paso 4: Pseudocódigo estructurado</h4>
+<pre class="pseudo structured"><code><span class="kw">INICIO</span>
+    <span class="tipo">Real</span>: <span class="var">a</span>, <span class="var">b</span>, <span class="var">c</span>
+    <span class="fn">Leer</span> <span class="var">a</span>, <span class="var">b</span>, <span class="var">c</span>
+    <span class="kw">SI</span> (<span class="var">a</span> <span class="op">&lt;</span> <span class="var">b</span>) <span class="op">AND</span> (<span class="var">b</span> <span class="op">&gt;</span> <span class="var">c</span>)
+        <span class="fn">Mostrar</span> <span class="var">a</span>
+    <span class="kw">FIN_SI</span>
+    <span class="fn">Mostrar</span> <span class="var">b</span>, <span class="var">c</span>
+<span class="kw">FIN</span></code></pre>
+
+            <h4>🔷 Diagrama de flujo</h4>
+            <div class="flowchart-container">
+              <div class="mermaid-container" data-original='graph TB
+    I([Inicio])
+    D["Real: a, b, c"]
+    L[/"leer a, b, c"/]
+    C{"a&lt;b AND b&gt;c?"}
+    Ma[/"mostrar a"/]
+    Mbc[/"mostrar b, c"/]
+    F([Fin])
+    I --> D --> L --> C
+    C -->|V| Ma --> Mbc --> F
+    C -->|F| Mbc
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style Ma fill:#60a5fa,stroke:#1e40af,color:#000
+    style Mbc fill:#60a5fa,stroke:#1e40af,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000'><div class="mermaid">
+graph TB
+    I([Inicio])
+    D["Real: a, b, c"]
+    L[/"leer a, b, c"/]
+    C{"a&lt;b AND b&gt;c?"}
+    Ma[/"mostrar a"/]
+    Mbc[/"mostrar b, c"/]
+    F([Fin])
+    I --> D --> L --> C
+    C -->|V| Ma --> Mbc --> F
+    C -->|F| Mbc
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style Ma fill:#60a5fa,stroke:#1e40af,color:#000
+    style Mbc fill:#60a5fa,stroke:#1e40af,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000
+              </div></div>
+            </div>
+
+            <h4>🧪 Paso 5: Verificar (comparar original vs estructurado)</h4>
+            <div class="trace-table"><table>
+              <thead><tr><th>Caso</th><th>Original muestra</th><th>Estructurado muestra</th><th>¿Coincide?</th></tr></thead>
+              <tbody>
+                <tr><td>a=3, b=5, c=2</td><td>3, 5, 2</td><td>3, 5, 2</td><td>✓</td></tr>
+                <tr><td>a=10, b=5, c=2</td><td>5, 2</td><td>5, 2</td><td>✓</td></tr>
+                <tr><td>a=3, b=5, c=10</td><td>5, 10</td><td>5, 10</td><td>✓</td></tr>
+                <tr><td>a=10, b=5, c=10</td><td>5, 10</td><td>5, 10</td><td>✓</td></tr>
+              </tbody>
+            </table></div>
+
+            <div class="final-answer"><div class="final-answer-label">✅ Resultado</div><p>Reestructuración correcta. El algoritmo ahora se lee de arriba abajo sin saltos. La <strong>condición AND</strong> captura las dos condiciones secuenciales originales. ✓</p></div>
+
+            <div class="callout tip"><div class="callout-header"><span class="callout-icon">💡</span> Lección clave</div><p>Cuando ves <strong>"Si cond1 salte a X. Salte al final. Si cond2 salte a X. ..."</strong>, eso es típicamente un <strong>AND</strong>: solo se llega al destino si ambas se cumplen.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EJERCICIO 2 -->
+      <div class="exercise">
+        <div class="exercise-header"><span class="exercise-num">EJ. 2</span><span>Reestructurar: condición OR + cálculos diferentes</span><span class="exercise-tag">📚 S7 oficial</span></div>
+        <div class="exercise-body">
+          <div class="statement-box"><span class="statement-label">📝 Enunciado oficial (S7)</span>
+            <p>Analizar el siguiente algoritmo y reestructurarlo:</p>
+<pre class="pseudo numbered" style="margin-top:8px"><code><span class="lblnum">1.</span> <span class="fn">Leer</span> <span class="var">a</span>, <span class="var">b</span>, <span class="var">c</span>
+<span class="lblnum">2.</span> <span class="kw">Si</span> <span class="var">a</span> <span class="op">&lt;</span> <span class="var">b</span> <span class="jmp">salte a la línea 4</span>
+<span class="lblnum">3.</span> <span class="kw">Si</span> <span class="var">c</span> <span class="op">&lt;=</span> <span class="var">b</span> <span class="jmp">salte a la línea 4</span>
+<span class="lblnum">4.</span> <span class="var">t</span> <span class="op">=</span> <span class="var">a</span> <span class="op">+</span> <span class="var">b</span>
+<span class="lblnum">5.</span> <span class="jmp">Salte a la línea 6</span>
+<span class="lblnum">6.</span> <span class="var">t</span> <span class="op">=</span> <span class="var">b</span> <span class="op">-</span> <span class="var">c</span>
+<span class="lblnum">7.</span> <span class="fn">Mostrar</span> <span class="var">a</span>, <span class="var">t</span>
+<span class="lblnum">8.</span> <span class="fn">Mostrar</span> <span class="var">b</span>, <span class="var">t</span></code></pre>
+          </div>
+
+          <div class="solution-block">
+            <h4>⚠️ Cuidado con el enunciado original</h4>
+            <p>Hay algo curioso: la línea 5 dice <em>"Salte a la línea 6"</em>, pero la línea 6 está justo después. <strong>El salto es redundante</strong>; el flujo va a 6 de todos modos. Eso significa que <strong>la línea 6 (t = b - c) se ejecuta SIEMPRE después de la 4 (t = a + b)</strong>, lo que sobrescribe el valor.</p>
+            <p>Esto debe ser una errata del enunciado del curso. La <strong>interpretación correcta intencionada</strong> (y la que el curso da en su solución oficial) es: la línea 4 y la línea 6 son <em>caminos alternativos</em>, donde solo uno se ejecuta. El "salte a 6" probablemente debería ser "salte a 7".</p>
+
+            <h4>🧠 Paso 2 y 3: Detectar el patrón y la condición (interpretación oficial)</h4>
+            <p>Si <code>a &lt; b</code> es V → salta a 4 → <code>t = a + b</code>.<br/>
+            Si <code>a &lt; b</code> es F, pasa a la línea 3. Si <code>c &lt;= b</code> es V → también salta a 4 → <code>t = a + b</code>.<br/>
+            Si ambas son F, cae al cálculo alternativo <code>t = b - c</code>.</p>
+
+            <p>Esto es claramente <strong>Patrón D: OR</strong>:</p>
+            <ul>
+              <li>SI <code>(a &lt; b) OR (c &lt;= b)</code> → <code>t = a + b</code></li>
+              <li>SINO → <code>t = b - c</code></li>
+            </ul>
+
+            <h4>🏷️ Leyenda</h4>
+            <div class="legend-box"><div class="legend-title">🏷️ Leyenda</div><ul style="margin:0">
+              <li><code>a, b, c</code> = números de entrada (<span class="tipo">Real</span>)</li>
+              <li><code>t</code> = resultado calculado (suma o resta) (<span class="tipo">Real</span>)</li>
+            </ul></div>
+
+            <h4>🪜 Paso 4: Pseudocódigo estructurado (solución oficial S7)</h4>
+<pre class="pseudo structured"><code><span class="kw">INICIO</span>
+    <span class="tipo">Real</span>: <span class="var">a</span>, <span class="var">b</span>, <span class="var">c</span>, <span class="var">t</span>
+    <span class="fn">Leer</span> <span class="var">a</span>, <span class="var">b</span>, <span class="var">c</span>
+    <span class="kw">SI</span> (<span class="var">a</span> <span class="op">&lt;</span> <span class="var">b</span>) <span class="op">OR</span> (<span class="var">c</span> <span class="op">&lt;=</span> <span class="var">b</span>)
+        <span class="var">t</span> <span class="op">=</span> <span class="var">a</span> <span class="op">+</span> <span class="var">b</span>
+    <span class="kw">SINO</span>
+        <span class="var">t</span> <span class="op">=</span> <span class="var">b</span> <span class="op">-</span> <span class="var">c</span>
+    <span class="kw">FIN_SI</span>
+    <span class="fn">Mostrar</span> <span class="var">a</span>, <span class="var">t</span>
+    <span class="fn">Mostrar</span> <span class="var">b</span>, <span class="var">t</span>
+<span class="kw">FIN</span></code></pre>
+
+            <h4>🔷 Diagrama de flujo</h4>
+            <div class="flowchart-container">
+              <div class="mermaid-container" data-original='graph TB
+    I([Inicio])
+    D["Real: a, b, c, t"]
+    L[/"leer a, b, c"/]
+    C{"a&lt;b OR c&lt;=b?"}
+    P1["t = a + b"]
+    P2["t = b - c"]
+    M1[/"mostrar a, t"/]
+    M2[/"mostrar b, t"/]
+    F([Fin])
+    I --> D --> L --> C
+    C -->|V| P1 --> M1
+    C -->|F| P2 --> M1
+    M1 --> M2 --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M1 fill:#60a5fa,stroke:#1e40af,color:#000
+    style M2 fill:#60a5fa,stroke:#1e40af,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000
+    style P1 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P2 fill:#f472b6,stroke:#be185d,color:#fff'><div class="mermaid">
+graph TB
+    I([Inicio])
+    D["Real: a, b, c, t"]
+    L[/"leer a, b, c"/]
+    C{"a&lt;b OR c&lt;=b?"}
+    P1["t = a + b"]
+    P2["t = b - c"]
+    M1[/"mostrar a, t"/]
+    M2[/"mostrar b, t"/]
+    F([Fin])
+    I --> D --> L --> C
+    C -->|V| P1 --> M1
+    C -->|F| P2 --> M1
+    M1 --> M2 --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M1 fill:#60a5fa,stroke:#1e40af,color:#000
+    style M2 fill:#60a5fa,stroke:#1e40af,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000
+    style P1 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P2 fill:#f472b6,stroke:#be185d,color:#fff
+              </div></div>
+            </div>
+
+            <div class="final-answer"><div class="final-answer-label">✅ Resultado</div><p>Reestructuración con SI-SINO y condición OR. Las dos condiciones del original que llevan al mismo destino se combinan con OR. ✓</p></div>
+
+            <div class="callout tip"><div class="callout-header"><span class="callout-icon">💡</span> Lección clave</div><p>Cuando ves <strong>"Si cond1 salte a X. Si cond2 salte a X. ..."</strong> (dos saltos al mismo destino), eso es <strong>OR</strong>: cualquiera de las dos lleva al destino.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EJERCICIO 3 -->
+      <div class="exercise">
+        <div class="exercise-header"><span class="exercise-num">EJ. 3</span><span>Reestructurar: con bucle interno (REPETIR-HASTA)</span><span class="exercise-tag">📚 S7 oficial</span></div>
+        <div class="exercise-body">
+          <div class="statement-box"><span class="statement-label">📝 Enunciado oficial (S7)</span>
+            <p>Analizar el siguiente algoritmo (más complejo: incluye bucle):</p>
+<pre class="pseudo numbered" style="margin-top:8px"><code><span class="lblnum">1.</span> <span class="fn">Leer</span> <span class="var">a</span>, <span class="var">b</span>
+<span class="lblnum">2.</span> <span class="jmp">Salte a la línea 5</span>
+<span class="lblnum">3.</span> <span class="fn">Mostrar</span> <span class="var">x</span>
+<span class="lblnum">4.</span> <span class="jmp">Salte a la línea 12</span>
+<span class="lblnum">5.</span> <span class="var">x</span> <span class="op">=</span> <span class="num">0</span>
+<span class="lblnum">6.</span> <span class="kw">Si</span> <span class="var">a</span> <span class="op">&lt;</span> <span class="num">5</span> <span class="jmp">salte a la línea 10</span>
+<span class="lblnum">7.</span> <span class="var">x</span> <span class="op">=</span> <span class="var">x</span> <span class="op">+</span> <span class="var">a</span>
+<span class="lblnum">8.</span> <span class="kw">Si</span> <span class="var">x</span> <span class="op">&gt;</span> <span class="var">b</span> <span class="jmp">salte a la línea 11</span>
+<span class="lblnum">9.</span> <span class="jmp">Salte a la línea 7</span>
+<span class="lblnum">10.</span> <span class="var">x</span> <span class="op">=</span> <span class="var">x</span> <span class="op">+</span> <span class="var">a</span> <span class="op">-</span> <span class="var">b</span>
+<span class="lblnum">11.</span> <span class="jmp">Salte a la línea 3</span>
+<span class="lblnum">12.</span> <span class="kw">Fin</span></code></pre>
+          </div>
+
+          <div class="solution-block">
+            <h4>🪜 Paso 1: Trazar el flujo</h4>
+            <p>Este es más complejo. Sigamos:</p>
+            <ul>
+              <li><strong>Línea 1 → 2 → 5</strong>: lee a, b; salta directo a 5; <code>x = 0</code>.</li>
+              <li><strong>Línea 6</strong>: ¿a &lt; 5?</li>
+              <li><strong>Si V</strong>: salta a 10 → <code>x = x + a - b</code> → línea 11 → salta a 3 → mostrar x → 4 → salta a 12 → fin.</li>
+              <li><strong>Si F</strong>: línea 7: <code>x = x + a</code> → 8: ¿x &gt; b? Si V salta a 11 (mostrar x y fin). Si F salta a 7 (vuelve atrás → BUCLE).</li>
+            </ul>
+
+            <h4>🧠 Paso 2 y 3: Detectar el patrón</h4>
+            <p>Hay <strong>un SI-SINO grande</strong>:</p>
+            <ul>
+              <li><strong>Si a &lt; 5</strong> (rama V): se hace una operación simple (<code>x = x + a - b</code>).</li>
+              <li><strong>Si a &gt;= 5</strong> (rama F): se ejecuta un <strong>bucle</strong> que suma <code>a</code> a <code>x</code> repetidamente hasta que <code>x &gt; b</code>.</li>
+            </ul>
+            <p>El bucle es del tipo <strong>REPETIR-HASTA</strong>: el cuerpo (<code>x = x + a</code>) se ejecuta SIEMPRE al menos una vez, y la condición se evalúa al final (línea 8: <em>si x &gt; b sale</em>).</p>
+
+            <h4>🏷️ Leyenda</h4>
+            <div class="legend-box"><div class="legend-title">🏷️ Leyenda</div><ul style="margin:0">
+              <li><code>a</code> = primer valor leído (<span class="tipo">Real</span>)</li>
+              <li><code>b</code> = segundo valor leído (<span class="tipo">Real</span>)</li>
+              <li><code>x</code> = acumulador (<span class="tipo">Real</span>)</li>
+            </ul></div>
+
+            <h4>🪜 Paso 4: Pseudocódigo estructurado (solución oficial S7)</h4>
+<pre class="pseudo structured"><code><span class="kw">INICIO</span>
+    <span class="tipo">Real</span>: <span class="var">a</span>, <span class="var">b</span>, <span class="var">x</span>
+    <span class="fn">Leer</span> <span class="var">a</span>, <span class="var">b</span>
+    <span class="var">x</span> <span class="op">=</span> <span class="num">0</span>
+    <span class="kw">SI</span> <span class="var">a</span> <span class="op">&lt;</span> <span class="num">5</span>
+        <span class="var">x</span> <span class="op">=</span> <span class="var">x</span> <span class="op">+</span> <span class="var">a</span> <span class="op">-</span> <span class="var">b</span>
+    <span class="kw">SINO</span>
+        <span class="kw">REPETIR</span>
+            <span class="var">x</span> <span class="op">=</span> <span class="var">x</span> <span class="op">+</span> <span class="var">a</span>
+        <span class="kw">HASTA QUE</span> <span class="var">x</span> <span class="op">&gt;</span> <span class="var">b</span>
+    <span class="kw">FIN_SI</span>
+    <span class="fn">Mostrar</span> <span class="var">x</span>
+<span class="kw">FIN</span></code></pre>
+
+            <h4>🔷 Diagrama de flujo</h4>
+            <div class="flowchart-container">
+              <div class="mermaid-container" data-original='graph TB
+    I([Inicio])
+    D["Real: a, b, x"]
+    L[/"leer a, b"/]
+    P0["x = 0"]
+    C1{"a &lt; 5?"}
+    P1["x = x + a - b"]
+    P2["x = x + a"]
+    C2{"x &gt; b?"}
+    M[/"mostrar x"/]
+    F([Fin])
+    I --> D --> L --> P0 --> C1
+    C1 -->|V| P1 --> M --> F
+    C1 -->|F| P2 --> C2
+    C2 -->|F| P2
+    C2 -->|V| M
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style P0 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P1 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P2 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style C1 fill:#fbbf24,stroke:#d97706,color:#000
+    style C2 fill:#fbbf24,stroke:#d97706,color:#000'><div class="mermaid">
+graph TB
+    I([Inicio])
+    D["Real: a, b, x"]
+    L[/"leer a, b"/]
+    P0["x = 0"]
+    C1{"a &lt; 5?"}
+    P1["x = x + a - b"]
+    P2["x = x + a"]
+    C2{"x &gt; b?"}
+    M[/"mostrar x"/]
+    F([Fin])
+    I --> D --> L --> P0 --> C1
+    C1 -->|V| P1 --> M --> F
+    C1 -->|F| P2 --> C2
+    C2 -->|F| P2
+    C2 -->|V| M
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style P0 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P1 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P2 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style C1 fill:#fbbf24,stroke:#d97706,color:#000
+    style C2 fill:#fbbf24,stroke:#d97706,color:#000
+              </div></div>
+              <div class="flowchart-caption">📊 SI-SINO con un REPETIR-HASTA dentro de la rama F. El lazo del bucle (rombo C2 al P2) es la marca del REPETIR-HASTA.</div>
+            </div>
+
+            <h4>🧪 Paso 5: Verificar con casos</h4>
+            <div class="trace-table"><table>
+              <thead><tr><th>Caso</th><th>Camino</th><th>x final</th></tr></thead>
+              <tbody>
+                <tr><td>a=3, b=10</td><td>a&lt;5 V → x = 0 + 3 - 10 = -7</td><td><strong>-7</strong></td></tr>
+                <tr><td>a=7, b=20</td><td>a&lt;5 F → REPETIR x+=7 (7,14,21). 21&gt;20 sale.</td><td><strong>21</strong></td></tr>
+                <tr><td>a=10, b=5</td><td>a&lt;5 F → REPETIR x+=10 (10). 10&gt;5 sale en 1ª iter.</td><td><strong>10</strong></td></tr>
+              </tbody>
+            </table></div>
+
+            <div class="final-answer"><div class="final-answer-label">✅ Resultado</div><p>Reestructuración con SI-SINO + REPETIR-HASTA en la rama F. El bucle se identifica porque la línea 9 era un "salte hacia atrás" (a la 7). ✓</p></div>
+
+            <div class="callout tip"><div class="callout-header"><span class="callout-icon">💡</span> Lección crítica</div><p>Un <strong>"salte a una línea anterior"</strong> es siempre un bucle. La pregunta es <em>cuál tipo</em>:</p>
+            <ul>
+              <li>Si la condición de salida está <strong>al inicio</strong> del bloque que se repite → MIENTRAS.</li>
+              <li>Si la condición de salida está <strong>al final</strong> (cuerpo se ejecuta primero, después se evalúa) → REPETIR-HASTA.</li>
+            </ul></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EJERCICIO 4 -->
+      <div class="exercise">
+        <div class="exercise-header"><span class="exercise-num">EJ. 4</span><span>Reestructurar: SI-SINO simple con cálculos</span><span class="exercise-tag">🆕 Nuevo</span></div>
+        <div class="exercise-body">
+          <div class="statement-box"><span class="statement-label">📝 Enunciado</span>
+            <p>Reestructurar el siguiente algoritmo:</p>
+<pre class="pseudo numbered" style="margin-top:8px"><code><span class="lblnum">1.</span> <span class="fn">Leer</span> <span class="var">x</span>, <span class="var">y</span>
+<span class="lblnum">2.</span> <span class="kw">Si</span> <span class="var">x</span> <span class="op">&gt;=</span> <span class="num">0</span> <span class="jmp">salte a la línea 5</span>
+<span class="lblnum">3.</span> <span class="var">z</span> <span class="op">=</span> <span class="var">y</span> <span class="op">*</span> <span class="num">2</span>
+<span class="lblnum">4.</span> <span class="jmp">Salte a la línea 6</span>
+<span class="lblnum">5.</span> <span class="var">z</span> <span class="op">=</span> <span class="var">x</span> <span class="op">+</span> <span class="var">y</span>
+<span class="lblnum">6.</span> <span class="fn">Mostrar</span> <span class="var">z</span></code></pre>
+          </div>
+
+          <div class="solution-block">
+            <h4>🪜 Paso 1: Trazar el flujo</h4>
+            <ul>
+              <li>Línea 1: leer x, y.</li>
+              <li>Línea 2: si <code>x &gt;= 0</code> V → salta a 5 (<code>z = x + y</code>) → 6 (mostrar z).</li>
+              <li>Línea 2 F → cae a 3 (<code>z = y * 2</code>) → 4 (salta a 6) → mostrar z.</li>
+            </ul>
+
+            <h4>🧠 Paso 2 y 3: Patrón claro</h4>
+            <p>Es <strong>SI-SINO simple</strong>: cada rama hace un cálculo distinto, y luego ambas convergen en mostrar z.</p>
+
+            <h4>🏷️ Leyenda</h4>
+            <div class="legend-box"><div class="legend-title">🏷️ Leyenda</div><ul style="margin:0">
+              <li><code>x, y</code> = entradas (<span class="tipo">Real</span>)</li>
+              <li><code>z</code> = resultado calculado (<span class="tipo">Real</span>)</li>
+            </ul></div>
+
+            <h4>🪜 Pseudocódigo estructurado</h4>
+<pre class="pseudo structured"><code><span class="kw">INICIO</span>
+    <span class="tipo">Real</span>: <span class="var">x</span>, <span class="var">y</span>, <span class="var">z</span>
+    <span class="fn">Leer</span> <span class="var">x</span>, <span class="var">y</span>
+    <span class="kw">SI</span> <span class="var">x</span> <span class="op">&gt;=</span> <span class="num">0</span>
+        <span class="var">z</span> <span class="op">=</span> <span class="var">x</span> <span class="op">+</span> <span class="var">y</span>
+    <span class="kw">SINO</span>
+        <span class="var">z</span> <span class="op">=</span> <span class="var">y</span> <span class="op">*</span> <span class="num">2</span>
+    <span class="kw">FIN_SI</span>
+    <span class="fn">Mostrar</span> <span class="var">z</span>
+<span class="kw">FIN</span></code></pre>
+
+            <h4>🔷 Diagrama de flujo</h4>
+            <div class="flowchart-container">
+              <div class="mermaid-container" data-original='graph TB
+    I([Inicio])
+    D["Real: x, y, z"]
+    L[/"leer x, y"/]
+    C{"x &gt;= 0?"}
+    P1["z = x + y"]
+    P2["z = y * 2"]
+    M[/"mostrar z"/]
+    F([Fin])
+    I --> D --> L --> C
+    C -->|V| P1 --> M
+    C -->|F| P2 --> M
+    M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000
+    style P1 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P2 fill:#f472b6,stroke:#be185d,color:#fff'><div class="mermaid">
+graph TB
+    I([Inicio])
+    D["Real: x, y, z"]
+    L[/"leer x, y"/]
+    C{"x &gt;= 0?"}
+    P1["z = x + y"]
+    P2["z = y * 2"]
+    M[/"mostrar z"/]
+    F([Fin])
+    I --> D --> L --> C
+    C -->|V| P1 --> M
+    C -->|F| P2 --> M
+    M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000
+    style P1 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P2 fill:#f472b6,stroke:#be185d,color:#fff
+              </div></div>
+            </div>
+
+            <h4>🧪 Verificación</h4>
+            <div class="trace-table"><table>
+              <thead><tr><th>Caso</th><th>Original z</th><th>Estructurado z</th><th>Coincide</th></tr></thead>
+              <tbody>
+                <tr><td>x=3, y=4</td><td>3+4 = 7</td><td>7</td><td>✓</td></tr>
+                <tr><td>x=-2, y=5</td><td>5*2 = 10</td><td>10</td><td>✓</td></tr>
+                <tr><td>x=0, y=8</td><td>0+8 = 8</td><td>8</td><td>✓</td></tr>
+              </tbody>
+            </table></div>
+
+            <div class="final-answer"><div class="final-answer-label">✅ Resultado</div><p>SI-SINO directo. Las dos asignaciones (líneas 3 y 5) son las dos ramas; la línea 6 es donde convergen. ✓</p></div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- EJERCICIO 5 -->
+      <div class="exercise">
+        <div class="exercise-header"><span class="exercise-num">EJ. 5</span><span>Reestructurar: bucle MIENTRAS (salto hacia atrás)</span><span class="exercise-tag">🆕 Nuevo</span></div>
+        <div class="exercise-body">
+          <div class="statement-box"><span class="statement-label">📝 Enunciado</span>
+            <p>Reestructurar el siguiente algoritmo. <strong>Pista:</strong> hay un salto hacia atrás (bucle).</p>
+<pre class="pseudo numbered" style="margin-top:8px"><code><span class="lblnum">1.</span> <span class="fn">Leer</span> <span class="var">N</span>
+<span class="lblnum">2.</span> <span class="var">i</span> <span class="op">=</span> <span class="num">1</span>
+<span class="lblnum">3.</span> <span class="var">suma</span> <span class="op">=</span> <span class="num">0</span>
+<span class="lblnum">4.</span> <span class="kw">Si</span> <span class="var">i</span> <span class="op">&gt;</span> <span class="var">N</span> <span class="jmp">salte a la línea 8</span>
+<span class="lblnum">5.</span> <span class="var">suma</span> <span class="op">=</span> <span class="var">suma</span> <span class="op">+</span> <span class="var">i</span>
+<span class="lblnum">6.</span> <span class="var">i</span> <span class="op">=</span> <span class="var">i</span> <span class="op">+</span> <span class="num">1</span>
+<span class="lblnum">7.</span> <span class="jmp">Salte a la línea 4</span>
+<span class="lblnum">8.</span> <span class="fn">Mostrar</span> <span class="var">suma</span></code></pre>
+          </div>
+
+          <div class="solution-block">
+            <h4>🪜 Paso 1: Trazar el flujo</h4>
+            <p>El flujo arranca con <code>i = 1, suma = 0</code>. Llega a la línea 4: pregunta si <code>i &gt; N</code>. Si V → salta al 8 (mostrar y fin). Si F → suma a, incrementa i, y la línea 7 dice "salta a 4" (atrás). Eso es un <strong>bucle</strong> que se evalúa al INICIO.</p>
+
+            <h4>🧠 Paso 2 y 3: Patrón = MIENTRAS</h4>
+            <p>El "salto hacia atrás" desde la línea 7 a la 4 es la marca clara. La condición <code>i &gt; N</code> en la línea 4 es la <strong>condición de salida</strong>; al MIENTRAS le pondré la <em>negación</em>: <code>i &lt;= N</code> (continúa MIENTRAS i &lt;= N).</p>
+
+            <p><strong>¿Por qué MIENTRAS y no REPETIR?</strong> Porque la condición se evalúa <em>antes</em> de ejecutar el cuerpo (línea 4 está antes de las líneas 5, 6). Si N=0, el bucle no se ejecuta nunca: <code>i=1 &gt; 0</code> es V desde el principio, salta a 8.</p>
+
+            <p>Como conozco el rango exacto (1 a N), podría usar <strong>PARA</strong> que es más elegante.</p>
+
+            <h4>🏷️ Leyenda</h4>
+            <div class="legend-box"><div class="legend-title">🏷️ Leyenda</div><ul style="margin:0">
+              <li><code>N</code> = límite superior (entrada, <span class="tipo">Entero</span>)</li>
+              <li><code>i</code> = contador del bucle (<span class="tipo">Entero</span>)</li>
+              <li><code>suma</code> = acumulador (<span class="tipo">Entero</span>)</li>
+            </ul></div>
+
+            <h4>🪜 Pseudocódigo estructurado (versión MIENTRAS)</h4>
+<pre class="pseudo structured"><code><span class="kw">INICIO</span>
+    <span class="tipo">Entero</span>: <span class="var">N</span>, <span class="var">i</span>, <span class="var">suma</span>
+    <span class="fn">Leer</span> <span class="var">N</span>
+    <span class="var">i</span> <span class="op">=</span> <span class="num">1</span>
+    <span class="var">suma</span> <span class="op">=</span> <span class="num">0</span>
+    <span class="kw">MIENTRAS</span> <span class="var">i</span> <span class="op">&lt;=</span> <span class="var">N</span> <span class="kw">HACER</span>
+        <span class="var">suma</span> <span class="op">=</span> <span class="var">suma</span> <span class="op">+</span> <span class="var">i</span>
+        <span class="var">i</span> <span class="op">=</span> <span class="var">i</span> <span class="op">+</span> <span class="num">1</span>
+    <span class="kw">FIN_MIENTRAS</span>
+    <span class="fn">Mostrar</span> <span class="var">suma</span>
+<span class="kw">FIN</span></code></pre>
+
+            <h4>🪜 Versión equivalente con PARA (más elegante)</h4>
+<pre class="pseudo structured"><code><span class="kw">INICIO</span>
+    <span class="tipo">Entero</span>: <span class="var">N</span>, <span class="var">i</span>, <span class="var">suma</span>
+    <span class="fn">Leer</span> <span class="var">N</span>
+    <span class="var">suma</span> <span class="op">=</span> <span class="num">0</span>
+    <span class="kw">PARA</span> <span class="var">i</span> <span class="op">=</span> <span class="num">1</span> <span class="kw">HASTA</span> <span class="var">N</span> <span class="kw">HACER</span>
+        <span class="var">suma</span> <span class="op">=</span> <span class="var">suma</span> <span class="op">+</span> <span class="var">i</span>
+    <span class="kw">FIN_PARA</span>
+    <span class="fn">Mostrar</span> <span class="var">suma</span>
+<span class="kw">FIN</span></code></pre>
+
+            <p style="font-size:.88rem;color:var(--text-muted)">Ambas versiones son correctas. La de PARA es preferible cuando conoces el rango fijo (<em>1 a N</em>), porque encapsula la inicialización, condición y actualización del contador en una sola línea.</p>
+
+            <h4>🔷 Diagrama de flujo (versión MIENTRAS)</h4>
+            <div class="flowchart-container">
+              <div class="mermaid-container" data-original='graph TB
+    I([Inicio])
+    D["Entero: N, i, suma"]
+    L[/"leer N"/]
+    Init["i = 1<br/>suma = 0"]
+    C{"i &lt;= N?"}
+    P["suma = suma + i<br/>i = i + 1"]
+    M[/"mostrar suma"/]
+    F([Fin])
+    I --> D --> L --> Init --> C
+    C -->|V| P --> C
+    C -->|F| M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style Init fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style C fill:#fbbf24,stroke:#d97706,color:#000
+    style P fill:#a78bfa,stroke:#6d28d9,color:#fff'><div class="mermaid">
+graph TB
+    I([Inicio])
+    D["Entero: N, i, suma"]
+    L[/"leer N"/]
+    Init["i = 1<br/>suma = 0"]
+    C{"i &lt;= N?"}
+    P["suma = suma + i<br/>i = i + 1"]
+    M[/"mostrar suma"/]
+    F([Fin])
+    I --> D --> L --> Init --> C
+    C -->|V| P --> C
+    C -->|F| M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style Init fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style C fill:#fbbf24,stroke:#d97706,color:#000
+    style P fill:#a78bfa,stroke:#6d28d9,color:#fff
+              </div></div>
+            </div>
+
+            <h4>🧪 Verificación (N = 4)</h4>
+            <p>Esperado: 1 + 2 + 3 + 4 = 10.</p>
+            <div class="trace-table"><table>
+              <thead><tr><th>Iter</th><th>i antes</th><th>i &lt;= N?</th><th>suma después</th><th>i después</th></tr></thead>
+              <tbody>
+                <tr><td>—</td><td>1 (init)</td><td>—</td><td>0 (init)</td><td>1</td></tr>
+                <tr><td>1</td><td>1</td><td>V</td><td>1</td><td>2</td></tr>
+                <tr><td>2</td><td>2</td><td>V</td><td>3</td><td>3</td></tr>
+                <tr><td>3</td><td>3</td><td>V</td><td>6</td><td>4</td></tr>
+                <tr><td>4</td><td>4</td><td>V</td><td>10</td><td>5</td></tr>
+                <tr><td>5</td><td>5</td><td>F → sale</td><td>10</td><td>—</td></tr>
+              </tbody>
+            </table></div>
+
+            <div class="final-answer"><div class="final-answer-label">✅ Resultado</div><p>El algoritmo calcula la <strong>suma de 1 hasta N</strong>. Para N=4, suma = 10. ✓ Las dos versiones (MIENTRAS y PARA) producen el mismo resultado.</p></div>
+
+            <div class="callout tip"><div class="callout-header"><span class="callout-icon">💡</span> Lección clave</div><p>Cuando un algoritmo con saltos contiene <strong>una variable contador (i)</strong> que se inicializa, se incrementa y se compara contra un límite, casi siempre es traducible a un <strong>PARA</strong>. Es la opción más limpia.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EJERCICIO 6 -->
+      <div class="exercise">
+        <div class="exercise-header"><span class="exercise-num">EJ. 6</span><span>Reestructurar: identificar tres rangos en saltos</span><span class="exercise-tag">🆕 Nuevo</span></div>
+        <div class="exercise-body">
+          <div class="statement-box"><span class="statement-label">📝 Enunciado</span>
+            <p>Reestructurar el siguiente algoritmo (cuenta con varios saltos en cascada):</p>
+<pre class="pseudo numbered" style="margin-top:8px"><code><span class="lblnum">1.</span> <span class="fn">Leer</span> <span class="var">nota</span>
+<span class="lblnum">2.</span> <span class="kw">Si</span> <span class="var">nota</span> <span class="op">&gt;=</span> <span class="num">17</span> <span class="jmp">salte a la línea 8</span>
+<span class="lblnum">3.</span> <span class="kw">Si</span> <span class="var">nota</span> <span class="op">&gt;=</span> <span class="num">14</span> <span class="jmp">salte a la línea 9</span>
+<span class="lblnum">4.</span> <span class="kw">Si</span> <span class="var">nota</span> <span class="op">&gt;=</span> <span class="num">11</span> <span class="jmp">salte a la línea 10</span>
+<span class="lblnum">5.</span> <span class="var">categoría</span> <span class="op">=</span> <span class="str">"Desaprobado"</span>
+<span class="lblnum">6.</span> <span class="jmp">Salte a la línea 11</span>
+<span class="lblnum">7.</span> <span class="cmt">// línea no usada</span>
+<span class="lblnum">8.</span> <span class="var">categoría</span> <span class="op">=</span> <span class="str">"Sobresaliente"</span>
+<span class="lblnum">9.</span> <span class="var">categoría</span> <span class="op">=</span> <span class="str">"Notable"</span>
+<span class="lblnum">10.</span> <span class="var">categoría</span> <span class="op">=</span> <span class="str">"Aprobado"</span>
+<span class="lblnum">11.</span> <span class="fn">Mostrar</span> <span class="var">categoría</span></code></pre>
+          </div>
+
+          <div class="solution-block">
+            <h4>⚠️ Detectar errata en el original</h4>
+            <p>Si trazas literalmente: cuando salta a la línea 8 (Sobresaliente), <strong>cae secuencialmente</strong> a la 9 (sobreescribe a Notable) y a la 10 (sobreescribe a Aprobado). El "Sobresaliente" desaparece. Eso significa que <strong>cada asignación necesita un salto al final</strong> para llegar al "Mostrar" sin pasar por las otras.</p>
+            <p>El enunciado original tiene saltos implícitos faltantes; en el archivo S7, este tipo de algoritmos asume que después de una asignación, hay un salto al final. Es una convención de "esquemas con etiquetas" donde el flujo no cae secuencialmente. Lo voy a tratar así para que tenga sentido.</p>
+
+            <h4>🪜 Paso 1: Trazar el flujo (corregido)</h4>
+            <ul>
+              <li>Línea 2: si <code>nota &gt;= 17</code> → Sobresaliente (línea 8) → mostrar.</li>
+              <li>Si no, línea 3: si <code>nota &gt;= 14</code> → Notable (línea 9) → mostrar.</li>
+              <li>Si no, línea 4: si <code>nota &gt;= 11</code> → Aprobado (línea 10) → mostrar.</li>
+              <li>Si no, línea 5: Desaprobado.</li>
+            </ul>
+
+            <h4>🧠 Paso 2 y 3: Patrón = SI anidado en cascada</h4>
+            <p>Cuatro categorías excluyentes. Es el clásico <strong>SI anidado de mayor a menor</strong>.</p>
+
+            <h4>🏷️ Leyenda</h4>
+            <div class="legend-box"><div class="legend-title">🏷️ Leyenda</div><ul style="margin:0">
+              <li><code>nota</code> = nota a clasificar (entrada, <span class="tipo">Real</span>)</li>
+              <li><code>categoría</code> = clasificación obtenida (salida, <span class="tipo">Cadena</span>)</li>
+            </ul></div>
+
+            <h4>🪜 Pseudocódigo estructurado</h4>
+<pre class="pseudo structured"><code><span class="kw">INICIO</span>
+    <span class="tipo">Real</span>: <span class="var">nota</span>
+    <span class="tipo">Cadena</span>: <span class="var">categoría</span>
+    <span class="fn">Leer</span> <span class="var">nota</span>
+    <span class="kw">SI</span> <span class="var">nota</span> <span class="op">&gt;=</span> <span class="num">17</span>
+        <span class="var">categoría</span> <span class="op">=</span> <span class="str">"Sobresaliente"</span>
+    <span class="kw">SINO</span>
+        <span class="kw">SI</span> <span class="var">nota</span> <span class="op">&gt;=</span> <span class="num">14</span>
+            <span class="var">categoría</span> <span class="op">=</span> <span class="str">"Notable"</span>
+        <span class="kw">SINO</span>
+            <span class="kw">SI</span> <span class="var">nota</span> <span class="op">&gt;=</span> <span class="num">11</span>
+                <span class="var">categoría</span> <span class="op">=</span> <span class="str">"Aprobado"</span>
+            <span class="kw">SINO</span>
+                <span class="var">categoría</span> <span class="op">=</span> <span class="str">"Desaprobado"</span>
+            <span class="kw">FIN_SI</span>
+        <span class="kw">FIN_SI</span>
+    <span class="kw">FIN_SI</span>
+    <span class="fn">Mostrar</span> <span class="var">categoría</span>
+<span class="kw">FIN</span></code></pre>
+
+            <h4>🔷 Diagrama de flujo</h4>
+            <div class="flowchart-container">
+              <div class="mermaid-container" data-original='graph TB
+    I([Inicio])
+    D["Real: nota · Cadena: categoria"]
+    L[/"leer nota"/]
+    C1{"nota &gt;= 17?"}
+    P1["categoria = Sobresaliente"]
+    C2{"nota &gt;= 14?"}
+    P2["categoria = Notable"]
+    C3{"nota &gt;= 11?"}
+    P3["categoria = Aprobado"]
+    P4["categoria = Desaprobado"]
+    M[/"mostrar categoria"/]
+    F([Fin])
+    I --> D --> L --> C1
+    C1 -->|V| P1 --> M
+    C1 -->|F| C2
+    C2 -->|V| P2 --> M
+    C2 -->|F| C3
+    C3 -->|V| P3 --> M
+    C3 -->|F| P4 --> M
+    M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style C1 fill:#fbbf24,stroke:#d97706,color:#000
+    style C2 fill:#fbbf24,stroke:#d97706,color:#000
+    style C3 fill:#fbbf24,stroke:#d97706,color:#000
+    style P1 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P2 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P3 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P4 fill:#94a3b8,stroke:#475569,color:#000'><div class="mermaid">
+graph TB
+    I([Inicio])
+    D["Real: nota · Cadena: categoria"]
+    L[/"leer nota"/]
+    C1{"nota &gt;= 17?"}
+    P1["categoria = Sobresaliente"]
+    C2{"nota &gt;= 14?"}
+    P2["categoria = Notable"]
+    C3{"nota &gt;= 11?"}
+    P3["categoria = Aprobado"]
+    P4["categoria = Desaprobado"]
+    M[/"mostrar categoria"/]
+    F([Fin])
+    I --> D --> L --> C1
+    C1 -->|V| P1 --> M
+    C1 -->|F| C2
+    C2 -->|V| P2 --> M
+    C2 -->|F| C3
+    C3 -->|V| P3 --> M
+    C3 -->|F| P4 --> M
+    M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style C1 fill:#fbbf24,stroke:#d97706,color:#000
+    style C2 fill:#fbbf24,stroke:#d97706,color:#000
+    style C3 fill:#fbbf24,stroke:#d97706,color:#000
+    style P1 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P2 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P3 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P4 fill:#94a3b8,stroke:#475569,color:#000
+              </div></div>
+            </div>
+
+            <h4>🧪 Verificación</h4>
+            <div class="trace-table"><table>
+              <thead><tr><th>nota</th><th>Cond. activada</th><th>categoría</th></tr></thead>
+              <tbody>
+                <tr><td>18</td><td>≥ 17</td><td>Sobresaliente</td></tr>
+                <tr><td>15</td><td>≥ 14</td><td>Notable</td></tr>
+                <tr><td>12</td><td>≥ 11</td><td>Aprobado</td></tr>
+                <tr><td>8</td><td>caso por defecto</td><td>Desaprobado</td></tr>
+              </tbody>
+            </table></div>
+
+            <div class="final-answer"><div class="final-answer-label">✅ Resultado</div><p>SI anidado en cascada con 4 categorías. Es <strong>el mismo patrón</strong> que el ejercicio del IMC del simulacro, solo que ahora reestructurado a partir de saltos. ✓</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EJERCICIO 7 - PROYECTO INTEGRADOR 1 -->
+      <div class="exercise">
+        <div class="exercise-header"><span class="exercise-num">EJ. 7</span><span>Proyecto integrador: gestión de notas de un curso</span><span class="exercise-tag">🚀 Integrador</span></div>
+        <div class="exercise-body">
+          <div class="statement-box"><span class="statement-label">📝 Enunciado</span>
+            <p>Diseña un algoritmo que procese las notas de N alumnos de un curso. Para cada alumno, lee su nota (0 a 20) y clasifícala (Aprobado si ≥ 10.5, Desaprobado si &lt; 10.5). Al final, debes mostrar:</p>
+            <ul>
+              <li>Cantidad total de aprobados.</li>
+              <li>Cantidad total de desaprobados.</li>
+              <li>El promedio general.</li>
+              <li>La nota máxima y la nota mínima.</li>
+              <li>Si el promedio del curso es ≥ 13, mostrar mensaje "Curso destacado". Si está entre 10.5 y 13, "Curso aprobado". Si &lt; 10.5, "Curso debajo del estándar".</li>
+            </ul>
+            <p>Aplica las 6 fases del proceso de programación.</p>
+          </div>
+
+          <div class="solution-block">
+            <h4>📋 Fase 1: Definición del problema</h4>
+            <p>Procesar N notas, contar aprobados/desaprobados, calcular promedio, máximo, mínimo, y dar un veredicto final del curso.</p>
+
+            <h4>📋 Fase 2: Análisis</h4>
+            <ul>
+              <li><strong>Entradas:</strong> N (cantidad de alumnos), notas (una por una).</li>
+              <li><strong>Salidas:</strong> aprob, desap, prom, max, min, mensaje del curso.</li>
+              <li><strong>Patrones a usar:</strong> PARA + 2 contadores + acumulador + max/min (todos juntos).</li>
+              <li><strong>Caso especial:</strong> inicializar max/min con la primera nota leída.</li>
+              <li><strong>Veredicto del curso:</strong> SI anidado de 3 niveles (≥13, ≥10.5, &lt;10.5).</li>
+            </ul>
+
+            <h4>📋 Fase 3: Diseño</h4>
+
+            <h4>🏷️ Leyenda</h4>
+            <div class="legend-box"><div class="legend-title">🏷️ Leyenda</div><ul style="margin:0">
+              <li><code>N</code> = cantidad de alumnos (<span class="tipo">Entero</span>)</li>
+              <li><code>nota</code> = nota actual leída (<span class="tipo">Real</span>)</li>
+              <li><code>i</code> = control del PARA (<span class="tipo">Entero</span>)</li>
+              <li><code>aprob, desap</code> = contadores (<span class="tipo">Entero</span>)</li>
+              <li><code>suma</code> = acumulador para promedio (<span class="tipo">Real</span>)</li>
+              <li><code>max, min</code> = nota máxima y mínima (<span class="tipo">Real</span>)</li>
+              <li><code>prom</code> = promedio final (<span class="tipo">Real</span>)</li>
+            </ul></div>
+
+            <h4>🪜 Pseudocódigo</h4>
+<pre class="pseudo structured"><code><span class="kw">INICIO</span>
+    <span class="tipo">Entero</span>: <span class="var">N</span>, <span class="var">i</span>, <span class="var">aprob</span>, <span class="var">desap</span>
+    <span class="tipo">Real</span>: <span class="var">nota</span>, <span class="var">suma</span>, <span class="var">max</span>, <span class="var">min</span>, <span class="var">prom</span>
+
+    <span class="fn">Leer</span> <span class="var">N</span>
+    <span class="var">aprob</span> <span class="op">=</span> <span class="num">0</span>
+    <span class="var">desap</span> <span class="op">=</span> <span class="num">0</span>
+    <span class="var">suma</span> <span class="op">=</span> <span class="num">0</span>
+
+    <span class="cmt">// leer la 1ª nota antes para inicializar max y min</span>
+    <span class="fn">Leer</span> <span class="var">nota</span>
+    <span class="var">max</span> <span class="op">=</span> <span class="var">nota</span>
+    <span class="var">min</span> <span class="op">=</span> <span class="var">nota</span>
+    <span class="var">suma</span> <span class="op">=</span> <span class="var">nota</span>
+    <span class="kw">SI</span> <span class="var">nota</span> <span class="op">&gt;=</span> <span class="num">10.5</span>
+        <span class="var">aprob</span> <span class="op">=</span> <span class="num">1</span>
+    <span class="kw">SINO</span>
+        <span class="var">desap</span> <span class="op">=</span> <span class="num">1</span>
+    <span class="kw">FIN_SI</span>
+
+    <span class="cmt">// procesar las restantes (N-1)</span>
+    <span class="kw">PARA</span> <span class="var">i</span> <span class="op">=</span> <span class="num">2</span> <span class="kw">HASTA</span> <span class="var">N</span> <span class="kw">HACER</span>
+        <span class="fn">Leer</span> <span class="var">nota</span>
+        <span class="var">suma</span> <span class="op">=</span> <span class="var">suma</span> <span class="op">+</span> <span class="var">nota</span>
+        <span class="kw">SI</span> <span class="var">nota</span> <span class="op">&gt;</span> <span class="var">max</span>
+            <span class="var">max</span> <span class="op">=</span> <span class="var">nota</span>
+        <span class="kw">FIN_SI</span>
+        <span class="kw">SI</span> <span class="var">nota</span> <span class="op">&lt;</span> <span class="var">min</span>
+            <span class="var">min</span> <span class="op">=</span> <span class="var">nota</span>
+        <span class="kw">FIN_SI</span>
+        <span class="kw">SI</span> <span class="var">nota</span> <span class="op">&gt;=</span> <span class="num">10.5</span>
+            <span class="var">aprob</span> <span class="op">=</span> <span class="var">aprob</span> <span class="op">+</span> <span class="num">1</span>
+        <span class="kw">SINO</span>
+            <span class="var">desap</span> <span class="op">=</span> <span class="var">desap</span> <span class="op">+</span> <span class="num">1</span>
+        <span class="kw">FIN_SI</span>
+    <span class="kw">FIN_PARA</span>
+
+    <span class="var">prom</span> <span class="op">=</span> <span class="var">suma</span> <span class="op">/</span> <span class="var">N</span>
+
+    <span class="fn">Mostrar</span> <span class="str">"Aprobados: "</span>, <span class="var">aprob</span>
+    <span class="fn">Mostrar</span> <span class="str">"Desaprobados: "</span>, <span class="var">desap</span>
+    <span class="fn">Mostrar</span> <span class="str">"Promedio: "</span>, <span class="var">prom</span>
+    <span class="fn">Mostrar</span> <span class="str">"Nota máxima: "</span>, <span class="var">max</span>
+    <span class="fn">Mostrar</span> <span class="str">"Nota mínima: "</span>, <span class="var">min</span>
+
+    <span class="kw">SI</span> <span class="var">prom</span> <span class="op">&gt;=</span> <span class="num">13</span>
+        <span class="fn">Mostrar</span> <span class="str">"Curso destacado"</span>
+    <span class="kw">SINO</span>
+        <span class="kw">SI</span> <span class="var">prom</span> <span class="op">&gt;=</span> <span class="num">10.5</span>
+            <span class="fn">Mostrar</span> <span class="str">"Curso aprobado"</span>
+        <span class="kw">SINO</span>
+            <span class="fn">Mostrar</span> <span class="str">"Curso debajo del estándar"</span>
+        <span class="kw">FIN_SI</span>
+    <span class="kw">FIN_SI</span>
+<span class="kw">FIN</span></code></pre>
+
+            <h4>🔷 Diagrama de flujo</h4>
+            <div class="flowchart-container">
+              <div class="mermaid-container" data-original='graph TB
+    I([Inicio])
+    D["declaración"]
+    L1[/"leer N"/]
+    Init["aprob=0, desap=0, suma=0"]
+    L2[/"leer 1a nota"/]
+    Init2["max = nota<br/>min = nota<br/>suma = nota"]
+    C0{"nota &gt;= 10.5?"}
+    Pa0["aprob = 1"]
+    Pd0["desap = 1"]
+    SetI["i = 2"]
+    Cp{"i &lt;= N?"}
+    L3[/"leer nota"/]
+    Acc["suma += nota"]
+    Cmax{"nota &gt; max?"}
+    Smax["max = nota"]
+    Cmin{"nota &lt; min?"}
+    Smin["min = nota"]
+    Caprob{"nota &gt;= 10.5?"}
+    Pa["aprob++"]
+    Pd["desap++"]
+    Inc["i = i + 1"]
+    Calc["prom = suma / N"]
+    M[/"mostrar resultados"/]
+    Cv1{"prom &gt;= 13?"}
+    Mv1[/"Curso destacado"/]
+    Cv2{"prom &gt;= 10.5?"}
+    Mv2[/"Curso aprobado"/]
+    Mv3[/"Curso debajo"/]
+    F([Fin])
+    I --> D --> L1 --> Init --> L2 --> Init2 --> C0
+    C0 -->|V| Pa0 --> SetI
+    C0 -->|F| Pd0 --> SetI
+    SetI --> Cp
+    Cp -->|V| L3 --> Acc --> Cmax
+    Cmax -->|V| Smax --> Cmin
+    Cmax -->|F| Cmin
+    Cmin -->|V| Smin --> Caprob
+    Cmin -->|F| Caprob
+    Caprob -->|V| Pa --> Inc
+    Caprob -->|F| Pd --> Inc
+    Inc --> Cp
+    Cp -->|F| Calc --> M --> Cv1
+    Cv1 -->|V| Mv1 --> F
+    Cv1 -->|F| Cv2
+    Cv2 -->|V| Mv2 --> F
+    Cv2 -->|F| Mv3 --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000'><div class="mermaid">
+graph TB
+    I([Inicio])
+    D["declaración"]
+    L1[/"leer N"/]
+    Init["aprob=0, desap=0, suma=0"]
+    L2[/"leer 1a nota"/]
+    Init2["max = nota<br/>min = nota<br/>suma = nota"]
+    C0{"nota &gt;= 10.5?"}
+    Pa0["aprob = 1"]
+    Pd0["desap = 1"]
+    SetI["i = 2"]
+    Cp{"i &lt;= N?"}
+    L3[/"leer nota"/]
+    Acc["suma += nota"]
+    Cmax{"nota &gt; max?"}
+    Smax["max = nota"]
+    Cmin{"nota &lt; min?"}
+    Smin["min = nota"]
+    Caprob{"nota &gt;= 10.5?"}
+    Pa["aprob++"]
+    Pd["desap++"]
+    Inc["i = i + 1"]
+    Calc["prom = suma / N"]
+    M[/"mostrar resultados"/]
+    Cv1{"prom &gt;= 13?"}
+    Mv1[/"Curso destacado"/]
+    Cv2{"prom &gt;= 10.5?"}
+    Mv2[/"Curso aprobado"/]
+    Mv3[/"Curso debajo"/]
+    F([Fin])
+    I --> D --> L1 --> Init --> L2 --> Init2 --> C0
+    C0 -->|V| Pa0 --> SetI
+    C0 -->|F| Pd0 --> SetI
+    SetI --> Cp
+    Cp -->|V| L3 --> Acc --> Cmax
+    Cmax -->|V| Smax --> Cmin
+    Cmax -->|F| Cmin
+    Cmin -->|V| Smin --> Caprob
+    Cmin -->|F| Caprob
+    Caprob -->|V| Pa --> Inc
+    Caprob -->|F| Pd --> Inc
+    Inc --> Cp
+    Cp -->|F| Calc --> M --> Cv1
+    Cv1 -->|V| Mv1 --> F
+    Cv1 -->|F| Cv2
+    Cv2 -->|V| Mv2 --> F
+    Cv2 -->|F| Mv3 --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+              </div></div>
+              <div class="flowchart-caption">📊 El diagrama integra TODOS los patrones aprendidos: PARA + 2 contadores + acumulador + max/min + SI anidado final.</div>
+            </div>
+
+            <h4>📋 Fase 5: Implantación / Prueba (con N=5, notas: 18, 9, 14, 11, 6)</h4>
+
+            <p>Trazado abreviado:</p>
+            <ul>
+              <li><strong>1ª nota:</strong> 18 → max=18, min=18, suma=18, aprob=1.</li>
+              <li><strong>i=2 (nota 9):</strong> suma=27, max=18, min=9, desap=1.</li>
+              <li><strong>i=3 (nota 14):</strong> suma=41, max=18, min=9, aprob=2.</li>
+              <li><strong>i=4 (nota 11):</strong> suma=52, max=18, min=9, aprob=3.</li>
+              <li><strong>i=5 (nota 6):</strong> suma=58, max=18, min=6, desap=2.</li>
+              <li><strong>Promedio:</strong> 58/5 = 11.6.</li>
+              <li><strong>Veredicto:</strong> 11.6 &lt; 13 y ≥ 10.5 → "Curso aprobado".</li>
+            </ul>
+
+            <div class="final-answer"><div class="final-answer-label">✅ Resultado del proyecto</div><p>Aprobados: 3, Desaprobados: 2, Promedio: 11.6, Máxima: 18, Mínima: 6 → <strong>Curso aprobado</strong>. ✓</p></div>
+
+            <div class="callout tip"><div class="callout-header"><span class="callout-icon">💡</span> Lección clave del integrador</div><p>Un proyecto integrador combina <strong>varios patrones</strong> en un solo algoritmo. La clave es identificar cada patrón individualmente y montarlos en el orden correcto. La <strong>leyenda con TODAS las variables</strong> y la <strong>inicialización antes del PARA</strong> son críticas.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EJERCICIO 8 - PROYECTO INTEGRADOR 2 -->
+      <div class="exercise">
+        <div class="exercise-header"><span class="exercise-num">EJ. 8</span><span>Proyecto integrador: análisis de un número entero</span><span class="exercise-tag">🚀 Integrador</span></div>
+        <div class="exercise-body">
+          <div class="statement-box"><span class="statement-label">📝 Enunciado</span>
+            <p>Diseña un algoritmo que reciba un <strong>número entero positivo</strong> y muestre:</p>
+            <ul>
+              <li>Si es par o impar.</li>
+              <li>La cantidad de cifras que tiene.</li>
+              <li>La suma de sus cifras.</li>
+              <li>Si la suma de cifras es divisible por 3 (curiosidad: si lo es, el número original también lo es).</li>
+              <li>El número invertido (sus cifras al revés).</li>
+            </ul>
+            <p>Si el usuario ingresa un número ≤ 0, muestra mensaje de error y termina.</p>
+          </div>
+
+          <div class="solution-block">
+            <h4>📋 Análisis</h4>
+            <ul>
+              <li><strong>Entrada:</strong> num (Entero positivo).</li>
+              <li><strong>Salidas:</strong> par/impar, cant_cifras, suma_cifras, divisibilidad por 3, invertido.</li>
+              <li><strong>Patrones a usar:</strong> validación de entrada con SI, MOD/DIV para paridad y descomposición, MIENTRAS para extraer cifras.</li>
+            </ul>
+
+            <h4>🏷️ Leyenda</h4>
+            <div class="legend-box"><div class="legend-title">🏷️ Leyenda</div><ul style="margin:0">
+              <li><code>num</code> = número original (<span class="tipo">Entero</span>)</li>
+              <li><code>aux</code> = copia para iterar (<span class="tipo">Entero</span>)</li>
+              <li><code>cifra</code> = cifra extraída en cada iteración (<span class="tipo">Entero</span>)</li>
+              <li><code>cant</code> = cantidad de cifras (<span class="tipo">Entero</span>)</li>
+              <li><code>suma</code> = suma de cifras (<span class="tipo">Entero</span>)</li>
+              <li><code>inv</code> = número invertido (<span class="tipo">Entero</span>)</li>
+            </ul></div>
+
+            <h4>🪜 Pseudocódigo</h4>
+<pre class="pseudo structured"><code><span class="kw">INICIO</span>
+    <span class="tipo">Entero</span>: <span class="var">num</span>, <span class="var">aux</span>, <span class="var">cifra</span>, <span class="var">cant</span>, <span class="var">suma</span>, <span class="var">inv</span>
+
+    <span class="fn">Leer</span> <span class="var">num</span>
+
+    <span class="kw">SI</span> <span class="var">num</span> <span class="op">&lt;=</span> <span class="num">0</span>
+        <span class="fn">Mostrar</span> <span class="str">"Error: ingrese un número positivo"</span>
+    <span class="kw">SINO</span>
+        <span class="cmt">// 1. Par o impar</span>
+        <span class="kw">SI</span> <span class="var">num</span> <span class="op">MOD</span> <span class="num">2</span> <span class="op">=</span> <span class="num">0</span>
+            <span class="fn">Mostrar</span> <span class="str">"El número es par"</span>
+        <span class="kw">SINO</span>
+            <span class="fn">Mostrar</span> <span class="str">"El número es impar"</span>
+        <span class="kw">FIN_SI</span>
+
+        <span class="cmt">// 2-4. Descomposición + suma + invertido (todo en un solo MIENTRAS)</span>
+        <span class="var">aux</span> <span class="op">=</span> <span class="var">num</span>
+        <span class="var">cant</span> <span class="op">=</span> <span class="num">0</span>
+        <span class="var">suma</span> <span class="op">=</span> <span class="num">0</span>
+        <span class="var">inv</span> <span class="op">=</span> <span class="num">0</span>
+        <span class="kw">MIENTRAS</span> <span class="var">aux</span> <span class="op">&gt;</span> <span class="num">0</span> <span class="kw">HACER</span>
+            <span class="var">cifra</span> <span class="op">=</span> <span class="var">aux</span> <span class="op">MOD</span> <span class="num">10</span>
+            <span class="var">cant</span> <span class="op">=</span> <span class="var">cant</span> <span class="op">+</span> <span class="num">1</span>
+            <span class="var">suma</span> <span class="op">=</span> <span class="var">suma</span> <span class="op">+</span> <span class="var">cifra</span>
+            <span class="var">inv</span> <span class="op">=</span> <span class="var">inv</span> <span class="op">*</span> <span class="num">10</span> <span class="op">+</span> <span class="var">cifra</span>
+            <span class="var">aux</span> <span class="op">=</span> <span class="var">aux</span> <span class="op">DIV</span> <span class="num">10</span>
+        <span class="kw">FIN_MIENTRAS</span>
+
+        <span class="fn">Mostrar</span> <span class="str">"Cantidad de cifras: "</span>, <span class="var">cant</span>
+        <span class="fn">Mostrar</span> <span class="str">"Suma de cifras: "</span>, <span class="var">suma</span>
+        <span class="fn">Mostrar</span> <span class="str">"Invertido: "</span>, <span class="var">inv</span>
+
+        <span class="cmt">// 5. Divisibilidad por 3</span>
+        <span class="kw">SI</span> <span class="var">suma</span> <span class="op">MOD</span> <span class="num">3</span> <span class="op">=</span> <span class="num">0</span>
+            <span class="fn">Mostrar</span> <span class="str">"Suma de cifras divisible por 3 → el número también lo es"</span>
+        <span class="kw">SINO</span>
+            <span class="fn">Mostrar</span> <span class="str">"Suma de cifras NO divisible por 3"</span>
+        <span class="kw">FIN_SI</span>
+    <span class="kw">FIN_SI</span>
+<span class="kw">FIN</span></code></pre>
+
+            <h4>🧪 Verificación (num = 4729)</h4>
+            <p>Esperado: impar (4729 MOD 2 = 1), 4 cifras, suma = 4+7+2+9 = 22, no divisible por 3, invertido = 9274.</p>
+
+            <div class="trace-table"><table>
+              <thead><tr><th>Iter</th><th>aux antes</th><th>cifra</th><th>cant</th><th>suma</th><th>inv</th><th>aux después</th></tr></thead>
+              <tbody>
+                <tr><td>—</td><td>4729</td><td>—</td><td>0</td><td>0</td><td>0</td><td>—</td></tr>
+                <tr><td>1</td><td>4729</td><td>9</td><td>1</td><td>9</td><td>9</td><td>472</td></tr>
+                <tr><td>2</td><td>472</td><td>2</td><td>2</td><td>11</td><td>92</td><td>47</td></tr>
+                <tr><td>3</td><td>47</td><td>7</td><td>3</td><td>18</td><td>927</td><td>4</td></tr>
+                <tr><td>4</td><td>4</td><td>4</td><td>4</td><td>22</td><td>9274</td><td>0</td></tr>
+              </tbody>
+            </table></div>
+
+            <p>22 MOD 3 = 1 → no divisible por 3. ✓ (Y efectivamente, 4729 / 3 = 1576.33..., no es entero).</p>
+
+            <div class="final-answer"><div class="final-answer-label">✅ Resultado</div>
+              <p>Salidas: <strong>impar, 4 cifras, suma 22, no divisible por 3, invertido 9274</strong>. ✓ El algoritmo combina paridad + descomposición + invertido + divisibilidad en un solo MIENTRAS eficiente.</p>
+            </div>
+
+            <div class="callout tip"><div class="callout-header"><span class="callout-icon">💡</span> Lección final del integrador</div><p>Cuando un problema requiere <strong>varios análisis sobre las cifras</strong>, no hagas un MIENTRAS por cada análisis: <strong>combínalos en un solo MIENTRAS</strong>. Aquí, suma + cantidad + invertido se calculan en una sola pasada. Esto es <em>eficiencia</em>, una idea que verás más en cursos avanzados.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ GLOSARIO ============ -->
+    <section class="block" id="glosario">
+      <div class="block-header"><div class="block-num">📖</div><h2>Glosario rápido</h2></div>
+
+      <div class="glossary-grid">
+        <div class="gloss-item"><div class="gloss-term">Algoritmo estructurado</div><div class="gloss-def">El que usa SOLO secuencial + selectiva + repetitiva. Sin GOTO.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Algoritmo NO estructurado</div><div class="gloss-def">El que usa GOTO o saltos numerados directos.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Reestructuración</div><div class="gloss-def">Convertir un algoritmo no estructurado en uno estructurado equivalente.</div></div>
+        <div class="gloss-item"><div class="gloss-term">GOTO / "Salte a la línea X"</div><div class="gloss-def">Instrucción que transfiere el control a otra línea numerada del programa.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Código espagueti</div><div class="gloss-def">Programa con tantos GOTO que es imposible de leer. Aludido por Dijkstra.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Teorema de Böhm-Jacopini</div><div class="gloss-def">Cualquier algoritmo computable se puede expresar usando solo secuencial + selectiva + repetitiva.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Salto hacia adelante</div><div class="gloss-def">Salto a una línea de número mayor. Típicamente parte de un SI.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Salto hacia atrás</div><div class="gloss-def">Salto a una línea de número menor. Indica un bucle.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Patrón AND oculto</div><div class="gloss-def">Varios SI consecutivos con saltos al mismo destino → se combinan con AND.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Patrón OR oculto</div><div class="gloss-def">Varios SI con saltos al mismo destino donde cualquiera lleva → se combinan con OR.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Definición del problema</div><div class="gloss-def">Fase 1: entender qué resolver.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Análisis</div><div class="gloss-def">Fase 2: identificar entradas, salidas, fórmulas, casos.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Diseño</div><div class="gloss-def">Fase 3: pseudocódigo + diagrama + leyenda.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Codificación</div><div class="gloss-def">Fase 4: traducir a un lenguaje de programación real (Python).</div></div>
+        <div class="gloss-item"><div class="gloss-term">Implantación</div><div class="gloss-def">Fase 5: probar el programa con casos reales.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Mantenimiento</div><div class="gloss-def">Fase 6: ajustar después de cambios o errores.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Estructura del algoritmo</div><div class="gloss-def">Ingreso de datos + procesamiento + impresión de resultados (las 3 secciones).</div></div>
+        <div class="gloss-item"><div class="gloss-term">Edsger Dijkstra</div><div class="gloss-def">Informático que en 1968 condenó el GOTO en su famosa carta.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Böhm y Jacopini</div><div class="gloss-def">Matemáticos italianos que demostraron formalmente la suficiencia de las 3 estructuras (1966).</div></div>
+        <div class="gloss-item"><div class="gloss-term">Programación estructurada</div><div class="gloss-def">Paradigma que prohíbe GOTO y promueve solo las 3 estructuras básicas.</div></div>
+      </div>
+    </section>
+
+    <!-- ============ AUTOEVALUACIÓN ============ -->
+    <section class="block" id="autoevaluacion">
+      <div class="block-header"><div class="block-num">✅</div><h2>Autoevaluación · 12 preguntas</h2></div>
+
+      <p style="color:var(--text-muted);margin-bottom:20px">Responde mentalmente, luego abre la respuesta. Si fallas más de 3, repasa los bloques correspondientes.</p>
+
+      <div class="quiz-item"><div class="quiz-q">¿Qué es un algoritmo estructurado?</div><details><summary>Ver respuesta</summary><div class="answer-content">El que usa <strong>únicamente</strong> las tres estructuras básicas: secuencial, selectiva y repetitiva. NO usa GOTO ni saltos numerados directos.</div></details></div>
+
+      <div class="quiz-item"><div class="quiz-q">¿Qué dice el teorema de Böhm-Jacopini?</div><details><summary>Ver respuesta</summary><div class="answer-content">Que <strong>cualquier algoritmo computable</strong> puede expresarse usando solo secuencial + selectiva + repetitiva. No se necesita GOTO para nada.</div></details></div>
+
+      <div class="quiz-item"><div class="quiz-q">¿Por qué se le llamaba "código espagueti" a los programas con GOTO?</div><details><summary>Ver respuesta</summary><div class="answer-content">Porque las flechas de los saltos formaban una maraña inseguible (como espaguetis enredados). Cada GOTO conectaba arbitrariamente dos puntos, y seguir el flujo era prácticamente imposible.</div></details></div>
+
+      <div class="quiz-item"><div class="quiz-q">¿Quién popularizó la crítica al GOTO en 1968?</div><details><summary>Ver respuesta</summary><div class="answer-content"><strong>Edsger Dijkstra</strong>, en su famosa carta "Go To Statement Considered Harmful".</div></details></div>
+
+      <div class="quiz-item"><div class="quiz-q">Cuando ves "Si cond1 salte a X. Salte al final. Si cond2 salte a X." ¿qué patrón es?</div><details><summary>Ver respuesta</summary><div class="answer-content">Patrón <strong>AND</strong>: solo se llega al destino X si ambas condiciones son V. <code>SI cond1 AND cond2</code>.</div></details></div>
+
+      <div class="quiz-item"><div class="quiz-q">Cuando ves "Si cond1 salte a X. Si cond2 salte a X." (dos saltos al mismo destino) ¿qué patrón es?</div><details><summary>Ver respuesta</summary><div class="answer-content">Patrón <strong>OR</strong>: cualquiera de las dos condiciones lleva al destino. <code>SI cond1 OR cond2</code>.</div></details></div>
+
+      <div class="quiz-item"><div class="quiz-q">¿Qué indica un salto hacia atrás (a una línea de número menor)?</div><details><summary>Ver respuesta</summary><div class="answer-content">Un <strong>bucle</strong>. Si la condición de salida está al inicio del bloque → MIENTRAS. Si está al final → REPETIR-HASTA. Si hay un contador con rango fijo → PARA.</div></details></div>
+
+      <div class="quiz-item"><div class="quiz-q">¿Cuáles son las 6 fases del proceso de programación?</div><details><summary>Ver respuesta</summary><div class="answer-content">1) Definición del problema, 2) Análisis, 3) Diseño, 4) Codificación, 5) Implantación/prueba, 6) Mantenimiento.</div></details></div>
+
+      <div class="quiz-item"><div class="quiz-q">¿Cuáles son las 3 secciones de todo algoritmo (según la S7)?</div><details><summary>Ver respuesta</summary><div class="answer-content">1) Ingreso de datos, 2) Procesamiento de datos, 3) Impresión de resultados.</div></details></div>
+
+      <div class="quiz-item"><div class="quiz-q">¿En qué fase se traduce el pseudocódigo a Python?</div><details><summary>Ver respuesta</summary><div class="answer-content">En la fase de <strong>Codificación</strong> (la 4ª). Las 3 anteriores son de pensamiento; las 3 siguientes son de ejecución.</div></details></div>
+
+      <div class="quiz-item"><div class="quiz-q">Si tengo un algoritmo con saltos y quiero verificar mi reestructuración, ¿qué hago?</div><details><summary>Ver respuesta</summary><div class="answer-content">Una <strong>prueba de escritorio comparativa</strong>: para los mismos valores, ambos algoritmos deben producir la misma salida. Prueba al menos 3 casos: cuando la condición es V, cuando es F, y un caso límite.</div></details></div>
+
+      <div class="quiz-item"><div class="quiz-q">¿Por qué Python no tiene la palabra clave <code>goto</code>?</div><details><summary>Ver respuesta</summary><div class="answer-content">Porque su diseñador (Guido van Rossum) eliminó deliberadamente el GOTO siguiendo los principios de la programación estructurada. Java tiene la palabra reservada pero no la implementa; Python ni siquiera la reservó.</div></details></div>
+    </section>
+
+    <!-- ============ CIERRE ============ -->
+    <section class="block" id="cierre">
+      <div class="block-header"><div class="block-num">🎯</div><h2>Cierre y conexión con el examen</h2></div>
+
+      <div class="callout tip">
+        <div class="callout-header"><span class="callout-icon">🏁</span> Lo que ya dominas</div>
+        <ul>
+          <li>Concepto de <strong>algoritmo estructurado</strong> y por qué importa.</li>
+          <li>Por qué el <strong>GOTO es nocivo</strong> y la historia de su rechazo (Dijkstra, Böhm-Jacopini).</li>
+          <li>El <strong>teorema fundamental</strong>: las 3 estructuras son suficientes para cualquier algoritmo.</li>
+          <li>El <strong>método de 5 pasos</strong> para reestructurar: trazar, detectar patrón, identificar condición, reescribir, verificar.</li>
+          <li>Los <strong>5 patrones de conversión</strong>: SI simple, SI-SINO, AND oculto, OR oculto, bucle.</li>
+          <li>Las <strong>6 fases del proceso</strong> de programación (definición, análisis, diseño, codificación, implantación, mantenimiento).</li>
+          <li>La estructura de <strong>3 secciones</strong> de todo algoritmo (entrada, procesamiento, salida).</li>
+          <li>Reestructurar los <strong>3 ejercicios oficiales</strong> del archivo S7 + 2 nuevos.</li>
+          <li>Resolver <strong>2 proyectos integradores</strong> que combinan TODOS los patrones.</li>
+        </ul>
+      </div>
+
+      <div class="callout intuition">
+        <div class="callout-header"><span class="callout-icon">➡️</span> Esto cierra la unidad de Fundamentos</div>
+        <p>Felicidades, Pingüino — has completado la <strong>Unidad 1: Fundamentos de Programación</strong> (Sem 1-7). El próximo paso es el <strong>Examen Parcial</strong>, que cubre toda esta unidad. Después, en la <strong>Semana 9</strong>, comienza la <strong>Unidad 2: Lenguaje Python</strong>, donde aplicarás todo lo que has aprendido en un lenguaje real.</p>
+        <p>Todo lo que has practicado (algoritmos secuenciales, decisiones, ciclos, DIV/MOD, contadores, acumuladores, máximos/mínimos, búsquedas, reestructuración) se traduce <strong>directamente</strong> a Python. La sintaxis cambiará un poco, pero las ideas son las mismas.</p>
+      </div>
+
+      <div class="callout warning">
+        <div class="callout-header"><span class="callout-icon">📋</span> Repaso final antes del Examen Parcial</div>
+        <p>Asegúrate de poder hacer todo lo siguiente <strong>sin ver apuntes</strong>:</p>
+        <ol>
+          <li>Escribir un pseudocódigo desde cero con leyenda + INICIO/FIN + tipos correctos.</li>
+          <li>Aplicar SI anidado en cascada con orden correcto (mayor a menor).</li>
+          <li>Diferenciar contador (suma 1) de acumulador (suma valor) e inicializar correctamente.</li>
+          <li>Implementar máximo/mínimo con inicialización en el primer elemento (NO en 0).</li>
+          <li>Aplicar el patrón priming read en MIENTRAS con sentinela.</li>
+          <li>Detectar paridad/divisibilidad con MOD y descomponer números con DIV/MOD.</li>
+          <li>Reestructurar un algoritmo con saltos numerados (3-5 saltos) en su forma estructurada.</li>
+          <li>Identificar los 5 patrones de conversión (SI, SI-SINO, AND, OR, bucle).</li>
+          <li>Hacer prueba de escritorio comparativa con casos representativos.</li>
+          <li>Combinar varios patrones en un solo algoritmo (proyecto integrador).</li>
+        </ol>
+      </div>
+
+      <div class="callout theory">
+        <div class="callout-header"><span class="callout-icon">🐧</span> Mensaje final, Pingüino</div>
+        <p>Has llegado al final de la unidad de Fundamentos. <strong>7 semanas. 50+ ejercicios resueltos. Cientos de líneas de pseudocódigo.</strong> Lo que sabes ahora es lo que sabe cualquier programador profesional al inicio de su carrera, organizado y aprendido a fondo.</p>
+        <p>Llegas al examen parcial preparado. <strong>Confía en lo que aprendiste</strong>, lee con calma cada enunciado, identifica el patrón, aplica la plantilla, verifica con un caso. Todo está ahí, en lo que ya dominas.</p>
+        <p>Vamos por ese parcial. 🚀</p>
+      </div>
+    </section>
+
+    <footer>
+      <p>📘 <strong>Semana 7 · Reestructuración de Algoritmos · Proyecto Integrador</strong></p>
+      <p>Hecho con <span class="heart">♥</span> para Pingüino · Universidad de Piura</p>
+      <p style="margin-top:8px;font-size:.8rem">Última semana de la Unidad 1 · Listo para el Examen Parcial</p>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+const root = document.documentElement;
+const themeToggle = document.getElementById('themeToggle');
+const themeIcon = document.getElementById('themeIcon');
+const themeLabel = document.getElementById('themeLabel');
+
+function getSavedTheme() {
+  try { return localStorage.getItem('penguin-theme') || 'dark'; } catch (e) { return 'dark'; }
+}
+function saveTheme(t) {
+  try { localStorage.setItem('penguin-theme', t); } catch (e) {}
+}
+function applyTheme(theme) {
+  root.setAttribute('data-theme', theme);
+  if (theme === 'dark') { themeIcon.textContent = '🌙'; themeLabel.textContent = 'Modo oscuro'; }
+  else { themeIcon.textContent = '☀️'; themeLabel.textContent = 'Modo claro'; }
+  initMermaid(theme);
+}
+themeToggle.addEventListener('click', () => {
+  const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  applyTheme(next); saveTheme(next);
+});
+
+function initMermaid(theme) {
+  if (typeof mermaid === 'undefined') return;
+  const isDark = (theme === 'dark');
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: isDark ? 'dark' : 'default',
+    securityLevel: 'loose',
+    themeVariables: isDark ? {
+      background: '#161c2f', primaryColor: '#1e293b', primaryTextColor: '#e8edf7',
+      primaryBorderColor: '#3d4870', lineColor: '#94a3b8', secondaryColor: '#a78bfa',
+      tertiaryColor: '#34d399', mainBkg: '#1a2138', nodeBkg: '#1a2138',
+      clusterBkg: '#0d1322', edgeLabelBackground: '#161c2f',
+      fontFamily: 'Inter, sans-serif',
+    } : {
+      background: '#ffffff', primaryColor: '#f1f5f9', primaryTextColor: '#0f172a',
+      primaryBorderColor: '#cbd5e1', lineColor: '#475569', mainBkg: '#ffffff',
+      clusterBkg: '#f8fafc', fontFamily: 'Inter, sans-serif',
+    },
+    flowchart: { curve: 'basis', padding: 20, useMaxWidth: true }
+  });
+  document.querySelectorAll('.mermaid-container').forEach(container => {
+    const original = container.dataset.original;
+    if (original) container.innerHTML = '<div class="mermaid">' + original + '</div>';
+  });
+  if (mermaid.run) mermaid.run();
+  else if (mermaid.init) mermaid.init(undefined, document.querySelectorAll('.mermaid'));
+}
+
+const tocLinks = document.querySelectorAll('.toc-list a');
+const sections = document.querySelectorAll('section.block, section.hero');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      tocLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+}, { rootMargin: '-30% 0px -60% 0px' });
+sections.forEach(s => observer.observe(s));
+
+window.addEventListener('DOMContentLoaded', () => { applyTheme(getSavedTheme()); });
+</script>
+</body>
+</html>

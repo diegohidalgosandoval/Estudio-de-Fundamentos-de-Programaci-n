@@ -1,0 +1,1476 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>📝 Simulacro Examen Parcial · Pingüino</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Crimson+Pro:wght@500;700&display=swap" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<style>
+:root[data-theme="dark"]{--bg:#0a0e1a;--bg-elevated:#131829;--bg-card:#161c2f;--bg-card-hover:#1c2340;--bg-code:#0d1322;--bg-paper:#1a2138;--border:#2a3354;--border-strong:#3d4870;--text:#e8edf7;--text-muted:#98a4c2;--text-dim:#6b7793;--primary:#60a5fa;--primary-strong:#3b82f6;--primary-bg:rgba(96,165,250,.12);--accent:#34d399;--accent-bg:rgba(52,211,153,.12);--warning:#fbbf24;--warning-bg:rgba(251,191,36,.12);--danger:#f87171;--danger-bg:rgba(248,113,113,.12);--purple:#a78bfa;--purple-bg:rgba(167,139,250,.12);--pink:#f472b6;--pink-bg:rgba(244,114,182,.12);--shadow:0 4px 24px rgba(0,0,0,.4);--syn-kw:#c586c0;--syn-fn:#dcdcaa;--syn-tipo:#4ec9b0;--syn-op:#ff79c6;--syn-num:#b5cea8;--syn-str:#ce9178;--syn-var:#9cdcfe;--syn-cmt:#6a9955;--syn-bg:#0d1322;--exam-bg:#1a2138;--exam-border:#3d4870}
+:root[data-theme="light"]{--bg:#f8fafc;--bg-elevated:#fff;--bg-card:#fff;--bg-card-hover:#f1f5f9;--bg-code:#f8fafc;--bg-paper:#fffef9;--border:#e2e8f0;--border-strong:#cbd5e1;--text:#0f172a;--text-muted:#475569;--text-dim:#94a3b8;--primary:#2563eb;--primary-strong:#1d4ed8;--primary-bg:rgba(37,99,235,.08);--accent:#059669;--accent-bg:rgba(5,150,105,.08);--warning:#d97706;--warning-bg:rgba(217,119,6,.08);--danger:#dc2626;--danger-bg:rgba(220,38,38,.08);--purple:#7c3aed;--purple-bg:rgba(124,58,237,.08);--pink:#db2777;--pink-bg:rgba(219,39,119,.08);--shadow:0 2px 8px rgba(15,23,42,.06);--syn-kw:#af00db;--syn-fn:#795e26;--syn-tipo:#267f99;--syn-op:#d73a49;--syn-num:#098658;--syn-str:#a31515;--syn-var:#001080;--syn-cmt:#008000;--syn-bg:#f6f8fa;--exam-bg:#fffef9;--exam-border:#cbd5e1}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:16px;transition:background .3s,color .3s;min-height:100vh}
+::selection{background:var(--primary);color:#fff}
+.topbar{position:sticky;top:0;z-index:100;background:var(--bg-elevated);border-bottom:1px solid var(--border);padding:14px 32px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(12px);background:color-mix(in srgb,var(--bg-elevated) 85%,transparent)}
+.brand{display:flex;align-items:center;gap:12px;font-weight:700;font-size:1.05rem;color:var(--text)}
+.brand-icon{width:38px;height:38px;background:linear-gradient(135deg,var(--primary),var(--purple));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:#fff;box-shadow:0 4px 16px var(--primary-bg)}
+.brand-text small{display:block;font-size:.74rem;font-weight:500;color:var(--text-muted);margin-top:-2px}
+.theme-toggle{background:var(--bg-card);border:1px solid var(--border);color:var(--text);padding:8px 14px;border-radius:999px;cursor:pointer;display:flex;align-items:center;gap:8px;font-size:.85rem;font-weight:500;font-family:inherit;transition:all .2s}
+.theme-toggle:hover{background:var(--bg-card-hover);border-color:var(--primary);transform:translateY(-1px)}
+.layout{display:grid;grid-template-columns:260px 1fr;max-width:1500px;margin:0 auto}
+@media(max-width:1024px){.layout{grid-template-columns:1fr}.sidebar{display:none}}
+.sidebar{position:sticky;top:64px;height:calc(100vh - 64px);overflow-y:auto;padding:24px 16px 24px 32px;border-right:1px solid var(--border);background:var(--bg)}
+.sidebar h3{font-size:.74rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text-dim);margin-bottom:12px;font-weight:700}
+.toc-list{list-style:none}
+.toc-list li{margin:1px 0}
+.toc-list a{display:block;padding:7px 12px;color:var(--text-muted);text-decoration:none;border-radius:8px;font-size:.85rem;border-left:3px solid transparent;transition:all .15s}
+.toc-list a:hover{background:var(--bg-card);color:var(--text)}
+.toc-list a.active{background:var(--primary-bg);color:var(--primary);border-left-color:var(--primary);font-weight:600}
+.toc-divider{height:1px;background:var(--border);margin:12px 0}
+main{padding:36px 48px 80px;max-width:100%;overflow-x:hidden}
+@media(max-width:768px){main{padding:24px 16px 60px}.topbar{padding:12px 16px}}
+.hero{padding:32px 0 36px;border-bottom:2px solid var(--border);margin-bottom:36px;text-align:center}
+.hero-badge{display:inline-block;padding:6px 14px;background:linear-gradient(90deg,var(--danger),var(--warning));color:#fff;border-radius:999px;font-size:.78rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;margin-bottom:16px}
+h1{font-size:clamp(1.9rem,5vw,2.6rem);font-weight:900;line-height:1.1;letter-spacing:-.02em;margin-bottom:14px;background:linear-gradient(135deg,var(--text) 0%,var(--primary) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:1.05rem;color:var(--text-muted);max-width:680px;margin:0 auto}
+.hero-meta{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px;justify-content:center}
+.meta-pill{display:flex;align-items:center;gap:8px;padding:7px 14px;background:var(--bg-card);border:1px solid var(--border);border-radius:999px;font-size:.82rem;color:var(--text-muted)}
+.meta-pill strong{color:var(--text);font-weight:600}
+section.block{margin:48px 0;scroll-margin-top:80px}
+.block-header{display:flex;align-items:center;gap:14px;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(--border)}
+.block-num{width:42px;height:42px;background:linear-gradient(135deg,var(--primary),var(--purple));color:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:800;flex-shrink:0;box-shadow:0 4px 12px var(--primary-bg)}
+h2{font-size:clamp(1.4rem,2.5vw,1.8rem);font-weight:800;letter-spacing:-.01em;color:var(--text)}
+h3{font-size:1.2rem;font-weight:700;margin:24px 0 12px;color:var(--text);display:flex;align-items:center;gap:8px}
+h4{font-size:1rem;font-weight:700;margin:16px 0 8px;color:var(--text)}
+p{margin:8px 0;color:var(--text)}
+strong{color:var(--text);font-weight:600}
+em{color:var(--primary);font-style:normal;font-weight:500}
+ul,ol{margin:8px 0 8px 24px}
+li{margin:4px 0}
+a{color:var(--primary);text-decoration:none}
+a:hover{text-decoration:underline}
+code{font-family:'JetBrains Mono',monospace;background:var(--bg-code);border:1px solid var(--border);padding:1px 6px;border-radius:4px;font-size:.85em;color:var(--accent)}
+
+/* Estilo examen oficial */
+.exam-paper{background:var(--bg-paper);border:2px solid var(--exam-border);border-radius:14px;padding:32px 40px;margin:24px 0;font-family:'Crimson Pro',Georgia,serif;box-shadow:var(--shadow);position:relative}
+.exam-paper::before{content:'EXAMEN';position:absolute;top:12px;right:20px;font-family:'Inter',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.15em;color:var(--danger);opacity:.5;border:1px solid var(--danger);padding:2px 8px;border-radius:4px}
+.exam-header{text-align:center;border-bottom:2px solid var(--exam-border);padding-bottom:20px;margin-bottom:20px}
+.exam-header .uni{font-size:1.1rem;font-weight:700;color:var(--text);letter-spacing:.05em}
+.exam-header .faculty{font-size:.95rem;color:var(--text-muted);margin-top:4px}
+.exam-header .program{font-size:.95rem;color:var(--text-muted)}
+.exam-header .course{font-size:1rem;color:var(--text);font-weight:600;margin-top:8px}
+.exam-header .prof{font-size:.9rem;color:var(--text-muted)}
+.exam-header .exam-title{font-size:1.4rem;font-weight:800;color:var(--text);margin-top:14px;letter-spacing:.02em}
+.exam-header .exam-meta{display:flex;justify-content:space-around;flex-wrap:wrap;gap:8px;margin-top:10px;font-size:.88rem;color:var(--text-muted)}
+.exam-header .exam-meta strong{color:var(--text)}
+.exam-warning{background:rgba(248,113,113,.08);border-left:3px solid var(--danger);padding:10px 14px;margin:14px 0;font-size:.88rem;color:var(--text);border-radius:0 8px 8px 0;font-family:'Inter',sans-serif}
+.exam-name{margin:14px 0;font-size:.92rem;color:var(--text-muted);font-family:'Inter',sans-serif}
+.exam-name span{display:inline-block;border-bottom:1px solid var(--text-dim);min-width:300px;margin-left:8px}
+.instructions-list{font-family:'Inter',sans-serif;font-size:.88rem;color:var(--text);margin:12px 0 12px 24px}
+.instructions-list li{margin:5px 0}
+.instructions-title{font-family:'Inter',sans-serif;font-weight:700;color:var(--text);margin-top:14px;font-size:.95rem}
+.exam-divider{margin:24px 0;border:none;border-top:1px dashed var(--exam-border)}
+
+/* Ejercicio dentro del examen */
+.exam-question{margin:28px 0;font-family:'Inter',sans-serif}
+.question-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--exam-border);flex-wrap:wrap;gap:8px}
+.question-num{font-weight:800;font-size:1.05rem;color:var(--text);display:flex;align-items:center;gap:8px}
+.question-num .badge{background:var(--primary);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem}
+.question-points{background:var(--accent-bg);color:var(--accent);padding:3px 10px;border-radius:999px;font-size:.78rem;font-weight:700}
+.question-body{font-size:.95rem;color:var(--text);line-height:1.65}
+.question-body p{margin:8px 0}
+.question-body table{width:auto;margin:12px 0;border-collapse:collapse;background:var(--bg-elevated);border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.question-body th,.question-body td{padding:8px 16px;border:1px solid var(--border);font-size:.88rem}
+.question-body th{background:var(--bg-card);font-weight:700}
+.criterion-box{margin-top:10px;padding:8px 12px;background:var(--bg-card);border:1px dashed var(--border-strong);border-radius:6px;font-size:.82rem;color:var(--text-muted)}
+.criterion-box strong{color:var(--text)}
+
+/* Solucionario */
+.solution-paper{background:var(--bg-paper);border:2px solid var(--accent);border-radius:14px;padding:32px 40px;margin:24px 0;box-shadow:var(--shadow);position:relative}
+.solution-paper::before{content:'✓ SOLUCIONARIO';position:absolute;top:12px;right:20px;font-family:'Inter',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.15em;color:var(--accent);opacity:.6;border:1px solid var(--accent);padding:2px 8px;border-radius:4px}
+
+.callout{margin:16px 0;padding:14px 18px;border-radius:10px;border-left:4px solid;background:var(--bg-card)}
+.callout-header{display:flex;align-items:center;gap:8px;font-weight:700;margin-bottom:6px;font-size:.92rem}
+.callout-icon{width:24px;height:24px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.95rem}
+.callout p{margin:4px 0}
+.callout p:last-child{margin-bottom:0}
+.callout.intuition{border-color:var(--primary);background:var(--primary-bg)}.callout.intuition .callout-icon{background:var(--primary);color:#fff}.callout.intuition .callout-header{color:var(--primary)}
+.callout.tip{border-color:var(--accent);background:var(--accent-bg)}.callout.tip .callout-icon{background:var(--accent);color:#fff}.callout.tip .callout-header{color:var(--accent)}
+.callout.warning{border-color:var(--warning);background:var(--warning-bg)}.callout.warning .callout-icon{background:var(--warning);color:#fff}.callout.warning .callout-header{color:var(--warning)}
+.callout.danger{border-color:var(--danger);background:var(--danger-bg)}.callout.danger .callout-icon{background:var(--danger);color:#fff}.callout.danger .callout-header{color:var(--danger)}
+.callout.theory{border-color:var(--purple);background:var(--purple-bg)}.callout.theory .callout-icon{background:var(--purple);color:#fff}.callout.theory .callout-header{color:var(--purple)}
+.table-wrapper{overflow-x:auto;margin:14px 0;border-radius:10px;border:1px solid var(--border);background:var(--bg-card)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th,td{padding:9px 14px;text-align:left;border-bottom:1px solid var(--border)}
+th{background:var(--bg-elevated);color:var(--text);font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:.04em}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--bg-card-hover)}
+td.center,th.center{text-align:center}
+td.mono,th.mono{font-family:'JetBrains Mono',monospace;font-size:.92em}
+pre.pseudo{background:var(--syn-bg);border:1px solid var(--border);border-left:4px solid var(--purple);border-radius:10px;padding:16px 20px;overflow-x:auto;margin:12px 0;font-family:'JetBrains Mono','Courier New',monospace;font-size:.88rem;line-height:1.75;color:var(--text)}
+pre.pseudo code{background:none;border:none;padding:0;color:inherit;font-size:inherit}
+.kw{color:var(--syn-kw);font-weight:700}
+.fn{color:var(--syn-fn);font-weight:600}
+.tipo{color:var(--syn-tipo);font-weight:600}
+.op{color:var(--syn-op);font-weight:500}
+.num{color:var(--syn-num)}
+.str{color:var(--syn-str)}
+.var{color:var(--syn-var)}
+.cmt{color:var(--syn-cmt);font-style:italic}
+.flowchart-container{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:18px;margin:14px 0;text-align:center;overflow-x:auto}
+.flowchart-container .mermaid{display:flex;justify-content:center;min-height:80px}
+.flowchart-caption{margin-top:10px;font-size:.82rem;color:var(--text-muted);font-style:italic}
+.legend-box{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:12px 16px;margin:12px 0;font-size:.9rem}
+.legend-box .legend-title{font-weight:700;color:var(--primary);margin-bottom:6px;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em}
+.trace-table{background:var(--bg-card);border-radius:10px;overflow:hidden;margin:14px 0;border:1px solid var(--border)}
+.trace-table table{font-size:.86rem}
+.trace-table th{background:var(--purple-bg);color:var(--purple)}
+.solution-block h4{display:flex;align-items:center;gap:8px;color:var(--accent);margin:20px 0 8px;font-size:1rem}
+.final-answer{background:var(--accent-bg);border-left:4px solid var(--accent);border-radius:8px;padding:14px 18px;margin:16px 0}
+.final-answer-label{font-weight:700;color:var(--accent);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+details.solution-toggle{margin:16px 0;background:var(--bg-card);border:2px solid var(--accent);border-radius:12px;overflow:hidden}
+details.solution-toggle > summary{padding:14px 20px;cursor:pointer;font-weight:700;color:var(--accent);background:var(--accent-bg);font-size:1rem;list-style:none;display:flex;align-items:center;gap:10px;user-select:none}
+details.solution-toggle > summary::before{content:'▶';transition:transform .2s;font-size:.8rem}
+details.solution-toggle[open] > summary::before{transform:rotate(90deg)}
+details.solution-toggle > summary::-webkit-details-marker{display:none}
+details.solution-toggle > div{padding:20px 24px;background:var(--bg-paper)}
+.timer-warning{background:linear-gradient(135deg,var(--warning-bg),var(--danger-bg));border:2px solid var(--warning);border-radius:12px;padding:16px 20px;margin:20px 0;text-align:center}
+.timer-warning .big{font-size:1.4rem;font-weight:800;color:var(--warning);margin-bottom:4px}
+.score-table{display:grid;grid-template-columns:1fr auto auto;gap:8px 16px;margin:14px 0;padding:14px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;font-family:'Inter',sans-serif;font-size:.9rem}
+.score-table .header-row{font-weight:700;color:var(--primary);border-bottom:1px solid var(--border);padding-bottom:6px}
+.score-table .total-row{font-weight:700;color:var(--accent);border-top:1px solid var(--border);padding-top:6px;font-size:1rem}
+footer{text-align:center;padding:32px 20px;border-top:1px solid var(--border);margin-top:60px;color:var(--text-muted);font-size:.85rem}
+footer .heart{color:var(--danger)}
+kbd{background:var(--bg-elevated);border:1px solid var(--border-strong);border-radius:4px;padding:1px 6px;font-family:'JetBrains Mono',monospace;font-size:.85em}
+.divider-banner{margin:60px 0 40px;text-align:center;position:relative;padding:30px 0;border-top:3px double var(--accent);border-bottom:3px double var(--accent)}
+.divider-banner h2{display:inline-block;background:var(--bg);padding:0 24px;margin:0;font-size:1.6rem;color:var(--accent)}
+.divider-banner p{margin-top:8px;color:var(--text-muted);font-size:.9rem}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:10px}
+::-webkit-scrollbar-thumb:hover{background:var(--primary)}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-icon">📝</div>
+    <div class="brand-text">Simulacro · Examen Parcial<small>Fundamentos de Programación · Pingüino</small></div>
+  </div>
+  <button class="theme-toggle" id="themeToggle"><span id="themeIcon">🌙</span><span id="themeLabel">Modo oscuro</span></button>
+</header>
+
+<div class="layout">
+  <aside class="sidebar">
+    <h3>📑 Contenido</h3>
+    <ul class="toc-list">
+      <li><a href="#intro">🏁 Cómo usar este simulacro</a></li>
+      <li><a href="#examen">📝 EXAMEN</a></li>
+      <li><a href="#ej1">&nbsp;&nbsp;&nbsp;Ej. 1 · IMC (3 pts)</a></li>
+      <li><a href="#ej2">&nbsp;&nbsp;&nbsp;Ej. 2 · Tarifa eléctrica (4 pts)</a></li>
+      <li><a href="#ej3">&nbsp;&nbsp;&nbsp;Ej. 3 · Año bisiesto (3 pts)</a></li>
+      <li><a href="#ej4">&nbsp;&nbsp;&nbsp;Ej. 4 · N notas (4 pts)</a></li>
+      <li><a href="#ej5">&nbsp;&nbsp;&nbsp;Ej. 5 · Suma de cifras (3 pts)</a></li>
+      <li><a href="#ej6">&nbsp;&nbsp;&nbsp;Ej. 6 · Promedio positivos (3 pts)</a></li>
+      <div class="toc-divider"></div>
+      <li><a href="#solucionario">✓ SOLUCIONARIO</a></li>
+      <li><a href="#sol1">&nbsp;&nbsp;&nbsp;Solución 1</a></li>
+      <li><a href="#sol2">&nbsp;&nbsp;&nbsp;Solución 2</a></li>
+      <li><a href="#sol3">&nbsp;&nbsp;&nbsp;Solución 3</a></li>
+      <li><a href="#sol4">&nbsp;&nbsp;&nbsp;Solución 4</a></li>
+      <li><a href="#sol5">&nbsp;&nbsp;&nbsp;Solución 5</a></li>
+      <li><a href="#sol6">&nbsp;&nbsp;&nbsp;Solución 6</a></li>
+      <div class="toc-divider"></div>
+      <li><a href="#evaluacion">📊 Cómo evaluarte</a></li>
+    </ul>
+  </aside>
+
+  <main>
+
+    <section class="hero" id="intro">
+      <div class="hero-badge">📝 Simulacro · Examen Parcial</div>
+      <h1>Practica bajo presión antes del examen real</h1>
+      <p class="hero-sub">6 ejercicios <strong>nuevos</strong> diseñados con la misma dificultad y formato del examen real. Cubre todo lo que has aprendido en las semanas 1-6. Incluye solucionario completo separado para que primero intentes resolver por tu cuenta.</p>
+      <div class="hero-meta">
+        <div class="meta-pill">⏱️ <span><strong>Duración:</strong> 1h 30min</span></div>
+        <div class="meta-pill">📊 <span><strong>Total:</strong> 20 puntos</span></div>
+        <div class="meta-pill">📋 <span><strong>Ejercicios:</strong> 6</span></div>
+        <div class="meta-pill">🎯 <span><strong>Cubre:</strong> Sem 1-6</span></div>
+      </div>
+    </section>
+
+    <div class="callout intuition">
+      <div class="callout-header"><span class="callout-icon">📋</span> Cómo usar este simulacro (lee antes de empezar)</div>
+      <ol style="margin:6px 0">
+        <li><strong>Imprime o ten papel y lápiz</strong>: resuelve a mano como en el examen real (no a computadora).</li>
+        <li><strong>Configura un timer de 1h 30min</strong>: respeta el tiempo, no te detengas a buscar apuntes.</li>
+        <li><strong>NO veas el solucionario</strong> hasta haber terminado los 6 ejercicios (o se acabe el tiempo).</li>
+        <li><strong>Sigue el formato</strong>: en cada ejercicio, leyenda → pseudocódigo → diagrama de flujo.</li>
+        <li><strong>Empieza por el que más domines</strong>: gana puntos seguros primero.</li>
+        <li><strong>Al terminar</strong>, abre el solucionario y compárate. Cada ejercicio tiene puntos detallados.</li>
+        <li><strong>En la sección final</strong> ("Cómo evaluarte"), suma tu puntaje real y ve dónde estás parado.</li>
+      </ol>
+    </div>
+
+    <div class="timer-warning">
+      <div class="big">⏰ Recomendación: 15 minutos por ejercicio</div>
+      <p style="margin:0;font-size:.9rem">Reserva los últimos 10 min para revisar tus FIN_SI/FIN_MIENTRAS y verificar trazas mentales.</p>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- EXAMEN -->
+    <!-- ============================================================ -->
+    <section class="block" id="examen">
+      <div class="exam-paper">
+        <div class="exam-header">
+          <div class="uni">UNIVERSIDAD DE PIURA · CAMPUS LIMA</div>
+          <div class="faculty">FACULTAD DE CIENCIAS ECONÓMICAS Y EMPRESARIALES</div>
+          <div class="program">PROGRAMA ACADÉMICO DE ADMINISTRACIÓN DE EMPRESAS</div>
+          <div class="course" style="margin-top:10px">CURSO: FUNDAMENTOS DE PROGRAMACIÓN · Sección "A"</div>
+          <div class="prof">PROFESOR: Luis Chirinos Figueroa</div>
+          <div class="exam-title" style="margin-top:14px">SIMULACRO · EXAMEN PARCIAL</div>
+          <div class="exam-meta">
+            <div>📅 <strong>Duración:</strong> 1 hora 30 minutos</div>
+            <div>📊 <strong>Total:</strong> 20 puntos</div>
+            <div>📋 <strong>SIN LIBROS NI APUNTES</strong></div>
+          </div>
+        </div>
+
+        <div class="exam-name">Nombre: <span></span></div>
+
+        <div class="exam-warning">
+          <strong style="color:var(--danger)">⚠ Instrucciones (replica las del examen oficial):</strong>
+        </div>
+
+        <div class="instructions-title">📋 Instrucciones generales</div>
+        <ul class="instructions-list">
+          <li>La presente evaluación debe desarrollarse de manera personal.</li>
+          <li>No se permite el intercambio de útiles (incluye calculadoras).</li>
+          <li>Apague su celular y guárdelo dentro de su mochila.</li>
+          <li>No se atenderán solicitudes de revisión cuando se hayan hecho enmendaduras con corrector o cuando se desarrolle con lápiz.</li>
+          <li>No puede usar apuntes de clases.</li>
+        </ul>
+
+        <div class="instructions-title">📌 Indicaciones adicionales</div>
+        <ul class="instructions-list">
+          <li>En cada ejercicio debe colocar una <strong>leyenda</strong> en la cual se indique el significado de cada variable que ha utilizado.</li>
+          <li>En cada ejercicio debe entregar <strong>pseudocódigo</strong> + <strong>diagrama de flujo</strong>.</li>
+          <li>Las soluciones deben estar correctamente <strong>indentadas</strong>.</li>
+          <li>Verifique que cada SI tenga su FIN_SI, cada MIENTRAS su FIN_MIENTRAS, etc.</li>
+        </ul>
+
+        <hr class="exam-divider" />
+
+        <div style="font-family:'Inter',sans-serif;font-weight:700;color:var(--text);margin:18px 0 8px;font-size:1.05rem">Resuelva las siguientes preguntas:</div>
+
+        <!-- ===== EJERCICIO 1 ===== -->
+        <div class="exam-question" id="ej1">
+          <div class="question-header">
+            <div class="question-num"><span class="badge">1</span>Cálculo del IMC con clasificación</div>
+            <div class="question-points">3 puntos</div>
+          </div>
+          <div class="question-body">
+            <p>Lea el <strong>peso (en kg)</strong> y la <strong>estatura (en metros)</strong> de una persona, calcule su <strong>Índice de Masa Corporal (IMC)</strong> con la fórmula:</p>
+            <p style="text-align:center;font-family:'JetBrains Mono',monospace;background:var(--bg-elevated);padding:6px;border-radius:6px;display:block">IMC = peso / (estatura ^ 2)</p>
+            <p>y muestre la clasificación según la tabla:</p>
+            <table>
+              <thead><tr><th>IMC</th><th>Clasificación</th></tr></thead>
+              <tbody>
+                <tr><td>Menor a 18.5</td><td>Bajo peso</td></tr>
+                <tr><td>[18.5 a 25)</td><td>Normal</td></tr>
+                <tr><td>[25 a 30)</td><td>Sobrepeso</td></tr>
+                <tr><td>30 o más</td><td>Obesidad</td></tr>
+              </tbody>
+            </table>
+            <div class="criterion-box">
+              <strong>Criterios:</strong> Pseudocódigo (1.5 pts) · Diagrama de flujo (1.5 pts)
+            </div>
+          </div>
+        </div>
+
+        <hr class="exam-divider" />
+
+        <!-- ===== EJERCICIO 2 ===== -->
+        <div class="exam-question" id="ej2">
+          <div class="question-header">
+            <div class="question-num"><span class="badge">2</span>Cálculo de tarifa eléctrica por consumo</div>
+            <div class="question-points">4 puntos</div>
+          </div>
+          <div class="question-body">
+            <p>Una empresa eléctrica cobra el servicio mensual a sus clientes según el siguiente esquema:</p>
+            <table>
+              <thead><tr><th>Consumo mensual (KWh)</th><th>Tarifa por KWh</th><th>Cargo fijo</th></tr></thead>
+              <tbody>
+                <tr><td>Menos de 100</td><td>S/. 0.30</td><td>S/. 5.00</td></tr>
+                <tr><td>[100 a 300)</td><td>S/. 0.45</td><td>S/. 8.00</td></tr>
+                <tr><td>[300 a 600)</td><td>S/. 0.65</td><td>S/. 12.00</td></tr>
+                <tr><td>600 o más</td><td>S/. 0.80</td><td>S/. 18.00</td></tr>
+              </tbody>
+            </table>
+            <p>El monto total a pagar = <code>(consumo × tarifa) + cargo fijo</code>.</p>
+            <p>Lea los KWh consumidos por un cliente y muestre el <strong>monto total a pagar</strong>.</p>
+            <div class="criterion-box">
+              <strong>Criterios:</strong> Pseudocódigo (2 pts) · Diagrama de flujo (2 pts)
+            </div>
+          </div>
+        </div>
+
+        <hr class="exam-divider" />
+
+        <!-- ===== EJERCICIO 3 ===== -->
+        <div class="exam-question" id="ej3">
+          <div class="question-header">
+            <div class="question-num"><span class="badge">3</span>Verificación de año bisiesto</div>
+            <div class="question-points">3 puntos</div>
+          </div>
+          <div class="question-body">
+            <p>Lea un año (entero positivo) y determine si es <strong>bisiesto</strong> según la regla del calendario gregoriano:</p>
+            <p>Un año es bisiesto si:</p>
+            <ul>
+              <li>Es <strong>divisible entre 4</strong> Y <strong>NO divisible entre 100</strong>, &nbsp;<strong>O</strong></li>
+              <li>Es <strong>divisible entre 400</strong></li>
+            </ul>
+            <p>Muestre el mensaje <em>"el año X es bisiesto"</em> o <em>"el año X NO es bisiesto"</em>, según corresponda.</p>
+            <p style="font-size:.85rem;color:var(--text-muted)"><strong>Ejemplos:</strong> 2024 es bisiesto (div entre 4, no entre 100). 2000 es bisiesto (div entre 400). 1900 NO es bisiesto (div entre 100 pero no entre 400). 2023 NO es bisiesto.</p>
+            <div class="criterion-box">
+              <strong>Criterios:</strong> Pseudocódigo (1.5 pts) · Diagrama de flujo (1.5 pts)
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <section class="block">
+      <div class="exam-paper" style="margin-top:0">
+
+        <!-- ===== EJERCICIO 4 ===== -->
+        <div class="exam-question" id="ej4">
+          <div class="question-header">
+            <div class="question-num"><span class="badge">4</span>Procesar N notas: aprobados, desaprobados y promedio</div>
+            <div class="question-points">4 puntos</div>
+          </div>
+          <div class="question-body">
+            <p>Lea la cantidad de alumnos <strong>N</strong> y luego las <strong>N notas</strong> de un curso (notas en escala 0 a 20). Determine y muestre:</p>
+            <ul>
+              <li>Cuántos alumnos <strong>aprobaron</strong> (nota ≥ 10.5).</li>
+              <li>Cuántos alumnos <strong>desaprobaron</strong> (nota &lt; 10.5).</li>
+              <li>El <strong>promedio general</strong> de las N notas.</li>
+            </ul>
+            <p>Use la estructura repetitiva que considere más adecuada.</p>
+            <div class="criterion-box">
+              <strong>Criterios:</strong> Pseudocódigo (2 pts) · Diagrama de flujo (2 pts)
+            </div>
+          </div>
+        </div>
+
+        <hr class="exam-divider" />
+
+        <!-- ===== EJERCICIO 5 ===== -->
+        <div class="exam-question" id="ej5">
+          <div class="question-header">
+            <div class="question-num"><span class="badge">5</span>Suma de las cifras de un número</div>
+            <div class="question-points">3 puntos</div>
+          </div>
+          <div class="question-body">
+            <p>Lea un <strong>número entero positivo</strong> (de cualquier cantidad de cifras) y calcule la <strong>suma de sus cifras</strong>.</p>
+            <p style="font-size:.88rem;color:var(--text-muted)"><strong>Ejemplo:</strong> si el número es 4729, las cifras son 4, 7, 2, 9 → suma = 22.</p>
+            <p>Use los operadores <code>DIV</code> y <code>MOD</code>. La solución debe funcionar para cualquier cantidad de dígitos (no asuma exactamente 3 o 4 cifras).</p>
+            <div class="criterion-box">
+              <strong>Criterios:</strong> Pseudocódigo (1.5 pts) · Diagrama de flujo (1.5 pts)
+            </div>
+          </div>
+        </div>
+
+        <hr class="exam-divider" />
+
+        <!-- ===== EJERCICIO 6 ===== -->
+        <div class="exam-question" id="ej6">
+          <div class="question-header">
+            <div class="question-num"><span class="badge">6</span>Promedio de positivos hasta ingresar un negativo</div>
+            <div class="question-points">3 puntos</div>
+          </div>
+          <div class="question-body">
+            <p>Lea una secuencia de <strong>números reales</strong> ingresados uno por uno por el usuario. La lectura termina cuando el usuario ingrese un <strong>número negativo</strong> (que NO se incluye en el cálculo).</p>
+            <p>Calcule y muestre el <strong>promedio de los números positivos</strong> ingresados.</p>
+            <p style="font-size:.88rem;color:var(--text-muted)"><strong>Ejemplo:</strong> si el usuario ingresa 4.5, 7.0, 8.5, 6.0, -1 → el promedio es (4.5+7.0+8.5+6.0)/4 = 6.5.</p>
+            <p style="font-size:.88rem;color:var(--text-muted)"><strong>Considere:</strong> si el primer número ya es negativo, no hay datos para calcular promedio (manéjelo apropiadamente).</p>
+            <div class="criterion-box">
+              <strong>Criterios:</strong> Pseudocódigo (1.5 pts) · Diagrama de flujo (1.5 pts)
+            </div>
+          </div>
+        </div>
+
+        <hr class="exam-divider" />
+
+        <!-- TABLA DE PUNTAJES -->
+        <div class="score-table">
+          <div class="header-row">Pregunta</div>
+          <div class="header-row" style="text-align:center">Puntos</div>
+          <div class="header-row" style="text-align:center">Tu nota</div>
+
+          <div>1. IMC con clasificación</div>
+          <div style="text-align:center">3</div>
+          <div style="text-align:center">___</div>
+
+          <div>2. Tarifa eléctrica</div>
+          <div style="text-align:center">4</div>
+          <div style="text-align:center">___</div>
+
+          <div>3. Año bisiesto</div>
+          <div style="text-align:center">3</div>
+          <div style="text-align:center">___</div>
+
+          <div>4. N notas (aprobados/desaprobados/promedio)</div>
+          <div style="text-align:center">4</div>
+          <div style="text-align:center">___</div>
+
+          <div>5. Suma de cifras</div>
+          <div style="text-align:center">3</div>
+          <div style="text-align:center">___</div>
+
+          <div>6. Promedio de positivos</div>
+          <div style="text-align:center">3</div>
+          <div style="text-align:center">___</div>
+
+          <div class="total-row">TOTAL</div>
+          <div class="total-row" style="text-align:center">20</div>
+          <div class="total-row" style="text-align:center">___</div>
+        </div>
+
+        <p style="text-align:center;font-style:italic;color:var(--text-muted);font-size:.85rem;margin-top:14px">
+          ✋ Detente aquí. NO bajes al solucionario hasta haber intentado todos los ejercicios.
+        </p>
+
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SOLUCIONARIO -->
+    <!-- ============================================================ -->
+    <div class="divider-banner" id="solucionario">
+      <h2>✓ SOLUCIONARIO</h2>
+      <p>Compara tu solución con la oficial. Cada solución incluye razonamiento, leyenda, pseudocódigo, diagrama y prueba de escritorio.</p>
+    </div>
+
+    <div class="callout warning">
+      <div class="callout-header"><span class="callout-icon">⚠️</span> Advertencia importante</div>
+      <p>Las soluciones presentadas son <strong>una</strong> de varias formas válidas. Si tu pseudocódigo es <em>distinto pero correcto</em> (mismo resultado para todos los casos), también vale el puntaje completo. Compara con espíritu crítico, no buscando coincidencia exacta.</p>
+    </div>
+
+    <!-- ===== SOLUCIÓN 1 ===== -->
+    <section class="block" id="sol1">
+      <div class="solution-paper">
+        <div class="block-header" style="margin-bottom:14px">
+          <div class="block-num">1</div>
+          <h2>Solución · IMC con clasificación (3 pts)</h2>
+        </div>
+
+        <div class="solution-block">
+          <h4>🎯 ¿Qué nos pidieron?</h4>
+          <p>Calcular el IMC y clasificar a la persona en 4 categorías. Es un caso clásico de <strong>SI anidado en cascada con 4 niveles</strong> sobre un valor calculado (no leído directamente).</p>
+
+          <h4>🧠 Razonamiento</h4>
+          <p>Primero calculo IMC (proceso secuencial), luego aplico la cascada <strong>de mayor a menor</strong> (Obesidad primero, después Sobrepeso, después Normal, último Bajo peso por defecto):</p>
+          <ul>
+            <li><strong>IMC ≥ 30</strong> → Obesidad</li>
+            <li><strong>IMC ≥ 25</strong> (pero &lt; 30, gracias al SINO) → Sobrepeso</li>
+            <li><strong>IMC ≥ 18.5</strong> (pero &lt; 25) → Normal</li>
+            <li>Caso por defecto → Bajo peso</li>
+          </ul>
+
+          <h4>🏷️ Leyenda</h4>
+          <div class="legend-box">
+            <ul style="margin:0">
+              <li><code>peso</code> = peso de la persona en kg (entrada, <span class="tipo">Real</span>)</li>
+              <li><code>estatura</code> = estatura en metros (entrada, <span class="tipo">Real</span>)</li>
+              <li><code>IMC</code> = índice calculado (intermedia, <span class="tipo">Real</span>)</li>
+              <li><code>clasif</code> = mensaje de clasificación (salida, <span class="tipo">Cadena</span>)</li>
+            </ul>
+          </div>
+
+          <h4>🪜 Pseudocódigo</h4>
+<pre class="pseudo"><code><span class="kw">INICIO</span>
+    <span class="tipo">Real</span>: <span class="var">peso</span>, <span class="var">estatura</span>, <span class="var">IMC</span>
+    <span class="tipo">Cadena</span>: <span class="var">clasif</span>
+    <span class="fn">Leer</span> <span class="var">peso</span>, <span class="var">estatura</span>
+    <span class="var">IMC</span> <span class="op">=</span> <span class="var">peso</span> <span class="op">/</span> (<span class="var">estatura</span> <span class="op">^</span> <span class="num">2</span>)
+    <span class="kw">SI</span> <span class="var">IMC</span> <span class="op">&gt;=</span> <span class="num">30</span>
+        <span class="var">clasif</span> <span class="op">=</span> <span class="str">"Obesidad"</span>
+    <span class="kw">SINO</span>
+        <span class="kw">SI</span> <span class="var">IMC</span> <span class="op">&gt;=</span> <span class="num">25</span>
+            <span class="var">clasif</span> <span class="op">=</span> <span class="str">"Sobrepeso"</span>
+        <span class="kw">SINO</span>
+            <span class="kw">SI</span> <span class="var">IMC</span> <span class="op">&gt;=</span> <span class="num">18.5</span>
+                <span class="var">clasif</span> <span class="op">=</span> <span class="str">"Normal"</span>
+            <span class="kw">SINO</span>
+                <span class="var">clasif</span> <span class="op">=</span> <span class="str">"Bajo peso"</span>
+            <span class="kw">FIN_SI</span>
+        <span class="kw">FIN_SI</span>
+    <span class="kw">FIN_SI</span>
+    <span class="fn">Mostrar</span> <span class="str">"IMC: "</span>, <span class="var">IMC</span>
+    <span class="fn">Mostrar</span> <span class="str">"Clasificación: "</span>, <span class="var">clasif</span>
+<span class="kw">FIN</span></code></pre>
+
+          <h4>🔷 Diagrama de flujo</h4>
+          <div class="flowchart-container">
+            <div class="mermaid-container" data-original='graph TB
+    I([Inicio])
+    D["Real: peso, estatura, IMC<br/>Cadena: clasif"]
+    L[/"leer peso, estatura"/]
+    Calc["IMC = peso / (estatura ^ 2)"]
+    C1{"IMC &gt;= 30?"}
+    P1["clasif = Obesidad"]
+    C2{"IMC &gt;= 25?"}
+    P2["clasif = Sobrepeso"]
+    C3{"IMC &gt;= 18.5?"}
+    P3["clasif = Normal"]
+    P4["clasif = Bajo peso"]
+    M[/"mostrar IMC, clasif"/]
+    F([Fin])
+    I --> D --> L --> Calc --> C1
+    C1 -->|Si| P1 --> M
+    C1 -->|No| C2
+    C2 -->|Si| P2 --> M
+    C2 -->|No| C3
+    C3 -->|Si| P3 --> M
+    C3 -->|No| P4 --> M
+    M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style Calc fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style C1 fill:#fbbf24,stroke:#d97706,color:#000
+    style C2 fill:#fbbf24,stroke:#d97706,color:#000
+    style C3 fill:#fbbf24,stroke:#d97706,color:#000
+    style P1 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P2 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P3 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P4 fill:#94a3b8,stroke:#475569,color:#000'><div class="mermaid">
+graph TB
+    I([Inicio])
+    D["Real: peso, estatura, IMC<br/>Cadena: clasif"]
+    L[/"leer peso, estatura"/]
+    Calc["IMC = peso / (estatura ^ 2)"]
+    C1{"IMC &gt;= 30?"}
+    P1["clasif = Obesidad"]
+    C2{"IMC &gt;= 25?"}
+    P2["clasif = Sobrepeso"]
+    C3{"IMC &gt;= 18.5?"}
+    P3["clasif = Normal"]
+    P4["clasif = Bajo peso"]
+    M[/"mostrar IMC, clasif"/]
+    F([Fin])
+    I --> D --> L --> Calc --> C1
+    C1 -->|Si| P1 --> M
+    C1 -->|No| C2
+    C2 -->|Si| P2 --> M
+    C2 -->|No| C3
+    C3 -->|Si| P3 --> M
+    C3 -->|No| P4 --> M
+    M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style Calc fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style C1 fill:#fbbf24,stroke:#d97706,color:#000
+    style C2 fill:#fbbf24,stroke:#d97706,color:#000
+    style C3 fill:#fbbf24,stroke:#d97706,color:#000
+    style P1 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P2 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P3 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P4 fill:#94a3b8,stroke:#475569,color:#000
+            </div></div>
+          </div>
+
+          <h4>🧪 Prueba de escritorio (los 4 escenarios)</h4>
+          <div class="trace-table"><table>
+            <thead><tr><th>peso</th><th>estatura</th><th>IMC</th><th>Clasificación</th></tr></thead>
+            <tbody>
+              <tr><td>50</td><td>1.65</td><td>18.37</td><td>Bajo peso (no entra a ninguna)</td></tr>
+              <tr><td>65</td><td>1.70</td><td>22.49</td><td>Normal (≥ 18.5, &lt; 25)</td></tr>
+              <tr><td>80</td><td>1.70</td><td>27.68</td><td>Sobrepeso (≥ 25, &lt; 30)</td></tr>
+              <tr><td>100</td><td>1.70</td><td>34.60</td><td>Obesidad (≥ 30)</td></tr>
+            </tbody>
+          </table></div>
+
+          <div class="final-answer">
+            <div class="final-answer-label">✅ Distribución de puntos</div>
+            <ul style="margin:6px 0">
+              <li><strong>Pseudocódigo (1.5 pts)</strong>: Leyenda completa (0.3) · Cálculo IMC (0.3) · Anidación correcta (0.6) · INICIO/FIN/tipos/Mostrar (0.3)</li>
+              <li><strong>Diagrama (1.5 pts)</strong>: Símbolos correctos (0.5) · Etiquetas V/F (0.4) · Lógica idéntica al pseudocódigo (0.6)</li>
+            </ul>
+            <p style="margin-top:8px;font-size:.88rem"><strong>Errores comunes:</strong> orden invertido (BMI ≥ 18.5 primero → todo cae en "Normal"), olvidar el caso por defecto (Bajo peso), usar <code>=</code> en vez de <code>&gt;=</code> en límites.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SOLUCIÓN 2 ===== -->
+    <section class="block" id="sol2">
+      <div class="solution-paper">
+        <div class="block-header" style="margin-bottom:14px">
+          <div class="block-num">2</div>
+          <h2>Solución · Tarifa eléctrica (4 pts)</h2>
+        </div>
+
+        <div class="solution-block">
+          <h4>🎯 ¿Qué nos pidieron?</h4>
+          <p>Igual que el problema de descuentos por kilos de la PC2, pero ahora cada nivel tiene <strong>DOS valores</strong> (tarifa y cargo fijo). Es la <strong>misma estructura</strong> de SI anidado en cascada, solo que dentro de cada rama se asignan dos variables.</p>
+
+          <h4>🧠 Razonamiento</h4>
+          <p>Aplico orden <strong>de mayor a menor</strong>:</p>
+          <ol>
+            <li><strong>Consumo ≥ 600</strong>: tarifa 0.80, cargo 18</li>
+            <li><strong>Consumo ≥ 300</strong>: tarifa 0.65, cargo 12</li>
+            <li><strong>Consumo ≥ 100</strong>: tarifa 0.45, cargo 8</li>
+            <li>caso por defecto (&lt; 100): tarifa 0.30, cargo 5</li>
+          </ol>
+          <p>Después calculo total = consumo × tarifa + cargo (fuera de los SI, una sola vez).</p>
+
+          <h4>🏷️ Leyenda</h4>
+          <div class="legend-box">
+            <ul style="margin:0">
+              <li><code>consumo</code> = KWh consumidos (entrada, <span class="tipo">Real</span>)</li>
+              <li><code>tarifa</code> = tarifa por KWh según rango (intermedia, <span class="tipo">Real</span>)</li>
+              <li><code>cargo</code> = cargo fijo según rango (intermedia, <span class="tipo">Real</span>)</li>
+              <li><code>total</code> = monto total a pagar (salida, <span class="tipo">Real</span>)</li>
+            </ul>
+          </div>
+
+          <h4>🪜 Pseudocódigo</h4>
+<pre class="pseudo"><code><span class="kw">INICIO</span>
+    <span class="tipo">Real</span>: <span class="var">consumo</span>, <span class="var">tarifa</span>, <span class="var">cargo</span>, <span class="var">total</span>
+    <span class="fn">Leer</span> <span class="var">consumo</span>
+    <span class="kw">SI</span> <span class="var">consumo</span> <span class="op">&gt;=</span> <span class="num">600</span>
+        <span class="var">tarifa</span> <span class="op">=</span> <span class="num">0.80</span>
+        <span class="var">cargo</span> <span class="op">=</span> <span class="num">18</span>
+    <span class="kw">SINO</span>
+        <span class="kw">SI</span> <span class="var">consumo</span> <span class="op">&gt;=</span> <span class="num">300</span>
+            <span class="var">tarifa</span> <span class="op">=</span> <span class="num">0.65</span>
+            <span class="var">cargo</span> <span class="op">=</span> <span class="num">12</span>
+        <span class="kw">SINO</span>
+            <span class="kw">SI</span> <span class="var">consumo</span> <span class="op">&gt;=</span> <span class="num">100</span>
+                <span class="var">tarifa</span> <span class="op">=</span> <span class="num">0.45</span>
+                <span class="var">cargo</span> <span class="op">=</span> <span class="num">8</span>
+            <span class="kw">SINO</span>
+                <span class="var">tarifa</span> <span class="op">=</span> <span class="num">0.30</span>
+                <span class="var">cargo</span> <span class="op">=</span> <span class="num">5</span>
+            <span class="kw">FIN_SI</span>
+        <span class="kw">FIN_SI</span>
+    <span class="kw">FIN_SI</span>
+    <span class="var">total</span> <span class="op">=</span> <span class="var">consumo</span> <span class="op">*</span> <span class="var">tarifa</span> <span class="op">+</span> <span class="var">cargo</span>
+    <span class="fn">Mostrar</span> <span class="str">"Monto total: S/. "</span>, <span class="var">total</span>
+<span class="kw">FIN</span></code></pre>
+
+          <h4>🔷 Diagrama de flujo</h4>
+          <div class="flowchart-container">
+            <div class="mermaid-container" data-original='graph TB
+    I([Inicio])
+    D["Real: consumo, tarifa, cargo, total"]
+    L[/"leer consumo"/]
+    C1{"consumo &gt;= 600?"}
+    P1["tarifa = 0.80<br/>cargo = 18"]
+    C2{"consumo &gt;= 300?"}
+    P2["tarifa = 0.65<br/>cargo = 12"]
+    C3{"consumo &gt;= 100?"}
+    P3["tarifa = 0.45<br/>cargo = 8"]
+    P4["tarifa = 0.30<br/>cargo = 5"]
+    Calc["total = consumo * tarifa + cargo"]
+    M[/"mostrar total"/]
+    F([Fin])
+    I --> D --> L --> C1
+    C1 -->|Si| P1 --> Calc
+    C1 -->|No| C2
+    C2 -->|Si| P2 --> Calc
+    C2 -->|No| C3
+    C3 -->|Si| P3 --> Calc
+    C3 -->|No| P4 --> Calc
+    Calc --> M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style Calc fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style C1 fill:#fbbf24,stroke:#d97706,color:#000
+    style C2 fill:#fbbf24,stroke:#d97706,color:#000
+    style C3 fill:#fbbf24,stroke:#d97706,color:#000
+    style P1 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P2 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P3 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P4 fill:#94a3b8,stroke:#475569,color:#000'><div class="mermaid">
+graph TB
+    I([Inicio])
+    D["Real: consumo, tarifa, cargo, total"]
+    L[/"leer consumo"/]
+    C1{"consumo &gt;= 600?"}
+    P1["tarifa = 0.80<br/>cargo = 18"]
+    C2{"consumo &gt;= 300?"}
+    P2["tarifa = 0.65<br/>cargo = 12"]
+    C3{"consumo &gt;= 100?"}
+    P3["tarifa = 0.45<br/>cargo = 8"]
+    P4["tarifa = 0.30<br/>cargo = 5"]
+    Calc["total = consumo * tarifa + cargo"]
+    M[/"mostrar total"/]
+    F([Fin])
+    I --> D --> L --> C1
+    C1 -->|Si| P1 --> Calc
+    C1 -->|No| C2
+    C2 -->|Si| P2 --> Calc
+    C2 -->|No| C3
+    C3 -->|Si| P3 --> Calc
+    C3 -->|No| P4 --> Calc
+    Calc --> M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style Calc fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style C1 fill:#fbbf24,stroke:#d97706,color:#000
+    style C2 fill:#fbbf24,stroke:#d97706,color:#000
+    style C3 fill:#fbbf24,stroke:#d97706,color:#000
+    style P1 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P2 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P3 fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style P4 fill:#94a3b8,stroke:#475569,color:#000
+            </div></div>
+          </div>
+
+          <h4>🧪 Prueba de escritorio (los 4 rangos)</h4>
+          <div class="trace-table"><table>
+            <thead><tr><th>consumo</th><th>Cond. activada</th><th>tarifa</th><th>cargo</th><th>total</th></tr></thead>
+            <tbody>
+              <tr><td>50</td><td>caso por defecto</td><td>0.30</td><td>5</td><td>50×0.30+5 = <strong>20</strong></td></tr>
+              <tr><td>200</td><td>≥ 100</td><td>0.45</td><td>8</td><td>200×0.45+8 = <strong>98</strong></td></tr>
+              <tr><td>450</td><td>≥ 300</td><td>0.65</td><td>12</td><td>450×0.65+12 = <strong>304.50</strong></td></tr>
+              <tr><td>800</td><td>≥ 600</td><td>0.80</td><td>18</td><td>800×0.80+18 = <strong>658</strong></td></tr>
+            </tbody>
+          </table></div>
+
+          <div class="final-answer">
+            <div class="final-answer-label">✅ Distribución de puntos</div>
+            <ul style="margin:6px 0">
+              <li><strong>Pseudocódigo (2 pts)</strong>: Leyenda (0.4) · Anidación con orden correcto (1.0) · Cálculo total fuera de los SI (0.4) · Sintaxis general (0.2)</li>
+              <li><strong>Diagrama (2 pts)</strong>: Símbolos correctos (0.6) · Etiquetas V/F en los 3 rombos (0.6) · Convergencia de las 4 ramas hacia el cálculo total (0.8)</li>
+            </ul>
+            <p style="margin-top:8px;font-size:.88rem"><strong>Error a evitar:</strong> calcular el total <em>dentro</em> de cada rama (4 veces). Es código repetitivo y feo. La forma elegante: solo asignar tarifa+cargo dentro, calcular total una sola vez al final.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SOLUCIÓN 3 ===== -->
+    <section class="block" id="sol3">
+      <div class="solution-paper">
+        <div class="block-header" style="margin-bottom:14px">
+          <div class="block-num">3</div>
+          <h2>Solución · Año bisiesto (3 pts)</h2>
+        </div>
+
+        <div class="solution-block">
+          <h4>🎯 ¿Qué nos pidieron?</h4>
+          <p>Aplicar la regla del calendario gregoriano: un año es bisiesto si <code>(div 4 AND no div 100) OR (div 400)</code>. Es un caso de <strong>SI-SINO simple</strong> con una <strong>condición lógica compuesta</strong>.</p>
+
+          <h4>🧠 Razonamiento</h4>
+          <p>La condición clave es:</p>
+          <p style="text-align:center;font-family:'JetBrains Mono',monospace;background:var(--bg-elevated);padding:8px;border-radius:6px;display:block">((año MOD 4 = 0) AND (año MOD 100 ≠ 0)) OR (año MOD 400 = 0)</p>
+          <p>Recordatorio: <strong>"divisible entre X"</strong> se traduce como <code>año MOD X = 0</code>; <strong>"NO divisible entre X"</strong> se traduce como <code>año MOD X ≠ 0</code> (que en este curso se escribe <code>&lt;&gt;</code>).</p>
+
+          <h4>🏷️ Leyenda</h4>
+          <div class="legend-box">
+            <ul style="margin:0">
+              <li><code>año</code> = año a verificar (entrada, <span class="tipo">Entero</span>)</li>
+            </ul>
+          </div>
+
+          <h4>🪜 Pseudocódigo</h4>
+<pre class="pseudo"><code><span class="kw">INICIO</span>
+    <span class="tipo">Entero</span>: <span class="var">año</span>
+    <span class="fn">Leer</span> <span class="var">año</span>
+    <span class="kw">SI</span> ((<span class="var">año</span> <span class="op">MOD</span> <span class="num">4</span> <span class="op">=</span> <span class="num">0</span>) <span class="op">AND</span> (<span class="var">año</span> <span class="op">MOD</span> <span class="num">100</span> <span class="op">&lt;&gt;</span> <span class="num">0</span>)) <span class="op">OR</span> (<span class="var">año</span> <span class="op">MOD</span> <span class="num">400</span> <span class="op">=</span> <span class="num">0</span>)
+        <span class="fn">Mostrar</span> <span class="str">"el año "</span>, <span class="var">año</span>, <span class="str">" es bisiesto"</span>
+    <span class="kw">SINO</span>
+        <span class="fn">Mostrar</span> <span class="str">"el año "</span>, <span class="var">año</span>, <span class="str">" NO es bisiesto"</span>
+    <span class="kw">FIN_SI</span>
+<span class="kw">FIN</span></code></pre>
+
+          <div class="callout intuition" style="margin-top:12px">
+            <div class="callout-header"><span class="callout-icon">💡</span> Versión alternativa con SI anidado</div>
+            <p>Si te parece confusa la condición compuesta, también puedes hacerlo con SI anidados:</p>
+<pre class="pseudo" style="margin-top:8px"><code><span class="kw">SI</span> <span class="var">año</span> <span class="op">MOD</span> <span class="num">400</span> <span class="op">=</span> <span class="num">0</span>
+    <span class="cmt">// caso especial: divisible entre 400 → bisiesto</span>
+    bisiesto
+<span class="kw">SINO</span>
+    <span class="kw">SI</span> <span class="var">año</span> <span class="op">MOD</span> <span class="num">100</span> <span class="op">=</span> <span class="num">0</span>
+        <span class="cmt">// divisible entre 100 (pero no 400) → NO bisiesto</span>
+        no bisiesto
+    <span class="kw">SINO</span>
+        <span class="kw">SI</span> <span class="var">año</span> <span class="op">MOD</span> <span class="num">4</span> <span class="op">=</span> <span class="num">0</span>
+            bisiesto
+        <span class="kw">SINO</span>
+            no bisiesto
+        <span class="kw">FIN_SI</span>
+    <span class="kw">FIN_SI</span>
+<span class="kw">FIN_SI</span></code></pre>
+            <p style="margin-top:8px;font-size:.88rem">Ambas versiones son <strong>equivalentes y dan el puntaje completo</strong>. La primera es más concisa, la segunda más explícita.</p>
+          </div>
+
+          <h4>🔷 Diagrama de flujo (versión condición compuesta)</h4>
+          <div class="flowchart-container">
+            <div class="mermaid-container" data-original='graph TB
+    I([Inicio])
+    D["Entero: año"]
+    L[/"leer año"/]
+    C{"(año MOD 4 = 0 AND año MOD 100 &lt;&gt; 0)<br/>OR año MOD 400 = 0?"}
+    M1[/"mostrar: año es bisiesto"/]
+    M2[/"mostrar: año NO es bisiesto"/]
+    F([Fin])
+    I --> D --> L --> C
+    C -->|Si| M1 --> F
+    C -->|No| M2 --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M1 fill:#60a5fa,stroke:#1e40af,color:#000
+    style M2 fill:#60a5fa,stroke:#1e40af,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000'><div class="mermaid">
+graph TB
+    I([Inicio])
+    D["Entero: año"]
+    L[/"leer año"/]
+    C{"(año MOD 4 = 0 AND año MOD 100 &lt;&gt; 0)<br/>OR año MOD 400 = 0?"}
+    M1[/"mostrar: año es bisiesto"/]
+    M2[/"mostrar: año NO es bisiesto"/]
+    F([Fin])
+    I --> D --> L --> C
+    C -->|Si| M1 --> F
+    C -->|No| M2 --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M1 fill:#60a5fa,stroke:#1e40af,color:#000
+    style M2 fill:#60a5fa,stroke:#1e40af,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000
+            </div></div>
+          </div>
+
+          <h4>🧪 Prueba de escritorio</h4>
+          <div class="trace-table"><table>
+            <thead><tr><th>año</th><th>MOD 4</th><th>MOD 100</th><th>MOD 400</th><th>Bisiesto?</th></tr></thead>
+            <tbody>
+              <tr><td>2024</td><td>0 ✓</td><td>24 ✓ (≠0)</td><td>—</td><td><strong>SÍ</strong> (1ª parte V)</td></tr>
+              <tr><td>2000</td><td>0</td><td>0</td><td>0 ✓</td><td><strong>SÍ</strong> (2ª parte V)</td></tr>
+              <tr><td>1900</td><td>0</td><td>0 (rompe 1ª parte)</td><td>300 (rompe 2ª)</td><td><strong>NO</strong></td></tr>
+              <tr><td>2023</td><td>3 (rompe 1ª)</td><td>23</td><td>23 (rompe 2ª)</td><td><strong>NO</strong></td></tr>
+            </tbody>
+          </table></div>
+
+          <div class="final-answer">
+            <div class="final-answer-label">✅ Distribución de puntos</div>
+            <ul style="margin:6px 0">
+              <li><strong>Pseudocódigo (1.5 pts)</strong>: Leyenda (0.2) · Condición lógica correcta (0.8) · Estructura SI-SINO completa (0.5)</li>
+              <li><strong>Diagrama (1.5 pts)</strong>: Símbolos (0.4) · Etiquetas V/F (0.4) · Lógica idéntica (0.7)</li>
+            </ul>
+            <p style="margin-top:8px;font-size:.88rem"><strong>Errores comunes:</strong> usar solo <code>año MOD 4 = 0</code> (versión simplificada incorrecta) → falla con 1900 y 2100. Olvidar el OR para el caso múltiplo de 400. Confundir "no divisible" con <code>&gt;</code>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===== SOLUCIÓN 4 ===== -->
+    <section class="block" id="sol4">
+      <div class="solution-paper">
+        <div class="block-header" style="margin-bottom:14px">
+          <div class="block-num">4</div>
+          <h2>Solución · N notas: aprobados, desaprobados y promedio (4 pts)</h2>
+        </div>
+
+        <div class="solution-block">
+          <h4>🎯 ¿Qué nos pidieron?</h4>
+          <p>Procesar N notas y obtener <strong>3 resultados</strong> simultáneamente: cantidad de aprobados, cantidad de desaprobados y promedio general. Es el patrón clásico <strong>PARA + SI con 2 contadores + 1 acumulador</strong>.</p>
+
+          <h4>🧠 Razonamiento</h4>
+          <p>Como conozco la cantidad de iteraciones (N), uso <strong>PARA</strong>. Dentro del ciclo:</p>
+          <ul>
+            <li>Acumulo cada nota en <code>suma</code> (para luego dividir y obtener el promedio).</li>
+            <li>Pregunto si la nota es ≥ 10.5: si sí, incremento <code>aprob</code>; si no, incremento <code>desap</code>.</li>
+          </ul>
+          <p>Después del PARA calculo <code>promedio = suma / N</code>. <strong>Nota:</strong> el promedio es <em>Real</em>, así que <code>suma</code> también debe ser Real (las notas tienen decimales).</p>
+
+          <h4>🏷️ Leyenda</h4>
+          <div class="legend-box">
+            <ul style="margin:0">
+              <li><code>N</code> = cantidad de alumnos (entrada, <span class="tipo">Entero</span>)</li>
+              <li><code>nota</code> = nota leída en cada iteración (<span class="tipo">Real</span>)</li>
+              <li><code>i</code> = control del PARA (<span class="tipo">Entero</span>)</li>
+              <li><code>aprob</code> = contador de aprobados (salida, <span class="tipo">Entero</span>)</li>
+              <li><code>desap</code> = contador de desaprobados (salida, <span class="tipo">Entero</span>)</li>
+              <li><code>suma</code> = acumulador de todas las notas (intermedia, <span class="tipo">Real</span>)</li>
+              <li><code>promedio</code> = promedio general (salida, <span class="tipo">Real</span>)</li>
+            </ul>
+          </div>
+
+          <h4>🪜 Pseudocódigo</h4>
+<pre class="pseudo"><code><span class="kw">INICIO</span>
+    <span class="tipo">Entero</span>: <span class="var">N</span>, <span class="var">i</span>, <span class="var">aprob</span>, <span class="var">desap</span>
+    <span class="tipo">Real</span>: <span class="var">nota</span>, <span class="var">suma</span>, <span class="var">promedio</span>
+
+    <span class="fn">Leer</span> <span class="var">N</span>
+    <span class="var">aprob</span> <span class="op">=</span> <span class="num">0</span>
+    <span class="var">desap</span> <span class="op">=</span> <span class="num">0</span>
+    <span class="var">suma</span> <span class="op">=</span> <span class="num">0</span>
+
+    <span class="kw">PARA</span> <span class="var">i</span> <span class="op">=</span> <span class="num">1</span> <span class="kw">HASTA</span> <span class="var">N</span> <span class="kw">HACER</span>
+        <span class="fn">Leer</span> <span class="var">nota</span>
+        <span class="var">suma</span> <span class="op">=</span> <span class="var">suma</span> <span class="op">+</span> <span class="var">nota</span>
+        <span class="kw">SI</span> <span class="var">nota</span> <span class="op">&gt;=</span> <span class="num">10.5</span>
+            <span class="var">aprob</span> <span class="op">=</span> <span class="var">aprob</span> <span class="op">+</span> <span class="num">1</span>
+        <span class="kw">SINO</span>
+            <span class="var">desap</span> <span class="op">=</span> <span class="var">desap</span> <span class="op">+</span> <span class="num">1</span>
+        <span class="kw">FIN_SI</span>
+    <span class="kw">FIN_PARA</span>
+
+    <span class="var">promedio</span> <span class="op">=</span> <span class="var">suma</span> <span class="op">/</span> <span class="var">N</span>
+
+    <span class="fn">Mostrar</span> <span class="str">"Aprobados: "</span>, <span class="var">aprob</span>
+    <span class="fn">Mostrar</span> <span class="str">"Desaprobados: "</span>, <span class="var">desap</span>
+    <span class="fn">Mostrar</span> <span class="str">"Promedio: "</span>, <span class="var">promedio</span>
+<span class="kw">FIN</span></code></pre>
+
+          <h4>🔷 Diagrama de flujo</h4>
+          <div class="flowchart-container">
+            <div class="mermaid-container" data-original='graph TB
+    I([Inicio])
+    D["Entero: N, i, aprob, desap<br/>Real: nota, suma, promedio"]
+    LN[/"leer N"/]
+    Init["aprob = 0<br/>desap = 0<br/>suma = 0<br/>i = 1"]
+    Cp{"i &lt;= N?"}
+    Lnota[/"leer nota"/]
+    Acu["suma = suma + nota"]
+    Cnota{"nota &gt;= 10.5?"}
+    Pap["aprob = aprob + 1"]
+    Pdes["desap = desap + 1"]
+    Inc["i = i + 1"]
+    Calc["promedio = suma / N"]
+    M[/"mostrar aprob, desap, promedio"/]
+    F([Fin])
+    I --> D --> LN --> Init --> Cp
+    Cp -->|Si| Lnota --> Acu --> Cnota
+    Cnota -->|Si| Pap --> Inc
+    Cnota -->|No| Pdes --> Inc
+    Inc --> Cp
+    Cp -->|No| Calc --> M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style Init fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style Inc fill:#fbbf24,stroke:#d97706,color:#000
+    style LN fill:#60a5fa,stroke:#1e40af,color:#000
+    style Lnota fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style Cp fill:#fbbf24,stroke:#d97706,color:#000
+    style Cnota fill:#fbbf24,stroke:#d97706,color:#000
+    style Acu fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style Calc fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style Pap fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style Pdes fill:#f472b6,stroke:#be185d,color:#fff'><div class="mermaid">
+graph TB
+    I([Inicio])
+    D["Entero: N, i, aprob, desap<br/>Real: nota, suma, promedio"]
+    LN[/"leer N"/]
+    Init["aprob = 0<br/>desap = 0<br/>suma = 0<br/>i = 1"]
+    Cp{"i &lt;= N?"}
+    Lnota[/"leer nota"/]
+    Acu["suma = suma + nota"]
+    Cnota{"nota &gt;= 10.5?"}
+    Pap["aprob = aprob + 1"]
+    Pdes["desap = desap + 1"]
+    Inc["i = i + 1"]
+    Calc["promedio = suma / N"]
+    M[/"mostrar aprob, desap, promedio"/]
+    F([Fin])
+    I --> D --> LN --> Init --> Cp
+    Cp -->|Si| Lnota --> Acu --> Cnota
+    Cnota -->|Si| Pap --> Inc
+    Cnota -->|No| Pdes --> Inc
+    Inc --> Cp
+    Cp -->|No| Calc --> M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style Init fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style Inc fill:#fbbf24,stroke:#d97706,color:#000
+    style LN fill:#60a5fa,stroke:#1e40af,color:#000
+    style Lnota fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style Cp fill:#fbbf24,stroke:#d97706,color:#000
+    style Cnota fill:#fbbf24,stroke:#d97706,color:#000
+    style Acu fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style Calc fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style Pap fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style Pdes fill:#f472b6,stroke:#be185d,color:#fff
+            </div></div>
+          </div>
+
+          <h4>🧪 Prueba de escritorio (N = 5, notas: 14, 8, 11, 17, 9)</h4>
+          <div class="trace-table"><table>
+            <thead><tr><th>i</th><th>nota</th><th>suma (acum)</th><th>¿≥ 10.5?</th><th>aprob</th><th>desap</th></tr></thead>
+            <tbody>
+              <tr><td>—</td><td>—</td><td>0</td><td>—</td><td>0</td><td>0</td></tr>
+              <tr><td>1</td><td>14</td><td>14</td><td>V</td><td>1</td><td>0</td></tr>
+              <tr><td>2</td><td>8</td><td>22</td><td>F</td><td>1</td><td>1</td></tr>
+              <tr><td>3</td><td>11</td><td>33</td><td>V</td><td>2</td><td>1</td></tr>
+              <tr><td>4</td><td>17</td><td>50</td><td>V</td><td>3</td><td>1</td></tr>
+              <tr><td>5</td><td>9</td><td>59</td><td>F</td><td>3</td><td>2</td></tr>
+              <tr><td colspan="6" style="text-align:center"><strong>Después del PARA: promedio = 59 / 5 = 11.8</strong></td></tr>
+            </tbody>
+          </table></div>
+
+          <div class="final-answer">
+            <div class="final-answer-label">✅ Resultado y distribución</div>
+            <p>Aprobados: <strong>3</strong>, Desaprobados: <strong>2</strong>, Promedio: <strong>11.8</strong> ✓</p>
+            <ul style="margin:6px 0">
+              <li><strong>Pseudocódigo (2 pts)</strong>: Leyenda completa con tipos correctos (0.4) · Inicialización de las 3 variables (0.4) · PARA con SI-SINO interno (0.6) · Cálculo y muestra del promedio (0.4) · Sintaxis general (0.2)</li>
+              <li><strong>Diagrama (2 pts)</strong>: Símbolos (0.4) · Etiquetas V/F en ambos rombos (0.4) · Convergencia correcta de las ramas SI/SINO (0.6) · Salida del PARA hacia el cálculo (0.6)</li>
+            </ul>
+            <p style="margin-top:8px;font-size:.88rem"><strong>Errores comunes:</strong> olvidar inicializar contadores (queda con basura), olvidar el cálculo del promedio, calcular promedio dentro del PARA (incorrecto: divide por i en vez de N), <strong>el caso límite de 10.5 exacto</strong>: con <code>≥ 10.5</code> es aprobado, con <code>&gt; 10.5</code> sería desaprobado (¡cuidado!).</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SOLUCIÓN 5 ===== -->
+    <section class="block" id="sol5">
+      <div class="solution-paper">
+        <div class="block-header" style="margin-bottom:14px">
+          <div class="block-num">5</div>
+          <h2>Solución · Suma de cifras (3 pts)</h2>
+        </div>
+
+        <div class="solution-block">
+          <h4>🎯 ¿Qué nos pidieron?</h4>
+          <p>Calcular la suma de los dígitos de un número, sin saber cuántas cifras tiene. Es el <strong>patrón de extracción de cifras con MIENTRAS + DIV/MOD</strong> que vimos en Semana 6.</p>
+
+          <h4>🧠 Razonamiento</h4>
+          <p>El truco genérico: <strong>extraer la última cifra con MOD 10, sumarla, y eliminar la última cifra con DIV 10</strong>. Repetir hasta que el número se haga 0.</p>
+          <ul>
+            <li>Como puedo modificar el número original (lo voy reduciendo), uso una <strong>copia auxiliar</strong> para no perderlo (en este ejercicio no lo pide, pero es buena práctica).</li>
+            <li>Inicializo <code>suma = 0</code> (acumulador de sumas).</li>
+            <li>El MIENTRAS continúa mientras <code>num &gt; 0</code>: cuando llegue a 0, ya extraí todas las cifras.</li>
+          </ul>
+
+          <h4>🏷️ Leyenda</h4>
+          <div class="legend-box">
+            <ul style="margin:0">
+              <li><code>num</code> = número original ingresado (entrada, <span class="tipo">Entero</span>)</li>
+              <li><code>aux</code> = copia auxiliar para iterar sin perder el original (<span class="tipo">Entero</span>)</li>
+              <li><code>cifra</code> = cifra extraída en cada iteración (<span class="tipo">Entero</span>)</li>
+              <li><code>suma</code> = acumulador de cifras (salida, <span class="tipo">Entero</span>)</li>
+            </ul>
+          </div>
+
+          <h4>🪜 Pseudocódigo</h4>
+<pre class="pseudo"><code><span class="kw">INICIO</span>
+    <span class="tipo">Entero</span>: <span class="var">num</span>, <span class="var">aux</span>, <span class="var">cifra</span>, <span class="var">suma</span>
+
+    <span class="fn">Leer</span> <span class="var">num</span>
+    <span class="var">aux</span> <span class="op">=</span> <span class="var">num</span>      <span class="cmt">// guardo copia para no perder el original</span>
+    <span class="var">suma</span> <span class="op">=</span> <span class="num">0</span>
+
+    <span class="kw">MIENTRAS</span> <span class="var">aux</span> <span class="op">&gt;</span> <span class="num">0</span> <span class="kw">HACER</span>
+        <span class="var">cifra</span> <span class="op">=</span> <span class="var">aux</span> <span class="op">MOD</span> <span class="num">10</span>     <span class="cmt">// última cifra</span>
+        <span class="var">suma</span> <span class="op">=</span> <span class="var">suma</span> <span class="op">+</span> <span class="var">cifra</span>
+        <span class="var">aux</span> <span class="op">=</span> <span class="var">aux</span> <span class="op">DIV</span> <span class="num">10</span>     <span class="cmt">// elimino la última cifra</span>
+    <span class="kw">FIN_MIENTRAS</span>
+
+    <span class="fn">Mostrar</span> <span class="str">"Suma de cifras de "</span>, <span class="var">num</span>, <span class="str">": "</span>, <span class="var">suma</span>
+<span class="kw">FIN</span></code></pre>
+
+          <h4>🔷 Diagrama de flujo</h4>
+          <div class="flowchart-container">
+            <div class="mermaid-container" data-original='graph TB
+    I([Inicio])
+    D["Entero: num, aux, cifra, suma"]
+    L[/"leer num"/]
+    Init["aux = num<br/>suma = 0"]
+    C{"aux &gt; 0?"}
+    P["cifra = aux MOD 10<br/>suma = suma + cifra<br/>aux = aux DIV 10"]
+    M[/"mostrar num, suma"/]
+    F([Fin])
+    I --> D --> L --> Init --> C
+    C -->|Si| P --> C
+    C -->|No| M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style Init fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000
+    style P fill:#a78bfa,stroke:#6d28d9,color:#fff'><div class="mermaid">
+graph TB
+    I([Inicio])
+    D["Entero: num, aux, cifra, suma"]
+    L[/"leer num"/]
+    Init["aux = num<br/>suma = 0"]
+    C{"aux &gt; 0?"}
+    P["cifra = aux MOD 10<br/>suma = suma + cifra<br/>aux = aux DIV 10"]
+    M[/"mostrar num, suma"/]
+    F([Fin])
+    I --> D --> L --> Init --> C
+    C -->|Si| P --> C
+    C -->|No| M --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style Init fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000
+    style P fill:#a78bfa,stroke:#6d28d9,color:#fff
+            </div></div>
+          </div>
+
+          <h4>🧪 Prueba de escritorio (num = 4729)</h4>
+          <div class="trace-table"><table>
+            <thead><tr><th>Iteración</th><th>aux antes</th><th>cifra (aux MOD 10)</th><th>suma después</th><th>aux después (aux DIV 10)</th></tr></thead>
+            <tbody>
+              <tr><td>—</td><td>4729</td><td>—</td><td>0 (inicial)</td><td>—</td></tr>
+              <tr><td>1</td><td>4729</td><td>9</td><td>9</td><td>472</td></tr>
+              <tr><td>2</td><td>472</td><td>2</td><td>11</td><td>47</td></tr>
+              <tr><td>3</td><td>47</td><td>7</td><td>18</td><td>4</td></tr>
+              <tr><td>4</td><td>4</td><td>4</td><td>22</td><td>0</td></tr>
+              <tr><td>—</td><td colspan="4" style="text-align:center"><strong>aux = 0 → sale del MIENTRAS. Suma final = 22 ✓</strong></td></tr>
+            </tbody>
+          </table></div>
+
+          <div class="final-answer">
+            <div class="final-answer-label">✅ Distribución de puntos</div>
+            <ul style="margin:6px 0">
+              <li><strong>Pseudocódigo (1.5 pts)</strong>: Leyenda (0.2) · Uso correcto de aux para no perder num (0.2) · Inicialización suma = 0 (0.1) · MIENTRAS con condición y actualización (0.5) · MOD 10 + DIV 10 correctos (0.5)</li>
+              <li><strong>Diagrama (1.5 pts)</strong>: Símbolos (0.4) · Etiquetas V/F (0.3) · Lazo del MIENTRAS bien dibujado (0.5) · Inicialización antes del rombo (0.3)</li>
+            </ul>
+            <p style="margin-top:8px;font-size:.88rem"><strong>Errores comunes:</strong> usar solo <code>num</code> (sin copia aux) → al final num = 0 y se imprime 0 en lugar del original; olvidar <code>aux = aux DIV 10</code> → bucle infinito (porque aux nunca cambia); confundir DIV con MOD; inicializar suma en 1 (eso es para producto, no suma).</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SOLUCIÓN 6 ===== -->
+    <section class="block" id="sol6">
+      <div class="solution-paper">
+        <div class="block-header" style="margin-bottom:14px">
+          <div class="block-num">6</div>
+          <h2>Solución · Promedio de positivos hasta sentinela (3 pts)</h2>
+        </div>
+
+        <div class="solution-block">
+          <h4>🎯 ¿Qué nos pidieron?</h4>
+          <p>Leer números hasta que ingresen un negativo, calcular el promedio de los positivos. Es el <strong>patrón clásico de priming read + MIENTRAS</strong> con <em>contador</em> y <em>acumulador</em>, más un detalle: <strong>manejar el caso de división por cero</strong> si el primer número ya es negativo.</p>
+
+          <h4>🧠 Razonamiento</h4>
+          <p>Estructura del patrón:</p>
+          <ol>
+            <li><strong>Inicializo</strong> <code>cant = 0</code> (contará positivos) y <code>suma = 0</code> (acumulará positivos).</li>
+            <li><strong>Priming read</strong>: leo <code>n</code> ANTES del MIENTRAS.</li>
+            <li><strong>MIENTRAS n ≥ 0</strong>: acumulo, incremento contador, leo el siguiente <code>n</code>.</li>
+            <li><strong>Después del ciclo</strong>: pregunto si <code>cant &gt; 0</code> (al menos un positivo). Si sí, calculo y muestro promedio. Si no, muestro mensaje de error.</li>
+          </ol>
+          <p><strong>¿Por qué el SI al final?</strong> Para evitar dividir entre cero. Si el primer número leído ya es negativo, el MIENTRAS ni siquiera se ejecuta y <code>cant</code> queda en 0. Sin el SI, calcularíamos <code>suma / 0</code> → error.</p>
+
+          <h4>🏷️ Leyenda</h4>
+          <div class="legend-box">
+            <ul style="margin:0">
+              <li><code>n</code> = número leído en cada iteración (<span class="tipo">Real</span>)</li>
+              <li><code>cant</code> = contador de positivos leídos (<span class="tipo">Entero</span>)</li>
+              <li><code>suma</code> = acumulador de positivos (<span class="tipo">Real</span>)</li>
+              <li><code>promedio</code> = promedio calculado (salida, <span class="tipo">Real</span>)</li>
+            </ul>
+          </div>
+
+          <h4>🪜 Pseudocódigo</h4>
+<pre class="pseudo"><code><span class="kw">INICIO</span>
+    <span class="tipo">Entero</span>: <span class="var">cant</span>
+    <span class="tipo">Real</span>: <span class="var">n</span>, <span class="var">suma</span>, <span class="var">promedio</span>
+
+    <span class="var">cant</span> <span class="op">=</span> <span class="num">0</span>
+    <span class="var">suma</span> <span class="op">=</span> <span class="num">0</span>
+
+    <span class="fn">Leer</span> <span class="var">n</span>                  <span class="cmt">// PRIMING READ</span>
+    <span class="kw">MIENTRAS</span> <span class="var">n</span> <span class="op">&gt;=</span> <span class="num">0</span> <span class="kw">HACER</span>
+        <span class="var">suma</span> <span class="op">=</span> <span class="var">suma</span> <span class="op">+</span> <span class="var">n</span>
+        <span class="var">cant</span> <span class="op">=</span> <span class="var">cant</span> <span class="op">+</span> <span class="num">1</span>
+        <span class="fn">Leer</span> <span class="var">n</span>              <span class="cmt">// LECTURA SUBSIGUIENTE</span>
+    <span class="kw">FIN_MIENTRAS</span>
+
+    <span class="kw">SI</span> <span class="var">cant</span> <span class="op">&gt;</span> <span class="num">0</span>
+        <span class="var">promedio</span> <span class="op">=</span> <span class="var">suma</span> <span class="op">/</span> <span class="var">cant</span>
+        <span class="fn">Mostrar</span> <span class="str">"Promedio: "</span>, <span class="var">promedio</span>
+    <span class="kw">SINO</span>
+        <span class="fn">Mostrar</span> <span class="str">"No se ingresaron números positivos"</span>
+    <span class="kw">FIN_SI</span>
+<span class="kw">FIN</span></code></pre>
+
+          <div class="callout warning" style="margin-top:12px">
+            <div class="callout-header"><span class="callout-icon">⚠️</span> Detalle sutil: ¿n &gt;= 0 o n &gt; 0?</div>
+            <p>El enunciado dice "termina cuando ingrese un <strong>negativo</strong>". Eso implica que el cero (0) NO es la señal de parada, así que <strong>el cero debería procesarse</strong>. Pero el cero no es positivo (es cero). Como el promedio "de positivos" estrictamente excluye el 0, hay dos interpretaciones válidas:</p>
+            <ul>
+              <li><strong>Interpretación amplia</strong> (más común): tratar el 0 como "no negativo" → entra al ciclo pero suma 0. Condición: <code>n &gt;= 0</code>.</li>
+              <li><strong>Interpretación estricta</strong>: solo positivos verdaderos. Condición: <code>n &gt; 0</code> → el 0 también para el ciclo.</li>
+            </ul>
+            <p>En el examen real, ambas se aceptan si está justificada en la leyenda. Yo escogí la primera porque "termina cuando ingrese un negativo" es la regla literal del enunciado.</p>
+          </div>
+
+          <h4>🔷 Diagrama de flujo</h4>
+          <div class="flowchart-container">
+            <div class="mermaid-container" data-original='graph TB
+    I([Inicio])
+    D["Entero: cant<br/>Real: n, suma, promedio"]
+    Init["cant = 0<br/>suma = 0"]
+    L1[/"leer n"/]
+    Cw{"n &gt;= 0?"}
+    Acc["suma = suma + n<br/>cant = cant + 1"]
+    L2[/"leer n"/]
+    Cv{"cant &gt; 0?"}
+    Calc["promedio = suma / cant"]
+    M1[/"mostrar promedio"/]
+    M2[/"mostrar: no se ingresaron positivos"/]
+    F([Fin])
+    I --> D --> Init --> L1 --> Cw
+    Cw -->|Si| Acc --> L2 --> Cw
+    Cw -->|No| Cv
+    Cv -->|Si| Calc --> M1 --> F
+    Cv -->|No| M2 --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style Init fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style L1 fill:#60a5fa,stroke:#1e40af,color:#000
+    style L2 fill:#60a5fa,stroke:#1e40af,color:#000
+    style M1 fill:#60a5fa,stroke:#1e40af,color:#000
+    style M2 fill:#60a5fa,stroke:#1e40af,color:#000
+    style Cw fill:#fbbf24,stroke:#d97706,color:#000
+    style Cv fill:#fbbf24,stroke:#d97706,color:#000
+    style Acc fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style Calc fill:#a78bfa,stroke:#6d28d9,color:#fff'><div class="mermaid">
+graph TB
+    I([Inicio])
+    D["Entero: cant<br/>Real: n, suma, promedio"]
+    Init["cant = 0<br/>suma = 0"]
+    L1[/"leer n"/]
+    Cw{"n &gt;= 0?"}
+    Acc["suma = suma + n<br/>cant = cant + 1"]
+    L2[/"leer n"/]
+    Cv{"cant &gt; 0?"}
+    Calc["promedio = suma / cant"]
+    M1[/"mostrar promedio"/]
+    M2[/"mostrar: no se ingresaron positivos"/]
+    F([Fin])
+    I --> D --> Init --> L1 --> Cw
+    Cw -->|Si| Acc --> L2 --> Cw
+    Cw -->|No| Cv
+    Cv -->|Si| Calc --> M1 --> F
+    Cv -->|No| M2 --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#fff
+    style D fill:#fbbf24,stroke:#d97706,color:#000
+    style Init fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style L1 fill:#60a5fa,stroke:#1e40af,color:#000
+    style L2 fill:#60a5fa,stroke:#1e40af,color:#000
+    style M1 fill:#60a5fa,stroke:#1e40af,color:#000
+    style M2 fill:#60a5fa,stroke:#1e40af,color:#000
+    style Cw fill:#fbbf24,stroke:#d97706,color:#000
+    style Cv fill:#fbbf24,stroke:#d97706,color:#000
+    style Acc fill:#a78bfa,stroke:#6d28d9,color:#fff
+    style Calc fill:#a78bfa,stroke:#6d28d9,color:#fff
+            </div></div>
+            <div class="flowchart-caption">📊 Patrón completo: priming read + MIENTRAS con acumulador y contador + SI final para evitar división por cero.</div>
+          </div>
+
+          <h4>🧪 Prueba de escritorio (entrada: 4.5, 7.0, 8.5, 6.0, -1)</h4>
+          <div class="trace-table"><table>
+            <thead><tr><th>Iteración</th><th>n leído</th><th>¿n ≥ 0?</th><th>suma</th><th>cant</th></tr></thead>
+            <tbody>
+              <tr><td>—</td><td>4.5 (priming)</td><td>—</td><td>0</td><td>0</td></tr>
+              <tr><td>1</td><td>(usa 4.5)</td><td>V</td><td>4.5</td><td>1</td></tr>
+              <tr><td>—</td><td>7.0 (siguiente lectura)</td><td>—</td><td>4.5</td><td>1</td></tr>
+              <tr><td>2</td><td>(usa 7.0)</td><td>V</td><td>11.5</td><td>2</td></tr>
+              <tr><td>—</td><td>8.5</td><td>—</td><td>11.5</td><td>2</td></tr>
+              <tr><td>3</td><td>(usa 8.5)</td><td>V</td><td>20.0</td><td>3</td></tr>
+              <tr><td>—</td><td>6.0</td><td>—</td><td>20.0</td><td>3</td></tr>
+              <tr><td>4</td><td>(usa 6.0)</td><td>V</td><td>26.0</td><td>4</td></tr>
+              <tr><td>—</td><td>-1</td><td>F</td><td>26.0</td><td>4</td></tr>
+              <tr><td colspan="5" style="text-align:center"><strong>Sale del MIENTRAS. cant = 4 &gt; 0 → promedio = 26.0 / 4 = 6.5 ✓</strong></td></tr>
+            </tbody>
+          </table></div>
+
+          <h4>🧪 Caso especial: primer número ya es negativo</h4>
+          <div class="trace-table"><table>
+            <thead><tr><th>n leído</th><th>¿n ≥ 0?</th><th>cant</th><th>Salida</th></tr></thead>
+            <tbody>
+              <tr><td>-5 (priming)</td><td>F</td><td>0</td><td><em>(no entra al MIENTRAS)</em></td></tr>
+              <tr><td colspan="4" style="text-align:center"><strong>cant = 0 → muestra "No se ingresaron positivos" (NO divide entre 0) ✓</strong></td></tr>
+            </tbody>
+          </table></div>
+
+          <div class="final-answer">
+            <div class="final-answer-label">✅ Distribución de puntos</div>
+            <ul style="margin:6px 0">
+              <li><strong>Pseudocódigo (1.5 pts)</strong>: Leyenda (0.2) · Inicialización (0.2) · Priming read correcto (0.3) · MIENTRAS con acumulador y contador (0.4) · SI final para evitar / 0 (0.4)</li>
+              <li><strong>Diagrama (1.5 pts)</strong>: Símbolos (0.3) · Etiquetas V/F en ambos rombos (0.4) · Las DOS lecturas (priming + dentro) (0.4) · Bifurcación final hacia 2 mensajes (0.4)</li>
+            </ul>
+            <p style="margin-top:8px;font-size:.88rem"><strong>Errores comunes:</strong> olvidar el priming read (1ª lectura fuera) → la primera n no se evalúa antes; olvidar la 2ª lectura dentro del MIENTRAS → bucle infinito; olvidar el SI <code>cant &gt; 0</code> → división entre cero si entrada inicial es negativa; sumar el negativo al total (no se debe).</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SECCIÓN: CÓMO EVALUARTE -->
+    <!-- ============================================================ -->
+    <section class="block" id="evaluacion">
+      <div class="block-header"><div class="block-num">📊</div><h2>Cómo evaluarte (autocalificación)</h2></div>
+
+      <p style="color:var(--text-muted)">Suma honestamente los puntos obtenidos en cada ejercicio según las distribuciones detalladas en cada solución. Aquí tu interpretación final:</p>
+
+      <h3>🏆 Escala de evaluación</h3>
+
+      <div class="table-wrapper">
+        <table>
+          <thead><tr><th>Puntaje</th><th>Nivel</th><th>Significado</th></tr></thead>
+          <tbody>
+            <tr style="background:rgba(52,211,153,.06)"><td><strong>18 a 20</strong></td><td><strong style="color:var(--accent)">🌟 Excelente</strong></td><td>Dominas todo. Vas a tener un examen tranquilo. Solo cuida los detalles (leyendas, FIN_SI, indentación).</td></tr>
+            <tr style="background:rgba(96,165,250,.06)"><td><strong>14 a 17</strong></td><td><strong style="color:var(--primary)">👍 Bueno</strong></td><td>Manejas la mayoría de patrones. Identifica los 1-2 ejercicios donde fallaste y refuerza ese tema. Vas a aprobar bien.</td></tr>
+            <tr style="background:rgba(251,191,36,.06)"><td><strong>11 a 13</strong></td><td><strong style="color:var(--warning)">⚠️ Aprobado justo</strong></td><td>Tienes lo básico pero hay temas frágiles. Revisa de nuevo las semanas correspondientes a los ejercicios donde fallaste.</td></tr>
+            <tr style="background:rgba(248,113,113,.06)"><td><strong>Menos de 11</strong></td><td><strong style="color:var(--danger)">🛑 Necesita más estudio</strong></td><td>No tomes el examen sin reforzar primero. Vuelve a las guías semanales y resuelve más ejercicios. Aún tienes tiempo.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>🔍 Si fallaste en un ejercicio específico, repasa…</h3>
+
+      <div class="table-wrapper">
+        <table>
+          <thead><tr><th>Si fallaste el…</th><th>Tema débil</th><th>Repasa</th></tr></thead>
+          <tbody>
+            <tr><td>Ejercicio 1 (IMC)</td><td>SI anidado en cascada</td><td>Semana 4 + Semana 5 (anidación)</td></tr>
+            <tr><td>Ejercicio 2 (Tarifa eléctrica)</td><td>SI anidado con asignaciones múltiples</td><td>Semana 4 + Semana 6 (estrategia PC2)</td></tr>
+            <tr><td>Ejercicio 3 (Año bisiesto)</td><td>Operadores lógicos AND/OR + MOD</td><td>Semana 4 (operadores lógicos) + Semana 6 (MOD)</td></tr>
+            <tr><td>Ejercicio 4 (N notas)</td><td>PARA + SI + contadores y acumulador</td><td>Semana 5 (ciclos PARA, contador vs acumulador)</td></tr>
+            <tr><td>Ejercicio 5 (Suma de cifras)</td><td>MIENTRAS + DIV/MOD</td><td>Semana 6 (descomposición de números)</td></tr>
+            <tr><td>Ejercicio 6 (Promedio positivos)</td><td>Priming read + manejo de división por 0</td><td>Semana 5 (MIENTRAS, priming read)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout tip" style="margin-top:24px">
+        <div class="callout-header"><span class="callout-icon">🎯</span> Plan de acción según tu puntaje</div>
+        <ul>
+          <li><strong>Si sacaste 18+</strong>: deja de estudiar y descansa. El sobreestudio cansa más de lo que ayuda. Solo revisa el cheat sheet la mañana del examen.</li>
+          <li><strong>Si sacaste 14-17</strong>: refuerza los 1-2 temas débiles con la guía correspondiente. No revisitas todo, solo lo que fallaste.</li>
+          <li><strong>Si sacaste 11-13</strong>: dedica un día completo a repasar a fondo los temas débiles, resuelve 2-3 ejercicios extra de cada guía y luego rehaz este simulacro.</li>
+          <li><strong>Si sacaste menos de 11</strong>: vuelve a la guía semanal correspondiente, lee los ejercicios resueltos, intenta rehacerlos a mano sin ver la solución, y luego haz el simulacro de nuevo. Repite hasta que saques 14+.</li>
+        </ul>
+      </div>
+
+      <div class="callout intuition" style="margin-top:16px">
+        <div class="callout-header"><span class="callout-icon">🐧</span> Mensaje final, Pingüino</div>
+        <p>Hacer este simulacro <strong>antes</strong> del examen real es una de las mejores cosas que puedes hacer por ti mismo: te enseña a manejar el tiempo, te muestra qué temas dominas y cuáles necesitas reforzar, y reduce los nervios el día real porque ya viviste la experiencia.</p>
+        <p>Si fallaste algo: <strong>perfecto, fallar acá es gratis</strong>. Cada error que detectas hoy es un punto que ganas en el examen real.</p>
+        <p>Vamos por ese aprobado. Con todo lo que has trabajado, lo tienes. 🚀</p>
+      </div>
+    </section>
+
+    <footer>
+      <p>📝 <strong>Simulacro · Examen Parcial · Fundamentos de Programación</strong></p>
+      <p>Hecho con <span class="heart">♥</span> para Pingüino · Universidad de Piura</p>
+      <p style="margin-top:8px;font-size:.78rem">Ejercicios diseñados desde cero · No copiados de exámenes anteriores · Misma dificultad y formato esperados</p>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+const root = document.documentElement;
+const themeToggle = document.getElementById('themeToggle');
+const themeIcon = document.getElementById('themeIcon');
+const themeLabel = document.getElementById('themeLabel');
+
+function getSavedTheme() {
+  try { return localStorage.getItem('penguin-theme') || 'dark'; } catch (e) { return 'dark'; }
+}
+function saveTheme(t) {
+  try { localStorage.setItem('penguin-theme', t); } catch (e) {}
+}
+function applyTheme(theme) {
+  root.setAttribute('data-theme', theme);
+  if (theme === 'dark') { themeIcon.textContent = '🌙'; themeLabel.textContent = 'Modo oscuro'; }
+  else { themeIcon.textContent = '☀️'; themeLabel.textContent = 'Modo claro'; }
+  initMermaid(theme);
+}
+themeToggle.addEventListener('click', () => {
+  const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  applyTheme(next); saveTheme(next);
+});
+
+function initMermaid(theme) {
+  if (typeof mermaid === 'undefined') return;
+  const isDark = (theme === 'dark');
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: isDark ? 'dark' : 'default',
+    securityLevel: 'loose',
+    themeVariables: isDark ? {
+      background: '#161c2f', primaryColor: '#1e293b', primaryTextColor: '#e8edf7',
+      primaryBorderColor: '#3d4870', lineColor: '#94a3b8', secondaryColor: '#a78bfa',
+      tertiaryColor: '#34d399', mainBkg: '#1a2138', nodeBkg: '#1a2138',
+      clusterBkg: '#0d1322', edgeLabelBackground: '#161c2f',
+      fontFamily: 'Inter, sans-serif',
+    } : {
+      background: '#ffffff', primaryColor: '#f1f5f9', primaryTextColor: '#0f172a',
+      primaryBorderColor: '#cbd5e1', lineColor: '#475569', mainBkg: '#ffffff',
+      clusterBkg: '#f8fafc', fontFamily: 'Inter, sans-serif',
+    },
+    flowchart: { curve: 'basis', padding: 20, useMaxWidth: true }
+  });
+  document.querySelectorAll('.mermaid-container').forEach(container => {
+    const original = container.dataset.original;
+    if (original) container.innerHTML = '<div class="mermaid">' + original + '</div>';
+  });
+  if (mermaid.run) mermaid.run();
+  else if (mermaid.init) mermaid.init(undefined, document.querySelectorAll('.mermaid'));
+}
+
+const tocLinks = document.querySelectorAll('.toc-list a');
+const sections = document.querySelectorAll('section.block, section.hero');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      tocLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+}, { rootMargin: '-30% 0px -60% 0px' });
+sections.forEach(s => observer.observe(s));
+
+window.addEventListener('DOMContentLoaded', () => { applyTheme(getSavedTheme()); });
+</script>
+</body>
+</html>
