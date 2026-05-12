@@ -1,0 +1,2314 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estudio Profundo · Práctica 1 y Práctica 2 · Fundamentos de Programación</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=Crimson+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\\\(',right:'\\\\)',display:false},{left:'\\\\[',right:'\\\\]',display:true}]});"></script>
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'base',
+    themeVariables: {
+      fontFamily: '"Crimson Pro", Georgia, serif',
+      fontSize: '15px',
+      primaryColor: '#FBF7EE',
+      primaryTextColor: '#1A1A2E',
+      primaryBorderColor: '#1E3A5F',
+      lineColor: '#1E3A5F',
+      secondaryColor: '#E8DFCE',
+      tertiaryColor: '#F5EFE0'
+    },
+    flowchart: { curve: 'basis', padding: 12, useMaxWidth: true }
+  });
+</script>
+<style>
+:root{
+  --bg: #FAF6EC;
+  --bg-card: #FFFCF5;
+  --ink: #1A1A2E;
+  --ink-soft: #3D3D52;
+  --ink-faint: #6E6E83;
+  --rule: #D8CFB8;
+  --accent: #8B1A1A;
+  --accent-soft: #C75D5D;
+  --blue: #1E3A5F;
+  --blue-soft: #4A6FA5;
+  --green: #2D5A3D;
+  --warn-bg: #FDF1E4;
+  --warn-border: #C77B30;
+  --code-bg: #F1EADB;
+  --code-key: #8B1A1A;
+  --code-comment: #6E6E83;
+  --code-string: #2D5A3D;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background: var(--bg);
+  background-image:
+    radial-gradient(circle at 20% 10%, rgba(139,26,26,.03) 0, transparent 40%),
+    radial-gradient(circle at 80% 60%, rgba(30,58,95,.04) 0, transparent 45%);
+  color: var(--ink);
+  font-family: 'Crimson Pro', Georgia, 'Times New Roman', serif;
+  font-size: 18px;
+  line-height: 1.65;
+  font-feature-settings: "kern", "liga", "onum";
+}
+.shell{
+  display: grid;
+  grid-template-columns: 280px minmax(0,1fr);
+  max-width: 1400px;
+  margin: 0 auto;
+  gap: 0;
+}
+/* ==== SIDEBAR ==== */
+aside.toc{
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 32px 22px 32px 28px;
+  border-right: 1px solid var(--rule);
+  background: var(--bg);
+  font-size: 14.5px;
+}
+aside.toc h2{
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 0 0 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--rule);
+}
+aside.toc ol{
+  list-style: none;
+  padding: 0;
+  margin: 0 0 18px;
+  counter-reset: tocsec;
+}
+aside.toc ol > li{
+  counter-increment: tocsec;
+  margin: 4px 0;
+}
+aside.toc ol > li > a::before{
+  content: counter(tocsec, decimal) ".";
+  color: var(--accent);
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  margin-right: 8px;
+  display: inline-block;
+  min-width: 22px;
+}
+aside.toc a{
+  color: var(--ink-soft);
+  text-decoration: none;
+  display: block;
+  padding: 3px 0;
+  line-height: 1.3;
+  transition: color .15s;
+}
+aside.toc a:hover{ color: var(--accent); }
+aside.toc ol ol{
+  margin: 4px 0 8px 28px;
+  font-size: 13.5px;
+  color: var(--ink-faint);
+}
+aside.toc ol ol > li{ counter-increment: none; }
+aside.toc ol ol > li > a::before{ content: "▸"; color: var(--blue-soft); font-size: 10px; margin-right: 6px; min-width: 0; }
+aside.toc .toc-group-label{
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 13px;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin: 18px 0 6px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--rule);
+}
+/* ==== MAIN ==== */
+main{
+  padding: 56px clamp(28px, 5vw, 76px) 120px;
+  max-width: 980px;
+}
+header.doc-head{
+  margin-bottom: 64px;
+  padding-bottom: 36px;
+  border-bottom: 2px solid var(--ink);
+  position: relative;
+}
+header.doc-head::after{
+  content:"";
+  position: absolute;
+  bottom: -7px; left: 0;
+  width: 80px; height: 2px;
+  background: var(--accent);
+}
+.eyebrow{
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 14px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 14px;
+}
+header.doc-head h1{
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(34px, 5vw, 58px);
+  line-height: 1.05;
+  margin: 0 0 18px;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+header.doc-head h1 em{
+  font-style: italic;
+  color: var(--accent);
+  font-weight: 500;
+}
+.subtitle{
+  font-size: 19px;
+  color: var(--ink-soft);
+  margin: 0;
+  max-width: 65ch;
+  font-style: italic;
+}
+.meta-row{
+  display: flex;
+  gap: 32px;
+  margin-top: 24px;
+  font-size: 14px;
+  color: var(--ink-faint);
+  letter-spacing: 0.04em;
+  font-family: 'JetBrains Mono', monospace;
+}
+.meta-row span strong{ color: var(--ink); font-weight: 500; }
+
+/* ==== SECTIONS ==== */
+h2.sec{
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: clamp(28px, 3.5vw, 40px);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin: 72px 0 8px;
+  padding-top: 32px;
+  border-top: 1px solid var(--rule);
+  color: var(--ink);
+}
+h2.sec .num{
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.55em;
+  font-weight: 500;
+  color: var(--accent);
+  vertical-align: middle;
+  margin-right: 16px;
+  letter-spacing: 0;
+}
+h3.subsec{
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 26px;
+  margin: 48px 0 12px;
+  color: var(--blue);
+  letter-spacing: -0.005em;
+}
+h4.step{
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-style: italic;
+  font-size: 22px;
+  margin: 32px 0 10px;
+  color: var(--ink);
+}
+h4.step::before{
+  content: "§ ";
+  color: var(--accent);
+  font-style: normal;
+}
+p{ margin: 0 0 14px; }
+p + p{ text-indent: 1.2em; }
+ul, ol{ padding-left: 1.4em; }
+li{ margin-bottom: 6px; }
+strong{ color: var(--ink); font-weight: 600; }
+em{ font-style: italic; }
+
+/* Lead paragraph */
+.lead{
+  font-size: 21px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  font-style: italic;
+  margin-bottom: 28px;
+  max-width: 62ch;
+}
+.lead::first-letter{
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 3.4em;
+  float: left;
+  line-height: 0.85;
+  margin: 8px 8px 0 0;
+  color: var(--accent);
+  font-style: normal;
+}
+
+/* ==== BOXES ==== */
+.statement{
+  background: var(--bg-card);
+  border-left: 4px solid var(--blue);
+  padding: 22px 28px;
+  margin: 24px 0 32px;
+  font-size: 17.5px;
+  position: relative;
+  border-radius: 0 6px 6px 0;
+  box-shadow: 0 1px 0 rgba(0,0,0,.02);
+}
+.statement::before{
+  content: "Enunciado";
+  position: absolute;
+  top: -10px;
+  left: 20px;
+  background: var(--blue);
+  color: white;
+  padding: 2px 10px;
+  font-family: 'Fraunces', serif;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border-radius: 3px;
+}
+.statement p:last-child{ margin-bottom: 0; }
+.statement .points{
+  display:inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--accent);
+  background: rgba(139,26,26,.08);
+  padding: 2px 8px;
+  border-radius: 3px;
+  margin-left: 8px;
+  letter-spacing: 0.05em;
+}
+
+.callout{
+  background: var(--bg-card);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 20px 24px;
+  margin: 22px 0;
+  position: relative;
+}
+.callout.intuition{ border-left: 4px solid var(--green); background: #F4F1E8; }
+.callout.theory{ border-left: 4px solid var(--blue); }
+.callout.warn{ border-left: 4px solid var(--warn-border); background: var(--warn-bg); }
+.callout.danger{ border-left: 4px solid var(--accent); background: #FBEEEE; }
+.callout-label{
+  display: inline-block;
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+.callout.intuition .callout-label{ color: var(--green); }
+.callout.theory .callout-label{ color: var(--blue); }
+.callout.warn .callout-label{ color: var(--warn-border); }
+.callout.danger .callout-label{ color: var(--accent); }
+
+/* ==== CODE / PSEUDOCODE ==== */
+.pseudocode{
+  background: var(--code-bg);
+  border-radius: 6px;
+  padding: 20px 24px;
+  margin: 18px 0 28px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14.5px;
+  line-height: 1.7;
+  border-left: 3px solid var(--ink);
+  white-space: pre;
+  overflow-x: auto;
+  color: var(--ink);
+  position: relative;
+}
+.pseudocode::before{
+  content: "PSEUDOCÓDIGO";
+  position: absolute;
+  top: 8px;
+  right: 14px;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--ink-faint);
+  font-weight: 600;
+}
+.pseudocode .k{ color: var(--code-key); font-weight: 700; }
+.pseudocode .c{ color: var(--code-comment); font-style: italic; }
+.pseudocode .s{ color: var(--code-string); }
+.pseudocode .v{ color: var(--blue); font-weight: 500; }
+
+code.inline{
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.88em;
+  background: var(--code-bg);
+  padding: 2px 7px;
+  border-radius: 3px;
+  color: var(--ink);
+}
+
+/* ==== LEYENDA ==== */
+.leyenda{
+  background: var(--bg-card);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 18px 22px;
+  margin: 16px 0 24px;
+  font-size: 16px;
+}
+.leyenda h5{
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 16px;
+  margin: 0 0 10px;
+  color: var(--accent);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.leyenda dl{ margin: 0; display: grid; grid-template-columns: max-content 1fr; gap: 6px 18px; }
+.leyenda dt{
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  color: var(--blue);
+  font-size: 14.5px;
+}
+.leyenda dd{ margin: 0; color: var(--ink-soft); }
+
+/* ==== TABLE (desk check) ==== */
+.deskcheck{
+  margin: 22px 0 32px;
+  font-size: 15px;
+  border-collapse: collapse;
+  width: 100%;
+  background: var(--bg-card);
+  border-radius: 6px;
+  overflow: hidden;
+  font-family: 'JetBrains Mono', monospace;
+}
+.deskcheck caption{
+  caption-side: top;
+  text-align: left;
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 15px;
+  color: var(--accent);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding-bottom: 8px;
+  font-weight: 600;
+}
+.deskcheck th, .deskcheck td{
+  padding: 8px 12px;
+  border: 1px solid var(--rule);
+  text-align: center;
+  font-size: 14px;
+}
+.deskcheck th{
+  background: var(--blue);
+  color: white;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.deskcheck tr:nth-child(even) td{ background: rgba(216,207,184,.18); }
+.deskcheck .case-label{
+  text-align: left;
+  font-family: 'Crimson Pro', serif;
+  font-style: italic;
+  color: var(--accent);
+  font-size: 14.5px;
+}
+
+/* ==== FLOWCHART CONTAINER ==== */
+.flowchart{
+  background: var(--bg-card);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 24px;
+  margin: 20px 0 32px;
+  text-align: center;
+  position: relative;
+}
+.flowchart::before{
+  content: "DIAGRAMA DE FLUJO";
+  position: absolute;
+  top: 10px; left: 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--ink-faint);
+  font-weight: 600;
+}
+.flowchart .mermaid{ display: inline-block; min-width: 100%; }
+
+/* ==== TWO COLUMNS ==== */
+.twocol{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin: 20px 0;
+}
+.twocol > div{ min-width: 0; }
+@media (max-width: 900px){
+  .twocol{ grid-template-columns: 1fr; }
+}
+
+/* ==== MATH FORMULA ==== */
+.formula-box{
+  background: linear-gradient(135deg, #F8F2E2 0%, #F1E9D3 100%);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 18px 28px;
+  margin: 18px 0;
+  text-align: center;
+  font-size: 18px;
+}
+
+/* ==== KBD / NUMBERED STEP ==== */
+.step-card{
+  background: var(--bg-card);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 18px 22px 18px 64px;
+  margin: 14px 0;
+  position: relative;
+  min-height: 64px;
+}
+.step-card .num-badge{
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  display: grid;
+  place-items: center;
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 16px;
+}
+.step-card h5{
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 18px;
+  margin: 0 0 6px;
+  color: var(--blue);
+}
+.step-card p:last-child{ margin-bottom: 0; }
+
+/* ==== TAG / CHIP ==== */
+.chip{
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  background: rgba(30,58,95,.1);
+  color: var(--blue);
+  padding: 2px 8px;
+  border-radius: 3px;
+  margin: 0 4px 4px 0;
+  letter-spacing: 0.03em;
+}
+.chip.accent{ background: rgba(139,26,26,.1); color: var(--accent); }
+.chip.green{ background: rgba(45,90,61,.1); color: var(--green); }
+
+.tag-row{ margin: 8px 0 14px; }
+
+/* ==== DECORATIONS ==== */
+.rule-flourish{
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 40px 0;
+  color: var(--accent);
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 14px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  justify-content: center;
+}
+.rule-flourish::before, .rule-flourish::after{
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--rule);
+}
+
+/* ==== PRINT ==== */
+@media print {
+  aside.toc{ display: none; }
+  .shell{ grid-template-columns: 1fr; }
+  main{ padding: 20px; }
+  body{ background: white; font-size: 12pt; }
+  .flowchart, .pseudocode, .deskcheck, .callout, .statement{ break-inside: avoid; }
+}
+
+/* ==== RESPONSIVE ==== */
+@media (max-width: 900px){
+  .shell{ grid-template-columns: 1fr; }
+  aside.toc{
+    position: relative;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--rule);
+  }
+  main{ padding: 32px 22px 80px; }
+  .leyenda dl{ grid-template-columns: 1fr; }
+}
+
+/* Anchor offset */
+[id]{ scroll-margin-top: 24px; }
+
+/* Reveal animation on load */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+header.doc-head{ animation: fadeUp .8s ease-out both; }
+header.doc-head h1{ animation: fadeUp 1s ease-out .1s both; }
+.subtitle{ animation: fadeUp 1s ease-out .25s both; }
+.meta-row{ animation: fadeUp 1s ease-out .4s both; }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+<!-- ==================== SIDEBAR TOC ==================== -->
+<aside class="toc">
+  <h2>Índice</h2>
+  <ol>
+    <li><a href="#intro">Cómo estudiar este documento</a></li>
+    <li><a href="#marco">Marco teórico esencial</a>
+      <ol>
+        <li><a href="#marco-algo">Algoritmo: definición y 5 pasos</a></li>
+        <li><a href="#marco-pseudo">Pseudocódigo y diagramas</a></li>
+        <li><a href="#marco-cond">Estructuras condicionales</a></li>
+        <li><a href="#marco-rep">Estructuras repetitivas</a></li>
+        <li><a href="#marco-arbol">Árbol de decisión de estructuras</a></li>
+      </ol>
+    </li>
+  </ol>
+
+  <div class="toc-group-label">Práctica calificada N.º 1</div>
+  <ol>
+    <li><a href="#p1-t1">T1 · Los 5 pasos con ejemplo</a></li>
+    <li><a href="#p1-t2">T2 · Características de un algoritmo</a></li>
+    <li><a href="#p1-e1">E1 · Estatura → pies y pulgadas</a></li>
+    <li><a href="#p1-e2">E2 · Sueldos de 3 empleados</a></li>
+    <li><a href="#p1-e3">E3 · Nota final ponderada</a></li>
+  </ol>
+
+  <div class="toc-group-label">Práctica N.º 2 — Fila A</div>
+  <ol>
+    <li><a href="#p2a-e1">E1 · Comisión de vendedores</a></li>
+    <li><a href="#p2a-e2">E2 · Mayor de tres números</a></li>
+    <li><a href="#p2a-e3">E3 · Contar la letra "a"</a></li>
+  </ol>
+
+  <div class="toc-group-label">Práctica N.º 2 — Fila B</div>
+  <ol>
+    <li><a href="#p2b-e1">E1 · Descuento por kilos</a></li>
+  </ol>
+
+  <div class="toc-group-label">Práctica N.º 2 — Fila C</div>
+  <ol>
+    <li><a href="#p2c-e1">E1 · Comisión (variante)</a></li>
+    <li><a href="#p2c-e2">E2 · Playa de estacionamiento</a></li>
+    <li><a href="#p2c-e3">E3 · Contar &gt; 50</a></li>
+  </ol>
+
+  <div class="toc-group-label">Cierre</div>
+  <ol>
+    <li><a href="#sintesis">Síntesis y patrones recurrentes</a></li>
+  </ol>
+</aside>
+
+<!-- ==================== MAIN ==================== -->
+<main>
+
+<!-- ==================== HEADER ==================== -->
+<header class="doc-head">
+  <p class="eyebrow">Estudio profundo · Curso A1FP1</p>
+  <h1>Prácticas calificadas <em>1 y 2</em>:<br>cada paso, su porqué, su teoría</h1>
+  <p class="subtitle">Resolución íntegra y razonada de los once ejercicios totales: comprensión del problema, leyenda de variables, análisis lógico-matemático, pseudocódigo justificado línea por línea, diagrama de flujo, prueba de escritorio y errores comunes.</p>
+  <div class="meta-row">
+    <span><strong>Curso:</strong> Fundamentos de Programación</span>
+    <span><strong>Profesor:</strong> Luis Chirinos F.</span>
+    <span><strong>UDEP</strong> · Campus Lima</span>
+  </div>
+</header>
+
+<!-- ==================== INTRO ==================== -->
+<section id="intro">
+<h2 class="sec"><span class="num">00</span>Cómo estudiar este documento</h2>
+
+<p class="lead">Este documento no busca darte respuestas: busca darte el mecanismo mental que produce respuestas. Por eso cada ejercicio se desmonta en sus partes, y cada parte se justifica.</p>
+
+<p>La trampa al estudiar algoritmos es memorizar pseudocódigos. Eso falla en cuanto el examen cambia un número o invierte un operador. Lo que sí escala es el <strong>método</strong>: una secuencia fija de pasos que aplicas a cualquier problema. Por eso aquí, para cada ejercicio, repites el mismo guion:</p>
+
+<ol>
+  <li><strong>Comprensión.</strong> ¿Qué te están pidiendo, en una sola frase, sin tecnicismos?</li>
+  <li><strong>Datos y resultados.</strong> ¿Qué entra? ¿Qué sale? ¿Qué tipo de dato es cada cosa?</li>
+  <li><strong>Leyenda de variables.</strong> Nombres cortos, mnemotécnicos, en mayúsculas — el profesor lo exige y, además, te obliga a clarificar antes de programar.</li>
+  <li><strong>Estrategia.</strong> ¿Qué estructura necesitas? ¿Hay condiciones? ¿Hay repetición? ¿Cuántas veces? Aquí <em>eliges</em> entre SI, SI-SINO, PARA, MIENTRAS, REPETIR.</li>
+  <li><strong>Pseudocódigo.</strong> Línea por línea, con justificación de cada decisión.</li>
+  <li><strong>Diagrama de flujo.</strong> Misma lógica, otra representación. Si la lógica está bien, el diagrama sale solo.</li>
+  <li><strong>Prueba de escritorio.</strong> Casos típicos, casos frontera, casos imposibles. Sin esto no sabes si funciona.</li>
+</ol>
+
+<p>Y al final, las preguntas que más duelen: <em>¿qué errores son fáciles de cometer aquí? ¿qué hace que un compañero, viendo lo mismo, escriba algo incorrecto?</em></p>
+
+<div class="callout warn">
+  <span class="callout-label">Aviso de honestidad intelectual</span>
+  <p>La solución oficial del Ejercicio 1 de la Práctica 2 (Fila A) contiene un error grave de anidamiento que invierte la lógica. En lugar de ocultarlo, en esa sección lo discuto, demuestro por qué está mal con una prueba de escritorio y muestro la versión correcta. Ese ejercicio en particular vale dedicarle el doble de atención.</p>
+</div>
+</section>
+
+<!-- ==================== MARCO TEÓRICO ==================== -->
+<section id="marco">
+<h2 class="sec"><span class="num">01</span>Marco teórico esencial</h2>
+
+<p class="lead">Antes de resolver, hay que tener fresco el vocabulario y las herramientas. Esta sección es deliberadamente breve: solo lo que vas a usar en los ejercicios.</p>
+
+<!-- 1.1 ALGORITMO -->
+<h3 class="subsec" id="marco-algo">1.1 ¿Qué es un algoritmo y cuáles son sus cinco pasos?</h3>
+
+<p>Un <strong>algoritmo</strong> es una secuencia finita, ordenada y no ambigua de instrucciones que, aplicada sobre unos datos de entrada, produce unos datos de salida en un número finito de pasos. Joyanes Aguilar lo resume así: "método para resolver un problema mediante una serie de pasos precisos, definidos y finitos".</p>
+
+<p>La metodología estándar para <em>construir</em> un algoritmo (la que pide la Pregunta Teórica 1 de la Práctica 1) tiene cinco pasos:</p>
+
+<div class="step-card"><div class="num-badge">1</div>
+  <h5>Definir el objetivo</h5>
+  <p>Escribir, en una sola frase, qué problema resuelve el algoritmo. Si no puedes decirlo en una frase, no lo entiendes todavía.</p>
+</div>
+<div class="step-card"><div class="num-badge">2</div>
+  <h5>Identificar los componentes (variables y datos)</h5>
+  <p>Listar qué dato entra, qué dato sale, qué datos intermedios necesitas y de qué tipo es cada uno (entero, real, carácter, lógico).</p>
+</div>
+<div class="step-card"><div class="num-badge">3</div>
+  <h5>Escribir las instrucciones</h5>
+  <p>Redactar en pseudocódigo y/o dibujar en diagrama de flujo la secuencia de operaciones.</p>
+</div>
+<div class="step-card"><div class="num-badge">4</div>
+  <h5>Probar el algoritmo</h5>
+  <p>Hacer la prueba de escritorio: simular con valores concretos qué hace cada línea, qué valor tiene cada variable, qué se muestra al final.</p>
+</div>
+<div class="step-card"><div class="num-badge">5</div>
+  <h5>Verificar el resultado</h5>
+  <p>Comparar la salida obtenida con la salida esperada. Si difiere, regresar al paso 3.</p>
+</div>
+
+<div class="callout intuition">
+  <span class="callout-label">Intuición</span>
+  <p>Estos cinco pasos son la versión universitaria de algo que ya haces sin saberlo cuando sigues una receta de cocina: sabes <em>qué</em> quieres preparar (1), reúnes ingredientes y utensilios (2), sigues los pasos (3), pruebas el plato (4), y decides si lo sirves o lo corriges (5). La diferencia es que aquí lo haces sobre datos en lugar de sobre sal y harina.</p>
+</div>
+
+<h3 class="subsec">1.2 Características que debe cumplir todo algoritmo</h3>
+
+<p>Estas son las propiedades que un algoritmo debe satisfacer. Las preguntan en la Pregunta Teórica 2 de la Práctica 1:</p>
+
+<ul>
+  <li><strong>Finitud.</strong> Tiene un número finito de pasos y termina.</li>
+  <li><strong>Definición precisa (no ambigüedad).</strong> Cada paso significa una cosa y solo una.</li>
+  <li><strong>Entradas definidas.</strong> Acepta cero o más datos como entrada, cada uno con tipo claro.</li>
+  <li><strong>Salidas definidas.</strong> Produce uno o más resultados, observables.</li>
+  <li><strong>Efectividad.</strong> Cada paso es ejecutable mecánicamente (no requiere creatividad humana).</li>
+</ul>
+
+<!-- 1.2 PSEUDOCÓDIGO / FLUJO -->
+<h3 class="subsec" id="marco-pseudo">1.3 Pseudocódigo y diagrama de flujo</h3>
+
+<p>Son dos formas de representar lo mismo. El <strong>pseudocódigo</strong> usa palabras estructuradas (INICIO, FIN, SI, MIENTRAS, etc.) y se parece a un lenguaje de programación sin sintaxis estricta. El <strong>diagrama de flujo</strong> usa símbolos gráficos. Los esenciales son:</p>
+
+<div class="twocol">
+<div>
+<table class="deskcheck" style="text-align:left;font-family:'Crimson Pro',serif;font-size:15.5px">
+<caption>Símbolos del diagrama de flujo</caption>
+<thead><tr><th style="text-align:left">Símbolo</th><th style="text-align:left">Significado</th></tr></thead>
+<tbody>
+<tr><td><strong>Óvalo</strong></td><td>Inicio / Fin</td></tr>
+<tr><td><strong>Paralelogramo</strong></td><td>Entrada / Salida (Leer, Mostrar)</td></tr>
+<tr><td><strong>Rectángulo</strong></td><td>Proceso (asignación, cálculo)</td></tr>
+<tr><td><strong>Rombo</strong></td><td>Decisión (condición, ¿Sí / No?)</td></tr>
+<tr><td><strong>Flecha</strong></td><td>Flujo de ejecución</td></tr>
+</tbody>
+</table>
+</div>
+<div>
+<table class="deskcheck" style="text-align:left;font-family:'Crimson Pro',serif;font-size:15.5px">
+<caption>Tipos de datos primitivos</caption>
+<thead><tr><th style="text-align:left">Tipo</th><th style="text-align:left">Ejemplo</th></tr></thead>
+<tbody>
+<tr><td><strong>Entero</strong></td><td>3, −7, 100</td></tr>
+<tr><td><strong>Real</strong></td><td>3.14, −0.5, 2.0</td></tr>
+<tr><td><strong>Carácter</strong></td><td>'a', 'Z', '7'</td></tr>
+<tr><td><strong>Lógico</strong></td><td>Verdadero / Falso</td></tr>
+<tr><td><strong>Cadena</strong></td><td>"hola"</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<!-- 1.3 CONDICIONALES -->
+<h3 class="subsec" id="marco-cond">1.4 Estructuras condicionales: SI, SI-SINO, SI anidados</h3>
+
+<p>Una condicional ejecuta uno u otro bloque <em>según</em> el resultado (Verdadero o Falso) de una condición lógica. Hay tres variantes:</p>
+
+<div class="callout theory">
+<span class="callout-label">SI simple</span>
+<pre class="pseudocode" style="margin:0;border:none;background:transparent;padding:0"><span class="k">SI</span> condición <span class="k">ENTONCES</span>
+    bloque P
+<span class="k">FIN_SI</span></pre>
+<p style="margin-top:10px">Si la condición es V, se ejecuta P; si es F, no se hace nada.</p>
+</div>
+
+<div class="callout theory">
+<span class="callout-label">SI doble (SI-SINO)</span>
+<pre class="pseudocode" style="margin:0;border:none;background:transparent;padding:0"><span class="k">SI</span> condición <span class="k">ENTONCES</span>
+    bloque P
+<span class="k">SINO</span>
+    bloque Q
+<span class="k">FIN_SI</span></pre>
+<p style="margin-top:10px">Si V → P; si F → Q. <strong>Siempre se ejecuta exactamente uno de los dos bloques.</strong></p>
+</div>
+
+<div class="callout theory">
+<span class="callout-label">SI anidados (selección múltiple)</span>
+<pre class="pseudocode" style="margin:0;border:none;background:transparent;padding:0"><span class="k">SI</span> condición1 <span class="k">ENTONCES</span>
+    bloque P
+<span class="k">SINO</span>
+    <span class="k">SI</span> condición2 <span class="k">ENTONCES</span>
+        bloque Q
+    <span class="k">SINO</span>
+        bloque R
+    <span class="k">FIN_SI</span>
+<span class="k">FIN_SI</span></pre>
+<p style="margin-top:10px">Útil cuando hay <em>más de dos</em> categorías mutuamente excluyentes. La <strong>regla de oro</strong>: el SINO de afuera ya garantiza que <code class="inline">condición1</code> es falsa, así que dentro del SINO no necesitas volver a comprobarla.</p>
+</div>
+
+<div class="callout intuition">
+<span class="callout-label">La intuición clave del anidamiento</span>
+<p>Cuando llegas al SINO, <strong>ya sabes</strong> que la condición de arriba fue falsa. Esa información viaja contigo hacia abajo. Por eso, si arriba pusiste <code class="inline">VM ≥ 35000</code> y fuiste al SINO, dentro del SINO sabes automáticamente que <code class="inline">VM &lt; 35000</code>. Entonces "VM ≥ 25000" dentro del SINO significa, en realidad, <code class="inline">25000 ≤ VM &lt; 35000</code>. Esta dualidad anidamiento ↔ intervalo es lo que te permite traducir un problema de tramos (como el de las comisiones) a un código limpio.</p>
+</div>
+
+<!-- 1.4 REPETITIVAS -->
+<h3 class="subsec" id="marco-rep">1.5 Estructuras repetitivas: PARA, MIENTRAS, REPETIR</h3>
+
+<p>Repetir una misma acción muchas veces es lo que hace que las computadoras sean computadoras. Hay tres estructuras estándar, y se diferencian en <em>dónde</em> se chequea la condición y en si conoces de antemano cuántas iteraciones serán:</p>
+
+<div class="callout theory">
+<span class="callout-label">PARA (for)</span>
+<pre class="pseudocode" style="margin:0;border:none;background:transparent;padding:0"><span class="k">PARA</span> i = inicio <span class="k">HASTA</span> fin <span class="k">HACER</span>
+    bloque P
+<span class="k">FIN_PARA</span></pre>
+<p style="margin-top:10px"><strong>Cuándo usarla:</strong> conoces de antemano el número exacto de iteraciones (por ejemplo, "ingresar 50 caracteres", "leer 8 números"). El contador <code class="inline">i</code> se incrementa automáticamente.</p>
+</div>
+
+<div class="callout theory">
+<span class="callout-label">MIENTRAS (while)</span>
+<pre class="pseudocode" style="margin:0;border:none;background:transparent;padding:0"><span class="k">MIENTRAS</span> condición <span class="k">HACER</span>
+    bloque P
+<span class="k">FIN_MIENTRAS</span></pre>
+<p style="margin-top:10px"><strong>Cuándo usarla:</strong> repites hasta que se cumpla algo, pero no sabes cuántas veces. La condición se evalúa <em>antes</em> de cada iteración: si la primera vez ya es falsa, el bloque no se ejecuta ni una sola vez.</p>
+</div>
+
+<div class="callout theory">
+<span class="callout-label">REPETIR-HASTA</span>
+<pre class="pseudocode" style="margin:0;border:none;background:transparent;padding:0"><span class="k">REPETIR</span>
+    bloque P
+<span class="k">HASTA QUE</span> condición</pre>
+<p style="margin-top:10px"><strong>Cuándo usarla:</strong> necesitas que el bloque se ejecute <em>al menos una vez</em>. La condición se evalúa <em>al final</em>, así que la primera pasada siempre ocurre. Termina cuando la condición se vuelve V.</p>
+</div>
+
+<!-- 1.5 ÁRBOL DE DECISIÓN -->
+<h3 class="subsec" id="marco-arbol">1.6 ¿Cuál estructura usar? Árbol de decisión</h3>
+
+<p>Esto te ahorra dudas en el examen:</p>
+
+<div class="flowchart">
+<div class="mermaid">
+flowchart TD
+  A["¿Necesito repetir<br/>algo varias veces?"]
+  A -->|"Sí"| B["¿Sé cuántas veces<br/>de antemano?"]
+  A -->|"No"| Z["Usar SI / SI-SINO<br/>o secuencial"]
+  B -->|"Sí"| P["Usar PARA"]
+  B -->|"No"| C["¿La condición se chequea<br/>ANTES o DESPUÉS?"]
+  C -->|"Antes"| M["Usar MIENTRAS"]
+  C -->|"Después<br/>(al menos 1 vez)"| R["Usar REPETIR-HASTA"]
+</div>
+</div>
+
+<div class="callout intuition">
+<span class="callout-label">Regla práctica</span>
+<p>"Ingrese 50 números" → <strong>PARA</strong> (conoces el 50). "Ingrese números hasta que sea negativo" → <strong>MIENTRAS</strong> (chequeas antes). "Pida la contraseña y vuelva a pedirla si está mal" → <strong>REPETIR-HASTA</strong> (al menos una vez la pides). Todas son equivalentes en potencia expresiva (cualquier PARA puede escribirse como MIENTRAS), pero <em>cada una comunica mejor una intención distinta</em>.</p>
+</div>
+
+<h3 class="subsec">1.7 Operadores que vas a usar</h3>
+
+<table class="deskcheck" style="text-align:left;font-family:'Crimson Pro',serif;font-size:15.5px">
+<caption>Operadores aritméticos, relacionales y lógicos</caption>
+<thead><tr><th style="text-align:left">Categoría</th><th style="text-align:left">Operadores</th><th style="text-align:left">Notas</th></tr></thead>
+<tbody>
+<tr><td>Aritméticos</td><td><code class="inline">+ − * /</code> ; <code class="inline">MOD</code> (resto) ; <code class="inline">DIV</code> (cociente entero) ; <code class="inline">^</code> (potencia)</td><td>Precedencia: <code class="inline">^</code> &gt; <code class="inline">* / MOD DIV</code> &gt; <code class="inline">+ −</code></td></tr>
+<tr><td>Relacionales</td><td><code class="inline">&lt; ≤ &gt; ≥ = ≠</code></td><td>Resultado: Verdadero o Falso</td></tr>
+<tr><td>Lógicos</td><td><code class="inline">Y</code> (AND) ; <code class="inline">O</code> (OR) ; <code class="inline">NO</code> (NOT)</td><td>Conectan condiciones simples</td></tr>
+</tbody>
+</table>
+
+<p class="rule-flourish">·  ·  ·</p>
+</section>
+
+<!-- ==================================================================== -->
+<!-- ==========================  PRÁCTICA 1  =========================== -->
+<!-- ==================================================================== -->
+
+<section id="p1-t1">
+<h2 class="sec"><span class="num">P1.T1</span>Pregunta teórica 1: los cinco pasos con un ejemplo <span class="chip accent">3 puntos</span></h2>
+
+<div class="statement">
+<p>Describa un ejemplo en el cual identifique los 5 pasos para la construcción de un algoritmo. Debe indicar y relacionar el ejemplo con cada uno de los pasos.</p>
+</div>
+
+<h4 class="step">Qué te están midiendo</h4>
+<p>Que sepas <strong>nombrar</strong> los cinco pasos y, sobre todo, que sepas <strong>aplicarlos</strong> sobre un caso concreto. El error típico es enumerarlos en abstracto: el profesor pide que cada paso esté <em>relacionado con el ejemplo</em>. Sin esa relación no hay puntaje.</p>
+
+<h4 class="step">Ejemplo modelo: calcular el área de un rectángulo</h4>
+
+<div class="step-card"><div class="num-badge">1</div>
+  <h5>Definir el objetivo</h5>
+  <p>Calcular el área de un rectángulo a partir de su base y su altura. <em>Objetivo escrito en una sola frase.</em></p>
+</div>
+<div class="step-card"><div class="num-badge">2</div>
+  <h5>Identificar los componentes (variables)</h5>
+  <p>Datos de entrada: <code class="inline">B</code> (base, real) y <code class="inline">H</code> (altura, real). Dato de salida: <code class="inline">A</code> (área, real). Fórmula: <code class="inline">A = B × H</code>.</p>
+</div>
+<div class="step-card"><div class="num-badge">3</div>
+  <h5>Escribir las instrucciones</h5>
+<pre class="pseudocode" style="margin-top:8px"><span class="k">INICIO</span>
+    <span class="k">Real:</span> B, H, A
+    <span class="k">Leer</span> B, H
+    A = B * H
+    <span class="k">Mostrar</span> A
+<span class="k">FIN</span></pre>
+</div>
+<div class="step-card"><div class="num-badge">4</div>
+  <h5>Probar el algoritmo (prueba de escritorio)</h5>
+  <p>Con B = 5 y H = 3: la línea <code class="inline">A = B * H</code> hace A = 15. Se muestra 15. Con B = 2.5 y H = 4: A = 10. Se muestra 10.</p>
+</div>
+<div class="step-card"><div class="num-badge">5</div>
+  <h5>Verificar el resultado</h5>
+  <p>Comparamos 15 contra el cálculo manual 5 × 3 = 15. Coincide. Comparamos 10 contra 2.5 × 4 = 10. Coincide. El algoritmo está verificado.</p>
+</div>
+
+<div class="callout intuition">
+<span class="callout-label">Por qué este ejemplo es bueno</span>
+<p>Es trivial pero <em>completo</em>: tiene entrada, salida, proceso, y se puede verificar a mano sin calculadora. En el examen, evita ejemplos donde la verificación sea difícil (como hipotenusas con raíces, donde no podrás verificar mentalmente). Cuanto más simple el ejemplo, más fácil mostrar los cinco pasos con claridad.</p>
+</div>
+</section>
+
+<!-- ============================ T2 ============================ -->
+<section id="p1-t2">
+<h2 class="sec"><span class="num">P1.T2</span>Pregunta teórica 2: características de un algoritmo <span class="chip accent">3 puntos</span></h2>
+
+<div class="statement">
+<p>Indique las características de un algoritmo y coloque un ejemplo en el cual relacione cada una de las características con el ejemplo dado.</p>
+</div>
+
+<h4 class="step">Ejemplo elegido: algoritmo que calcula la suma de dos números</h4>
+<pre class="pseudocode"><span class="k">INICIO</span>
+    <span class="k">Real:</span> a, b, s
+    <span class="k">Leer</span> a, b
+    s = a + b
+    <span class="k">Mostrar</span> s
+<span class="k">FIN</span></pre>
+
+<table class="deskcheck" style="text-align:left;font-family:'Crimson Pro',serif;font-size:16px">
+<caption>Cinco características, una a una, aplicadas al ejemplo</caption>
+<thead><tr><th style="text-align:left;width:25%">Característica</th><th style="text-align:left">Cómo se cumple en el ejemplo</th></tr></thead>
+<tbody>
+<tr><td><strong>Finitud</strong></td><td>El algoritmo tiene exactamente 5 líneas (INICIO, declaración, lectura, asignación, salida, FIN) y termina cuando llega a FIN. No hay bucles ni recursión que puedan dispararse al infinito.</td></tr>
+<tr><td><strong>Definición precisa</strong></td><td>Cada línea significa exactamente una cosa: <code class="inline">Leer a, b</code> pide dos valores numéricos del teclado y los guarda en <code class="inline">a</code> y <code class="inline">b</code>. No hay ambigüedad sobre qué ocurre.</td></tr>
+<tr><td><strong>Entradas definidas</strong></td><td>Dos entradas: <code class="inline">a</code> y <code class="inline">b</code>, ambas de tipo real. Se sabe qué se espera del usuario.</td></tr>
+<tr><td><strong>Salidas definidas</strong></td><td>Una salida: <code class="inline">s</code>, mostrada en pantalla. Es observable y mide el resultado.</td></tr>
+<tr><td><strong>Efectividad</strong></td><td>La operación <code class="inline">a + b</code> es ejecutable mecánicamente por cualquier computadora: no requiere creatividad, intuición ni conocimiento externo al algoritmo.</td></tr>
+</tbody>
+</table>
+
+<div class="callout warn">
+<span class="callout-label">Trampa que te puede costar puntos</span>
+<p>Mucha gente confunde las <em>características</em> de un algoritmo con los <em>pasos para construirlo</em>. No son lo mismo: los pasos son una metodología; las características son propiedades que el resultado debe satisfacer. Si te preguntan características, no respondas "definir el objetivo, identificar variables…" — eso es la pregunta 1.</p>
+</div>
+</section>
+
+<!-- ============================ E1: ESTATURA ============================ -->
+<section id="p1-e1">
+<h2 class="sec"><span class="num">P1.E1</span>Ejercicio 1: estatura en metros a pies y pulgadas <span class="chip accent">4 puntos</span></h2>
+
+<div class="statement">
+<p>Elabore el pseudocódigo y diagrama de flujo de un algoritmo que solicite la estatura de una persona en metros y la convierta a pies y pulgadas. Se sabe que: <strong>1 metro = 3.28084 pies</strong> y <strong>1 pulgada = 2.54 cm</strong>.</p>
+</div>
+
+<h4 class="step">Comprensión: ¿qué se pide exactamente?</h4>
+<p>Dado un valor en metros, calcular cuántos pies son y cuántas pulgadas son. Importante: <strong>no</strong> se pide convertir metros a "pies con pulgadas restantes" (eso sería más complejo, requiriendo la parte entera). Solo se pide hacer las <em>dos conversiones independientes</em>: el mismo valor expresado en pies, y el mismo valor expresado en pulgadas.</p>
+
+<h4 class="step">Análisis matemático</h4>
+<p>Tenemos dos factores de conversión:</p>
+<div class="formula-box">$$1\ \text{m} = 3.28084\ \text{pies} \quad\Longrightarrow\quad \text{pies} = \text{metros} \times 3.28084$$</div>
+
+<p>Para las pulgadas, el dato viene en centímetros: 1 pulgada = 2.54 cm. Como 1 m = 100 cm, primero pasamos metros a cm multiplicando por 100, y luego cm a pulgadas dividiendo entre 2.54:</p>
+
+<div class="formula-box">$$\text{pulgadas} = \frac{\text{metros} \times 100}{2.54}$$</div>
+
+<div class="callout intuition">
+<span class="callout-label">Verificación rápida</span>
+<p>Una persona de 1.80 m mide aproximadamente 5.91 pies (porque 1.80 × 3.28084 ≈ 5.91) y 70.87 pulgadas (porque 180 / 2.54 ≈ 70.87). Si tu algoritmo, alimentado con 1.80, no produce estos números, hay un error.</p>
+</div>
+
+<h4 class="step">Leyenda de variables</h4>
+<div class="leyenda">
+<h5>Leyenda</h5>
+<dl>
+  <dt>estatura</dt><dd>estatura de la persona, en metros (real)</dd>
+  <dt>pie</dt><dd>estatura convertida a pies (real)</dd>
+  <dt>pulg</dt><dd>estatura convertida a pulgadas (real)</dd>
+</dl>
+</div>
+
+<h4 class="step">Estrategia algorítmica</h4>
+<p>Es un problema <strong>puramente secuencial</strong>: tres pasos en línea recta: leer → calcular dos cosas → mostrar. No hay decisiones, no hay repeticiones. Solo asignaciones aritméticas. Estructura: I/O → Proceso → I/O.</p>
+
+<h4 class="step">Pseudocódigo</h4>
+<pre class="pseudocode"><span class="k">INICIO</span>
+    <span class="k">Real:</span> estatura, pie, pulg
+    <span class="k">Leer</span> estatura                       <span class="c">// dato de entrada en metros</span>
+    pie  = estatura * 3.28084              <span class="c">// metros → pies</span>
+    pulg = (estatura * 100) / 2.54         <span class="c">// metros → cm → pulgadas</span>
+    <span class="k">Mostrar</span> pie, pulg                  <span class="c">// salida</span>
+<span class="k">FIN</span></pre>
+
+<div class="callout theory">
+<span class="callout-label">¿Por qué los paréntesis en (estatura * 100) / 2.54?</span>
+<p>Por precedencia de operadores, <code class="inline">*</code> y <code class="inline">/</code> tienen la <strong>misma</strong> precedencia y se evalúan de <em>izquierda a derecha</em>. Entonces <code class="inline">estatura * 100 / 2.54</code> ya hace lo correcto sin paréntesis. Pero los paréntesis hacen explícita la intención y eliminan cualquier duda. <strong>Regla práctica:</strong> cuando dudes, parentiza. El código se ejecuta igual, pero se lee mejor.</p>
+</div>
+
+<h4 class="step">Diagrama de flujo</h4>
+<div class="flowchart">
+<div class="mermaid">
+flowchart TD
+  S(["INICIO"])
+  D["Real: estatura, pie, pulg"]
+  I[/"Leer estatura"/]
+  P1["pie = estatura * 3.28084"]
+  P2["pulg = (estatura * 100) / 2.54"]
+  O[/"Mostrar pie, pulg"/]
+  E(["FIN"])
+  S --> D --> I --> P1 --> P2 --> O --> E
+</div>
+</div>
+
+<h4 class="step">Prueba de escritorio</h4>
+<table class="deskcheck">
+<caption>Tres casos para verificar el algoritmo</caption>
+<thead><tr><th>Caso</th><th>estatura</th><th>pie</th><th>pulg</th></tr></thead>
+<tbody>
+<tr><td class="case-label">Persona promedio (1.75 m)</td><td>1.75</td><td>5.74147</td><td>68.8976</td></tr>
+<tr><td class="case-label">Persona alta (1.90 m)</td><td>1.90</td><td>6.23360</td><td>74.8031</td></tr>
+<tr><td class="case-label">Persona baja (1.50 m)</td><td>1.50</td><td>4.92126</td><td>59.0551</td></tr>
+</tbody>
+</table>
+
+<div class="callout warn">
+<span class="callout-label">Errores típicos en este ejercicio</span>
+<ul>
+<li><strong>Olvidar el factor 100.</strong> Escribir <code class="inline">pulg = estatura / 2.54</code> da pulgadas <em>desde centímetros</em>, no desde metros. Resultado erróneo por factor 100.</li>
+<li><strong>Confundir el sentido de la conversión.</strong> Algunos escriben <code class="inline">pie = estatura / 3.28084</code> pensando "divido por el factor". Pero el factor te dice cuántos pies hay en un metro; entonces para pasar metros → pies, <em>multiplicas</em>.</li>
+<li><strong>No leer la entrada.</strong> Escribir <code class="inline">estatura = 1.75</code> sin <code class="inline">Leer</code> produce un algoritmo que solo sirve para esa persona. El profesor lo penaliza.</li>
+<li><strong>Olvidar declarar tipos.</strong> El enunciado pide la leyenda. Sin ella, pierdes puntos aunque el código funcione.</li>
+</ul>
+</div>
+</section>
+
+<!-- ============================ E2: SUELDOS ============================ -->
+<section id="p1-e2">
+<h2 class="sec"><span class="num">P1.E2</span>Ejercicio 2: sueldos de tres empleados <span class="chip accent">5 puntos</span></h2>
+
+<div class="statement">
+<p>Una empresa desea determinar el sueldo que debe pagar a cada uno de sus 3 empleados y la suma de los 3 sueldos. El empleado 1 trabajó un mes, el empleado 2 trabajó 17 días y el empleado 3 trabajó 12 días. Se debe considerar que el pago por día es de <strong>45 soles</strong> y que un mes de trabajo es igual a <strong>24 días</strong>.</p>
+</div>
+
+<h4 class="step">Comprensión: ¿qué se pide?</h4>
+<p>Cuatro números de salida: tres sueldos individuales y su suma. Los días trabajados están <em>fijos</em> en el enunciado (24, 17, 12); no se leen. El pago por día está <em>fijo</em> en 45 soles. La pregunta interesante es: ¿qué pide el examen, que esos valores estén "quemados" en el código, o que se lean?</p>
+
+<div class="callout intuition">
+<span class="callout-label">Decisión de diseño</span>
+<p>La solución oficial trata el <em>pago por día</em> como variable de entrada (<code class="inline">SPH</code> = sueldo por hora — aunque en realidad es por día) y los <em>días</em> como constantes en el código. Es una decisión de diseño razonable: lo que cambia con frecuencia (el pago por día, según la empresa) se vuelve variable; lo que está fijo por enunciado (los días de cada empleado) se queda como literal. Vamos a respetar esta convención porque es la oficial.</p>
+</div>
+
+<h4 class="step">Análisis matemático</h4>
+<p>Sea <em>p</em> el pago por día. Empleado 1 trabajó un mes = 24 días, así que su sueldo es <em>p</em> · 24. Empleado 2: <em>p</em> · 17. Empleado 3: <em>p</em> · 12. Total: la suma de los tres.</p>
+
+<div class="formula-box">
+$$SE_1 = p \cdot 24 \qquad SE_2 = p \cdot 17 \qquad SE_3 = p \cdot 12$$
+$$SSE = SE_1 + SE_2 + SE_3 = p \cdot (24 + 17 + 12) = 53\,p$$
+</div>
+
+<h4 class="step">Leyenda de variables</h4>
+<div class="leyenda">
+<h5>Leyenda</h5>
+<dl>
+  <dt>SPH</dt><dd>sueldo por día (real). El nombre dice "por hora" pero el enunciado lo trata como "por día"; mantenemos el nombre de la solución oficial.</dd>
+  <dt>SE1</dt><dd>sueldo del empleado 1 (real)</dd>
+  <dt>SE2</dt><dd>sueldo del empleado 2 (real)</dd>
+  <dt>SE3</dt><dd>sueldo del empleado 3 (real)</dd>
+  <dt>SSE</dt><dd>suma de los sueldos de los tres empleados (real)</dd>
+</dl>
+</div>
+
+<h4 class="step">Estrategia</h4>
+<p>Problema <strong>secuencial puro</strong>, igual que el anterior: una lectura, tres asignaciones de sueldo, una asignación de suma, una salida.</p>
+
+<h4 class="step">Pseudocódigo</h4>
+<pre class="pseudocode"><span class="k">INICIO</span>
+    <span class="k">Real:</span> SPH, SE1, SE2, SE3, SSE
+    <span class="k">Leer</span> SPH
+    SE1 = SPH * 24                  <span class="c">// 1 mes = 24 días</span>
+    SE2 = SPH * 17
+    SE3 = SPH * 12
+    SSE = SE1 + SE2 + SE3
+    <span class="k">Mostrar</span> SE1, SE2, SE3, SSE
+<span class="k">FIN</span></pre>
+
+<h4 class="step">Diagrama de flujo</h4>
+<div class="flowchart">
+<div class="mermaid">
+flowchart TD
+  S(["INICIO"])
+  D["Real: SPH, SE1, SE2, SE3, SSE"]
+  I[/"Leer SPH"/]
+  P1["SE1 = SPH * 24"]
+  P2["SE2 = SPH * 17"]
+  P3["SE3 = SPH * 12"]
+  P4["SSE = SE1 + SE2 + SE3"]
+  O[/"Mostrar SE1, SE2, SE3, SSE"/]
+  E(["FIN"])
+  S --> D --> I --> P1 --> P2 --> P3 --> P4 --> O --> E
+</div>
+</div>
+
+<h4 class="step">Prueba de escritorio</h4>
+<table class="deskcheck">
+<caption>Tres casos con pagos por día distintos</caption>
+<thead><tr><th>SPH</th><th>SE1 (24 días)</th><th>SE2 (17 días)</th><th>SE3 (12 días)</th><th>SSE</th></tr></thead>
+<tbody>
+<tr><td>45</td><td>1080</td><td>765</td><td>540</td><td>2385</td></tr>
+<tr><td>50</td><td>1200</td><td>850</td><td>600</td><td>2650</td></tr>
+<tr><td>30</td><td>720</td><td>510</td><td>360</td><td>1590</td></tr>
+</tbody>
+</table>
+
+<div class="callout intuition">
+<span class="callout-label">Verificación con la fórmula compacta</span>
+<p>Para SPH = 45: SSE = 53 × 45 = 2385 ✓. Para SPH = 50: SSE = 53 × 50 = 2650 ✓. Para SPH = 30: SSE = 53 × 30 = 1590 ✓. Esta es la utilidad del <strong>análisis matemático</strong>: te da una forma de verificar el resultado sin reproducir todo el algoritmo.</p>
+</div>
+
+<div class="callout warn">
+<span class="callout-label">Errores comunes</span>
+<ul>
+<li><strong>Confundir mes con 30 días.</strong> El enunciado dice explícitamente "un mes = 24 días". Usar 30 da resultados incorrectos pero plausibles.</li>
+<li><strong>Pedir los días por teclado.</strong> El enunciado los da fijos. Si tu pseudocódigo dice <code class="inline">Leer dias1, dias2, dias3</code>, estás haciendo otro ejercicio.</li>
+<li><strong>Olvidar mostrar la suma.</strong> Mostrar solo los sueldos individuales y no la suma incumple el enunciado.</li>
+</ul>
+</div>
+</section>
+
+<!-- ============================ E3: NOTA FINAL ============================ -->
+<section id="p1-e3">
+<h2 class="sec"><span class="num">P1.E3</span>Ejercicio 3: nota final ponderada del curso <span class="chip accent">5 puntos</span></h2>
+
+<div class="statement">
+<p>Elabore un algoritmo que calcule la nota final del curso sabiendo que solamente hay un examen parcial que equivale al <strong>40%</strong> de la nota final, dos prácticas que equivalen al <strong>30%</strong> y <strong>20%</strong> respectivamente, y una tarea que equivale al <strong>10%</strong> de la nota final. Debe ingresar como datos todas las notas.</p>
+</div>
+
+<h4 class="step">Comprensión: la media ponderada</h4>
+<p>Una <strong>media ponderada</strong> es una suma de productos donde cada valor se multiplica por su "peso" (importancia relativa). Si llamamos $w_i$ al peso del componente $i$ y $x_i$ a la nota correspondiente, la media ponderada es:</p>
+
+<div class="formula-box">$$\bar{x} = \frac{\sum_{i=1}^n w_i \cdot x_i}{\sum_{i=1}^n w_i}$$</div>
+
+<p>En este problema los pesos son porcentajes que suman 100% = 1: <em>40 + 30 + 20 + 10 = 100</em>. Como suman 1 (o 100 si los expresamos en escala 1–100), el denominador desaparece (o se vuelve 100). Eso nos deja con dos formas equivalentes de escribir la fórmula:</p>
+
+<div class="formula-box">
+<strong>Forma con decimales:</strong>$$NFC = 0.4 \cdot NEP + 0.3 \cdot NP_1 + 0.2 \cdot NP_2 + 0.1 \cdot NTA$$
+<strong>Forma con enteros:</strong>$$NFC = \frac{4 \cdot NEP + 3 \cdot NP_1 + 2 \cdot NP_2 + 1 \cdot NTA}{10}$$
+</div>
+
+<div class="callout intuition">
+<span class="callout-label">¿Por qué dividir entre 10 y no entre 100?</span>
+<p>Porque hemos dividido <em>cada porcentaje también entre 10</em>: en lugar de 40, 30, 20, 10 usamos 4, 3, 2, 1. La proporción se preserva. La fórmula con denominador 10 (que es la que usa la solución oficial) es más limpia de escribir y entiende exactamente lo mismo. Lo importante es que <strong>los pesos relativos respeten la proporción 4 : 3 : 2 : 1</strong>.</p>
+</div>
+
+<h4 class="step">Demostración formal de la equivalencia</h4>
+<p>Partimos de la forma con decimales y multiplicamos numerador y denominador por 10:</p>
+<div class="formula-box">$$0.4 \cdot NEP + 0.3 \cdot NP_1 + 0.2 \cdot NP_2 + 0.1 \cdot NTA = \frac{4 \cdot NEP + 3 \cdot NP_1 + 2 \cdot NP_2 + 1 \cdot NTA}{10}$$</div>
+<p>Ambas expresiones dan el mismo número, así que el algoritmo es libre de usar la que prefiera. La solución oficial elige la segunda; es la que reproducimos.</p>
+
+<h4 class="step">Leyenda de variables</h4>
+<div class="leyenda">
+<h5>Leyenda</h5>
+<dl>
+  <dt>NEP</dt><dd>nota del examen parcial (real, 0 a 20)</dd>
+  <dt>NP1</dt><dd>nota de la práctica 1 (real, 0 a 20)</dd>
+  <dt>NP2</dt><dd>nota de la práctica 2 (real, 0 a 20)</dd>
+  <dt>NTA</dt><dd>nota de la tarea (real, 0 a 20)</dd>
+  <dt>NFC</dt><dd>nota final del curso (real)</dd>
+</dl>
+</div>
+
+<h4 class="step">Estrategia</h4>
+<p>Otra vez puramente secuencial. Una lectura (cuatro variables), una asignación (la fórmula ponderada), una salida.</p>
+
+<h4 class="step">Pseudocódigo</h4>
+<pre class="pseudocode"><span class="k">INICIO</span>
+    <span class="k">Real:</span> NEP, NP1, NP2, NTA, NFC
+    <span class="k">Leer</span> NEP, NP1, NP2, NTA
+    NFC = ((NEP * 4) + (NP1 * 3) + (NP2 * 2) + (NTA * 1)) / 10
+    <span class="k">Mostrar</span> NFC
+<span class="k">FIN</span></pre>
+
+<div class="callout theory">
+<span class="callout-label">Paréntesis y precedencia</span>
+<p>Sin paréntesis, <code class="inline">NEP * 4 + NP1 * 3 + ... / 10</code> haría algo distinto: <code class="inline">/</code> tiene la misma precedencia que <code class="inline">*</code> y se evalúa de izquierda a derecha; el último término <code class="inline">NTA * 1</code> se dividiría solo entre 10. Los paréntesis exteriores fuerzan que la suma completa se divida entre 10. Esta es una de las trampas clásicas del álgebra de operadores.</p>
+</div>
+
+<h4 class="step">Diagrama de flujo</h4>
+<div class="flowchart">
+<div class="mermaid">
+flowchart TD
+  S(["INICIO"])
+  D["Real: NEP, NP1, NP2, NTA, NFC"]
+  I[/"Leer NEP, NP1, NP2, NTA"/]
+  P["NFC = ((NEP*4) + (NP1*3) + (NP2*2) + (NTA*1)) / 10"]
+  O[/"Mostrar NFC"/]
+  E(["FIN"])
+  S --> D --> I --> P --> O --> E
+</div>
+</div>
+
+<h4 class="step">Prueba de escritorio</h4>
+<table class="deskcheck">
+<caption>Casos representativos, incluido el caso "todas iguales"</caption>
+<thead><tr><th>NEP</th><th>NP1</th><th>NP2</th><th>NTA</th><th>NFC</th><th>Comentario</th></tr></thead>
+<tbody>
+<tr><td>14</td><td>16</td><td>12</td><td>18</td><td>14.6</td><td>Caso normal</td></tr>
+<tr><td>20</td><td>20</td><td>20</td><td>20</td><td>20</td><td>Si todo es 20, NFC = 20 (verificación de consistencia)</td></tr>
+<tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>Si todo es 0, NFC = 0 (verificación)</td></tr>
+<tr><td>10</td><td>10</td><td>10</td><td>10</td><td>10</td><td>Si todo es 10, NFC = 10 (los pesos suman 100%)</td></tr>
+</tbody>
+</table>
+
+<div class="callout intuition">
+<span class="callout-label">El test del "todo igual"</span>
+<p>Una propiedad fundamental de una media ponderada es: si todos los valores son iguales a $k$, el resultado debe ser $k$. Si tu algoritmo da algo distinto cuando NEP = NP1 = NP2 = NTA = 10, los pesos no suman 100% o tienes un error de cálculo. Este es el test más barato y más potente.</p>
+</div>
+
+<div class="callout warn">
+<span class="callout-label">Errores comunes</span>
+<ul>
+<li><strong>Olvidar paréntesis.</strong> Sin ellos, la división afecta solo al último término.</li>
+<li><strong>Dividir entre 100.</strong> Si usas los pesos 4, 3, 2, 1 (escala /10), el denominador es 10. Si usas 40, 30, 20, 10 (escala /100), el denominador es 100. Mezclarlos rompe todo.</li>
+<li><strong>Pesos que no suman 100%.</strong> 30 + 40 + 20 + 10 = 100 ✓, pero un alumno apurado escribe 30 + 30 + 20 + 10 = 90 y obtiene notas finales mayores que 20.</li>
+</ul>
+</div>
+</section>
+
+<p class="rule-flourish">Fin de la Práctica 1</p>
+
+<!-- ==================================================================== -->
+<!-- ======================== PRÁCTICA 2 - FILA A ======================= -->
+<!-- ==================================================================== -->
+
+<!-- ============================ P2A.E1 ============================ -->
+<section id="p2a-e1">
+<h2 class="sec"><span class="num">P2A.E1</span>Comisión de vendedores (Fila A) <span class="chip accent">6 puntos</span></h2>
+
+<div class="statement">
+<p>Los vendedores de un concesionario de automóviles ganan un porcentaje adicional a su sueldo base por las ventas que realizan. Si las ventas mensuales son <strong>mayores o iguales a $35 000</strong>, reciben una comisión del <strong>5%</strong> de la venta; entre <strong>$25 000 y $35 000</strong> reciben <strong>2.5%</strong>; entre <strong>$15 000 y $25 000</strong> reciben <strong>1%</strong>. Elabore el pseudocódigo y diagrama de flujo que calcule la comisión y el sueldo final del trabajador.</p>
+</div>
+
+<div class="callout danger">
+<span class="callout-label">Atención — Solución oficial errónea</span>
+<p>La solución oficial que circula para este ejercicio tiene un <strong>defecto grave de anidamiento</strong>: pone los SI uno dentro de otro de forma que la rama del 5% se sobreescribe inmediatamente cuando VM también supera los 25 000 (lo cual ocurre siempre que supera los 35 000). Aquí lo señalo y derivo la versión correcta. Es exactamente el tipo de error que tu memoria de estudio entrena a detectar: <em>asignaciones redundantes, condiciones que no reflejan la intención</em>.</p>
+</div>
+
+<h4 class="step">Comprensión: interpretación de los intervalos</h4>
+<p>El enunciado define cuatro tramos, pero con cierta ambigüedad en los extremos. Vamos a leerlos con el criterio estándar (intervalos semi-abiertos por la derecha, que es lo que está implícito cuando dos tramos se "tocan" en un valor):</p>
+
+<table class="deskcheck" style="text-align:left;font-family:'Crimson Pro',serif;font-size:16px">
+<caption>Los cuatro tramos de comisión</caption>
+<thead><tr><th style="text-align:left">Condición sobre VM</th><th style="text-align:left">Notación matemática</th><th style="text-align:left">Comisión</th></tr></thead>
+<tbody>
+<tr><td>VM ≥ 35 000</td><td>$[35\,000, \infty)$</td><td>5% de VM</td></tr>
+<tr><td>25 000 ≤ VM &lt; 35 000</td><td>$[25\,000, 35\,000)$</td><td>2.5% de VM</td></tr>
+<tr><td>15 000 ≤ VM &lt; 25 000</td><td>$[15\,000, 25\,000)$</td><td>1% de VM</td></tr>
+<tr><td>VM &lt; 15 000</td><td>$(-\infty, 15\,000)$</td><td>0 (sin comisión)</td></tr>
+</tbody>
+</table>
+
+<div class="callout intuition">
+<span class="callout-label">La intuición de los tramos</span>
+<p>Los tramos son <strong>mutuamente excluyentes y exhaustivos</strong>: cada venta cae en exactamente uno. Esto es lo que se llama una <em>partición</em> de los números reales en cuatro pedazos. El "≥" del primer tramo y los "&lt;" implícitos de los siguientes garantizan que el valor 35 000, por ejemplo, esté <em>solo</em> en el primer tramo (no se duplica).</p>
+</div>
+
+<h4 class="step">El error de la solución oficial, explicado</h4>
+<p>La solución oficial escribe (transcrita literalmente):</p>
+<pre class="pseudocode"><span class="k">SI</span> VM >= 35000 <span class="k">ENTONCES</span>
+    C = VM * 0.05
+    <span class="k">SI</span> VM >= 25000 <span class="k">ENTONCES</span>           <span class="c">// ← anidado DENTRO del SI anterior</span>
+        C = VM * 0.025                <span class="c">// ← sobreescribe la asignación de 5%</span>
+        <span class="k">SI</span> VM >= 15000 <span class="k">ENTONCES</span>
+            C = VM * 0.01
+        <span class="k">SINO</span>
+            C = 0
+        <span class="k">FIN_SI</span>
+    <span class="k">FIN_SI</span>
+<span class="k">FIN_SI</span></pre>
+
+<p>Analízalo con la lente de la prueba de escritorio. Toma VM = 40 000:</p>
+<ol>
+<li>Línea 1: <code class="inline">40000 ≥ 35000</code> → V, entra al bloque.</li>
+<li>Línea 2: <code class="inline">C = 40000 × 0.05 = 2000</code>. (Hasta aquí, correcto.)</li>
+<li>Línea 3: <code class="inline">40000 ≥ 25000</code> → V, entra al bloque interior.</li>
+<li>Línea 4: <code class="inline">C = 40000 × 0.025 = 1000</code>. <strong>Se borra el 2000 anterior.</strong></li>
+<li>Línea 5: <code class="inline">40000 ≥ 15000</code> → V.</li>
+<li>Línea 6: <code class="inline">C = 40000 × 0.01 = 400</code>. <strong>Se borra el 1000.</strong></li>
+</ol>
+<p>Resultado final: C = 400 (en lugar de 2000). El algoritmo está roto. El problema es que los SI están <em>anidados dentro del bloque verdadero del SI anterior</em>, cuando deberían estar dentro del SINO. Cada nuevo nivel de anidamiento debería capturar el caso <em>complementario</em>, no un sub-caso del anterior.</p>
+
+<h4 class="step">La estructura correcta</h4>
+<p>La regla, derivada del marco teórico: cuando los tramos son mutuamente excluyentes y van de "más exigente" a "menos exigente", cada nuevo SI va dentro del <strong>SINO</strong> del anterior, no dentro del ENTONCES.</p>
+
+<h4 class="step">Leyenda de variables</h4>
+<div class="leyenda">
+<h5>Leyenda</h5>
+<dl>
+  <dt>VM</dt><dd>ventas mensuales del vendedor (real)</dd>
+  <dt>SB</dt><dd>sueldo base del vendedor (real)</dd>
+  <dt>C</dt><dd>comisión obtenida por las ventas (real)</dd>
+  <dt>SF</dt><dd>sueldo final = SB + C (real)</dd>
+</dl>
+</div>
+
+<h4 class="step">Pseudocódigo correcto (versión recomendada)</h4>
+<pre class="pseudocode"><span class="k">INICIO</span>
+    <span class="k">Real:</span> VM, SB, SF, C
+    <span class="k">Leer</span> SB, VM
+    <span class="k">SI</span> VM >= 35000 <span class="k">ENTONCES</span>
+        C = VM * 0.05               <span class="c">// tramo 1: comisión 5%</span>
+    <span class="k">SINO</span>
+        <span class="k">SI</span> VM >= 25000 <span class="k">ENTONCES</span>       <span class="c">// aquí ya VM &lt; 35000, así que 25000 ≤ VM &lt; 35000</span>
+            C = VM * 0.025          <span class="c">// tramo 2: comisión 2.5%</span>
+        <span class="k">SINO</span>
+            <span class="k">SI</span> VM >= 15000 <span class="k">ENTONCES</span>   <span class="c">// aquí ya VM &lt; 25000, así que 15000 ≤ VM &lt; 25000</span>
+                C = VM * 0.01       <span class="c">// tramo 3: comisión 1%</span>
+            <span class="k">SINO</span>
+                C = 0               <span class="c">// tramo 4: sin comisión</span>
+            <span class="k">FIN_SI</span>
+        <span class="k">FIN_SI</span>
+    <span class="k">FIN_SI</span>
+    SF = SB + C
+    <span class="k">Mostrar</span> C, SF
+<span class="k">FIN</span></pre>
+
+<div class="callout intuition">
+<span class="callout-label">¿Por qué no necesito escribir VM &lt; 35000 en el segundo SI?</span>
+<p>Porque <strong>ya estoy en el SINO del primero</strong>. Si llegué a esa línea, la condición <code class="inline">VM ≥ 35000</code> fue Falsa, lo que es equivalente a <code class="inline">VM &lt; 35000</code>. Esa información se "hereda" sin tener que escribirla. Esta es la economía expresiva del anidamiento: el contexto carga implícitamente la negación de las condiciones anteriores.</p>
+</div>
+
+<h4 class="step">Pseudocódigo alternativo (con condiciones compuestas)</h4>
+<p>El mismo problema admite una solución sin anidamiento, usando el operador <code class="inline">Y</code> para describir cada intervalo:</p>
+<pre class="pseudocode"><span class="k">SI</span> VM >= 35000 <span class="k">ENTONCES</span>
+    C = VM * 0.05
+<span class="k">FIN_SI</span>
+<span class="k">SI</span> (VM >= 25000) Y (VM &lt; 35000) <span class="k">ENTONCES</span>
+    C = VM * 0.025
+<span class="k">FIN_SI</span>
+<span class="k">SI</span> (VM >= 15000) Y (VM &lt; 25000) <span class="k">ENTONCES</span>
+    C = VM * 0.01
+<span class="k">FIN_SI</span>
+<span class="k">SI</span> VM &lt; 15000 <span class="k">ENTONCES</span>
+    C = 0
+<span class="k">FIN_SI</span></pre>
+
+<div class="callout theory">
+<span class="callout-label">Dualidad anidamiento ↔ condición compuesta</span>
+<p>Ambos códigos son equivalentes en resultado, pero distintos en eficiencia: el anidado evalúa hasta 3 condiciones; el plano evalúa siempre las 4. En ejercicios de examen ambas son válidas, pero <strong>la anidada es la canónica</strong> porque imita la estructura jerárquica del problema (tramos ordenados de mayor a menor exigencia).</p>
+</div>
+
+<h4 class="step">Diagrama de flujo</h4>
+<div class="flowchart">
+<div class="mermaid">
+flowchart TD
+  S(["INICIO"])
+  I[/"Leer SB, VM"/]
+  Q1{"VM >= 35000?"}
+  A1["C = VM * 0.05"]
+  Q2{"VM >= 25000?"}
+  A2["C = VM * 0.025"]
+  Q3{"VM >= 15000?"}
+  A3["C = VM * 0.01"]
+  A4["C = 0"]
+  P["SF = SB + C"]
+  O[/"Mostrar C, SF"/]
+  E(["FIN"])
+  S --> I --> Q1
+  Q1 -->|"Sí"| A1 --> P
+  Q1 -->|"No"| Q2
+  Q2 -->|"Sí"| A2 --> P
+  Q2 -->|"No"| Q3
+  Q3 -->|"Sí"| A3 --> P
+  Q3 -->|"No"| A4 --> P
+  P --> O --> E
+</div>
+</div>
+
+<h4 class="step">Prueba de escritorio</h4>
+<table class="deskcheck">
+<caption>Cinco casos cubriendo todos los tramos y los puntos frontera</caption>
+<thead><tr><th>Caso</th><th>VM</th><th>SB</th><th>Tramo</th><th>C</th><th>SF</th></tr></thead>
+<tbody>
+<tr><td class="case-label">Venta alta</td><td>50 000</td><td>2 000</td><td>VM ≥ 35 000</td><td>2 500</td><td>4 500</td></tr>
+<tr><td class="case-label">Frontera 35 000</td><td>35 000</td><td>2 000</td><td>VM ≥ 35 000</td><td>1 750</td><td>3 750</td></tr>
+<tr><td class="case-label">Tramo medio</td><td>30 000</td><td>2 000</td><td>25 000 ≤ VM &lt; 35 000</td><td>750</td><td>2 750</td></tr>
+<tr><td class="case-label">Frontera 25 000</td><td>25 000</td><td>2 000</td><td>25 000 ≤ VM &lt; 35 000</td><td>625</td><td>2 625</td></tr>
+<tr><td class="case-label">Tramo bajo</td><td>20 000</td><td>2 000</td><td>15 000 ≤ VM &lt; 25 000</td><td>200</td><td>2 200</td></tr>
+<tr><td class="case-label">Sin comisión</td><td>10 000</td><td>2 000</td><td>VM &lt; 15 000</td><td>0</td><td>2 000</td></tr>
+</tbody>
+</table>
+
+<div class="callout warn">
+<span class="callout-label">Anti-patrones recurrentes en este ejercicio</span>
+<ul>
+<li><strong>Anidar dentro del ENTONCES en lugar del SINO.</strong> Es el error de la solución oficial. Hace que la última condición que se cumpla "gane".</li>
+<li><strong>Escribir condiciones redundantes en cascada.</strong> Como en <code class="inline">SI VM &gt;= 25000 Y VM &lt; 35000</code> después de un SINO. No es incorrecto, pero es redundante y delata que no entiendes la herencia del contexto.</li>
+<li><strong>Olvidar el tramo VM &lt; 15 000.</strong> Si no lo manejas, la variable C queda sin valor en ese caso, lo que en la práctica produce basura.</li>
+<li><strong>Confundir % con su factor.</strong> 5% no es 0.5, sino 0.05. Un error de factor 10 en el cálculo.</li>
+</ul>
+</div>
+</section>
+
+<!-- ============================ P2A.E2 ============================ -->
+<section id="p2a-e2">
+<h2 class="sec"><span class="num">P2A.E2</span>El mayor de tres números diferentes <span class="chip accent">7 puntos</span></h2>
+
+<div class="statement">
+<p>Diseñar un algoritmo que lea tres números A, B, C y muestre cuál de ellos es el mayor. Nota: los tres números son diferentes.</p>
+</div>
+
+<h4 class="step">Comprensión: ¿por qué importa que sean diferentes?</h4>
+<p>Si los tres pueden ser iguales (por ejemplo A = B = 5), tendríamos que pensar qué significa "el mayor". La nota del enunciado nos libera de ese caso: A, B y C son distintos entre sí, así que hay exactamente uno que es estrictamente mayor que los otros dos. Esto permite usar comparaciones estrictas (<code class="inline">&gt;</code>) sin preocuparnos por empates.</p>
+
+<h4 class="step">Análisis lógico: ¿cuántas comparaciones son necesarias?</h4>
+<p>Con tres números hay tres pares: (A,B), (A,C), (B,C). ¿Necesito todos? Resulta que <strong>no</strong>: con dos comparaciones bien elegidas alcanza. La idea es comparar de dos en dos, descartando, como un torneo:</p>
+
+<div class="callout intuition">
+<span class="callout-label">Estrategia del torneo</span>
+<p>Compara A con B. El perdedor queda fuera. Compara al ganador con C. El que queda es el campeón. Esto requiere 2 comparaciones, no 3.</p>
+</div>
+
+<p>Otra estrategia, la que usa la solución oficial, es un árbol binario: <em>"¿A &gt; B? Si sí, ¿A &gt; C? Si sí, A es el mayor; si no, C lo es. Si no (A no era mayor que B), ¿B &gt; C? ..."</em>. Misma cantidad de comparaciones (2 por camino), distinta forma. La oficial es más natural para escribir como SI-SINO anidados, así que vamos con esa.</p>
+
+<h4 class="step">Demostración formal de exhaustividad</h4>
+<p>El árbol de decisión tiene cuatro hojas:</p>
+
+<table class="deskcheck" style="text-align:left;font-family:'Crimson Pro',serif;font-size:16px">
+<caption>Las cuatro ramas del árbol y su mayor</caption>
+<thead><tr><th style="text-align:left">A &gt; B</th><th style="text-align:left">A &gt; C / B &gt; C</th><th style="text-align:left">Implicación</th><th style="text-align:left">Mayor</th></tr></thead>
+<tbody>
+<tr><td>V</td><td>A &gt; C : V</td><td>A &gt; B y A &gt; C</td><td>A</td></tr>
+<tr><td>V</td><td>A &gt; C : F</td><td>A &gt; B pero C &gt; A → C &gt; A &gt; B</td><td>C</td></tr>
+<tr><td>F</td><td>B &gt; C : V</td><td>B &gt; A y B &gt; C</td><td>B</td></tr>
+<tr><td>F</td><td>B &gt; C : F</td><td>B &gt; A (porque distintos) y C &gt; B → C &gt; B &gt; A</td><td>C</td></tr>
+</tbody>
+</table>
+
+<p>Las cuatro hojas cubren todos los casos posibles. Como los números son distintos, las comparaciones son siempre estrictas (V o F sin ambigüedad). El algoritmo es <strong>correcto y completo</strong>.</p>
+
+<h4 class="step">Leyenda de variables</h4>
+<div class="leyenda">
+<h5>Leyenda</h5>
+<dl>
+  <dt>A, B, C</dt><dd>los tres números a comparar (real, distintos entre sí)</dd>
+  <dt>MAYOR</dt><dd>el mayor de los tres (real)</dd>
+</dl>
+</div>
+
+<h4 class="step">Pseudocódigo</h4>
+<pre class="pseudocode"><span class="k">INICIO</span>
+    <span class="k">Real:</span> A, B, C, MAYOR
+    <span class="k">Leer</span> A, B, C
+    <span class="k">SI</span> A > B <span class="k">ENTONCES</span>
+        <span class="k">SI</span> A > C <span class="k">ENTONCES</span>
+            MAYOR = A              <span class="c">// A > B y A > C → A es el mayor</span>
+        <span class="k">SINO</span>
+            MAYOR = C              <span class="c">// A > B pero C >= A → C es el mayor</span>
+        <span class="k">FIN_SI</span>
+    <span class="k">SINO</span>
+        <span class="k">SI</span> B > C <span class="k">ENTONCES</span>
+            MAYOR = B              <span class="c">// B >= A y B > C → B es el mayor</span>
+        <span class="k">SINO</span>
+            MAYOR = C              <span class="c">// B >= A y C >= B → C es el mayor</span>
+        <span class="k">FIN_SI</span>
+    <span class="k">FIN_SI</span>
+    <span class="k">Mostrar</span> MAYOR
+<span class="k">FIN</span></pre>
+
+<h4 class="step">Diagrama de flujo</h4>
+<div class="flowchart">
+<div class="mermaid">
+flowchart TD
+  S(["INICIO"])
+  I[/"Leer A, B, C"/]
+  Q1{"A > B?"}
+  Q2{"A > C?"}
+  Q3{"B > C?"}
+  M1["MAYOR = A"]
+  M2["MAYOR = C"]
+  M3["MAYOR = B"]
+  M4["MAYOR = C"]
+  O[/"Mostrar MAYOR"/]
+  E(["FIN"])
+  S --> I --> Q1
+  Q1 -->|"Sí"| Q2
+  Q1 -->|"No"| Q3
+  Q2 -->|"Sí"| M1 --> O
+  Q2 -->|"No"| M2 --> O
+  Q3 -->|"Sí"| M3 --> O
+  Q3 -->|"No"| M4 --> O
+  O --> E
+</div>
+</div>
+
+<h4 class="step">Prueba de escritorio (las cuatro ramas)</h4>
+<table class="deskcheck">
+<caption>Cubrir los cuatro caminos del árbol</caption>
+<thead><tr><th>A</th><th>B</th><th>C</th><th>A &gt; B?</th><th>2.ª pregunta</th><th>MAYOR</th><th>Camino</th></tr></thead>
+<tbody>
+<tr><td>5</td><td>3</td><td>2</td><td>Sí</td><td>A &gt; C: Sí</td><td>A = 5</td><td>Rama 1</td></tr>
+<tr><td>5</td><td>3</td><td>7</td><td>Sí</td><td>A &gt; C: No</td><td>C = 7</td><td>Rama 2</td></tr>
+<tr><td>5</td><td>7</td><td>4</td><td>No</td><td>B &gt; C: Sí</td><td>B = 7</td><td>Rama 3</td></tr>
+<tr><td>5</td><td>7</td><td>9</td><td>No</td><td>B &gt; C: No</td><td>C = 9</td><td>Rama 4</td></tr>
+</tbody>
+</table>
+
+<div class="callout intuition">
+<span class="callout-label">¿Por qué C aparece dos veces como respuesta?</span>
+<p>Porque C es "el outsider" en el primer torneo entre A y B. Si C resulta ser mayor que el ganador de ese torneo, C gana, sin importar quién haya ganado el primero. Esto refleja una asimetría: A y B se comparan entre sí; C se compara después. C tiene "dos oportunidades" de ganar.</p>
+</div>
+
+<div class="callout warn">
+<span class="callout-label">Errores comunes</span>
+<ul>
+<li><strong>Olvidar el caso C.</strong> Es habitual escribir solo <code class="inline">SI A &gt; B ENTONCES MAYOR = A SINO MAYOR = B FIN_SI</code> y entregarlo sin pensar en C. El examen pide los tres.</li>
+<li><strong>Usar ≥ en lugar de &gt;.</strong> Con tres números <em>diferentes</em> da igual; pero si quitas esa restricción, ≥ podría hacer que dos números "iguales" empaten y declarar como mayor a uno arbitrario.</li>
+<li><strong>Sumar A + B + C y restar.</strong> Algunos intentan trucos como "el mayor es total − dos pequeños"; complica más de lo que simplifica y arrastra errores.</li>
+</ul>
+</div>
+</section>
+
+<!-- ============================ P2A.E3 ============================ -->
+<section id="p2a-e3">
+<h2 class="sec"><span class="num">P2A.E3</span>Contar las letras "a" en 50 caracteres <span class="chip accent">7 puntos</span></h2>
+
+<div class="statement">
+<p>Elabore un algoritmo que permita el ingreso de 50 caracteres e indique cuántas veces se repite el carácter "a". Debe utilizar una instrucción repetitiva (usted elige cuál).</p>
+</div>
+
+<h4 class="step">Comprensión: identificar la estructura repetitiva apropiada</h4>
+<p>El enunciado dice "ingresar 50 caracteres". <em>Conoces de antemano</em> cuántas iteraciones necesitas (50). Aplicando el árbol de decisión del marco teórico:</p>
+
+<div class="callout intuition">
+<span class="callout-label">Aplicando el árbol</span>
+<p>¿Repito algo? Sí. ¿Sé cuántas veces? Sí, 50. ⇒ <strong>PARA</strong>. Si el enunciado dijera "ingrese caracteres hasta que digite un punto", sería MIENTRAS. Si dijera "pida un carácter al menos una vez y siga pidiendo hasta...", sería REPETIR-HASTA.</p>
+</div>
+
+<h4 class="step">El patrón "contador de coincidencias"</h4>
+<p>Este ejercicio aplica un patrón clásico llamado <strong>contador</strong>: una variable entera que empieza en 0 e incrementa en 1 cada vez que ocurre algo específico. En este caso, el "algo específico" es: el carácter leído es "a".</p>
+
+<p>El patrón general es:</p>
+
+<div class="formula-box" style="text-align:left;font-family:'JetBrains Mono',monospace;font-size:15px">
+contador = 0<br>
+<strong>PARA</strong> cada iteración<br>
+&nbsp;&nbsp;leer dato<br>
+&nbsp;&nbsp;<strong>SI</strong> dato cumple condición <strong>ENTONCES</strong><br>
+&nbsp;&nbsp;&nbsp;&nbsp;contador = contador + 1<br>
+&nbsp;&nbsp;<strong>FIN_SI</strong><br>
+<strong>FIN_PARA</strong><br>
+mostrar contador
+</div>
+
+<div class="callout theory">
+<span class="callout-label">Contador vs. acumulador</span>
+<p>Dos patrones gemelos pero distintos:
+<br>• <strong>Contador:</strong> <code class="inline">c = c + 1</code> (siempre suma 1). Cuenta cuántas veces ocurre algo.
+<br>• <strong>Acumulador:</strong> <code class="inline">s = s + x</code> (suma el valor leído). Acumula totales.
+<br>Ambos requieren <em>inicialización</em> a 0 <strong>antes</strong> del bucle. Si no inicializas, arrancas con basura y todo el resultado es basura.</p>
+</div>
+
+<h4 class="step">Leyenda de variables</h4>
+<div class="leyenda">
+<h5>Leyenda</h5>
+<dl>
+  <dt>i</dt><dd>contador del bucle (entero, va de 1 a 50)</dd>
+  <dt>C</dt><dd>carácter leído del teclado en cada iteración</dd>
+  <dt>CA</dt><dd>cantidad de veces que aparece "a" (entero, contador)</dd>
+</dl>
+</div>
+
+<h4 class="step">Pseudocódigo</h4>
+<pre class="pseudocode"><span class="k">INICIO</span>
+    <span class="k">Entero:</span> CA, i
+    <span class="k">Carácter:</span> C
+    CA = 0                              <span class="c">// inicialización del contador</span>
+    <span class="k">PARA</span> i = 1 <span class="k">HASTA</span> 50 <span class="k">HACER</span>
+        <span class="k">Leer</span> C
+        <span class="k">SI</span> C = "a" <span class="k">ENTONCES</span>
+            CA = CA + 1                 <span class="c">// se incrementa solo si coincidió</span>
+        <span class="k">FIN_SI</span>
+    <span class="k">FIN_PARA</span>
+    <span class="k">Mostrar</span> CA
+<span class="k">FIN</span></pre>
+
+<div class="callout intuition">
+<span class="callout-label">Por qué CA = 0 va FUERA del bucle</span>
+<p>Si pusieras <code class="inline">CA = 0</code> dentro del bucle, en cada iteración se borraría y el contador siempre acabaría siendo 0 o 1. La inicialización va una vez, antes de empezar a contar. Es como poner el marcador de un partido a 0 antes del primer minuto, no antes de cada gol.</p>
+</div>
+
+<h4 class="step">Diagrama de flujo</h4>
+<div class="flowchart">
+<div class="mermaid">
+flowchart TD
+  S(["INICIO"])
+  D["Entero: CA, i. Carácter: C"]
+  P0["CA = 0"]
+  L["i = 1"]
+  Q1{"i &lt;= 50?"}
+  R[/"Leer C"/]
+  Q2{"C = 'a'?"}
+  INC["CA = CA + 1"]
+  STEP["i = i + 1"]
+  O[/"Mostrar CA"/]
+  E(["FIN"])
+  S --> D --> P0 --> L --> Q1
+  Q1 -->|"Sí"| R --> Q2
+  Q2 -->|"Sí"| INC --> STEP
+  Q2 -->|"No"| STEP
+  STEP --> Q1
+  Q1 -->|"No"| O --> E
+</div>
+</div>
+
+<div class="callout theory">
+<span class="callout-label">El bucle PARA descompuesto</span>
+<p>El bucle <code class="inline">PARA i = 1 HASTA 50 HACER</code> es azúcar sintáctica. Por debajo, hace tres cosas: (1) inicializar <code class="inline">i = 1</code>, (2) chequear <code class="inline">i ≤ 50</code> antes de cada iteración, (3) incrementar <code class="inline">i = i + 1</code> al final de cada iteración. El diagrama de flujo expone esos tres pasos por separado, lo que ayuda a ver por qué un PARA puede convertirse en un MIENTRAS equivalente.</p>
+</div>
+
+<h4 class="step">Prueba de escritorio (versión abreviada con 5 caracteres)</h4>
+<p>Para no escribir 50 filas, simulemos con un bucle de 5 iteraciones leyendo la secuencia: <code class="inline">a, b, a, c, a</code>. Esperamos CA = 3 al final.</p>
+
+<table class="deskcheck">
+<caption>Traza con 5 caracteres (ajustando 50 → 5 mentalmente)</caption>
+<thead><tr><th>Iteración i</th><th>C leído</th><th>C = 'a' ?</th><th>CA antes</th><th>CA después</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>'a'</td><td>Sí</td><td>0</td><td>1</td></tr>
+<tr><td>2</td><td>'b'</td><td>No</td><td>1</td><td>1</td></tr>
+<tr><td>3</td><td>'a'</td><td>Sí</td><td>1</td><td>2</td></tr>
+<tr><td>4</td><td>'c'</td><td>No</td><td>2</td><td>2</td></tr>
+<tr><td>5</td><td>'a'</td><td>Sí</td><td>2</td><td>3</td></tr>
+</tbody>
+</table>
+
+<p>Se muestra: 3. ✓</p>
+
+<h4 class="step">Variante: lo mismo con MIENTRAS</h4>
+<p>Tu memoria de estudio valora ver el mismo problema con las tres estructuras. Esta es la versión MIENTRAS, que conceptualmente expone más:</p>
+
+<pre class="pseudocode"><span class="k">INICIO</span>
+    <span class="k">Entero:</span> CA, i
+    <span class="k">Carácter:</span> C
+    CA = 0
+    i  = 1
+    <span class="k">MIENTRAS</span> i &lt;= 50 <span class="k">HACER</span>
+        <span class="k">Leer</span> C
+        <span class="k">SI</span> C = "a" <span class="k">ENTONCES</span>
+            CA = CA + 1
+        <span class="k">FIN_SI</span>
+        i = i + 1
+    <span class="k">FIN_MIENTRAS</span>
+    <span class="k">Mostrar</span> CA
+<span class="k">FIN</span></pre>
+
+<h4 class="step">Variante: lo mismo con REPETIR-HASTA</h4>
+<pre class="pseudocode"><span class="k">INICIO</span>
+    <span class="k">Entero:</span> CA, i
+    <span class="k">Carácter:</span> C
+    CA = 0
+    i  = 1
+    <span class="k">REPETIR</span>
+        <span class="k">Leer</span> C
+        <span class="k">SI</span> C = "a" <span class="k">ENTONCES</span>
+            CA = CA + 1
+        <span class="k">FIN_SI</span>
+        i = i + 1
+    <span class="k">HASTA QUE</span> i > 50
+    <span class="k">Mostrar</span> CA
+<span class="k">FIN</span></pre>
+
+<div class="callout intuition">
+<span class="callout-label">De Morgan en acción</span>
+<p>Fíjate: el MIENTRAS chequea <code class="inline">i ≤ 50</code> al inicio y se queda mientras sea verdadero. El REPETIR chequea <code class="inline">i &gt; 50</code> al final y se sale cuando es verdadero. Estas dos condiciones son <strong>negaciones lógicas</strong> una de otra. Es exactamente la transformación que estudias con las Leyes de De Morgan al convertir MIENTRAS en REPETIR.</p>
+</div>
+
+<div class="callout warn">
+<span class="callout-label">Errores comunes</span>
+<ul>
+<li><strong>No inicializar CA.</strong> Sin <code class="inline">CA = 0</code>, el resultado es indefinido.</li>
+<li><strong>Confundir 'a' (carácter) con "a" (cadena).</strong> En la notación del curso ambas se aceptan, pero algunos lenguajes (como C) los distinguen.</li>
+<li><strong>Poner el <code class="inline">i = i + 1</code> al inicio de la iteración.</strong> En MIENTRAS, el incremento va al final, después del proceso. Si va al inicio, lees un carácter menos.</li>
+<li><strong>Usar <code class="inline">i &lt; 50</code> en lugar de <code class="inline">i ≤ 50</code>.</strong> Solo lees 49 caracteres. Test rápido: cuenta cuántas iteraciones hace tu bucle.</li>
+</ul>
+</div>
+</section>
+
+<p class="rule-flourish">Fin de la Práctica 2 — Fila A</p>
+
+<!-- ==================================================================== -->
+<!-- ======================== PRÁCTICA 2 - FILA B ======================= -->
+<!-- ==================================================================== -->
+
+<!-- ============================ P2B.E1 ============================ -->
+<section id="p2b-e1">
+<h2 class="sec"><span class="num">P2B.E1</span>Descuento por cantidad de kilos comprados <span class="chip accent">6 puntos</span></h2>
+
+<div class="statement">
+<p>En un almacén se ofrece un producto con descuento según el siguiente detalle:</p>
+<table class="deskcheck" style="margin-top:8px;font-family:'Crimson Pro',serif;font-size:15.5px">
+<thead><tr><th>Kilos comprados</th><th>Precio por kilo</th></tr></thead>
+<tbody>
+<tr><td>Menos de 12 kg</td><td>$2.5</td></tr>
+<tr><td>[12 a 16)</td><td>$2.3</td></tr>
+<tr><td>[16 a 20)</td><td>$2.0</td></tr>
+<tr><td>Más de 20</td><td>$1.8</td></tr>
+</tbody>
+</table>
+<p>Elabore el algoritmo que lea la cantidad de kilos comprados y determine cuánto debe pagar.</p>
+</div>
+
+<div class="callout warn">
+<span class="callout-label">Aviso — Ambigüedad en el enunciado</span>
+<p>El enunciado tiene una <em>microambigüedad</em>: dice "menos de 12" (claramente <code class="inline">&lt;12</code>) y "más de 20" (claramente <code class="inline">&gt;20</code>), pero los dos tramos del medio están en notación de intervalo semi-abierto: [12, 16) y [16, 20). Esto deja el <strong>valor 20</strong> sin asignar (no está en "más de 20" ni en [16, 20)). La solución oficial lo resuelve usando <code class="inline">Kg ≥ 20</code> para el primer tramo, lo cual incluye al 20 en el grupo del precio más bajo. Vamos a seguir esa convención: el valor 20 se trata como "más de 20" (≥ 20), y comentamos esto en una nota.</p>
+</div>
+
+<h4 class="step">Reformulación matemática de los tramos</h4>
+<p>Adoptando la convención de la solución oficial:</p>
+
+<table class="deskcheck" style="text-align:left;font-family:'Crimson Pro',serif;font-size:16px">
+<caption>Cuatro tramos del descuento por kilos</caption>
+<thead><tr><th style="text-align:left">Condición sobre Kg</th><th style="text-align:left">Intervalo</th><th style="text-align:left">Precio por kg</th><th style="text-align:left">Fórmula del pago</th></tr></thead>
+<tbody>
+<tr><td>Kg ≥ 20</td><td>$[20, \infty)$</td><td>$1.8</td><td>PF = Kg × 1.8</td></tr>
+<tr><td>16 ≤ Kg &lt; 20</td><td>$[16, 20)$</td><td>$2.0</td><td>PF = Kg × 2.0</td></tr>
+<tr><td>12 ≤ Kg &lt; 16</td><td>$[12, 16)$</td><td>$2.3</td><td>PF = Kg × 2.3</td></tr>
+<tr><td>Kg &lt; 12</td><td>$(-\infty, 12)$</td><td>$2.5</td><td>PF = Kg × 2.5</td></tr>
+</tbody>
+</table>
+
+<div class="callout intuition">
+<span class="callout-label">El truco: ordenar de mayor a menor</span>
+<p>En este tipo de problemas, conviene preguntarse primero por el extremo "más grande" (≥ 20), luego ≥ 16, luego ≥ 12. Cada SINO captura automáticamente el complemento de la condición anterior. Si fueras "de menor a mayor", también funciona, pero las condiciones tendrían un aspecto más complicado.</p>
+</div>
+
+<h4 class="step">Leyenda de variables</h4>
+<div class="leyenda">
+<h5>Leyenda</h5>
+<dl>
+  <dt>Kg</dt><dd>cantidad de kilos comprados (real; el enunciado no dice entero, así que admitimos decimales — "15.5 kg" tiene sentido)</dd>
+  <dt>PF</dt><dd>precio final a pagar (real)</dd>
+</dl>
+</div>
+
+<h4 class="step">Pseudocódigo</h4>
+<pre class="pseudocode"><span class="k">INICIO</span>
+    <span class="k">Real:</span> Kg, PF
+    <span class="k">Leer</span> Kg
+    <span class="k">SI</span> Kg >= 20 <span class="k">ENTONCES</span>
+        PF = Kg * 1.8                <span class="c">// tramo más barato</span>
+    <span class="k">SINO</span>
+        <span class="k">SI</span> Kg >= 16 <span class="k">ENTONCES</span>        <span class="c">// 16 &lt;= Kg &lt; 20</span>
+            PF = Kg * 2.0
+        <span class="k">SINO</span>
+            <span class="k">SI</span> Kg >= 12 <span class="k">ENTONCES</span>    <span class="c">// 12 &lt;= Kg &lt; 16</span>
+                PF = Kg * 2.3
+            <span class="k">SINO</span>
+                PF = Kg * 2.5        <span class="c">// Kg &lt; 12, precio más alto</span>
+            <span class="k">FIN_SI</span>
+        <span class="k">FIN_SI</span>
+    <span class="k">FIN_SI</span>
+    <span class="k">Mostrar</span> Kg, PF
+<span class="k">FIN</span></pre>
+
+<h4 class="step">Diagrama de flujo</h4>
+<div class="flowchart">
+<div class="mermaid">
+flowchart TD
+  S(["INICIO"])
+  I[/"Leer Kg"/]
+  Q1{"Kg >= 20?"}
+  A1["PF = Kg * 1.8"]
+  Q2{"Kg >= 16?"}
+  A2["PF = Kg * 2.0"]
+  Q3{"Kg >= 12?"}
+  A3["PF = Kg * 2.3"]
+  A4["PF = Kg * 2.5"]
+  O[/"Mostrar Kg, PF"/]
+  E(["FIN"])
+  S --> I --> Q1
+  Q1 -->|"Sí"| A1 --> O
+  Q1 -->|"No"| Q2
+  Q2 -->|"Sí"| A2 --> O
+  Q2 -->|"No"| Q3
+  Q3 -->|"Sí"| A3 --> O
+  Q3 -->|"No"| A4 --> O
+  O --> E
+</div>
+</div>
+
+<h4 class="step">Prueba de escritorio</h4>
+<table class="deskcheck">
+<caption>Casos típicos y fronteras</caption>
+<thead><tr><th>Caso</th><th>Kg</th><th>Tramo</th><th>Precio/kg</th><th>PF</th></tr></thead>
+<tbody>
+<tr><td class="case-label">Compra grande</td><td>25</td><td>Kg ≥ 20</td><td>1.8</td><td>45.0</td></tr>
+<tr><td class="case-label">Frontera 20</td><td>20</td><td>Kg ≥ 20</td><td>1.8</td><td>36.0</td></tr>
+<tr><td class="case-label">Tramo medio-alto</td><td>18</td><td>16 ≤ Kg &lt; 20</td><td>2.0</td><td>36.0</td></tr>
+<tr><td class="case-label">Frontera 16</td><td>16</td><td>16 ≤ Kg &lt; 20</td><td>2.0</td><td>32.0</td></tr>
+<tr><td class="case-label">Tramo medio-bajo</td><td>14</td><td>12 ≤ Kg &lt; 16</td><td>2.3</td><td>32.2</td></tr>
+<tr><td class="case-label">Frontera 12</td><td>12</td><td>12 ≤ Kg &lt; 16</td><td>2.3</td><td>27.6</td></tr>
+<tr><td class="case-label">Compra pequeña</td><td>5</td><td>Kg &lt; 12</td><td>2.5</td><td>12.5</td></tr>
+</tbody>
+</table>
+
+<div class="callout intuition">
+<span class="callout-label">Observación curiosa</span>
+<p>Mira las filas <em>Frontera 20</em> y <em>Tramo medio-alto</em>: 20 kg a $1.80 = $36; 18 kg a $2.00 = $36. <strong>Pagas lo mismo por comprar más.</strong> Y de hecho, comprando 21 kg pagas 21 × 1.8 = $37.80, que es menos que comprar 19 kg (19 × 2.0 = $38). Hay un "salto de descuento" en 20 kg que recompensa cruzar el umbral. Esto se llama una <em>función no-monótona</em>: el precio total no siempre crece al comprar más.</p>
+</div>
+
+<div class="callout theory">
+<span class="callout-label">Comparación con la Fila A</span>
+<p>Este ejercicio (Fila B) y el de comisiones (Fila A) son <strong>el mismo patrón</strong>: una variable de entrada se clasifica en tramos y se aplica una fórmula distinta a cada tramo. Lo que cambia son los números y la semántica (ventas vs. kilos), pero el esqueleto del pseudocódigo es idéntico:</p>
+<pre class="pseudocode" style="margin-top:8px">SI cond_más_exigente ENTONCES
+    formula_1
+SINO
+    SI cond_media ENTONCES
+        formula_2
+    SINO
+        SI cond_baja ENTONCES
+            formula_3
+        SINO
+            formula_4
+        FIN_SI
+    FIN_SI
+FIN_SI</pre>
+<p style="margin-top:8px">Si dominas el patrón, no importa cuántas variantes te pongan: cambias los números y listo.</p>
+</div>
+
+<div class="callout warn">
+<span class="callout-label">Errores comunes</span>
+<ul>
+<li><strong>Tratar Kg como entero.</strong> El enunciado no lo dice, y compras como 12.5 kg son razonables.</li>
+<li><strong>Confundir [16, 20) con (16, 20].</strong> "[" significa incluido; ")" significa no incluido. <code class="inline">Kg ≥ 16</code> incluye al 16; <code class="inline">Kg &gt; 16</code> no.</li>
+<li><strong>Dejar el valor 20 sin clasificar.</strong> Si escribes <code class="inline">SI Kg &gt; 20</code> en lugar de <code class="inline">≥ 20</code>, y el siguiente tramo es <code class="inline">Kg ≥ 16</code> hasta &lt; 20, entonces Kg = 20 cae fuera de ambos. ¡La condición correcta para que ningún valor quede huérfano es importante!</li>
+</ul>
+</div>
+
+<h4 class="step">Nota: los ejercicios 2 y 3 de la Fila B son idénticos a la Fila A</h4>
+<p>El ejercicio 2 de la Fila B ("mayor de tres números") y el ejercicio 3 ("contar 50 veces la letra 'a'") tienen <em>exactamente</em> el mismo enunciado que los respectivos de la Fila A. Su resolución completa está en las secciones <a href="#p2a-e2">P2A.E2</a> y <a href="#p2a-e3">P2A.E3</a>. No los repito aquí para no diluir el documento.</p>
+</section>
+
+<!-- ==================================================================== -->
+<!-- ======================== PRÁCTICA 2 - FILA C ======================= -->
+<!-- ==================================================================== -->
+
+<!-- ============================ P2C.E1 ============================ -->
+<section id="p2c-e1">
+<h2 class="sec"><span class="num">P2C.E1</span>Comisión de vendedores — variante <span class="chip accent">6 puntos</span></h2>
+
+<div class="statement">
+<p>Los vendedores de un concesionario ganan un porcentaje adicional a su sueldo base por las ventas. Si las ventas mensuales son <strong>≥ $30 000</strong> reciben <strong>5%</strong>; entre <strong>$20 000 y $30 000</strong> reciben <strong>2%</strong>; entre <strong>$10 000 y $20 000</strong> reciben <strong>1%</strong>. Calcule la comisión que recibe y el sueldo final del trabajador.</p>
+</div>
+
+<h4 class="step">El ejercicio es estructuralmente idéntico al de Fila A</h4>
+<p>Solo cambian los umbrales (35 000 → 30 000, 25 000 → 20 000, 15 000 → 10 000) y un porcentaje (2.5% → 2%). La <em>estructura</em> del pseudocódigo es la misma. Esto es lo que tu memoria llama "los patrones se repiten: cambian los números, no el esqueleto".</p>
+
+<div class="callout intuition">
+<span class="callout-label">El truco de los patrones</span>
+<p>Reconocer que dos problemas tienen el mismo patrón te ahorra trabajo en el examen. Una vez que dominas el "ladder de SI-SINO de mayor a menor", lo aplicas a comisiones, descuentos, tarifas, escalas de impuestos, niveles de rendimiento, calificaciones... <strong>El esqueleto se reusa.</strong></p>
+</div>
+
+<h4 class="step">Tabla de tramos adaptada</h4>
+<table class="deskcheck" style="text-align:left;font-family:'Crimson Pro',serif;font-size:16px">
+<caption>Tramos del problema Fila C</caption>
+<thead><tr><th style="text-align:left">Condición sobre VM</th><th style="text-align:left">Intervalo</th><th style="text-align:left">Comisión</th></tr></thead>
+<tbody>
+<tr><td>VM ≥ 30 000</td><td>$[30\,000, \infty)$</td><td>5%</td></tr>
+<tr><td>20 000 ≤ VM &lt; 30 000</td><td>$[20\,000, 30\,000)$</td><td>2%</td></tr>
+<tr><td>10 000 ≤ VM &lt; 20 000</td><td>$[10\,000, 20\,000)$</td><td>1%</td></tr>
+<tr><td>VM &lt; 10 000</td><td>$(-\infty, 10\,000)$</td><td>0</td></tr>
+</tbody>
+</table>
+
+<h4 class="step">Leyenda de variables</h4>
+<div class="leyenda">
+<h5>Leyenda</h5>
+<dl>
+  <dt>VM</dt><dd>ventas mensuales del vendedor (real)</dd>
+  <dt>SB</dt><dd>sueldo base (real)</dd>
+  <dt>C</dt><dd>comisión (real)</dd>
+  <dt>SF</dt><dd>sueldo final = SB + C (real)</dd>
+</dl>
+</div>
+
+<h4 class="step">Pseudocódigo</h4>
+<pre class="pseudocode"><span class="k">INICIO</span>
+    <span class="k">Real:</span> VM, SB, C, SF
+    <span class="k">Leer</span> SB, VM
+    <span class="k">SI</span> VM >= 30000 <span class="k">ENTONCES</span>
+        C = VM * 0.05
+    <span class="k">SINO</span>
+        <span class="k">SI</span> VM >= 20000 <span class="k">ENTONCES</span>
+            C = VM * 0.02
+        <span class="k">SINO</span>
+            <span class="k">SI</span> VM >= 10000 <span class="k">ENTONCES</span>
+                C = VM * 0.01
+            <span class="k">SINO</span>
+                C = 0
+            <span class="k">FIN_SI</span>
+        <span class="k">FIN_SI</span>
+    <span class="k">FIN_SI</span>
+    SF = SB + C
+    <span class="k">Mostrar</span> C, SF
+<span class="k">FIN</span></pre>
+
+<h4 class="step">Diagrama de flujo</h4>
+<div class="flowchart">
+<div class="mermaid">
+flowchart TD
+  S(["INICIO"])
+  I[/"Leer SB, VM"/]
+  Q1{"VM >= 30000?"}
+  A1["C = VM * 0.05"]
+  Q2{"VM >= 20000?"}
+  A2["C = VM * 0.02"]
+  Q3{"VM >= 10000?"}
+  A3["C = VM * 0.01"]
+  A4["C = 0"]
+  P["SF = SB + C"]
+  O[/"Mostrar C, SF"/]
+  E(["FIN"])
+  S --> I --> Q1
+  Q1 -->|"Sí"| A1 --> P
+  Q1 -->|"No"| Q2
+  Q2 -->|"Sí"| A2 --> P
+  Q2 -->|"No"| Q3
+  Q3 -->|"Sí"| A3 --> P
+  Q3 -->|"No"| A4 --> P
+  P --> O --> E
+</div>
+</div>
+
+<h4 class="step">Prueba de escritorio</h4>
+<table class="deskcheck">
+<caption>Tramos cubiertos</caption>
+<thead><tr><th>Caso</th><th>VM</th><th>SB</th><th>Tramo</th><th>C</th><th>SF</th></tr></thead>
+<tbody>
+<tr><td class="case-label">Venta alta</td><td>40 000</td><td>1 500</td><td>VM ≥ 30 000</td><td>2 000</td><td>3 500</td></tr>
+<tr><td class="case-label">Frontera 30 000</td><td>30 000</td><td>1 500</td><td>VM ≥ 30 000</td><td>1 500</td><td>3 000</td></tr>
+<tr><td class="case-label">Tramo medio</td><td>25 000</td><td>1 500</td><td>20 000 ≤ VM &lt; 30 000</td><td>500</td><td>2 000</td></tr>
+<tr><td class="case-label">Tramo bajo</td><td>15 000</td><td>1 500</td><td>10 000 ≤ VM &lt; 20 000</td><td>150</td><td>1 650</td></tr>
+<tr><td class="case-label">Sin comisión</td><td>5 000</td><td>1 500</td><td>VM &lt; 10 000</td><td>0</td><td>1 500</td></tr>
+</tbody>
+</table>
+</section>
+
+<!-- ============================ P2C.E2 ============================ -->
+<section id="p2c-e2">
+<h2 class="sec"><span class="num">P2C.E2</span>Tarifa de playa de estacionamiento <span class="chip accent">7 puntos</span></h2>
+
+<div class="statement">
+<p>En una playa de estacionamiento te cobran por las dos primeras horas o fracción <strong>S/. 10</strong>, a partir de la tercera hora o fracción el costo es de <strong>S/. 7 por hora</strong>, y si ocupa todo el día (<strong>8 horas o más</strong>) es una <strong>tarifa plana de S/. 5 por hora</strong>. Elaborar el algoritmo que calcule el precio total.</p>
+</div>
+
+<h4 class="step">Comprensión: desmontando la tarifa</h4>
+<p>Este enunciado es <strong>el más sutil de todos los exámenes</strong> porque la estructura del precio cambia según el tramo. Vamos a leerlo con cuidado y reformularlo:</p>
+
+<table class="deskcheck" style="text-align:left;font-family:'Crimson Pro',serif;font-size:16px">
+<caption>Lectura literal del enunciado</caption>
+<thead><tr><th style="text-align:left">Tramo</th><th style="text-align:left">Significado</th><th style="text-align:left">Costo total</th></tr></thead>
+<tbody>
+<tr><td>1ª y 2ª hora o fracción</td><td>Pagas S/. 10 fijos por hasta 2 horas (cualquier cantidad menor también cuesta S/. 10).</td><td>S/. 10</td></tr>
+<tr><td>De la 3ª en adelante (y menos de 8 horas totales)</td><td>S/. 7 por cada hora adicional sobre las primeras 2.</td><td>10 + 7·(h − 2)</td></tr>
+<tr><td>8 horas o más</td><td>Tarifa plana de S/. 5 por hora, aplicada a <strong>todas</strong> las horas.</td><td>5 · h</td></tr>
+</tbody>
+</table>
+
+<div class="callout intuition">
+<span class="callout-label">La trampa de "o fracción"</span>
+<p>"2 horas o fracción" significa que si te quedas <strong>5 minutos</strong> ya pagas las dos horas: $S/. 10. Si te quedas 1h45min, pagas $S/. 10. Si te quedas 2h, pagas $S/. 10. Solo a partir de la tercera hora (es decir, en la marca 2h+1seg en adelante) empieza la tarifa adicional. <strong>Para simplificar, asumimos que la entrada <code class="inline">h</code> ya viene redondeada hacia arriba</strong>: 1.5 horas se ingresa como 2; 2.3 horas se ingresa como 3. Esta es la interpretación estándar en ejercicios académicos.</p>
+</div>
+
+<h4 class="step">Análisis matemático del costo en cada tramo</h4>
+
+<div class="formula-box">
+$$\text{Costo}(h) = \begin{cases} 10, & \text{si } 1 \le h \le 2 \\ 10 + 7\,(h - 2), & \text{si } 3 \le h \le 7 \\ 5\,h, & \text{si } h \ge 8 \end{cases}$$
+</div>
+
+<div class="callout theory">
+<span class="callout-label">¿Por qué la fórmula 10 + 7·(h − 2) para el tramo medio?</span>
+<p>Las dos primeras horas siempre cuestan S/. 10. Si te quedas <em>h</em> horas con <em>h</em> entre 3 y 7, las horas "adicionales" sobre las 2 iniciales son <em>h − 2</em>. Cada una cuesta S/. 7. Sumas el costo fijo S/. 10 más el variable 7·(h−2). Verifiquemos:
+<br>• h = 3: 10 + 7·1 = 17
+<br>• h = 5: 10 + 7·3 = 31
+<br>• h = 7: 10 + 7·5 = 45 ✓</p>
+</div>
+
+<div class="callout warn">
+<span class="callout-label">Discontinuidad en h = 8</span>
+<p>Verifica esto: con la fórmula del tramo medio (si aplicara), h = 8 daría 10 + 7·6 = 52. Pero con la tarifa plana del tercer tramo, h = 8 da 5·8 = 40. <strong>Pagar más por menos tiempo</strong>: las 8 horas exactas pagan menos que 7 horas. Otra función no-monótona, como la del descuento por kilos. Esto se llama un "incentivo al uso prolongado", típico de tarifas planas diarias.</p>
+</div>
+
+<h4 class="step">Leyenda de variables</h4>
+<div class="leyenda">
+<h5>Leyenda</h5>
+<dl>
+  <dt>h</dt><dd>horas que el vehículo estuvo estacionado (entero, ≥ 1)</dd>
+  <dt>precio</dt><dd>precio total a pagar en soles (real)</dd>
+</dl>
+</div>
+
+<h4 class="step">Estrategia</h4>
+<p>Patrón SI-SINO anidado, como los anteriores. Pero ahora cada tramo tiene una <em>fórmula distinta</em>, no solo un coeficiente distinto. La estructura del código tiene que escoger no solo el precio, sino la <em>forma</em> del cálculo.</p>
+
+<h4 class="step">Pseudocódigo</h4>
+<pre class="pseudocode"><span class="k">INICIO</span>
+    <span class="k">Entero:</span> h
+    <span class="k">Real:</span> precio
+    <span class="k">Leer</span> h
+    <span class="k">SI</span> h >= 8 <span class="k">ENTONCES</span>
+        precio = 5 * h                <span class="c">// tarifa plana: S/. 5 por hora, todas</span>
+    <span class="k">SINO</span>
+        <span class="k">SI</span> h >= 3 <span class="k">ENTONCES</span>          <span class="c">// 3 &lt;= h &lt;= 7</span>
+            precio = 10 + 7 * (h - 2) <span class="c">// fijo de 10 + 7 por cada hora extra</span>
+        <span class="k">SINO</span>
+            precio = 10               <span class="c">// 1 &lt;= h &lt;= 2: tarifa mínima</span>
+        <span class="k">FIN_SI</span>
+    <span class="k">FIN_SI</span>
+    <span class="k">Mostrar</span> precio
+<span class="k">FIN</span></pre>
+
+<div class="callout intuition">
+<span class="callout-label">¿Por qué empiezo preguntando por ≥ 8?</span>
+<p>Misma lógica que con los tramos de comisión: pregunto primero por el caso más extremo. Si pregunto ≥ 8 y es V, ya gano. Si es F, sé que h ≤ 7 y entro al SINO, donde puedo preguntar ≥ 3 sin tener que escribir "y &lt; 8" (porque ya está implícito). Si el SINO no se cumple (es decir, no ≥ 3), entonces h ≤ 2: la tarifa mínima.</p>
+</div>
+
+<h4 class="step">Diagrama de flujo</h4>
+<div class="flowchart">
+<div class="mermaid">
+flowchart TD
+  S(["INICIO"])
+  I[/"Leer h"/]
+  Q1{"h >= 8?"}
+  A1["precio = 5 * h"]
+  Q2{"h >= 3?"}
+  A2["precio = 10 + 7 * (h - 2)"]
+  A3["precio = 10"]
+  O[/"Mostrar precio"/]
+  E(["FIN"])
+  S --> I --> Q1
+  Q1 -->|"Sí"| A1 --> O
+  Q1 -->|"No"| Q2
+  Q2 -->|"Sí"| A2 --> O
+  Q2 -->|"No"| A3 --> O
+  O --> E
+</div>
+</div>
+
+<h4 class="step">Prueba de escritorio exhaustiva</h4>
+<table class="deskcheck">
+<caption>Casos cubriendo cada tramo y las fronteras</caption>
+<thead><tr><th>h</th><th>Tramo</th><th>Fórmula aplicada</th><th>precio</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Tarifa mínima</td><td>10 (fijo)</td><td>10</td></tr>
+<tr><td>2</td><td>Tarifa mínima</td><td>10 (fijo)</td><td>10</td></tr>
+<tr><td>3</td><td>Tramo medio</td><td>10 + 7·1</td><td>17</td></tr>
+<tr><td>4</td><td>Tramo medio</td><td>10 + 7·2</td><td>24</td></tr>
+<tr><td>5</td><td>Tramo medio</td><td>10 + 7·3</td><td>31</td></tr>
+<tr><td>7</td><td>Tramo medio</td><td>10 + 7·5</td><td>45</td></tr>
+<tr><td>8</td><td>Tarifa plana</td><td>5·8</td><td>40</td></tr>
+<tr><td>10</td><td>Tarifa plana</td><td>5·10</td><td>50</td></tr>
+<tr><td>24</td><td>Tarifa plana</td><td>5·24</td><td>120</td></tr>
+</tbody>
+</table>
+
+<div class="callout intuition">
+<span class="callout-label">Lectura económica de la tabla</span>
+<p>Mira cómo el precio crece de 10 a 45 entre h=2 y h=7, y luego <em>salta hacia abajo</em> a 40 en h=8. El mensaje implícito al cliente es: "si vas a estar 7 horas, mejor quédate 8 — pagas menos". Esa es la lógica del negocio detrás de la fórmula. Reconocerla te ayuda a no equivocarte al programar: si tu pseudocódigo produce 45 para h=8, sabes inmediatamente que algo está mal.</p>
+</div>
+
+<div class="callout warn">
+<span class="callout-label">Errores comunes</span>
+<ul>
+<li><strong>Aplicar S/. 7 desde la primera hora.</strong> Olvidan que las 2 primeras son fijas a S/. 10. Resultado: 7·h en lugar de 10 + 7·(h−2).</li>
+<li><strong>Aplicar S/. 5 solo a las horas que excedan 8.</strong> El enunciado dice "tarifa plana de S/. 5 por hora": todas las horas, no solo las que pasan de 8. Si pones <code class="inline">precio = 5*(h-8)</code> obtienes 0 para h=8 y 5 para h=9. Eso es absurdo.</li>
+<li><strong>Tratar h como real.</strong> Por la convención de "hora o fracción", <em>h</em> se entiende como entero. Si lees real, vas a tener que decidir qué hacer con 2.7 horas, y se complica.</li>
+</ul>
+</div>
+</section>
+
+<!-- ============================ P2C.E3 ============================ -->
+<section id="p2c-e3">
+<h2 class="sec"><span class="num">P2C.E3</span>Contar cuántos de 8 números son &gt; 50 <span class="chip accent">7 puntos</span></h2>
+
+<div class="statement">
+<p>Elabore un algoritmo que permita ingresar 8 números enteros y muestre la cantidad de números mayores a 50 que se ingresaron. <em>Ejemplo:</em> si se ingresan los números 9, 88, 55, 120, 32, 21, 9, 11, el programa mostrará 3 (porque 88, 55 y 120 son mayores que 50). Debe utilizar una instrucción repetitiva.</p>
+</div>
+
+<h4 class="step">Comprensión: ¿qué patrón es este?</h4>
+<p>Es <strong>el mismo patrón "contador de coincidencias"</strong> del ejercicio P2A.E3 (contar la letra "a"). La estructura es idéntica:</p>
+
+<ul>
+<li>Sé cuántas iteraciones: 8. ⇒ <strong>PARA</strong>.</li>
+<li>Necesito una variable contador, inicializada en 0.</li>
+<li>En cada iteración, leo un valor y, si cumple una condición, incremento el contador.</li>
+<li>La condición esta vez es <code class="inline">N &gt; 50</code> en lugar de <code class="inline">C = 'a'</code>.</li>
+</ul>
+
+<div class="callout intuition">
+<span class="callout-label">Detectar el patrón ahorra trabajo</span>
+<p>Una vez que reconoces "este es contador de coincidencias", el 80% del algoritmo está escrito mentalmente. Solo decides qué condición usar y cuántas iteraciones. El resto es plantilla. <strong>Aprende los patrones, no los problemas.</strong></p>
+</div>
+
+<h4 class="step">Leyenda de variables</h4>
+<div class="leyenda">
+<h5>Leyenda</h5>
+<dl>
+  <dt>i</dt><dd>contador del bucle (entero, va de 1 a 8)</dd>
+  <dt>N</dt><dd>número leído en cada iteración (entero)</dd>
+  <dt>C50</dt><dd>cantidad de números mayores a 50 (entero, contador)</dd>
+</dl>
+</div>
+
+<h4 class="step">Pseudocódigo</h4>
+<pre class="pseudocode"><span class="k">INICIO</span>
+    <span class="k">Entero:</span> i, N, C50
+    C50 = 0                              <span class="c">// inicialización del contador</span>
+    <span class="k">PARA</span> i = 1 <span class="k">HASTA</span> 8 <span class="k">HACER</span>
+        <span class="k">Leer</span> N
+        <span class="k">SI</span> N > 50 <span class="k">ENTONCES</span>
+            C50 = C50 + 1
+        <span class="k">FIN_SI</span>
+    <span class="k">FIN_PARA</span>
+    <span class="k">Mostrar</span> C50
+<span class="k">FIN</span></pre>
+
+<h4 class="step">Diagrama de flujo</h4>
+<div class="flowchart">
+<div class="mermaid">
+flowchart TD
+  S(["INICIO"])
+  D["Entero: i, N, C50"]
+  P0["C50 = 0"]
+  L["i = 1"]
+  Q1{"i &lt;= 8?"}
+  R[/"Leer N"/]
+  Q2{"N &gt; 50?"}
+  INC["C50 = C50 + 1"]
+  STEP["i = i + 1"]
+  O[/"Mostrar C50"/]
+  E(["FIN"])
+  S --> D --> P0 --> L --> Q1
+  Q1 -->|"Sí"| R --> Q2
+  Q2 -->|"Sí"| INC --> STEP
+  Q2 -->|"No"| STEP
+  STEP --> Q1
+  Q1 -->|"No"| O --> E
+</div>
+</div>
+
+<h4 class="step">Prueba de escritorio con los datos del ejemplo</h4>
+<p>Usemos los 8 números del enunciado: 9, 88, 55, 120, 32, 21, 9, 11. Esperamos C50 = 3 al final.</p>
+
+<table class="deskcheck">
+<caption>Traza completa con los datos del enunciado</caption>
+<thead><tr><th>i</th><th>N</th><th>N &gt; 50?</th><th>C50 antes</th><th>C50 después</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>9</td><td>No</td><td>0</td><td>0</td></tr>
+<tr><td>2</td><td>88</td><td>Sí</td><td>0</td><td>1</td></tr>
+<tr><td>3</td><td>55</td><td>Sí</td><td>1</td><td>2</td></tr>
+<tr><td>4</td><td>120</td><td>Sí</td><td>2</td><td>3</td></tr>
+<tr><td>5</td><td>32</td><td>No</td><td>3</td><td>3</td></tr>
+<tr><td>6</td><td>21</td><td>No</td><td>3</td><td>3</td></tr>
+<tr><td>7</td><td>9</td><td>No</td><td>3</td><td>3</td></tr>
+<tr><td>8</td><td>11</td><td>No</td><td>3</td><td>3</td></tr>
+</tbody>
+</table>
+
+<p>Se muestra: <strong>3</strong>. ✓</p>
+
+<h4 class="step">¿Y si el enunciado dijera "≥ 50" en lugar de "&gt; 50"?</h4>
+<p>El número 50 mismo cambiaría de bando: con <code class="inline">N &gt; 50</code> no cuenta (50 no es mayor que 50); con <code class="inline">N ≥ 50</code> sí cuenta. Este es un detalle que vale puntos: el operador "&gt;" es estrictamente mayor, el operador "≥" es mayor o igual. <strong>Siempre lee el enunciado literalmente.</strong></p>
+
+<div class="callout warn">
+<span class="callout-label">Errores comunes</span>
+<ul>
+<li><strong>Confundir 8 con 10 por el enunciado.</strong> El enunciado dice "ingresar 8 números enteros" pero el ejemplo lista 8 valores y dice "los siguientes 10 números". Es una errata del enunciado original. Sigue el "ingrese 8".</li>
+<li><strong>Olvidar inicializar.</strong> C50 sin inicializar genera basura. Siempre <code class="inline">C50 = 0</code> antes del bucle.</li>
+<li><strong>Mostrar dentro del bucle.</strong> Si pones <code class="inline">Mostrar C50</code> dentro del FIN_PARA, ves el contador en cada iteración, no solo el final. No es exactamente un error de lógica, pero no es lo que pide el enunciado.</li>
+<li><strong>Usar &gt;= por costumbre.</strong> El enunciado dice "mayores a 50", que es estrictamente "&gt;". El número 50 no cuenta.</li>
+</ul>
+</div>
+</section>
+
+<p class="rule-flourish">Fin de la Práctica 2 — Fila C</p>
+
+<!-- ==================================================================== -->
+<!-- ==========================  SÍNTESIS  ============================ -->
+<!-- ==================================================================== -->
+
+<section id="sintesis">
+<h2 class="sec"><span class="num">02</span>Síntesis: los patrones que se repiten</h2>
+
+<p class="lead">Si has llegado hasta acá habrás notado que, con once ejercicios distintos, hay solo cuatro plantillas mentales. Reconocerlas te permite resolver cualquier variante que te pongan.</p>
+
+<h3 class="subsec">Patrón 1 · Secuencial puro: leer → calcular → mostrar</h3>
+<p>Aplica cuando el problema es una fórmula matemática directa, sin decisiones ni bucles. Ejercicios donde lo viste:</p>
+<div class="tag-row">
+<span class="chip">P1.E1 · estatura</span>
+<span class="chip">P1.E2 · sueldos</span>
+<span class="chip">P1.E3 · nota final</span>
+</div>
+<p><strong>Esqueleto:</strong></p>
+<pre class="pseudocode">INICIO
+    declarar variables
+    Leer entradas
+    calcular fórmula (asignaciones)
+    Mostrar salidas
+FIN</pre>
+
+<h3 class="subsec">Patrón 2 · Clasificación por tramos (SI-SINO anidados)</h3>
+<p>Aplica cuando una variable de entrada determina, según su valor, cuál de varios cálculos aplicar. Es el patrón más frecuente en problemas de comisiones, descuentos, tarifas y notas. Ejercicios:</p>
+<div class="tag-row">
+<span class="chip accent">P2A.E1 · comisión (Fila A)</span>
+<span class="chip accent">P2B.E1 · descuento por kilos</span>
+<span class="chip accent">P2C.E1 · comisión (Fila C)</span>
+<span class="chip accent">P2C.E2 · estacionamiento</span>
+</div>
+<p><strong>Reglas de oro:</strong></p>
+<ul>
+<li>Pregunta primero por el tramo más extremo (≥ valor más alto).</li>
+<li>Cada SI siguiente va dentro del <em>SINO</em> del anterior, no dentro del ENTONCES.</li>
+<li>El último SINO captura el tramo restante sin necesidad de chequearlo.</li>
+<li>Verifica que los tramos sean mutuamente excluyentes <em>y</em> exhaustivos (que ningún valor quede huérfano).</li>
+</ul>
+
+<h3 class="subsec">Patrón 3 · Árbol de decisión binario (comparaciones por pares)</h3>
+<p>Aplica cuando hay que elegir <em>uno</em> entre varios elementos según comparaciones. Ejercicio:</p>
+<div class="tag-row">
+<span class="chip green">P2A.E2 · mayor de 3 números</span>
+</div>
+<p><strong>Esqueleto general (mayor de 3):</strong></p>
+<pre class="pseudocode">SI A > B ENTONCES
+    SI A > C ENTONCES
+        MAYOR = A
+    SINO
+        MAYOR = C
+    FIN_SI
+SINO
+    SI B > C ENTONCES
+        MAYOR = B
+    SINO
+        MAYOR = C
+    FIN_SI
+FIN_SI</pre>
+
+<h3 class="subsec">Patrón 4 · Contador de coincidencias (bucle + condición + contador)</h3>
+<p>Aplica cuando hay que repetir N veces, leer un valor cada vez y contar cuántos cumplen una condición. Ejercicios:</p>
+<div class="tag-row">
+<span class="chip">P2A.E3 · contar 'a'</span>
+<span class="chip">P2C.E3 · contar &gt; 50</span>
+</div>
+<p><strong>Esqueleto:</strong></p>
+<pre class="pseudocode">INICIO
+    declarar variables
+    contador = 0                  // inicialización OBLIGATORIA
+    PARA i = 1 HASTA N HACER
+        Leer dato
+        SI dato cumple condición ENTONCES
+            contador = contador + 1
+        FIN_SI
+    FIN_PARA
+    Mostrar contador
+FIN</pre>
+
+<h3 class="subsec">Los siete principios para no perder puntos</h3>
+
+<ol>
+<li><strong>Declara siempre los tipos.</strong> <code class="inline">Real: A, B</code> o <code class="inline">Entero: i, contador</code>. El examen lo pide explícitamente.</li>
+<li><strong>Escribe la leyenda completa.</strong> Cada variable, una línea, con descripción. El profesor lo exige y, además, te obliga a aclarar la intención antes de programar.</li>
+<li><strong>Inicializa contadores y acumuladores.</strong> Antes del bucle: <code class="inline">contador = 0</code>, <code class="inline">suma = 0</code>.</li>
+<li><strong>Lee la entrada con <code class="inline">Leer</code>.</strong> No quemes valores en el código a menos que el enunciado lo indique como dato fijo.</li>
+<li><strong>Cuidado con los paréntesis en fórmulas con división.</strong> <code class="inline">(a + b) / c</code> ≠ <code class="inline">a + b / c</code>.</li>
+<li><strong>Anida SI dentro del SINO correcto.</strong> El error de la solución oficial de P2A.E1 es exactamente esto: anidar en el ENTONCES. Revisa siempre con un caso de prueba.</li>
+<li><strong>Haz prueba de escritorio antes de entregar.</strong> Un caso simple, un caso frontera, un caso extremo. Si tu algoritmo da basura en cualquiera, vuelve atrás.</li>
+</ol>
+
+<div class="callout intuition" style="margin-top:32px">
+<span class="callout-label">Una nota final</span>
+<p>El propósito de este documento no es que memorices once soluciones. Es que reconozcas <strong>los cuatro patrones</strong> y entiendas que cualquier ejercicio del curso (de este capítulo del curso) es alguna combinación de ellos. Cuando llegues al examen y veas un enunciado nuevo, tu primera pregunta debería ser: "¿esto es secuencial, clasificación por tramos, árbol binario, o contador con bucle?". Una vez que respondas, el código se escribe casi solo.</p>
+</div>
+
+<p class="rule-flourish">·  ·  ·</p>
+
+<p style="text-align:center;font-style:italic;color:var(--ink-faint);margin-top:48px;font-size:15px">
+Documento elaborado en el marco del curso A1FP1 — Fundamentos de Programación · UDEP Lima<br>
+Resolución íntegra de la Práctica Calificada 1 y de las tres filas de la Práctica Calificada 2.<br>
+Estudio dirigido a la comprensión profunda, no a la memorización.
+</p>
+</section>
+
+</main>
+</div>
+
+</body>
+</html>
