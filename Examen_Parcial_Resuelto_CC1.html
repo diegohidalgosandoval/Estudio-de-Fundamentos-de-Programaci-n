@@ -1,0 +1,2178 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Examen Parcial Resuelto · Contabilidad de Costos I</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' },
+  startup: { typeset: false }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.min.js" id="MathJax-script" async></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
+<style>
+/* ============================================================
+   SISTEMA DE COLOR — dos temas (oscuro por defecto)
+   ============================================================ */
+:root[data-theme="dark"]{
+  --bg:#13161d;            /* tinta profunda */
+  --bg-soft:#181c25;
+  --surface:#1d222e;       /* tarjetas */
+  --surface-2:#232938;
+  --line:#2f3647;
+  --line-soft:#262c3a;
+  --ink:#e9e5d9;           /* texto papel cálido */
+  --ink-soft:#b9c0cd;
+  --ink-mute:#8a93a4;
+  --paper:#e9e5d9;
+  --terra:#e89b6e;         /* terracota */
+  --terra-deep:#cf7f4f;
+  --teal:#57c2b5;
+  --gold:#e8c25c;
+  --plum:#c79bd9;
+  --sage:#93c08c;
+  --orange:#ef9a5b;
+  --terra-bg:rgba(232,155,110,.12);
+  --teal-bg:rgba(87,194,181,.12);
+  --gold-bg:rgba(232,194,92,.12);
+  --plum-bg:rgba(199,155,217,.12);
+  --sage-bg:rgba(147,192,140,.12);
+  --orange-bg:rgba(239,154,91,.13);
+  --shadow:0 14px 40px -18px rgba(0,0,0,.7);
+  --grid:rgba(255,255,255,.07);
+}
+:root[data-theme="light"]{
+  --bg:#f4efe3;            /* papel crema */
+  --bg-soft:#efe9da;
+  --surface:#fffdf7;
+  --surface-2:#f7f2e6;
+  --line:#ddd4bf;
+  --line-soft:#e6ddc9;
+  --ink:#22282f;           /* tinta navy */
+  --ink-soft:#4a525f;
+  --ink-mute:#6f7785;
+  --paper:#22282f;
+  --terra:#c2552a;
+  --terra-deep:#a7461f;
+  --teal:#1f6f66;
+  --gold:#9a7b1b;
+  --plum:#7e4f93;
+  --sage:#4f7a4a;
+  --orange:#bf6726;
+  --terra-bg:rgba(194,85,42,.09);
+  --teal-bg:rgba(31,111,102,.09);
+  --gold-bg:rgba(154,123,27,.11);
+  --plum-bg:rgba(126,79,147,.09);
+  --sage-bg:rgba(79,122,74,.10);
+  --orange-bg:rgba(191,103,38,.10);
+  --shadow:0 14px 40px -22px rgba(60,45,20,.45);
+  --grid:rgba(40,40,40,.10);
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Manrope',system-ui,sans-serif;
+  font-size:16.5px;
+  line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+  transition:background .35s ease,color .35s ease;
+}
+
+/* ---------- LAYOUT ---------- */
+.shell{display:flex;max-width:1280px;margin:0 auto;gap:0;}
+.toc{
+  width:268px;flex:none;position:sticky;top:0;height:100vh;
+  overflow-y:auto;padding:30px 20px 50px 26px;
+  border-right:1px solid var(--line);
+}
+.main{flex:1;min-width:0;padding:0 clamp(20px,4.2vw,64px) 120px;}
+@media(max-width:980px){
+  .toc{display:none;}
+  .main{padding:0 20px 90px;}
+}
+
+/* ---------- TOC ---------- */
+.toc-brand{font-family:'Fraunces',serif;font-size:1.06rem;font-weight:600;
+  color:var(--terra);line-height:1.3;margin-bottom:4px;}
+.toc-sub{font-size:.74rem;color:var(--ink-mute);letter-spacing:.04em;
+  text-transform:uppercase;margin-bottom:22px;}
+.toc a{display:block;color:var(--ink-soft);text-decoration:none;
+  font-size:.85rem;padding:5px 10px;border-radius:7px;
+  border-left:2px solid transparent;margin:1px 0;transition:.18s;}
+.toc a:hover{background:var(--surface);color:var(--ink);}
+.toc a.active{color:var(--terra);border-left-color:var(--terra);
+  background:var(--terra-bg);font-weight:600;}
+.toc .grp{font-size:.71rem;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-mute);margin:20px 0 6px 10px;font-weight:700;}
+.toc a.sub{padding-left:24px;font-size:.79rem;}
+
+/* ---------- THEME TOGGLE ---------- */
+.theme-toggle{
+  display:flex;align-items:center;gap:9px;margin-top:26px;
+  padding:9px 12px;background:var(--surface);border:1px solid var(--line);
+  border-radius:11px;cursor:pointer;user-select:none;
+}
+.theme-toggle:hover{border-color:var(--terra);}
+.switch{width:42px;height:23px;border-radius:20px;background:var(--surface-2);
+  border:1px solid var(--line);position:relative;flex:none;transition:.3s;}
+.knob{position:absolute;top:2px;left:2px;width:17px;height:17px;border-radius:50%;
+  background:var(--gold);transition:.3s cubic-bezier(.6,.2,.2,1);}
+[data-theme="light"] .knob{transform:translateX(19px);background:var(--terra);}
+.theme-toggle .lbl{font-size:.79rem;font-weight:600;color:var(--ink-soft);}
+
+/* ---------- HERO ---------- */
+.hero{padding:54px 0 30px;border-bottom:1px solid var(--line);margin-bottom:8px;}
+.hero .eyebrow{font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--terra);font-weight:700;margin-bottom:14px;}
+.hero h1{font-family:'Fraunces',serif;font-weight:600;
+  font-size:clamp(2.1rem,4.6vw,3.2rem);line-height:1.08;letter-spacing:-.012em;}
+.hero h1 em{font-style:italic;color:var(--terra);}
+.hero .lede{margin-top:18px;font-size:1.05rem;color:var(--ink-soft);max-width:62ch;}
+.hero-meta{display:flex;flex-wrap:wrap;gap:9px;margin-top:24px;}
+.chip{font-size:.76rem;font-weight:600;padding:6px 12px;border-radius:20px;
+  background:var(--surface);border:1px solid var(--line);color:var(--ink-soft);}
+.chip b{color:var(--terra);}
+
+/* ---------- TYPOGRAPHY ---------- */
+.main h2{font-family:'Fraunces',serif;font-weight:600;
+  font-size:clamp(1.6rem,3vw,2.15rem);line-height:1.16;letter-spacing:-.01em;
+  margin:8px 0 6px;}
+.main h3{font-family:'Fraunces',serif;font-weight:600;
+  font-size:1.32rem;margin:34px 0 10px;letter-spacing:-.005em;}
+.main h4{font-size:1.02rem;font-weight:800;margin:24px 0 8px;
+  color:var(--ink);letter-spacing:.005em;}
+.main p{margin:11px 0;color:var(--ink-soft);}
+.main p strong,.main li strong{color:var(--ink);font-weight:700;}
+.main a{color:var(--terra);}
+.lead{font-size:1.07rem;color:var(--ink-soft);}
+ul,ol{margin:11px 0 11px 4px;padding-left:24px;color:var(--ink-soft);}
+li{margin:6px 0;}
+em{color:var(--ink);}
+.mono{font-family:'JetBrains Mono',monospace;}
+
+/* ---------- SECTION SHELL ---------- */
+section{padding-top:54px;scroll-margin-top:18px;}
+.sec-tag{display:inline-flex;align-items:center;gap:8px;font-size:.74rem;
+  font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--terra);margin-bottom:10px;}
+.sec-tag::before{content:"";width:26px;height:2px;background:var(--terra);}
+
+/* ---------- CASE BANNER ---------- */
+.case-banner{
+  border-radius:18px;padding:30px 32px;margin:14px 0 10px;
+  background:linear-gradient(135deg,var(--terra-bg),transparent 75%);
+  border:1px solid var(--line);position:relative;overflow:hidden;
+}
+.case-banner::after{content:"";position:absolute;right:-40px;top:-40px;
+  width:180px;height:180px;border-radius:50%;
+  background:radial-gradient(circle,var(--terra-bg),transparent 70%);}
+.case-banner .knum{font-family:'Fraunces',serif;font-size:.95rem;
+  font-weight:600;color:var(--terra);letter-spacing:.04em;}
+.case-banner h2{margin:6px 0 4px;}
+.case-banner .firm{font-size:.92rem;color:var(--ink-mute);font-weight:600;}
+
+/* ---------- CARDS / PANELS ---------- */
+.panel{background:var(--surface);border:1px solid var(--line);
+  border-radius:15px;padding:22px 24px;margin:18px 0;}
+.panel.tight{padding:16px 20px;}
+
+/* ---------- CALLOUTS ---------- */
+.call{border-radius:13px;padding:15px 18px 15px 18px;margin:16px 0;
+  border-left:4px solid;font-size:.97rem;}
+.call .ct{font-size:.73rem;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;display:flex;align-items:center;gap:7px;margin-bottom:5px;}
+.call p{margin:5px 0;color:var(--ink-soft);}
+.call p:first-of-type{margin-top:0;}
+.call.intuicion{border-color:var(--gold);background:var(--gold-bg);}
+.call.intuicion .ct{color:var(--gold);}
+.call.clave{border-color:var(--terra);background:var(--terra-bg);}
+.call.clave .ct{color:var(--terra);}
+.call.formula{border-color:var(--teal);background:var(--teal-bg);}
+.call.formula .ct{color:var(--teal);}
+.call.insight{border-color:var(--plum);background:var(--plum-bg);}
+.call.insight .ct{color:var(--plum);}
+.call.advertencia{border-color:var(--orange);background:var(--orange-bg);}
+.call.advertencia .ct{color:var(--orange);}
+.call.tip{border-color:var(--sage);background:var(--sage-bg);}
+.call.tip .ct{color:var(--sage);}
+
+/* ---------- RAZONAMIENTO + CÁLCULO ---------- */
+.rc{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0;}
+@media(max-width:760px){.rc{grid-template-columns:1fr;}}
+.rc-box{border:1px solid var(--line);border-radius:13px;padding:15px 17px;
+  background:var(--surface);}
+.rc-box .rc-h{font-size:.72rem;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:7px;display:flex;align-items:center;gap:6px;}
+.rc-razon .rc-h{color:var(--plum);}
+.rc-calc .rc-h{color:var(--teal);}
+.rc-razon{background:var(--plum-bg);border-color:transparent;}
+.rc-calc{background:var(--bg-soft);}
+.rc-calc .mono{font-family:'JetBrains Mono',monospace;font-size:.9rem;
+  line-height:1.95;color:var(--ink);display:block;}
+.rc-calc .mono .op{color:var(--ink-mute);}
+.rc-calc .mono .res{color:var(--terra);font-weight:700;}
+
+/* ---------- STEP NUMBERS ---------- */
+.step{display:flex;gap:15px;margin:26px 0 6px;align-items:flex-start;}
+.step-n{flex:none;width:38px;height:38px;border-radius:11px;
+  background:var(--terra);color:#fff;font-family:'Fraunces',serif;
+  font-weight:600;font-size:1.2rem;display:flex;align-items:center;
+  justify-content:center;box-shadow:var(--shadow);}
+[data-theme="dark"] .step-n{color:#1b1208;}
+.step-h{padding-top:3px;}
+.step-h .st-k{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--terra);font-weight:700;}
+.step-h .st-t{font-family:'Fraunces',serif;font-size:1.24rem;font-weight:600;
+  line-height:1.2;}
+
+/* ---------- TABLES ---------- */
+.tbl-wrap{overflow-x:auto;margin:16px 0;border-radius:13px;
+  border:1px solid var(--line);}
+table{border-collapse:collapse;width:100%;font-size:.9rem;}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line-soft);}
+thead th{background:var(--surface-2);font-size:.74rem;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--ink-mute);font-weight:700;
+  border-bottom:1px solid var(--line);}
+tbody tr:last-child td{border-bottom:none;}
+tbody tr:hover{background:var(--surface);}
+td.num,th.num{text-align:right;font-family:'JetBrains Mono',monospace;
+  font-size:.86rem;}
+.row-total td{background:var(--terra-bg);font-weight:700;color:var(--ink);
+  border-top:2px solid var(--terra);}
+.row-total td.num{color:var(--terra);}
+.row-sub td{background:var(--bg-soft);font-weight:600;}
+.tag-c{display:inline-block;font-size:.69rem;font-weight:700;padding:2px 8px;
+  border-radius:6px;letter-spacing:.02em;}
+.tag-costo{background:var(--teal-bg);color:var(--teal);}
+.tag-gasto{background:var(--orange-bg);color:var(--orange);}
+.tag-cxc{background:var(--plum-bg);color:var(--plum);}
+.tag-no{background:var(--gold-bg);color:var(--gold);}
+
+/* Kardex specific */
+.kardex th,.kardex td{text-align:center;font-size:.82rem;padding:7px 8px;}
+.kardex .grp-e{background:var(--teal-bg);}
+.kardex .grp-s{background:var(--orange-bg);}
+.kardex .grp-b{background:var(--terra-bg);}
+.kardex td.lbl{text-align:left;font-weight:600;}
+.kardex .layer{display:block;font-family:'JetBrains Mono',monospace;
+  font-size:.78rem;line-height:1.6;color:var(--ink-soft);}
+.kardex .layer.hl{color:var(--terra);font-weight:600;}
+.kardex tr.k-total td{background:var(--terra-bg);font-weight:700;border-top:2px solid var(--terra);}
+
+/* ---------- BIG NUMBERS ---------- */
+.bn-grid{display:grid;gap:14px;margin:18px 0;
+  grid-template-columns:repeat(auto-fit,minmax(190px,1fr));}
+.bn{border:1px solid var(--line);border-radius:14px;padding:18px 20px;
+  background:var(--surface);position:relative;overflow:hidden;}
+.bn::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;
+  background:var(--terra);}
+.bn.teal::before{background:var(--teal);}
+.bn.gold::before{background:var(--gold);}
+.bn.plum::before{background:var(--plum);}
+.bn .bn-k{font-size:.74rem;font-weight:700;letter-spacing:.04em;
+  text-transform:uppercase;color:var(--ink-mute);}
+.bn .bn-v{font-family:'Fraunces',serif;font-weight:600;font-size:1.75rem;
+  color:var(--ink);margin-top:4px;line-height:1.1;}
+.bn .bn-v small{font-size:1rem;color:var(--ink-mute);}
+.bn .bn-note{font-size:.78rem;color:var(--ink-mute);margin-top:5px;}
+
+/* ---------- CHART ---------- */
+.chart-card{background:var(--surface);border:1px solid var(--line);
+  border-radius:15px;padding:20px 22px;margin:18px 0;}
+.chart-card .ch-t{font-family:'Fraunces',serif;font-weight:600;
+  font-size:1.08rem;margin-bottom:3px;}
+.chart-card .ch-s{font-size:.83rem;color:var(--ink-mute);margin-bottom:14px;}
+.chart-box{position:relative;height:300px;}
+.chart-box.tall{height:340px;}
+
+/* ---------- SVG DIAGRAM ---------- */
+.diagram{background:var(--surface);border:1px solid var(--line);
+  border-radius:15px;padding:22px;margin:18px 0;}
+.diagram svg{display:block;width:100%;height:auto;}
+.svg-ink{fill:var(--ink);}
+.svg-soft{fill:var(--ink-soft);}
+.svg-mute{fill:var(--ink-mute);}
+.dia-cap{font-size:.82rem;color:var(--ink-mute);margin-top:12px;text-align:center;}
+
+/* ---------- FORMULA DISPLAY ---------- */
+.fbox{background:var(--teal-bg);border:1px solid var(--teal);
+  border-radius:12px;padding:14px 20px;margin:14px 0;text-align:center;
+  overflow-x:auto;}
+
+/* ---------- CHECK / QUIZ ---------- */
+.quiz{border:1px dashed var(--terra);border-radius:13px;padding:16px 20px;
+  margin:18px 0;background:var(--terra-bg);}
+.quiz .qh{font-size:.73rem;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--terra);margin-bottom:6px;}
+details{margin-top:9px;border-top:1px solid var(--line);padding-top:9px;}
+summary{cursor:pointer;font-weight:700;color:var(--terra);font-size:.9rem;
+  list-style:none;}
+summary::-webkit-details-marker{display:none;}
+summary::before{content:"▸ ";color:var(--terra);}
+details[open] summary::before{content:"▾ ";}
+details p{font-size:.93rem;margin-top:8px;}
+
+/* ---------- DIVIDERS / MISC ---------- */
+.rule{height:1px;background:var(--line);margin:40px 0;}
+.mini-legend{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0;}
+.ml{display:flex;align-items:center;gap:7px;font-size:.82rem;
+  color:var(--ink-soft);}
+.ml .dot{width:13px;height:13px;border-radius:4px;}
+
+footer{border-top:1px solid var(--line);margin-top:60px;padding-top:30px;
+  font-size:.85rem;color:var(--ink-mute);}
+
+.pin{background:var(--surface-2);border-radius:6px;padding:1px 7px;
+  font-family:'JetBrains Mono',monospace;font-size:.85em;color:var(--terra);
+  font-weight:600;}
+.toplink{font-size:.78rem;color:var(--ink-mute);text-decoration:none;
+  display:inline-block;margin-top:8px;}
+.toplink:hover{color:var(--terra);}
+::selection{background:var(--terra);color:#fff;}
+</style>
+</head>
+<body>
+<div class="shell">
+
+<!-- ================= SIDEBAR TOC ================= -->
+<nav class="toc" id="toc">
+  <div class="toc-brand">Contabilidad de Costos I</div>
+  <div class="toc-sub">Examen Parcial · UDEP</div>
+
+  <a href="#inicio">Portada</a>
+  <a href="#como">Cómo estudiar este material</a>
+
+  <div class="grp">Caso 1 · Sabores Ejecutivos</div>
+  <a href="#c1-mapa" class="sub">Lectura del caso</a>
+  <a href="#c1-teoria-inv" class="sub">Teoría · Inventario y PEPS</a>
+  <a href="#c1-import" class="sub">Costeo de la importación</a>
+  <a href="#c1-kardex" class="sub">Kardex PEPS paso a paso</a>
+  <a href="#c1-rotura" class="sub">Las 4 botellas rotas</a>
+  <a href="#c1-r1" class="sub">★ Respuesta · Req. 1</a>
+  <a href="#c1-teoria-cs" class="sub">Teoría · Costo del Servicio</a>
+  <a href="#c1-clasif" class="sub">Clasificación de partidas</a>
+  <a href="#c1-r2" class="sub">★ Respuesta · Req. 2</a>
+  <a href="#c1-r3" class="sub">★ Respuesta · Req. 3 (EERR)</a>
+
+  <div class="grp">Caso 2 · Mochilas Norteñas</div>
+  <a href="#c2-mapa" class="sub">Lectura del caso</a>
+  <a href="#c2-teoria" class="sub">Teoría · Elementos del costo</a>
+  <a href="#c2-clasif" class="sub">Clasificación de partidas</a>
+  <a href="#c2-r1" class="sub">★ Respuesta · Req. 1</a>
+  <a href="#c2-r2" class="sub">★ Respuesta · Req. 2</a>
+  <a href="#c2-r3" class="sub">★ Respuesta · Req. 3</a>
+  <a href="#c2-r4" class="sub">★ Respuesta · Req. 4</a>
+
+  <div class="grp">Cierre</div>
+  <a href="#errores" class="sub">10 errores típicos</a>
+  <a href="#sintesis" class="sub">Síntesis de fórmulas</a>
+  <a href="#maestria" class="sub">Checklist de maestría</a>
+
+  <div class="theme-toggle" id="themeToggle" role="button" tabindex="0" aria-label="Cambiar tema">
+    <div class="switch"><div class="knob"></div></div>
+    <span class="lbl" id="themeLbl">Modo oscuro</span>
+  </div>
+</nav>
+
+<!-- ================= MAIN ================= -->
+<main class="main">
+
+<!-- ===== HERO ===== -->
+<header class="hero" id="inicio">
+  <div class="eyebrow">Examen Parcial · Resolución de estudio</div>
+  <h1>Contabilidad de Costos&nbsp;I,<br>resuelta <em>paso a paso</em>.</h1>
+  <p class="lede">Dos casos completos —catering de servicios e industria de mochilas— desarmados pieza por pieza: cada cálculo viene con su razonamiento, su intuición y la teoría que lo sostiene. Pensado para que no solo apruebes, sino que <em>entiendas</em>.</p>
+  <div class="hero-meta">
+    <span class="chip">Curso <b>A1CC1</b></span>
+    <span class="chip">Prof. <b>Gino Vivanco</b></span>
+    <span class="chip">Caso 1 · <b>14 pts</b></span>
+    <span class="chip">Caso 2 · <b>6 pts</b></span>
+    <span class="chip"><b>Verificado</b> con los recursos del curso</span>
+  </div>
+</header>
+
+<!-- ===== CÓMO ESTUDIAR ===== -->
+<section id="como">
+  <div class="sec-tag">Antes de empezar</div>
+  <h2>Cómo está diseñado este material</h2>
+  <p class="lead">Este no es un solucionario que te da el número y se va. Está construido como una <strong>clase particular escrita</strong>: te toma de la mano desde la lectura del enunciado hasta la última cifra del Estado de Resultados.</p>
+
+  <h4>El recorrido de cada caso</h4>
+  <p>Para cada caso seguimos siempre la misma secuencia, porque es la secuencia que querrás repetir en el examen real:</p>
+  <ol>
+    <li><strong>Lectura inteligente</strong> — qué te piden exactamente y qué datos son la clave.</li>
+    <li><strong>Teoría puntual</strong> — solo el marco conceptual que necesitas para ese paso, ni más ni menos.</li>
+    <li><strong>Resolución paso a paso</strong> — cada paso tiene un número, un <em>razonamiento</em> (el porqué) y un <em>cálculo</em> (el cómo).</li>
+    <li><strong>Respuesta consolidada</strong> — la cifra final, lista para escribir en tu hoja.</li>
+  </ol>
+
+  <h4>La leyenda de colores</h4>
+  <p>A lo largo del texto verás recuadros de colores. Cada color es un <em>tipo de ayuda</em> distinto. Apréndete la leyenda: te dirá de un vistazo qué estás leyendo.</p>
+  <div class="mini-legend">
+    <span class="ml"><span class="dot" style="background:var(--gold)"></span><b>Intuición</b> — la idea en lenguaje simple</span>
+    <span class="ml"><span class="dot" style="background:var(--terra)"></span><b>Clave</b> — algo que no puedes olvidar</span>
+    <span class="ml"><span class="dot" style="background:var(--teal)"></span><b>Fórmula</b> — la regla matemática</span>
+    <span class="ml"><span class="dot" style="background:var(--plum)"></span><b>Insight</b> — una conexión más profunda</span>
+    <span class="ml"><span class="dot" style="background:var(--orange)"></span><b>Advertencia</b> — el error que casi todos cometen</span>
+    <span class="ml"><span class="dot" style="background:var(--sage)"></span><b>Tip</b> — un truco práctico de examen</span>
+  </div>
+
+  <div class="call intuicion">
+    <div class="ct">◆ Intuición</div>
+    <p>Cada vez que veas un bloque dividido en dos —<strong>Razonamiento</strong> (morado) y <strong>Cálculo</strong> (la cuenta)— léelo así: primero entiende <em>por qué</em> haces la operación, y solo después mira los números. Si memorizas números sin el porqué, olvidarás todo en el examen. Si entiendes el porqué, podrás reconstruir cualquier número.</p>
+  </div>
+
+  <div class="call tip">
+    <div class="ct">✦ Tip de uso</div>
+    <p>Arriba a la izquierda tienes un interruptor <strong>claro / oscuro</strong>. Está en oscuro por defecto. Los gráficos y diagramas se reajustan solos al cambiar de tema. Usa el índice lateral para saltar entre secciones; las marcadas con ★ son las <em>respuestas</em> que entregarías.</p>
+  </div>
+
+  <div class="call advertencia">
+    <div class="ct">▲ Una nota de honestidad intelectual</div>
+    <p>En contabilidad de costos algunas clasificaciones admiten criterio profesional (por ejemplo, si un accesorio es material directo o indirecto). Cuando eso ocurra, te lo diré con claridad, te explicaré <em>cómo se decide</em> y tomaré la postura mejor fundamentada. Aprender a decidir es más valioso que memorizar una respuesta.</p>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ============================================================
+     CASO 1 — SABORES EJECUTIVOS S.A.C.
+     ============================================================ -->
+<section id="caso1">
+  <div class="case-banner">
+    <div class="knum">CASO 1 · 14 puntos</div>
+    <h2>Sabores Ejecutivos S.A.C.</h2>
+    <div class="firm">Empresa de servicios de catering para eventos corporativos · Mayo 2025</div>
+  </div>
+</section>
+
+<!-- ===== 1.0 LECTURA DEL CASO ===== -->
+<section id="c1-mapa">
+  <div class="sec-tag">Caso 1 · Paso previo</div>
+  <h2>Lectura inteligente del caso</h2>
+  <p class="lead">Antes de tocar la calculadora, hay que entender <em>qué tipo de empresa</em> es, <em>qué nos dan</em> y <em>qué nos piden</em>. El 80&nbsp;% de los errores nace de resolver rápido sin haber leído despacio.</p>
+
+  <h4>¿Qué tipo de empresa es?</h4>
+  <p>Sabores Ejecutivos es una <strong>empresa de servicios</strong> (catering). Esto es decisivo: una empresa de servicios no tiene "Costo de Producción" ni "Costo de Ventas de mercaderías" — tiene un <strong>Costo del Servicio</strong>. Pero, ojo, sí maneja un <strong>inventario de materiales</strong> (los vinos) que va consumiendo a medida que presta el servicio.</p>
+
+  <div class="call clave">
+    <div class="ct">● Clave</div>
+    <p>Una empresa de servicios <strong>sí controla inventarios</strong> cuando usa insumos físicos en el servicio. El catering consume vino, comida y descartables. Esos insumos entran a un <strong>Kardex</strong> igual que la materia prima de una fábrica. Lo aprendiste en el curso con <em>Cold Air Service</em> (PD3), que llevaba kardex de repuestos.</p>
+  </div>
+
+  <h4>El mapa de los tres requerimientos</h4>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th style="width:70px">Req.</th><th>Qué pide exactamente</th><th>Herramienta que usaremos</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1</strong></td><td>Consumo de vinos (unidades y S/), saldo final, y el importe de otros gastos o cuentas por cobrar. Mostrar aparte el detalle del costo de importación del 14.05.</td><td>Costeo de importación + <strong>Kardex PEPS</strong> (inventario permanente)</td></tr>
+        <tr><td><strong>2</strong></td><td>Determinar y detallar el <strong>Costo del Servicio</strong> (en sus 3 elementos) y los gastos administrativos y de ventas.</td><td>Clasificación costo / gasto + prorrateos</td></tr>
+        <tr><td><strong>3</strong></td><td>Elaborar el <strong>Estado de Resultados</strong> de mayo 2025, expresarlo en porcentajes y dar recomendaciones.</td><td>Estructura del EERR de servicios + análisis vertical</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h4>Los datos que son "la columna vertebral"</h4>
+  <ul>
+    <li><strong>Sistema de inventario:</strong> permanente. <strong>Método:</strong> PEPS. — Define cómo armamos el kardex.</li>
+    <li><strong>Movimientos de vino:</strong> inventario inicial, dos compras (una de ellas <em>importada</em>) y tres salidas (dos consumos + una rotura).</li>
+    <li><strong>Tipo de cambio:</strong> S/&nbsp;3.40 por US$&nbsp;1 — para convertir la importación.</li>
+    <li><strong>Ventas del mes:</strong> S/&nbsp;68&nbsp;000 — el punto de partida del Estado de Resultados.</li>
+  </ul>
+
+  <div class="call tip">
+    <div class="ct">✦ Tip de examen</div>
+    <p>Subraya en el enunciado tres cosas con tres marcas distintas: <strong>(a)</strong> el método de valuación, <strong>(b)</strong> cada fecha con movimiento de inventario, y <strong>(c)</strong> los porcentajes de prorrateo (80/20, 70/30). Son los datos que, si los pierdes de vista, te cuestan puntos enteros.</p>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ===== 1.1 TEORÍA INVENTARIO Y PEPS ===== -->
+<section id="c1-teoria-inv">
+  <div class="sec-tag">Caso 1 · Marco teórico</div>
+  <h2>Teoría: sistema permanente y método PEPS</h2>
+  <p class="lead">El requerimiento 1 dice dos cosas técnicas: <em>"sistema de inventario permanente"</em> y <em>"método PEPS"</em>. No son sinónimos — son dos decisiones distintas. Entiende la diferencia y el kardex se vuelve fácil.</p>
+
+  <h3>Dos preguntas independientes</h3>
+  <div class="rc">
+    <div class="rc-box rc-razon">
+      <div class="rc-h">▸ Sistema = ¿CADA CUÁNTO mido?</div>
+      <p><strong>Permanente (perpetuo):</strong> llevo un registro continuo. Después de <em>cada</em> movimiento sé exactamente cuántas unidades tengo y cuánto valen. Es el Kardex valorizado.</p>
+      <p><strong>Periódico:</strong> solo cuento físicamente al final del periodo y deduzco el consumo por diferencia.</p>
+    </div>
+    <div class="rc-box rc-calc">
+      <div class="rc-h">▸ Método = ¿A QUÉ PRECIO valoro lo que sale?</div>
+      <span class="mono"><strong>PEPS</strong> — Primeras Entradas,<br>Primeras Salidas. Lo que<br>entró primero, sale primero.<br><br><strong>Promedio</strong> — recalculo un<br>costo unitario promedio<br>después de cada compra.</span>
+    </div>
+  </div>
+
+  <div class="call insight">
+    <div class="ct">✸ Insight</div>
+    <p>Son ejes <strong>independientes</strong>: puedes combinar permanente+PEPS, permanente+promedio, periódico+PEPS o periódico+promedio. El caso nos pide <strong>permanente + PEPS</strong>. Así que llevaremos un kardex completo y, cada vez que algo salga, lo valoramos al costo de las unidades <em>más antiguas</em> que aún tengamos.</p>
+  </div>
+
+  <h3>La intuición de PEPS</h3>
+  <div class="call intuicion">
+    <div class="ct">◆ Intuición</div>
+    <p>Piensa en la góndola de leche del supermercado: el reponedor pone los envases nuevos <em>atrás</em> y deja adelante los viejos, para que se vendan primero y no se venzan. Eso es PEPS. Las <strong>salidas</strong> se cuestan con los precios de las <em>primeras</em> compras (las viejas); por lo tanto, lo que <strong>queda en el inventario final</strong> son siempre las compras <em>más recientes</em>.</p>
+  </div>
+
+  <p>El curso lo define así (PPT3, "Métodos de Valuación"): bajo PEPS los consumos se valúan a los valores de compra de las primeras entradas hasta agotarlas, y el inventario final queda valuado a las últimas adquisiciones. Esa es exactamente la lógica que aplicaremos.</p>
+
+  <h3>¿Qué entra al costo del material?</h3>
+  <p>Cuando registramos una compra en el Kardex, ¿a qué valor la ingresamos? No solo al precio de lista. La <strong>NIC 2</strong> (citada en PPT3) dice que el <strong>costo de adquisición</strong> comprende:</p>
+  <div class="fbox">
+    \[ \text{Costo de adquisición} = \text{Precio de compra} + \text{Fletes} + \text{Seguros} + \text{Derechos de importación no recuperables} + \text{otros gastos hasta el almacén} \]
+  </div>
+  <div class="call clave">
+    <div class="ct">● Clave</div>
+    <p>Todo desembolso necesario para dejar el material <strong>listo y en el almacén</strong> forma parte de su costo. Por eso, cuando el 06.05 se compran 24 botellas y se paga flete, el flete <strong>se suma</strong> al costo de esas botellas. Y por eso la importación del 14.05 tendrá un costo mucho mayor que el precio de la mercadería sola: hay que añadir flete, seguro, aranceles, ISC y gastos logísticos.</p>
+  </div>
+  <div class="call advertencia">
+    <div class="ct">▲ Advertencia</div>
+    <p>Los <strong>descuentos comerciales</strong> se <em>restan</em> del costo (NIC 2). No los confundas con un gasto. Si un proveedor te da 10&nbsp;% de descuento, el costo de adquisición baja — el descuento nunca va al Estado de Resultados como ingreso.</p>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ===== 1.2 COSTEO DE LA IMPORTACIÓN ===== -->
+<section id="c1-import">
+  <div class="sec-tag">Caso 1 · Requerimiento 1 — Parte A</div>
+  <h2>Costeo de la importación del 14.05</h2>
+  <p class="lead">El 14.05 llegan 36 botellas importadas desde Chile. El examen pide <em>"mostrar por separado el detalle del costo de la importación"</em>. Este es el cálculo más técnico del caso — lo haremos en 8 pasos, y cada paso responde a una pregunta: <strong>¿este desembolso encarece la botella, o lo voy a recuperar?</strong></p>
+
+  <div class="call clave">
+    <div class="ct">● La regla que gobierna todo este cálculo</div>
+    <p>En una importación, el dinero que sale se divide en dos familias:</p>
+    <p><strong>① Lo que NO se recupera</strong> → es <span class="tag-c tag-costo">COSTO</span> → encarece la botella y entra al Kardex.</p>
+    <p><strong>② Lo que SÍ se recupera</strong> → NO es costo → es un <span class="tag-c tag-cxc">crédito / cuenta por cobrar</span> contra el fisco.</p>
+    <p>Memoriza esa frase: <em>"lo que no se recupera, es costo; lo que se recupera, es cuenta por cobrar"</em>. Con ella resuelves cualquier importación.</p>
+  </div>
+
+  <!-- PASO 1 -->
+  <div class="step">
+    <div class="step-n">1</div>
+    <div class="step-h"><div class="st-k">Punto de partida</div>
+    <div class="st-t">Leer el INCOTERM y convertir a soles</div></div>
+  </div>
+  <p>El enunciado da un <strong>valor CFR de US$&nbsp;360</strong> y un <strong>seguro de US$&nbsp;90</strong>. La palabra <span class="pin">CFR</span> es un INCOTERM y es la primera pista que hay que decodificar.</p>
+  <div class="rc">
+    <div class="rc-box rc-razon">
+      <div class="rc-h">▸ Razonamiento</div>
+      <p><strong>CFR</strong> = "Cost and Freight" (Costo y Flete). Significa que el precio de US$&nbsp;360 <em>ya incluye</em> la mercadería + el flete internacional hasta el puerto del Callao. Lo que <strong>NO incluye</strong> es el seguro.</p>
+      <p>El INCOTERM es como decir "hasta aquí pagó el vendedor". CFR = el vendedor pagó hasta poner la carga en el barco y costear el flete; el seguro corre por cuenta del comprador.</p>
+      <p>Primero llevamos todo a soles con el tipo de cambio S/&nbsp;3.40.</p>
+    </div>
+    <div class="rc-box rc-calc">
+      <div class="rc-h">▸ Cálculo</div>
+      <span class="mono">CFR    = US$ 360 <span class="op">×</span> 3.40<br>       = <span class="res">S/ 1 224.00</span><br><br>Seguro = US$ 90 <span class="op">×</span> 3.40<br>       = <span class="res">S/ 306.00</span></span>
+    </div>
+  </div>
+  <div class="call intuicion">
+    <div class="ct">◆ Intuición</div>
+    <p>El INCOTERM te dice qué piezas del rompecabezas ya están sobre la mesa y cuáles tienes que poner tú. Con CFR ya tienes "costo + flete"; te falta agregar el seguro para completar el valor CIF. Si el enunciado hubiera dicho <em>FOB</em>, te faltarían flete <em>y</em> seguro; si dijera <em>CIF</em>, no te faltaría nada.</p>
+  </div>
+
+  <!-- PASO 2 -->
+  <div class="step">
+    <div class="step-n">2</div>
+    <div class="step-h"><div class="st-k">La base de todo</div>
+    <div class="st-t">Construir el valor CIF en aduanas</div></div>
+  </div>
+  <div class="rc">
+    <div class="rc-box rc-razon">
+      <div class="rc-h">▸ Razonamiento</div>
+      <p>El <strong>valor CIF</strong> (Cost + Insurance + Freight) es el valor de la mercadería "puesta en la aduana peruana". Es el número más importante del costeo, porque es la <strong>base imponible</strong> sobre la que el Estado calcula los impuestos.</p>
+      <p>El curso (PPT4) lo dice textualmente: la base imponible está constituida por el valor CIF, que incluye FOB&nbsp;+&nbsp;Flete&nbsp;+&nbsp;Seguro.</p>
+      <p>Como el CFR ya trae costo + flete, solo le sumamos el seguro.</p>
+    </div>
+    <div class="rc-box rc-calc">
+      <div class="rc-h">▸ Cálculo</div>
+      <span class="mono">CIF = CFR <span class="op">+</span> Seguro<br>CIF = 1 224.00 <span class="op">+</span> 306.00<br>CIF = <span class="res">S/ 1 530.00</span></span>
+    </div>
+  </div>
+  <div class="call clave">
+    <div class="ct">● Clave</div>
+    <p>El valor CIF (S/&nbsp;1&nbsp;530.00) cumple dos papeles a la vez: <strong>(1)</strong> es la base para calcular Ad Valorem, ISC e IGV; y <strong>(2)</strong> es la primera pieza del costo de la mercadería. La mercadería en sí <em>sí</em> es costo — nadie te devuelve lo que pagaste por el vino y su transporte.</p>
+  </div>
+
+  <!-- PASO 3 -->
+  <div class="step">
+    <div class="step-n">3</div>
+    <div class="step-h"><div class="st-k">Primer impuesto</div>
+    <div class="st-t">Ad Valorem · 6 % &nbsp;<span class="tag-c tag-costo">es costo</span></div></div>
+  </div>
+  <div class="rc">
+    <div class="rc-box rc-razon">
+      <div class="rc-h">▸ Razonamiento</div>
+      <p>El <strong>Ad Valorem</strong> es el arancel de aduana. "Ad valorem" significa, en latín, <em>"según el valor"</em>: es un porcentaje sobre el valor de lo que importas.</p>
+      <p>Su base es el <strong>valor CIF</strong>. El curso es explícito: el Ad Valorem <em>"es considerado como parte del costo de la mercancía"</em>.</p>
+      <p>¿Por qué es costo? Porque <strong>no se recupera</strong>: no genera crédito fiscal. El dinero se va y no vuelve → encarece la botella.</p>
+    </div>
+    <div class="rc-box rc-calc">
+      <div class="rc-h">▸ Cálculo</div>
+      <span class="mono">Base = valor CIF<br>Ad Val. = 6% <span class="op">×</span> 1 530.00<br>Ad Val. = <span class="res">S/ 91.80</span></span>
+    </div>
+  </div>
+
+  <!-- PASO 4 -->
+  <div class="step">
+    <div class="step-n">4</div>
+    <div class="step-h"><div class="st-k">Segundo impuesto</div>
+    <div class="st-t">ISC · 20 % &nbsp;<span class="tag-c tag-costo">es costo</span></div></div>
+  </div>
+  <div class="rc">
+    <div class="rc-box rc-razon">
+      <div class="rc-h">▸ Razonamiento</div>
+      <p>El <strong>ISC</strong> (Impuesto Selectivo al Consumo) grava productos "suntuosos" o de consumo específico: cigarrillos, combustibles, vehículos y <strong>bebidas alcohólicas</strong>. El vino es un licor → está afecto al ISC.</p>
+      <p>Atención a la base: el ISC <strong>no</strong> se calcula sobre el CIF solo. El curso dice que se aplica <em>"al valor CIF más el ad valorem"</em>. Es un impuesto que se monta <strong>sobre el escalón anterior</strong>.</p>
+      <p>Igual que el Ad Valorem, el ISC <em>"no genera ningún crédito fiscal... formará parte del costo del bien"</em>.</p>
+    </div>
+    <div class="rc-box rc-calc">
+      <div class="rc-h">▸ Cálculo</div>
+      <span class="mono">Base = CIF <span class="op">+</span> Ad Valorem<br>Base = 1 530.00 <span class="op">+</span> 91.80<br>Base = 1 621.80<br><br>ISC = 20% <span class="op">×</span> 1 621.80<br>ISC = <span class="res">S/ 324.36</span></span>
+    </div>
+  </div>
+  <div class="call insight">
+    <div class="ct">✸ Insight — el efecto "cascada"</div>
+    <p>Fíjate en el patrón: el Ad Valorem se calcula sobre el CIF; el ISC se calcula sobre el CIF <em>ya inflado con el Ad Valorem</em>. Los impuestos de importación se apilan como una escalera: cada escalón nuevo se para sobre la suma de los anteriores. Esto se llama <strong>efecto cascada</strong>, y es la razón de que un producto importado termine costando bastante más que su precio de origen.</p>
+  </div>
+
+  <!-- PASO 5 -->
+  <div class="step">
+    <div class="step-n">5</div>
+    <div class="step-h"><div class="st-k">Tercer impuesto</div>
+    <div class="st-t">IGV · 18 % &nbsp;<span class="tag-c tag-no">NO es costo</span></div></div>
+  </div>
+  <div class="rc">
+    <div class="rc-box rc-razon">
+      <div class="rc-h">▸ Razonamiento</div>
+      <p>El <strong>IGV</strong> de la importación se calcula sobre <strong>CIF + Ad Valorem + ISC</strong>. Su tasa es 18&nbsp;% (16&nbsp;% de IGV propiamente + 2&nbsp;% de Impuesto de Promoción Municipal).</p>
+      <p>Aquí cambia la historia: el IGV <strong>NO es costo</strong>. El curso lo subraya: el IGV de las compras <em>"da derecho a la deducción"</em> — es <strong>crédito fiscal</strong>.</p>
+      <p>Lo calculamos igual, porque lo necesitamos como base para la percepción, pero <strong>no entrará al costo de la botella</strong>.</p>
+    </div>
+    <div class="rc-box rc-calc">
+      <div class="rc-h">▸ Cálculo</div>
+      <span class="mono">Base = CIF+AdVal.+ISC<br>Base = 1 530.00+91.80+324.36<br>Base = 1 946.16<br><br>IGV = 18% <span class="op">×</span> 1 946.16<br>IGV = <span class="res">S/ 350.31</span><br><span class="op">(crédito fiscal, no costo)</span></span>
+    </div>
+  </div>
+  <div class="call intuicion">
+    <div class="ct">◆ Intuición — ¿por qué el IGV no encarece?</div>
+    <p>Imagina el IGV como un "depósito reembolsable". Cuando importas, pagas IGV; pero cuando vendes tu servicio y le cobras IGV a tu cliente, le restas al fisco el IGV que ya pagaste. Es un dinero que <em>entra y sale</em>: lo adelantas y luego se compensa. Como vuelve, <strong>no encarece la botella</strong> → no es costo. Va a una cuenta de activo: "IGV — crédito fiscal".</p>
+  </div>
+
+  <!-- PASO 6 -->
+  <div class="step">
+    <div class="step-n">6</div>
+    <div class="step-h"><div class="st-k">Cuarto desembolso al fisco</div>
+    <div class="st-t">Percepción del IGV · 3.5 % &nbsp;<span class="tag-c tag-cxc">cuenta por cobrar</span></div></div>
+  </div>
+  <div class="rc">
+    <div class="rc-box rc-razon">
+      <div class="rc-h">▸ Razonamiento</div>
+      <p>La <strong>percepción</strong> es un <em>pago adelantado del IGV</em> de tus futuras ventas. La SUNAT te cobra hoy un porcentaje extra "a cuenta".</p>
+      <p>Su base, según el curso, es el <strong>"importe de la operación" = valor CIF + todos los tributos que graven la importación</strong>. Es decir: CIF + Ad Valorem + ISC + IGV.</p>
+      <p>Como es un adelanto de impuesto que <strong>luego se recupera</strong>, tampoco es costo. Es una <strong>cuenta por cobrar al fisco</strong>.</p>
+    </div>
+    <div class="rc-box rc-calc">
+      <div class="rc-h">▸ Cálculo</div>
+      <span class="mono">Importe operación =<br> CIF+AdVal.+ISC+IGV<br> =1 530+91.80+324.36+350.31<br> = 2 296.47<br><br>Percep. = 3.5% <span class="op">×</span> 2 296.47<br>Percep. = <span class="res">S/ 80.38</span><br><span class="op">(cuenta por cobrar)</span></span>
+    </div>
+  </div>
+  <div class="call advertencia">
+    <div class="ct">▲ Advertencia — el error de meter IGV y percepción al costo</div>
+    <p>Es tentador sumar <em>todo</em> lo que pagaste y llamarlo "costo de importación". <strong>No lo hagas.</strong> El IGV (S/&nbsp;350.31) y la percepción (S/&nbsp;80.38) se recuperan; si los metes al costo, inflarías el costo unitario de la botella y todos los cálculos siguientes saldrían mal. Quédate con la regla: <em>se recupera → no es costo</em>.</p>
+  </div>
+
+  <!-- PASO 7 -->
+  <div class="step">
+    <div class="step-n">7</div>
+    <div class="step-h"><div class="st-k">Gastos en territorio nacional</div>
+    <div class="st-t">Operador logístico y transporte &nbsp;<span class="tag-c tag-costo">son costo</span></div></div>
+  </div>
+  <div class="rc">
+    <div class="rc-box rc-razon">
+      <div class="rc-h">▸ Razonamiento</div>
+      <p>Pagar el <strong>operador logístico</strong> (S/&nbsp;920) y el <strong>transporte del puerto al almacén</strong> (S/&nbsp;420) son desembolsos necesarios para que la botella llegue <em>físicamente lista</em> al almacén de la empresa.</p>
+      <p>La NIC 2 (PPT3) incluye en el costo de adquisición los <em>"fletes, seguros y otros gastos incurridos en el país hasta el ingreso de los bienes en los almacenes"</em>.</p>
+      <p>No se recuperan → <strong>son costo</strong>.</p>
+    </div>
+    <div class="rc-box rc-calc">
+      <div class="rc-h">▸ Cálculo</div>
+      <span class="mono">Operador logístico = <span class="res">S/ 920.00</span><br>Transporte interno = <span class="res">S/ 420.00</span><br><br><span class="op">Ambos entran al costo</span></span>
+    </div>
+  </div>
+
+  <!-- PASO 8 -->
+  <div class="step">
+    <div class="step-n">8</div>
+    <div class="step-h"><div class="st-k">Cierre del cálculo</div>
+    <div class="st-t">Sumar el costo total y obtener el costo unitario</div></div>
+  </div>
+  <div class="rc">
+    <div class="rc-box rc-razon">
+      <div class="rc-h">▸ Razonamiento</div>
+      <p>El costo de la importación es la suma de <strong>todo lo que NO se recupera</strong>: el valor CIF (mercadería + flete + seguro) más los dos impuestos-costo (Ad Valorem e ISC) más los dos gastos nacionales (operador y transporte).</p>
+      <p>Dividido entre las 36 botellas, obtenemos el costo unitario que usaremos en el Kardex.</p>
+    </div>
+    <div class="rc-box rc-calc">
+      <div class="rc-h">▸ Cálculo</div>
+      <span class="mono">Costo = CIF + AdVal. + ISC<br>      + Operador + Transp.<br>= 1 530 + 91.80 + 324.36<br>      + 920 + 420<br>= <span class="res">S/ 3 286.16</span><br><br>C. unitario = 3 286.16 / 36<br>= <span class="res">S/ 91.2822</span></span>
+    </div>
+  </div>
+
+  <h3>Detalle del costo de importación (como lo pide el examen)</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Concepto</th><th class="num">Importe S/</th><th>¿Es costo?</th></tr></thead>
+      <tbody>
+        <tr><td>Valor CFR (US$ 360 × 3.40)</td><td class="num">1 224.00</td><td><span class="tag-c tag-costo">Costo</span></td></tr>
+        <tr><td>Seguro internacional (US$ 90 × 3.40)</td><td class="num">306.00</td><td><span class="tag-c tag-costo">Costo</span></td></tr>
+        <tr class="row-sub"><td>= Valor CIF en aduanas</td><td class="num">1 530.00</td><td></td></tr>
+        <tr><td>Ad Valorem (6 % × CIF)</td><td class="num">91.80</td><td><span class="tag-c tag-costo">Costo</span></td></tr>
+        <tr><td>ISC (20 % × [CIF + Ad Valorem])</td><td class="num">324.36</td><td><span class="tag-c tag-costo">Costo</span></td></tr>
+        <tr><td>Servicios del operador logístico</td><td class="num">920.00</td><td><span class="tag-c tag-costo">Costo</span></td></tr>
+        <tr><td>Transporte del puerto al almacén</td><td class="num">420.00</td><td><span class="tag-c tag-costo">Costo</span></td></tr>
+        <tr class="row-total"><td>COSTO DE IMPORTACIÓN (36 botellas)</td><td class="num">3 286.16</td><td></td></tr>
+        <tr class="row-total"><td>Costo unitario de importación (÷ 36)</td><td class="num">91.2822</td><td></td></tr>
+        <tr><td>IGV (18 % × [CIF + Ad Valorem + ISC])</td><td class="num">350.31</td><td><span class="tag-c tag-no">No es costo</span></td></tr>
+        <tr><td>Percepción del IGV (3.5 % × importe de operación)</td><td class="num">80.38</td><td><span class="tag-c tag-cxc">Cta. x cobrar</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="call advertencia">
+    <div class="ct">▲ Nota técnica sobre los decimales</div>
+    <p>El costo unitario exacto es S/&nbsp;3&nbsp;286.16&nbsp;÷&nbsp;36&nbsp;=&nbsp;<strong>S/&nbsp;91.2822</strong>. El examen pide "al menos dos decimales": usaremos <strong>cuatro decimales</strong> en el Kardex precisamente para que las salidas y el saldo cuadren al céntimo con el total de S/&nbsp;3&nbsp;286.16. Si redondearas a S/&nbsp;91.28, aparecerían diferencias de centavos. Más decimales = kardex que cuadra perfecto.</p>
+  </div>
+
+  <div class="chart-card">
+    <div class="ch-t">Composición del costo de importación</div>
+    <div class="ch-s">De dónde viene cada sol del costo de S/ 3 286.16 — observa el peso de la mercadería (CIF) frente a los impuestos.</div>
+    <div class="chart-box"><canvas id="chImport"></canvas></div>
+  </div>
+
+  <div class="call insight">
+    <div class="ct">✸ Insight para reconocerlo en el examen</div>
+    <p>¿Cómo sabes, frente a cualquier impuesto, si va al costo o no? Pregúntate una sola cosa: <strong>¿genera crédito fiscal?</strong> Si la respuesta es no (Ad Valorem, ISC, derechos antidumping) → costo. Si la respuesta es sí (IGV) → crédito, no costo. La percepción es un caso especial: es un <em>adelanto</em> de un impuesto que sí da crédito, así que también se recupera → cuenta por cobrar.</p>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ===== 1.3 KARDEX PEPS ===== -->
+<section id="c1-kardex">
+  <div class="sec-tag">Caso 1 · Requerimiento 1 — Parte B</div>
+  <h2>El Kardex PEPS, movimiento por movimiento</h2>
+  <p class="lead">Ya conocemos el costo unitario de cada lote de vino. Ahora construimos el Kardex: una bitácora que registra cada entrada, cada salida y el saldo que queda después. Lo haremos un movimiento a la vez, explicando la lógica PEPS en cada uno.</p>
+
+  <h3>Los costos unitarios de cada lote</h3>
+  <p>Antes de empezar, ordenemos los tres "lotes" de vino que la empresa tendrá durante el mes, cada uno con su propio costo unitario:</p>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Lote</th><th>Origen</th><th class="num">Cant.</th><th class="num">Costo total S/</th><th class="num">C. unitario S/</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Lote A</strong></td><td>Inventario inicial (01.05)</td><td class="num">18</td><td class="num">1 044.00</td><td class="num">58.0000</td></tr>
+        <tr><td><strong>Lote B</strong></td><td>Compra local 06.05 (24 × 56 + flete 168)</td><td class="num">24</td><td class="num">1 512.00</td><td class="num">63.0000</td></tr>
+        <tr><td><strong>Lote C</strong></td><td>Importación 14.05</td><td class="num">36</td><td class="num">3 286.16</td><td class="num">91.2822</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="call clave">
+    <div class="ct">● Clave — el flete del 06.05</div>
+    <p>La compra del 06.05 fue de 24 botellas a S/&nbsp;56 (= S/&nbsp;1&nbsp;344) más un flete de S/&nbsp;168. El flete <strong>se suma</strong> al costo (NIC 2). Por eso el lote B no cuesta S/&nbsp;56 la botella, sino <strong>S/&nbsp;63.00</strong> (1&nbsp;512&nbsp;÷&nbsp;24). Quien no sume el flete arrastra un error por todo el kardex.</p>
+  </div>
+
+  <h3>El recorrido del mes, paso a paso</h3>
+
+  <div class="step">
+    <div class="step-n">1</div>
+    <div class="step-h"><div class="st-k">01.05</div><div class="st-t">Inventario inicial</div></div>
+  </div>
+  <p><strong>Razonamiento.</strong> El mes arranca con un saldo de arrastre: 18 botellas valuadas a S/&nbsp;58.00. No es una compra, es lo que ya estaba. Se anota directamente en la columna de <em>Saldo</em>.</p>
+  <p class="mono" style="color:var(--ink-soft);font-size:.86rem">Saldo → 18 × 58.00 = S/ 1 044.00</p>
+
+  <div class="step">
+    <div class="step-n">2</div>
+    <div class="step-h"><div class="st-k">06.05</div><div class="st-t">Compra local de 24 botellas</div></div>
+  </div>
+  <p><strong>Razonamiento.</strong> Entran 24 botellas del lote B (S/&nbsp;63.00 c/u). Bajo PEPS, los lotes <em>no se mezclan</em>: el saldo ahora tiene <strong>dos capas</strong> apiladas — primero las 18 viejas a S/&nbsp;58, encima las 24 nuevas a S/&nbsp;63. Es como apilar cajas: la primera que entró queda abajo y saldrá primero.</p>
+  <p class="mono" style="color:var(--ink-soft);font-size:.86rem">Entrada → 24 × 63.00 = S/ 1 512.00 &nbsp;|&nbsp; Saldo → 18@58 + 24@63 = S/ 2 556.00</p>
+
+  <div class="step">
+    <div class="step-n">3</div>
+    <div class="step-h"><div class="st-k">10.05</div><div class="st-t">Consumo en evento: 28 botellas</div></div>
+  </div>
+  <div class="rc">
+    <div class="rc-box rc-razon">
+      <div class="rc-h">▸ Razonamiento PEPS</div>
+      <p>Salen 28 botellas para un evento. PEPS manda: <strong>primero las más antiguas</strong>.</p>
+      <p>Tomamos las 18 del lote A (a S/&nbsp;58) — se agota. Faltan 10, que salen del lote B (a S/&nbsp;63).</p>
+      <p>Nota importante: el lote C (importación) <strong>aún no existe</strong> el 10.05 — llega recién el 14.05. No puedes consumir lo que todavía no tienes.</p>
+    </div>
+    <div class="rc-box rc-calc">
+      <div class="rc-h">▸ Cálculo</div>
+      <span class="mono">18 × 58.00 = 1 044.00<br>10 × 63.00 =   630.00<br><span class="op">─────────────────</span><br>Salida = <span class="res">S/ 1 674.00</span><br><br>Saldo → 14 × 63.00<br>      = S/ 882.00</span>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">4</div>
+    <div class="step-h"><div class="st-k">14.05</div><div class="st-t">Llega la importación: 36 botellas</div></div>
+  </div>
+  <p><strong>Razonamiento.</strong> Ingresa el lote C: 36 botellas a S/&nbsp;91.2822 (el costo que calculamos en los 8 pasos anteriores). Se apila como una tercera capa. El saldo vuelve a tener dos capas: las 14 que sobraban a S/&nbsp;63 y las 36 nuevas a S/&nbsp;91.2822.</p>
+  <p class="mono" style="color:var(--ink-soft);font-size:.86rem">Entrada → 36 × 91.2822 = S/ 3 286.16 &nbsp;|&nbsp; Saldo → 14@63 + 36@91.2822 = S/ 4 168.16</p>
+
+  <div class="step">
+    <div class="step-n">5</div>
+    <div class="step-h"><div class="st-k">20.05</div><div class="st-t">Consumo en evento: 26 botellas</div></div>
+  </div>
+  <div class="rc">
+    <div class="rc-box rc-razon">
+      <div class="rc-h">▸ Razonamiento PEPS</div>
+      <p>Salen 26 botellas. Las más antiguas disponibles son las 14 del lote B (S/&nbsp;63) — se agotan. Faltan 12, que salen del lote C (S/&nbsp;91.2822).</p>
+      <p>El lote A ya no existe (se agotó el 10.05). Tras esta salida, el lote B también desaparece: solo quedará vino importado.</p>
+    </div>
+    <div class="rc-box rc-calc">
+      <div class="rc-h">▸ Cálculo</div>
+      <span class="mono">14 × 63.0000 =   882.00<br>12 × 91.2822 = 1 095.39<br><span class="op">─────────────────</span><br>Salida = <span class="res">S/ 1 977.39</span><br><br>Saldo → 24 × 91.2822<br>      = S/ 2 190.77</span>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">6</div>
+    <div class="step-h"><div class="st-k">30.05</div><div class="st-t">Rotura de 4 botellas durante el inventario físico</div></div>
+  </div>
+  <div class="rc">
+    <div class="rc-box rc-razon">
+      <div class="rc-h">▸ Razonamiento</div>
+      <p>Al hacer el conteo físico se rompen 4 botellas "por mal manipuleo". Físicamente <strong>salen del almacén</strong> — ya no se pueden usar.</p>
+      <p>Las 4 botellas se valoran al costo de lo que queda en stock: el lote C, a S/&nbsp;91.2822 (no quedaba otra cosa).</p>
+      <p>El <em>tratamiento contable</em> de esta salida —si es gasto o cuenta por cobrar— lo decidimos en la sección siguiente. Pero en el Kardex, la cantidad sale igual.</p>
+    </div>
+    <div class="rc-box rc-calc">
+      <div class="rc-h">▸ Cálculo</div>
+      <span class="mono">Rotura → 4 × 91.2822<br>       = <span class="res">S/ 365.13</span><br><br>Saldo final → 20 × 91.2822<br>            = S/ 1 825.64</span>
+    </div>
+  </div>
+
+  <h3>El Kardex completo</h3>
+  <div class="tbl-wrap">
+    <table class="kardex">
+      <thead>
+        <tr>
+          <th rowspan="2">Fecha</th><th rowspan="2" style="text-align:left">Detalle</th>
+          <th colspan="3" class="grp-e">Entradas</th>
+          <th colspan="3" class="grp-s">Salidas</th>
+          <th colspan="3" class="grp-b">Saldo</th>
+        </tr>
+        <tr>
+          <th class="grp-e">Cant.</th><th class="grp-e">C.U.</th><th class="grp-e">Total</th>
+          <th class="grp-s">Cant.</th><th class="grp-s">C.U.</th><th class="grp-s">Total</th>
+          <th class="grp-b">Cant.</th><th class="grp-b">C.U.</th><th class="grp-b">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>01.05</td><td class="lbl">Inventario inicial</td>
+          <td>—</td><td>—</td><td>—</td>
+          <td>—</td><td>—</td><td>—</td>
+          <td>18</td><td>58.0000</td><td>1 044.00</td>
+        </tr>
+        <tr>
+          <td>06.05</td><td class="lbl">Compra local (incl. flete)</td>
+          <td>24</td><td>63.0000</td><td>1 512.00</td>
+          <td>—</td><td>—</td><td>—</td>
+          <td><span class="layer">18</span><span class="layer">24</span></td>
+          <td><span class="layer">58.0000</span><span class="layer">63.0000</span></td>
+          <td><span class="layer">1 044.00</span><span class="layer">1 512.00</span></td>
+        </tr>
+        <tr>
+          <td>10.05</td><td class="lbl">Consumo en evento</td>
+          <td>—</td><td>—</td><td>—</td>
+          <td><span class="layer">18</span><span class="layer">10</span></td>
+          <td><span class="layer">58.0000</span><span class="layer">63.0000</span></td>
+          <td><span class="layer">1 044.00</span><span class="layer">630.00</span><span class="layer hl">1 674.00</span></td>
+          <td>14</td><td>63.0000</td><td>882.00</td>
+        </tr>
+        <tr>
+          <td>14.05</td><td class="lbl">Importación (lote C)</td>
+          <td>36</td><td>91.2822</td><td>3 286.16</td>
+          <td>—</td><td>—</td><td>—</td>
+          <td><span class="layer">14</span><span class="layer">36</span></td>
+          <td><span class="layer">63.0000</span><span class="layer">91.2822</span></td>
+          <td><span class="layer">882.00</span><span class="layer">3 286.16</span></td>
+        </tr>
+        <tr>
+          <td>20.05</td><td class="lbl">Consumo en evento</td>
+          <td>—</td><td>—</td><td>—</td>
+          <td><span class="layer">14</span><span class="layer">12</span></td>
+          <td><span class="layer">63.0000</span><span class="layer">91.2822</span></td>
+          <td><span class="layer">882.00</span><span class="layer">1 095.39</span><span class="layer hl">1 977.39</span></td>
+          <td>24</td><td>91.2822</td><td>2 190.77</td>
+        </tr>
+        <tr>
+          <td>30.05</td><td class="lbl">Rotura por mal manipuleo</td>
+          <td>—</td><td>—</td><td>—</td>
+          <td>4</td><td>91.2822</td><td>365.13</td>
+          <td>20</td><td>91.2822</td><td>1 825.64</td>
+        </tr>
+        <tr class="k-total">
+          <td colspan="2">TOTALES</td>
+          <td>78</td><td>—</td><td>5 842.16</td>
+          <td>58</td><td>—</td><td>4 016.52</td>
+          <td>20</td><td>—</td><td>1 825.64</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="call formula">
+    <div class="ct">▣ Comprobación — el kardex siempre debe cuadrar</div>
+    <p>\[ \text{Entradas} = \text{Salidas} + \text{Saldo final} \]</p>
+    <p class="mono" style="font-size:.88rem;color:var(--ink)">S/ 5 842.16 = S/ 4 016.52 + S/ 1 825.64 &nbsp;✓</p>
+    <p>Si esta igualdad no se cumple, hay un error en algún movimiento. Es tu red de seguridad: hazla siempre antes de pasar al siguiente requerimiento.</p>
+  </div>
+
+  <div class="call tip">
+    <div class="ct">✦ Tip — separa el consumo de la rotura</div>
+    <p>De las 58 botellas que salieron, <strong>54 se consumieron en eventos</strong> (28 + 26) y <strong>4 se rompieron</strong>. No las mezcles: las 54 consumidas son <em>costo del servicio</em>; las 4 rotas tienen otro destino (lo vemos enseguida). El examen pide el "consumo de vinos" — eso son las 54, no las 58.</p>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ===== 1.4 LAS BOTELLAS ROTAS ===== -->
+<section id="c1-rotura">
+  <div class="sec-tag">Caso 1 · Decisión contable</div>
+  <h2>Las 4 botellas rotas: ¿gasto o cuenta por cobrar?</h2>
+  <p class="lead">El examen pregunta, literalmente, por <em>"el importe de otros gastos u otras cuentas por cobrar"</em>. Esa "o" es una invitación a tomar una decisión contable. Vamos a tomarla bien y, sobre todo, a entender el criterio — porque es justo el tipo de pregunta con la que un profesor distingue quién entendió de quién memorizó.</p>
+
+  <h3>Las tres salidas posibles para una pérdida de inventario</h3>
+  <p>Cuando desaparecen unidades del almacén, el costo de esas unidades puede ir a <strong>tres destinos</strong> distintos. Elegir bien depende de <em>por qué</em> desaparecieron:</p>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Situación</th><th>¿Por qué pasó?</th><th>Destino contable</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Merma normal</strong></td><td>Pérdida inherente y esperada del proceso (evaporación, mermas técnicas).</td><td>Va al <span class="tag-c tag-costo">costo</span> (CIF / costo del servicio)</td></tr>
+        <tr><td><strong>Pérdida anormal</strong></td><td>Hecho extraordinario, evitable, no esperado (accidente, descuido, mal manejo) y <em>sin</em> responsable a quien cobrar.</td><td>Va a <span class="tag-c tag-gasto">otros gastos</span> del periodo</td></tr>
+        <tr><td><strong>Faltante con responsable</strong></td><td>Hay una persona identificada y una política de que ella asume la pérdida.</td><td>Va a <span class="tag-c tag-cxc">cuenta por cobrar</span> (al trabajador o al seguro)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>¿En cuál encaja nuestro caso?</h3>
+  <div class="rc">
+    <div class="rc-box rc-razon">
+      <div class="rc-h">▸ Analizando el enunciado</div>
+      <p>El enunciado dice: <em>"se rompieron 4 botellas por mal manipuleo"</em> mientras se hacía el inventario físico.</p>
+      <p><strong>¿Es merma normal?</strong> No. Romper botellas no es algo "inherente y esperado" de guardar vino. Es un accidente evitable.</p>
+      <p><strong>¿Hay un responsable a quien cobrar?</strong> El enunciado <strong>no</strong> menciona ninguna política de cobro a un trabajador, ni un seguro, ni nombra a un responsable que deba reponer.</p>
+      <p>Conclusión: es una <strong>pérdida anormal sin responsable asignado</strong> → va a <strong>OTROS GASTOS</strong>.</p>
+    </div>
+    <div class="rc-box rc-calc">
+      <div class="rc-h">▸ El importe</div>
+      <span class="mono">4 botellas rotas (lote C)<br>4 × 91.2822<br>= <span class="res">S/ 365.13</span><br><br>Destino:<br><span class="res">Otros gastos</span><br>(pérdida por rotura<br> de existencias)</span>
+    </div>
+  </div>
+
+  <div class="call insight">
+    <div class="ct">✸ Insight — el contraste que lo aclara todo</div>
+    <p>Compáralo con un caso que viste en clase, <strong>Textil Unión (PD3, Caso 2)</strong>. Ahí se malograba material y el enunciado decía expresamente: <em>"es política de la empresa que si hay algún faltante lo debe asumir el responsable del almacén, a través de descuento de salario"</em>. Con esa frase, el faltante se convertía en <strong>cuenta por cobrar</strong> al trabajador.</p>
+    <p>En nuestro examen <strong>esa frase no existe</strong>. No hay política de cobro ni responsable señalado. Por eso —y solo por eso— la rotura va a <strong>otros gastos</strong> y no a cuentas por cobrar. La diferencia entre una y otra respuesta es una sola frase del enunciado: léelo con lupa.</p>
+  </div>
+
+  <div class="call clave">
+    <div class="ct">● Clave — por qué NO es costo del servicio</div>
+    <p>Las 4 botellas rotas <strong>no se usaron en ningún evento</strong>: no generaron ingreso ni valor para un cliente. Meterlas al Costo del Servicio sería castigar la rentabilidad del catering por un descuido de almacén. Por eso van por separado, como <strong>otros gastos</strong> del mes, debajo de la utilidad operativa en el Estado de Resultados.</p>
+  </div>
+
+  <div class="quiz">
+    <div class="qh">✦ Compruébalo tú mismo</div>
+    <p>Si el enunciado hubiera dicho <em>"la empresa descontará del sueldo del almacenero las botellas rotas"</em>, ¿cuánto y a qué cuenta iría?</p>
+    <details><summary>Ver respuesta</summary>
+    <p>Iría a <strong>Cuentas por cobrar al personal</strong> por <strong>S/&nbsp;365.13</strong>, y <em>no</em> aparecería como gasto en el Estado de Resultados (la empresa recupera el dinero vía descuento de planilla). El monto en soles es el mismo; lo que cambia es el destino. Ese es justo el matiz que el examen está evaluando con la frase "otros gastos <em>u</em> otras cuentas por cobrar".</p>
+    </details>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ===== 1.5 RESPUESTA REQ 1 ===== -->
+<section id="c1-r1">
+  <div class="sec-tag">Caso 1 · ★ Respuesta oficial</div>
+  <h2>Requerimiento 1 — Respuesta consolidada</h2>
+  <p class="lead">Reunimos todo lo trabajado. Esto es exactamente lo que escribirías en tu hoja de examen.</p>
+
+  <div class="bn-grid">
+    <div class="bn teal">
+      <div class="bn-k">Consumo de vino en el servicio</div>
+      <div class="bn-v">S/ 3 651.39</div>
+      <div class="bn-note">54 botellas (28 del 10.05 + 26 del 20.05)</div>
+    </div>
+    <div class="bn">
+      <div class="bn-k">Otros gastos · rotura</div>
+      <div class="bn-v">S/ 365.13</div>
+      <div class="bn-note">4 botellas — pérdida anormal, sin responsable</div>
+    </div>
+    <div class="bn gold">
+      <div class="bn-k">Saldo final de inventario</div>
+      <div class="bn-v">S/ 1 825.64</div>
+      <div class="bn-note">20 botellas a S/ 91.2822 c/u</div>
+    </div>
+    <div class="bn plum">
+      <div class="bn-k">Costo de la importación 14.05</div>
+      <div class="bn-v">S/ 3 286.16</div>
+      <div class="bn-note">36 botellas — c. unitario S/ 91.2822</div>
+    </div>
+  </div>
+
+  <div class="call formula">
+    <div class="ct">▣ Resumen verificable</div>
+    <p class="mono" style="font-size:.88rem;color:var(--ink);line-height:2">
+    Consumo (54) ......... S/ 3 651.39<br>
+    Rotura — otros gastos (4) ... S/ 365.13<br>
+    Saldo final (20) ........ S/ 1 825.64<br>
+    <span style="color:var(--ink-mute)">───────────────────────────</span><br>
+    Total salidas + saldo .. S/ 5 842.16 = Total entradas ✓</p>
+  </div>
+
+  <div class="call tip">
+    <div class="ct">✦ Cómo presentarlo en el examen</div>
+    <p>Entrega <strong>tres cosas</strong>: (1) el cuadro de detalle del costo de importación, (2) el Kardex completo con sus totales, y (3) este recuadro de respuestas. Un examinador valora ver el <em>procedimiento</em>: el Kardex bien armado vale más que el número final suelto.</p>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ===== 1.6 TEORÍA COSTO DEL SERVICIO ===== -->
+<section id="c1-teoria-cs">
+  <div class="sec-tag">Caso 1 · Marco teórico</div>
+  <h2>Teoría: el Costo del Servicio y los Gastos</h2>
+  <p class="lead">El requerimiento 2 pide "el Costo del Servicio desglosado en sus 3 elementos" y, aparte, los gastos. Para hacerlo sin equivocarte necesitas una sola idea muy clara: la diferencia entre <strong>costo</strong> y <strong>gasto</strong>, y dónde vive cada uno.</p>
+
+  <h3>Costo y gasto: distinto destino</h3>
+  <div class="rc">
+    <div class="rc-box rc-razon">
+      <div class="rc-h">▸ COSTO</div>
+      <p>Es todo desembolso ligado a <strong>generar el servicio</strong> que el cliente paga. En el catering: el vino, la comida, los cocineros, la cocina.</p>
+      <p>El costo se "guarda" en el valor del servicio prestado y se enfrenta a la venta como <strong>Costo del Servicio</strong>.</p>
+    </div>
+    <div class="rc-box rc-calc">
+      <div class="rc-h">▸ GASTO</div>
+      <span class="mono">Es el desembolso de las<br>áreas de APOYO, que no<br>tocan el servicio:<br><br>• Administración<br>• Ventas / comercial<br><br>Va DIRECTO al resultado<br>del mes, como gasto<br>operativo.</span>
+    </div>
+  </div>
+  <div class="call clave">
+    <div class="ct">● Clave — el curso lo dice así</div>
+    <p>"Un costo de compra o de producción se convertirá en INVENTARIO (activo). Un gasto operativo irá directamente a los RESULTADOS del mes." (PPT2). En una empresa de servicios, el costo se vuelve <strong>Costo del Servicio</strong>; el gasto se va directo al Estado de Resultados como gasto de administración o de ventas.</p>
+  </div>
+
+  <h3>Los 3 elementos del Costo del Servicio</h3>
+  <p>Aunque Sabores Ejecutivos no "fabrica" un producto, su Costo del Servicio se estructura con los <strong>mismos 3 elementos</strong> que una fábrica (así lo trabajaste con <em>Cold Air Service</em>, PD3):</p>
+  <div class="diagram">
+    <svg viewBox="0 0 720 220" xmlns="http://www.w3.org/2000/svg">
+      <text x="360" y="26" text-anchor="middle" class="svg-ink" style="font:600 16px Fraunces,serif">Costo del Servicio = ① + ② + ③</text>
+      <!-- box 1 -->
+      <rect x="20" y="52" width="210" height="118" rx="12" fill="var(--teal-bg)" stroke="var(--teal)" stroke-width="1.5"/>
+      <text x="125" y="80" text-anchor="middle" fill="var(--teal)" style="font:700 13px Manrope">① MATERIALES DIRECTOS</text>
+      <text x="125" y="106" text-anchor="middle" class="svg-soft" style="font:400 12px Manrope">Insumos que se consumen</text>
+      <text x="125" y="124" text-anchor="middle" class="svg-soft" style="font:400 12px Manrope">en el evento</text>
+      <text x="125" y="150" text-anchor="middle" class="svg-mute" style="font:500 11.5px JetBrains Mono">vino · comidas</text>
+      <!-- box 2 -->
+      <rect x="255" y="52" width="210" height="118" rx="12" fill="var(--terra-bg)" stroke="var(--terra)" stroke-width="1.5"/>
+      <text x="360" y="80" text-anchor="middle" fill="var(--terra)" style="font:700 13px Manrope">② MANO DE OBRA</text>
+      <text x="360" y="106" text-anchor="middle" class="svg-soft" style="font:400 12px Manrope">Personal que ejecuta y</text>
+      <text x="360" y="124" text-anchor="middle" class="svg-soft" style="font:400 12px Manrope">supervisa el servicio</text>
+      <text x="360" y="150" text-anchor="middle" class="svg-mute" style="font:500 11.5px JetBrains Mono">chef · cocineros · supervisor</text>
+      <!-- box 3 -->
+      <rect x="490" y="52" width="210" height="118" rx="12" fill="var(--gold-bg)" stroke="var(--gold)" stroke-width="1.5"/>
+      <text x="595" y="80" text-anchor="middle" fill="var(--gold)" style="font:700 13px Manrope">③ COSTOS INDIRECTOS</text>
+      <text x="595" y="106" text-anchor="middle" class="svg-soft" style="font:400 12px Manrope">Recursos de apoyo a la</text>
+      <text x="595" y="124" text-anchor="middle" class="svg-soft" style="font:400 12px Manrope">operación del servicio</text>
+      <text x="595" y="150" text-anchor="middle" class="svg-mute" style="font:500 11.5px JetBrains Mono">suministros · energía · alquiler · deprec.</text>
+      <text x="360" y="200" text-anchor="middle" class="svg-mute" style="font:400 12px Manrope">Todo lo que NO toca el servicio (administrador, asistente, captación, publicidad) es GASTO, no costo.</text>
+    </svg>
+  </div>
+
+  <h3>La pregunta que clasifica todo</h3>
+  <div class="call intuicion">
+    <div class="ct">◆ Intuición — el "test de la cocina"</div>
+    <p>Frente a cada partida, hazte una pregunta sencilla: <strong>"¿esto ocurre en la cocina / en el evento, o en la oficina?"</strong></p>
+    <p>Si ocurre <em>en la operación del servicio</em> (la cocina, el evento) → es <strong>costo</strong>. Si ocurre <em>en la oficina</em> (administrar, vender, hacer publicidad) → es <strong>gasto</strong>. Para los recursos compartidos (un local que es cocina <em>y</em> oficina), se reparte con un porcentaje: eso es un <strong>prorrateo</strong>.</p>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ===== 1.7 CLASIFICACIÓN ===== -->
+<section id="c1-clasif">
+  <div class="sec-tag">Caso 1 · Requerimiento 2 — Parte A</div>
+  <h2>Clasificación de cada partida</h2>
+  <p class="lead">Aplicamos el "test de la cocina" a cada concepto del enunciado. Una buena clasificación es la mitad del puntaje del requerimiento 2.</p>
+
+  <h3>Paso 1 · El personal</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Trabajador</th><th>Puesto</th><th class="num">S/</th><th>Clasificación</th></tr></thead>
+      <tbody>
+        <tr><td>Rosa Medina</td><td>Chef principal</td><td class="num">3 400</td><td><span class="tag-c tag-costo">Costo · MO del servicio</span></td></tr>
+        <tr><td>Víctor Salazar</td><td>Cocinero</td><td class="num">2 300</td><td><span class="tag-c tag-costo">Costo · MO del servicio</span></td></tr>
+        <tr><td>Pamela Ríos</td><td>Cocinera</td><td class="num">2 300</td><td><span class="tag-c tag-costo">Costo · MO del servicio</span></td></tr>
+        <tr><td>Diego Campos</td><td>Supervisor del servicio de eventos</td><td class="num">2 800</td><td><span class="tag-c tag-costo">Costo · MO del servicio</span></td></tr>
+        <tr><td>Luis Paredes</td><td>Administrador</td><td class="num">7 800</td><td><span class="tag-c tag-gasto">Gasto administrativo</span></td></tr>
+        <tr><td>Ana Salas</td><td>Asistente administrativa</td><td class="num">2 600</td><td><span class="tag-c tag-gasto">Gasto administrativo</span></td></tr>
+        <tr><td>Jimena Vargas</td><td>Captación de clientes para eventos</td><td class="num">2 500</td><td><span class="tag-c tag-gasto">Gasto de ventas</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="call insight">
+    <div class="ct">✸ Insight — los dos puestos que confunden</div>
+    <p><strong>Diego Campos, "supervisor del servicio de eventos".</strong> La palabra "supervisor" hace dudar a muchos. Pero la clave es <em>qué supervisa</em>: supervisa <strong>el servicio</strong>. Está dentro de la operación → es mano de obra del servicio → costo. (Si fuera "supervisor administrativo", sería gasto.)</p>
+    <p><strong>Jimena Vargas, "captación de clientes".</strong> Captar clientes es una función <em>comercial</em>: conseguir ventas. Por eso es <strong>gasto de ventas</strong>, no administrativo. Administración ≠ ventas: el administrador gestiona la empresa; el área de ventas trae los clientes.</p>
+  </div>
+
+  <h3>Paso 2 · Otros costos y gastos</h3>
+  <p>Aquí aparecen los <strong>prorrateos</strong>. Cuando un recurso se usa a la vez en la operación y en la oficina, se reparte según el porcentaje que indique el enunciado.</p>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Concepto</th><th class="num">S/ total</th><th>Tratamiento</th><th class="num">A costo</th><th class="num">A gasto</th></tr></thead>
+      <tbody>
+        <tr><td>Comidas consumidas en eventos</td><td class="num">4 800</td><td>Material directo del servicio</td><td class="num">4 800</td><td class="num">—</td></tr>
+        <tr><td>Suministros (servilletas, descartables)</td><td class="num">1 250</td><td>Material indirecto → CIF servicio</td><td class="num">1 250</td><td class="num">—</td></tr>
+        <tr><td>Gas, energía eléctrica y agua</td><td class="num">2 100</td><td>Prorrateo 80 % servicio / 20 % admin.</td><td class="num">1 680</td><td class="num">420</td></tr>
+        <tr><td>Alquiler local de cocina y oficina</td><td class="num">5 000</td><td>Prorrateo 70 % servicio / 30 % admin.</td><td class="num">3 500</td><td class="num">1 500</td></tr>
+        <tr><td>Depreciación equipos de cocina/conservación</td><td class="num">666.67</td><td>CIF del servicio (equipos de la operación)</td><td class="num">666.67</td><td class="num">—</td></tr>
+        <tr><td>Publicidad digital</td><td class="num">2 000</td><td>Gasto de ventas</td><td class="num">—</td><td class="num">2 000</td></tr>
+        <tr><td>Comisiones por captación de eventos</td><td class="num">1 700</td><td>Gasto de ventas</td><td class="num">—</td><td class="num">1 700</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="rc">
+    <div class="rc-box rc-razon">
+      <div class="rc-h">▸ Razonamiento — la depreciación</div>
+      <p>El equipo de cocina y conservación de bebidas vale S/&nbsp;48&nbsp;000 y se deprecia linealmente en 6 años. La depreciación es el "desgaste" del equipo, repartido en su vida útil.</p>
+      <p>Como son equipos de la <strong>operación del servicio</strong>, su depreciación es <strong>CIF del servicio</strong> (costo, no gasto).</p>
+    </div>
+    <div class="rc-box rc-calc">
+      <div class="rc-h">▸ Cálculo — depreciación mensual</div>
+      <span class="mono">Anual = 48 000 / 6<br>      = 8 000<br><br>Mensual = 8 000 / 12<br>        = <span class="res">S/ 666.67</span><br><br><span class="op">El examen es de UN mes →</span><br><span class="op">usamos la cuota mensual.</span></span>
+    </div>
+  </div>
+  <div class="call advertencia">
+    <div class="ct">▲ Advertencia — depreciación: anual vs mensual</div>
+    <p>El error clásico es poner la depreciación <em>anual</em> (S/&nbsp;8&nbsp;000) en un Estado de Resultados <em>mensual</em>. El examen cubre <strong>mayo 2025</strong> — un solo mes. Divide siempre entre 12. Usar S/&nbsp;8&nbsp;000 en lugar de S/&nbsp;666.67 te dispara el costo y arruina el resultado.</p>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ===== 1.8 RESPUESTA REQ 2 ===== -->
+<section id="c1-r2">
+  <div class="sec-tag">Caso 1 · ★ Respuesta oficial</div>
+  <h2>Requerimiento 2 — Costo del Servicio y Gastos</h2>
+  <p class="lead">Con todo clasificado, armamos los tres bloques que pide el examen: el Costo del Servicio (en sus 3 elementos), los gastos administrativos y los gastos de ventas.</p>
+
+  <h3>① Costo del Servicio — desglosado en 3 elementos</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Elemento</th><th>Detalle</th><th class="num">Parcial S/</th><th class="num">Subtotal S/</th></tr></thead>
+      <tbody>
+        <tr><td rowspan="2"><strong>① Materiales<br>directos</strong></td><td>Consumo de vino (Kardex: 28+26 botellas)</td><td class="num">3 651.39</td><td class="num" rowspan="2">8 451.39</td></tr>
+        <tr><td>Comidas consumidas en eventos</td><td class="num">4 800.00</td></tr>
+        <tr><td rowspan="4"><strong>② Mano de obra<br>del servicio</strong></td><td>Rosa Medina — Chef principal</td><td class="num">3 400.00</td><td class="num" rowspan="4">10 800.00</td></tr>
+        <tr><td>Víctor Salazar — Cocinero</td><td class="num">2 300.00</td></tr>
+        <tr><td>Pamela Ríos — Cocinera</td><td class="num">2 300.00</td></tr>
+        <tr><td>Diego Campos — Supervisor de eventos</td><td class="num">2 800.00</td></tr>
+        <tr><td rowspan="4"><strong>③ Costos indirectos<br>del servicio</strong></td><td>Suministros (servilletas, descartables)</td><td class="num">1 250.00</td><td class="num" rowspan="4">7 096.67</td></tr>
+        <tr><td>Gas, energía y agua (80 %)</td><td class="num">1 680.00</td></tr>
+        <tr><td>Alquiler del local (70 %)</td><td class="num">3 500.00</td></tr>
+        <tr><td>Depreciación de equipos (mensual)</td><td class="num">666.67</td></tr>
+        <tr class="row-total"><td colspan="3">COSTO DEL SERVICIO — mayo 2025</td><td class="num">26 348.06</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="chart-card">
+    <div class="ch-t">Composición del Costo del Servicio</div>
+    <div class="ch-s">Los 3 elementos del costo. La mano de obra es el rubro más pesado del catering — un negocio intensivo en personas.</div>
+    <div class="chart-box"><canvas id="chCostoServ"></canvas></div>
+  </div>
+
+  <h3>② Gastos de Administración</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Concepto</th><th class="num">S/</th></tr></thead>
+      <tbody>
+        <tr><td>Luis Paredes — Administrador</td><td class="num">7 800.00</td></tr>
+        <tr><td>Ana Salas — Asistente administrativa</td><td class="num">2 600.00</td></tr>
+        <tr><td>Gas, energía y agua (20 %)</td><td class="num">420.00</td></tr>
+        <tr><td>Alquiler del local (30 %)</td><td class="num">1 500.00</td></tr>
+        <tr class="row-total"><td>TOTAL GASTOS DE ADMINISTRACIÓN</td><td class="num">12 320.00</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>③ Gastos de Ventas</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Concepto</th><th class="num">S/</th></tr></thead>
+      <tbody>
+        <tr><td>Jimena Vargas — Captación de clientes</td><td class="num">2 500.00</td></tr>
+        <tr><td>Publicidad digital</td><td class="num">2 000.00</td></tr>
+        <tr><td>Comisiones por captación de eventos</td><td class="num">1 700.00</td></tr>
+        <tr class="row-total"><td>TOTAL GASTOS DE VENTAS</td><td class="num">6 200.00</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="bn-grid">
+    <div class="bn teal"><div class="bn-k">Costo del Servicio</div><div class="bn-v">S/ 26 348.06</div><div class="bn-note">MD 8 451.39 + MO 10 800 + CIF 7 096.67</div></div>
+    <div class="bn"><div class="bn-k">Gastos de Administración</div><div class="bn-v">S/ 12 320.00</div><div class="bn-note">Áreas de apoyo / gestión</div></div>
+    <div class="bn gold"><div class="bn-k">Gastos de Ventas</div><div class="bn-v">S/ 6 200.00</div><div class="bn-note">Captación, publicidad, comisiones</div></div>
+  </div>
+
+  <div class="call tip">
+    <div class="ct">✦ Tip — la rotura NO está aquí</div>
+    <p>Habrás notado que las 4 botellas rotas (S/&nbsp;365.13) no aparecen ni en el costo ni en los gastos de administración/ventas. Correcto: es <strong>otro gasto</strong>, una categoría aparte que aparecerá recién en el Estado de Resultados, debajo de la utilidad operativa. No la fuerces dentro del Costo del Servicio.</p>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ===== 1.9 RESPUESTA REQ 3 — EERR ===== -->
+<section id="c1-r3">
+  <div class="sec-tag">Caso 1 · ★ Respuesta oficial</div>
+  <h2>Requerimiento 3 — Estado de Resultados</h2>
+  <p class="lead">El último requerimiento une todo el caso en un solo informe. El Estado de Resultados cuenta una historia: cuánto vendió la empresa y, restando capa por capa, cuánto le quedó.</p>
+
+  <h3>Teoría: la "escalera" del Estado de Resultados</h3>
+  <p>El Estado de Resultados de una empresa de servicios se construye como una resta en cascada. Cada peldaño tiene un nombre y un significado:</p>
+  <div class="diagram">
+    <svg viewBox="0 0 720 290" xmlns="http://www.w3.org/2000/svg">
+      <!-- Ventas -->
+      <rect x="40" y="20" width="640" height="36" rx="8" fill="var(--teal-bg)" stroke="var(--teal)" stroke-width="1.4"/>
+      <text x="60" y="43" class="svg-ink" style="font:700 13px Manrope">VENTAS (servicios facturados)</text>
+      <text x="660" y="43" text-anchor="end" fill="var(--teal)" style="font:700 13px JetBrains Mono">68 000.00</text>
+      <text x="90" y="74" class="svg-mute" style="font:500 11px Manrope">(−) Costo del Servicio</text>
+      <!-- UB -->
+      <rect x="80" y="84" width="600" height="34" rx="8" fill="var(--terra-bg)" stroke="var(--terra)" stroke-width="1.4"/>
+      <text x="100" y="106" class="svg-ink" style="font:700 13px Manrope">= UTILIDAD BRUTA</text>
+      <text x="660" y="106" text-anchor="end" fill="var(--terra)" style="font:700 13px JetBrains Mono">41 651.94</text>
+      <text x="130" y="136" class="svg-mute" style="font:500 11px Manrope">(−) Gastos de Administración y de Ventas</text>
+      <!-- UO -->
+      <rect x="120" y="146" width="560" height="34" rx="8" fill="var(--gold-bg)" stroke="var(--gold)" stroke-width="1.4"/>
+      <text x="140" y="168" class="svg-ink" style="font:700 13px Manrope">= UTILIDAD OPERATIVA</text>
+      <text x="660" y="168" text-anchor="end" fill="var(--gold)" style="font:700 13px JetBrains Mono">23 131.94</text>
+      <text x="170" y="198" class="svg-mute" style="font:500 11px Manrope">(−) Otros gastos (rotura de botellas)</text>
+      <!-- Resultado -->
+      <rect x="160" y="208" width="520" height="34" rx="8" fill="var(--plum-bg)" stroke="var(--plum)" stroke-width="1.4"/>
+      <text x="180" y="230" class="svg-ink" style="font:700 13px Manrope">= RESULTADO ANTES DE IMPUESTOS</text>
+      <text x="660" y="230" text-anchor="end" fill="var(--plum)" style="font:700 13px JetBrains Mono">22 766.81</text>
+      <text x="360" y="270" text-anchor="middle" class="svg-mute" style="font:400 11.5px Manrope">Cada peldaño resta un tipo de costo o gasto. El ancho que se "pierde" es lo que cuesta operar.</text>
+    </svg>
+  </div>
+  <div class="call clave">
+    <div class="ct">● Clave — los dos márgenes que todo examinador busca</div>
+    <p><strong>Utilidad Bruta</strong> = Ventas − Costo del Servicio. Mide si el servicio en sí es rentable.</p>
+    <p><strong>Utilidad Operativa</strong> = Utilidad Bruta − Gastos de Administración − Gastos de Ventas. Mide si el negocio completo (con su estructura de apoyo) es rentable.</p>
+    <p>Los <strong>otros gastos</strong> (la rotura) van <em>después</em> de la utilidad operativa, porque no son parte ni de la operación del servicio ni de las áreas de apoyo: son un hecho extraordinario.</p>
+  </div>
+
+  <h3>Estado de Resultados — Sabores Ejecutivos S.A.C. · Mayo 2025</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Concepto</th><th class="num">S/</th><th class="num">% s/ ventas</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Ventas (servicios facturados)</strong></td><td class="num">68 000.00</td><td class="num">100.00 %</td></tr>
+        <tr><td>(−) Costo del Servicio</td><td class="num">(26 348.06)</td><td class="num">38.75 %</td></tr>
+        <tr class="row-sub"><td><strong>= Utilidad Bruta</strong></td><td class="num">41 651.94</td><td class="num">61.25 %</td></tr>
+        <tr><td>(−) Gastos de Administración</td><td class="num">(12 320.00)</td><td class="num">18.12 %</td></tr>
+        <tr><td>(−) Gastos de Ventas</td><td class="num">(6 200.00)</td><td class="num">9.12 %</td></tr>
+        <tr class="row-sub"><td><strong>= Utilidad Operativa</strong></td><td class="num">23 131.94</td><td class="num">34.02 %</td></tr>
+        <tr><td>(−) Otros gastos (rotura de botellas)</td><td class="num">(365.13)</td><td class="num">0.54 %</td></tr>
+        <tr class="row-total"><td>= RESULTADO ANTES DE IMPUESTOS</td><td class="num">22 766.81</td><td class="num">33.48 %</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="call advertencia">
+    <div class="ct">▲ Advertencia — ¿y el impuesto a la renta?</div>
+    <p>El enunciado <strong>no da una tasa de impuesto a la renta</strong>, así que el informe se cierra en "Resultado antes de impuestos". No inventes una tasa del 29.5&nbsp;%: si el dato no está, no se calcula. Indicarlo así demuestra criterio.</p>
+  </div>
+
+  <h3>Análisis vertical: ¿a dónde va cada S/ 100 de venta?</h3>
+  <p>El análisis porcentual (o "vertical") expresa cada línea como porcentaje de las ventas. Convierte el Estado de Resultados en algo comparable y fácil de leer:</p>
+  <div class="chart-card">
+    <div class="ch-t">Destino de cada S/ 100 vendido</div>
+    <div class="ch-s">De cada S/ 100 que factura Sabores Ejecutivos, S/ 33.48 quedan como utilidad. El resto se reparte entre el costo del servicio y los gastos.</div>
+    <div class="chart-box"><canvas id="chEERR"></canvas></div>
+  </div>
+  <div class="call formula">
+    <div class="ct">▣ Fórmula del análisis vertical</div>
+    <p>\[ \%\text{ de la línea} = \frac{\text{Importe de la línea}}{\text{Ventas}} \times 100 \]</p>
+    <p class="mono" style="font-size:.86rem;color:var(--ink)">Ejemplo — Costo del Servicio: 26 348.06 / 68 000 × 100 = 38.75 %</p>
+  </div>
+
+  <h3>Recomendaciones para la gerencia</h3>
+  <p>El examen pide comentar la rentabilidad. Tres lecturas, fundamentadas en los números:</p>
+
+  <div class="call insight">
+    <div class="ct">✸ Recomendación 1 — Revisar el peso de la administración</div>
+    <p>Los gastos de administración son el <strong>18.12 %</strong> de las ventas: casi 1 de cada 5 soles. El rubro más pesado es el sueldo del administrador (S/&nbsp;7&nbsp;800), que <em>supera al del chef principal</em> (S/&nbsp;3&nbsp;400), el trabajador clave del servicio. Conviene evaluar si esa estructura administrativa es proporcional al tamaño del negocio, o si está consumiendo margen que podría reinvertirse.</p>
+  </div>
+  <div class="call insight">
+    <div class="ct">✸ Recomendación 2 — Eliminar pérdidas evitables</div>
+    <p>La rotura de 4 botellas (S/&nbsp;365.13) fue una pérdida <strong>100 % evitable</strong>: nació de un descuido, no de la operación. Aunque el monto parezca pequeño (0.54 % de las ventas), es utilidad que se perdió sin contraparte. Recomendación: protocolos de manipuleo, capacitación al personal de almacén y, de ser posible, asignar responsabilidad para reducir la negligencia.</p>
+  </div>
+  <div class="call insight">
+    <div class="ct">✸ Recomendación 3 — Aprovechar el margen para crecer</div>
+    <p>El negocio es sano: deja <strong>33.48 %</strong> de resultado neto y una utilidad bruta de 61.25 %. Con ese colchón, y dado que el gasto de ventas es bajo (solo 9.12 %), Sabores Ejecutivos podría invertir <em>más</em> en captación de clientes para crecer en facturación sin poner en riesgo su rentabilidad.</p>
+  </div>
+
+  <div class="bn-grid">
+    <div class="bn"><div class="bn-k">Utilidad Bruta</div><div class="bn-v">61.25 <small>%</small></div><div class="bn-note">El servicio en sí es muy rentable</div></div>
+    <div class="bn gold"><div class="bn-k">Utilidad Operativa</div><div class="bn-v">34.02 <small>%</small></div><div class="bn-note">Tras administración y ventas</div></div>
+    <div class="bn plum"><div class="bn-k">Resultado neto</div><div class="bn-v">S/ 22 766.81</div><div class="bn-note">33.48 % de las ventas — saludable</div></div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ============================================================
+     CASO 2 — MOCHILAS NORTEÑAS S.A.C.
+     ============================================================ -->
+<section id="caso2">
+  <div class="case-banner">
+    <div class="knum">CASO 2 · 6 puntos</div>
+    <h2>Mochilas Norteñas S.A.C.</h2>
+    <div class="firm">Empresa industrial — fabricación de mochilas · Trujillo · Junio 2025</div>
+  </div>
+</section>
+
+<!-- ===== 2.0 LECTURA DEL CASO ===== -->
+<section id="c2-mapa">
+  <div class="sec-tag">Caso 2 · Paso previo</div>
+  <h2>Lectura inteligente del caso</h2>
+  <p class="lead">Cambiamos de mundo: ya no es una empresa de servicios, es una <strong>empresa industrial</strong> que <em>fabrica</em> un producto físico. Eso cambia el vocabulario y la estructura, pero la lógica de fondo —separar costo de gasto— es la misma.</p>
+
+  <h4>Servicios vs Industria: qué cambia</h4>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Concepto</th><th>Caso 1 — Servicios</th><th>Caso 2 — Industrial</th></tr></thead>
+      <tbody>
+        <tr><td>¿Qué entrega al cliente?</td><td>Un servicio (el catering)</td><td>Un producto físico (la mochila)</td></tr>
+        <tr><td>El "costo" se llama…</td><td>Costo del Servicio</td><td>Costo de Producción</td></tr>
+        <tr><td>Lo que se enfrenta a la venta</td><td>Costo del Servicio del mes</td><td>Costo de Ventas (de lo vendido)</td></tr>
+        <tr><td>¿Hay inventario de producto?</td><td>No (el servicio se consume al instante)</td><td>Sí — productos terminados en almacén</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="call clave">
+    <div class="ct">● Clave — costo de producción ≠ costo de ventas</div>
+    <p>En la industria hay <strong>dos costos distintos</strong> que no debes confundir. El <strong>Costo de Producción</strong> es lo que costó <em>fabricar</em> las mochilas del mes. El <strong>Costo de Ventas</strong> es lo que costó fabricar solo las mochilas que se <em>vendieron</em>. Como no todo lo producido se vende (queda inventario), son números diferentes.</p>
+  </div>
+
+  <h4>El mapa de los cuatro requerimientos</h4>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th style="width:60px">Req.</th><th>Qué pide</th><th>Herramienta</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1</strong></td><td>Costo de producción total y unitario</td><td>Suma de los 3 elementos del costo</td></tr>
+        <tr><td><strong>2</strong></td><td>Costo primo y costo de conversión</td><td>Combinaciones de MPD, MOD y CIF</td></tr>
+        <tr><td><strong>3</strong></td><td>Costo de ventas (inventario periódico, método promedio)</td><td>Disponible − inventario final</td></tr>
+        <tr><td><strong>4</strong></td><td>Utilidad bruta total y en porcentaje</td><td>Ventas − Costo de ventas</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h4>Datos columna vertebral</h4>
+  <ul>
+    <li><strong>Producción del mes:</strong> 1&nbsp;800 mochilas terminadas.</li>
+    <li><strong>Inventario inicial de productos terminados:</strong> 300 mochilas, S/&nbsp;18&nbsp;000.</li>
+    <li><strong>Inventario final de productos terminados:</strong> 420 mochilas.</li>
+    <li><strong>Método de valuación:</strong> promedio ponderado · <strong>Sistema:</strong> periódico (para el costo de ventas).</li>
+    <li><strong>Precio de venta:</strong> S/&nbsp;120 por mochila.</li>
+  </ul>
+</section>
+
+<div class="rule"></div>
+
+<!-- ===== 2.1 TEORÍA ELEMENTOS DEL COSTO ===== -->
+<section id="c2-teoria">
+  <div class="sec-tag">Caso 2 · Marco teórico</div>
+  <h2>Teoría: los 3 elementos del costo</h2>
+  <p class="lead">Todo costo de producción, según el curso (PPT1), se arma con <strong>tres elementos</strong>. Domínalos y los requerimientos 1 y 2 se resuelven casi solos.</p>
+
+  <h3>Los tres elementos</h3>
+  <div class="rc">
+    <div class="rc-box rc-razon">
+      <div class="rc-h">▸ ① Materiales Directos (MPD)</div>
+      <p>Materiales que se <strong>convierten en parte física</strong> del producto y se pueden <strong>rastrear de forma económicamente factible</strong> a cada unidad.</p>
+      <p><em>En la mochila:</em> la tela. Y —lo veremos— también los cierres, hebillas y correas.</p>
+    </div>
+    <div class="rc-box rc-calc">
+      <div class="rc-h">▸ ② Mano de Obra Directa (MOD)</div>
+      <span class="mono">Trabajo del personal que<br>fabrica físicamente el<br>producto: lo "tocan",<br>lo cosen, lo arman.<br><br>En la mochila: los<br>operarios de costura.</span>
+    </div>
+  </div>
+  <div class="panel tight">
+    <div style="font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:5px">▸ ③ Costos Indirectos de Fabricación (CIF)</div>
+    <p style="margin:4px 0">Recursos <strong>necesarios para fabricar</strong> pero que <em>no</em> se identifican fácilmente con cada unidad. El curso da ejemplos exactos: <em>"supervisión, energía eléctrica y agua de fábrica, depreciación de maquinarias y local de fábrica, mantenimiento, control de calidad"</em>. Incluye los materiales indirectos, la mano de obra indirecta y los demás costos indirectos.</p>
+  </div>
+
+  <div class="fbox">
+    \[ \text{Costo de Producción} = \text{MPD} + \text{MOD} + \text{CIF} \]
+  </div>
+
+  <h3>Costo primo y costo de conversión</h3>
+  <p>El curso (PPT1) define dos combinaciones de estos elementos. No son elementos nuevos: son <em>maneras de agrupar</em> los tres que ya conoces.</p>
+  <div class="diagram">
+    <svg viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg">
+      <!-- three blocks -->
+      <rect x="60" y="70" width="180" height="60" rx="10" fill="var(--teal-bg)" stroke="var(--teal)" stroke-width="1.5"/>
+      <text x="150" y="98" text-anchor="middle" fill="var(--teal)" style="font:700 14px Manrope">MPD</text>
+      <text x="150" y="116" text-anchor="middle" class="svg-mute" style="font:400 10.5px Manrope">Materiales Directos</text>
+      <rect x="270" y="70" width="180" height="60" rx="10" fill="var(--terra-bg)" stroke="var(--terra)" stroke-width="1.5"/>
+      <text x="360" y="98" text-anchor="middle" fill="var(--terra)" style="font:700 14px Manrope">MOD</text>
+      <text x="360" y="116" text-anchor="middle" class="svg-mute" style="font:400 10.5px Manrope">Mano de Obra Directa</text>
+      <rect x="480" y="70" width="180" height="60" rx="10" fill="var(--gold-bg)" stroke="var(--gold)" stroke-width="1.5"/>
+      <text x="570" y="98" text-anchor="middle" fill="var(--gold)" style="font:700 14px Manrope">CIF</text>
+      <text x="570" y="116" text-anchor="middle" class="svg-mute" style="font:400 10.5px Manrope">Costos Indirectos</text>
+      <!-- costo primo bracket (top) -->
+      <path d="M60 56 L60 44 L450 44 L450 56" fill="none" stroke="var(--plum)" stroke-width="1.6"/>
+      <text x="255" y="34" text-anchor="middle" fill="var(--plum)" style="font:700 12.5px Manrope">COSTO PRIMO = MPD + MOD</text>
+      <!-- costo conversion bracket (bottom) -->
+      <path d="M270 144 L270 156 L660 156 L660 144" fill="none" stroke="var(--sage)" stroke-width="1.6"/>
+      <text x="465" y="178" text-anchor="middle" fill="var(--sage)" style="font:700 12.5px Manrope">COSTO DE CONVERSIÓN = MOD + CIF</text>
+      <text x="360" y="214" text-anchor="middle" class="svg-mute" style="font:400 11.5px Manrope">La MOD es el "puente": pertenece a los dos grupos a la vez.</text>
+    </svg>
+  </div>
+  <div class="rc">
+    <div class="rc-box rc-razon">
+      <div class="rc-h">▸ Costo Primo — lo "directo"</div>
+      <p>Es la suma de los costos que se relacionan <strong>directamente</strong> con el producto: <strong>MPD + MOD</strong>. "Primo" viene de <em>primario</em>: lo primero, lo esencial, lo que se rastrea sin esfuerzo.</p>
+    </div>
+    <div class="rc-box rc-calc">
+      <div class="rc-h">▸ Costo de Conversión — la "transformación"</div>
+      <span class="mono">Es lo que cuesta CONVERTIR<br>la materia prima en<br>producto terminado:<br><strong>MOD + CIF</strong>.<br><br>El esfuerzo + los recursos<br>de la transformación.</span>
+    </div>
+  </div>
+  <div class="call insight">
+    <div class="ct">✸ Insight — por qué la MOD se repite</div>
+    <p>La <strong>mano de obra directa aparece en los dos</strong> (costo primo y costo de conversión). No es un error: la MOD es a la vez algo "directo" (por eso está en el primo) y parte del esfuerzo de "transformación" (por eso está en la conversión). Es el puente entre ambos conceptos. Por eso <em>costo primo + costo de conversión ≠ costo de producción</em>: estarías contando la MOD dos veces.</p>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ===== 2.2 CLASIFICACIÓN ===== -->
+<section id="c2-clasif">
+  <div class="sec-tag">Caso 2 · Paso de resolución</div>
+  <h2>Clasificar cada partida</h2>
+  <p class="lead">Antes de sumar nada, etiquetamos cada concepto del enunciado. La regla de oro para la industria: lo que ocurre <strong>"en la planta / producción"</strong> es costo; lo que ocurre <strong>"en la oficina / con los vendedores"</strong> es gasto.</p>
+
+  <h3>La gran tabla de clasificación</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Partida</th><th class="num">S/</th><th>Clasificación</th><th>¿Por qué?</th></tr></thead>
+      <tbody>
+        <tr><td>Tela impermeable consumida</td><td class="num">28 500</td><td><span class="tag-c tag-costo">MPD</span></td><td>Forma física la mochila; rastreable por unidad</td></tr>
+        <tr><td>Cierres, hebillas y correas consumidas</td><td class="num">12 600</td><td><span class="tag-c tag-costo">MPD</span></td><td>Componentes integrados y cuantificables (ver análisis abajo)</td></tr>
+        <tr><td>MOD de operarios a destajo</td><td class="num">72 000</td><td><span class="tag-c tag-costo">MOD</span></td><td>Cosen físicamente el producto · S/ 40 × 1 800</td></tr>
+        <tr><td>Sueldo del supervisor de planta</td><td class="num">4 500</td><td><span class="tag-c tag-costo">CIF</span></td><td>Mano de obra indirecta — supervisa, no cose</td></tr>
+        <tr><td>Energía eléctrica de la planta</td><td class="num">3 200</td><td><span class="tag-c tag-costo">CIF</span></td><td>Recurso de fábrica, no rastreable por mochila</td></tr>
+        <tr><td>Depreciación de máquinas de coser industriales</td><td class="num">1 700</td><td><span class="tag-c tag-costo">CIF</span></td><td>Desgaste de maquinaria de producción</td></tr>
+        <tr><td>Comisiones de vendedores</td><td class="num">3 400</td><td><span class="tag-c tag-gasto">Gasto de ventas</span></td><td>Función comercial — vender</td></tr>
+        <tr><td>Publicidad en redes sociales</td><td class="num">2 800</td><td><span class="tag-c tag-gasto">Gasto de ventas</span></td><td>Promoción comercial</td></tr>
+        <tr><td>Sueldo del administrador</td><td class="num">6 200</td><td><span class="tag-c tag-gasto">Gasto administrativo</span></td><td>Gestión, no producción</td></tr>
+        <tr><td>Servicios de oficina administrativa</td><td class="num">1 500</td><td><span class="tag-c tag-gasto">Gasto administrativo</span></td><td>Apoyo de oficina, no de planta</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>La decisión clave: ¿los cierres, hebillas y correas son material directo o indirecto?</h3>
+  <p>Este es el punto del caso que exige <strong>criterio profesional</strong>. Vale la pena detenerse, porque entender <em>cómo se decide</em> es justo lo que te vuelve un maestro del tema.</p>
+  <div class="rc">
+    <div class="rc-box rc-razon">
+      <div class="rc-h">▸ El criterio (PPT1 — "Materiales Directos")</div>
+      <p>El curso dice que un material es <strong>directo</strong> cuando cumple dos condiciones:</p>
+      <p><strong>(1)</strong> Su identificación con el producto es <em>física</em> — forma parte del producto.</p>
+      <p><strong>(2)</strong> Es <em>económicamente factible</em> identificarlo y cuantificarlo — se puede determinar cuánto va en cada unidad.</p>
+    </div>
+    <div class="rc-box rc-calc">
+      <div class="rc-h">▸ Aplicándolo a cierres/hebillas/correas</div>
+      <span class="mono">(1) ¿Forman parte física<br>    de la mochila?  →  SÍ<br><br>(2) ¿Se pueden cuantificar<br>    por mochila?     →  SÍ<br>    (cada mochila lleva un<br>    set definido)<br><br>(3) ¿Monto significativo?<br>    12 600/1 800 = S/ 7 por<br>    mochila  →  SÍ, relevante<br><br>→ <span class="res">Materia Prima Directa</span></span>
+    </div>
+  </div>
+  <div class="call insight">
+    <div class="ct">✸ Decisión fundamentada</div>
+    <p>Tratamos los cierres, hebillas y correas como <strong>Materia Prima Directa</strong>. Cumplen las dos condiciones del curso (parte física + cuantificable por unidad) y, además, el monto es significativo (≈ S/&nbsp;7 por mochila). Los materiales indirectos típicos —el hilo, el pegamento— son justo lo contrario: minúsculos e impracticables de rastrear unidad por unidad. Cierres y correas no son ese caso.</p>
+  </div>
+  <div class="call advertencia">
+    <div class="ct">▲ Dato tranquilizador para el examen</div>
+    <p>Aunque alguien los clasificara como CIF, el <strong>costo de producción total (S/&nbsp;122&nbsp;500), el costo unitario, el costo de ventas y la utilidad bruta NO cambiarían</strong> — los S/&nbsp;12&nbsp;600 igual se suman. Lo único que cambiaría es el reparto entre <em>costo primo</em> y <em>costo de conversión</em> del Requerimiento 2. Por eso lo importante es <strong>saber justificar tu criterio</strong>.</p>
+  </div>
+
+  <div class="call clave">
+    <div class="ct">● Clave — la palabra que delata la clasificación</div>
+    <p>Fíjate en el patrón del enunciado: "supervisor <strong>de planta</strong>", "energía <strong>de la planta</strong>", "máquinas <strong>industriales</strong>" → todo eso es <strong>costo</strong>. En cambio "<strong>vendedores</strong>", "<strong>administrador</strong>", "oficina <strong>administrativa</strong>" → todo eso es <strong>gasto</strong>. La propia redacción te da la pista: subraya el lugar o la función y la categoría salta sola.</p>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ===== 2.3 REQ 1 ===== -->
+<section id="c2-r1">
+  <div class="sec-tag">Caso 2 · ★ Respuesta oficial</div>
+  <h2>Requerimiento 1 — Costo de producción</h2>
+  <p class="lead">Con las partidas ya clasificadas, el costo de producción es una suma ordenada de los tres elementos.</p>
+
+  <div class="step">
+    <div class="step-n">1</div>
+    <div class="step-h"><div class="st-k">Elemento ①</div><div class="st-t">Materiales Directos (MPD)</div></div>
+  </div>
+  <div class="rc">
+    <div class="rc-box rc-razon">
+      <div class="rc-h">▸ Razonamiento</div>
+      <p>Sumamos los dos materiales que forman físicamente la mochila y que clasificamos como directos: la tela impermeable y el conjunto de cierres, hebillas y correas.</p>
+    </div>
+    <div class="rc-box rc-calc">
+      <div class="rc-h">▸ Cálculo</div>
+      <span class="mono">Tela impermeable .... 28 500<br>Cierres/hebillas/<br>  correas .......... 12 600<br><span class="op">───────────────────</span><br>MPD = <span class="res">S/ 41 100</span></span>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">2</div>
+    <div class="step-h"><div class="st-k">Elemento ②</div><div class="st-t">Mano de Obra Directa (MOD)</div></div>
+  </div>
+  <div class="rc">
+    <div class="rc-box rc-razon">
+      <div class="rc-h">▸ Razonamiento</div>
+      <p>Los operarios cobran <strong>a destajo</strong>: S/&nbsp;40 por cada mochila producida. "A destajo" significa que el pago depende de las unidades hechas. Como se produjeron 1&nbsp;800 mochilas, multiplicamos.</p>
+    </div>
+    <div class="rc-box rc-calc">
+      <div class="rc-h">▸ Cálculo</div>
+      <span class="mono">MOD = S/ 40 <span class="op">×</span> 1 800 mochilas<br>MOD = <span class="res">S/ 72 000</span></span>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">3</div>
+    <div class="step-h"><div class="st-k">Elemento ③</div><div class="st-t">Costos Indirectos de Fabricación (CIF)</div></div>
+  </div>
+  <div class="rc">
+    <div class="rc-box rc-razon">
+      <div class="rc-h">▸ Razonamiento</div>
+      <p>Reunimos los tres recursos de la planta que <em>no</em> se rastrean a cada mochila: la supervisión, la energía de la fábrica y la depreciación de las máquinas de coser. Son exactamente los ejemplos de CIF que da el curso.</p>
+    </div>
+    <div class="rc-box rc-calc">
+      <div class="rc-h">▸ Cálculo</div>
+      <span class="mono">Supervisor de planta .. 4 500<br>Energía de planta ..... 3 200<br>Deprec. máquinas ...... 1 700<br><span class="op">───────────────────</span><br>CIF = <span class="res">S/ 9 400</span></span>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">4</div>
+    <div class="step-h"><div class="st-k">Cierre</div><div class="st-t">Costo de producción total y unitario</div></div>
+  </div>
+  <div class="fbox">
+    \[ \text{Costo de Producción} = \text{MPD} + \text{MOD} + \text{CIF} \qquad ; \qquad \text{C. unitario} = \frac{\text{Costo de Producción}}{\text{Unidades producidas}} \]
+  </div>
+  <div class="rc">
+    <div class="rc-box rc-razon">
+      <div class="rc-h">▸ Razonamiento</div>
+      <p>El costo total es la suma de los tres elementos. El costo unitario lo obtenemos repartiéndolo entre las 1&nbsp;800 mochilas fabricadas — es lo que costó, en promedio, cada mochila.</p>
+    </div>
+    <div class="rc-box rc-calc">
+      <div class="rc-h">▸ Cálculo</div>
+      <span class="mono">Total = 41 100+72 000+9 400<br>      = <span class="res">S/ 122 500</span><br><br>Unitario = 122 500 / 1 800<br>         = <span class="res">S/ 68.06</span></span>
+    </div>
+  </div>
+
+  <h3>Detalle del costo de producción — junio 2025</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Elemento</th><th>Detalle</th><th class="num">Parcial</th><th class="num">Total S/</th></tr></thead>
+      <tbody>
+        <tr><td rowspan="2"><strong>① MPD</strong></td><td>Tela impermeable</td><td class="num">28 500</td><td class="num" rowspan="2">41 100</td></tr>
+        <tr><td>Cierres, hebillas y correas</td><td class="num">12 600</td></tr>
+        <tr><td><strong>② MOD</strong></td><td>Operarios a destajo (40 × 1 800)</td><td class="num">72 000</td><td class="num">72 000</td></tr>
+        <tr><td rowspan="3"><strong>③ CIF</strong></td><td>Supervisor de planta</td><td class="num">4 500</td><td class="num" rowspan="3">9 400</td></tr>
+        <tr><td>Energía eléctrica de la planta</td><td class="num">3 200</td></tr>
+        <tr><td>Depreciación de máquinas de coser</td><td class="num">1 700</td></tr>
+        <tr class="row-total"><td colspan="3">COSTO DE PRODUCCIÓN TOTAL (1 800 mochilas)</td><td class="num">122 500</td></tr>
+        <tr class="row-total"><td colspan="3">COSTO DE PRODUCCIÓN UNITARIO (÷ 1 800)</td><td class="num">68.06</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="chart-card">
+    <div class="ch-t">Composición del costo de producción</div>
+    <div class="ch-s">La mano de obra directa concentra casi el 59 % del costo: fabricar mochilas es intensivo en trabajo de costura.</div>
+    <div class="chart-box"><canvas id="chCostoProd"></canvas></div>
+  </div>
+
+  <div class="bn-grid">
+    <div class="bn teal"><div class="bn-k">Costo de producción total</div><div class="bn-v">S/ 122 500</div><div class="bn-note">Por las 1 800 mochilas del mes</div></div>
+    <div class="bn gold"><div class="bn-k">Costo de producción unitario</div><div class="bn-v">S/ 68.06</div><div class="bn-note">122 500 ÷ 1 800 (exacto 68.0556)</div></div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ===== 2.4 REQ 2 ===== -->
+<section id="c2-r2">
+  <div class="sec-tag">Caso 2 · ★ Respuesta oficial</div>
+  <h2>Requerimiento 2 — Costo primo y de conversión</h2>
+  <p class="lead">No hay que calcular nada nuevo: solo reagrupar los tres elementos que ya tenemos, según las dos definiciones del curso.</p>
+
+  <div class="rc">
+    <div class="rc-box rc-razon">
+      <div class="rc-h">▸ Costo Primo = MPD + MOD</div>
+      <p>Es lo <strong>directo</strong>: el material que se rastrea a la mochila más la mano de obra que la cose.</p>
+      <p class="mono" style="color:var(--ink);margin-top:8px">41 100 + 72 000 = <span style="color:var(--terra);font-weight:700">S/ 113 100</span></p>
+    </div>
+    <div class="rc-box rc-calc">
+      <div class="rc-h">▸ Costo de Conversión = MOD + CIF</div>
+      <span class="mono">Es lo que cuesta TRANSFORMAR<br>la tela en mochila: la mano<br>de obra + los costos<br>indirectos de la planta.<br><br>72 000 + 9 400<br>= <span class="res">S/ 81 400</span></span>
+    </div>
+  </div>
+
+  <div class="bn-grid">
+    <div class="bn"><div class="bn-k">Costo Primo</div><div class="bn-v">S/ 113 100</div><div class="bn-note">MPD 41 100 + MOD 72 000</div></div>
+    <div class="bn gold"><div class="bn-k">Costo de Conversión</div><div class="bn-v">S/ 81 400</div><div class="bn-note">MOD 72 000 + CIF 9 400</div></div>
+  </div>
+
+  <div class="call advertencia">
+    <div class="ct">▲ Advertencia — no los sumes entre sí</div>
+    <p>113&nbsp;100 + 81&nbsp;400 = 194&nbsp;500, que <strong>no</strong> es el costo de producción (122&nbsp;500). La razón: la MOD (72&nbsp;000) está incluida en <em>ambos</em>. Costo primo y costo de conversión son dos <em>miradas</em> del mismo costo, no dos pedazos que se suman.</p>
+  </div>
+  <div class="quiz">
+    <div class="qh">✦ Compruébalo tú mismo</div>
+    <p>Si sumas costo primo + costo de conversión y le restas la MOD, ¿qué obtienes?</p>
+    <details><summary>Ver respuesta</summary>
+    <p>113&nbsp;100 + 81&nbsp;400 − 72&nbsp;000 = <strong>S/&nbsp;122&nbsp;500</strong> = el costo de producción. Funciona porque al restar la MOD eliminas la duplicación. Es una buena forma de verificar que tus tres elementos están bien.</p>
+    </details>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ===== 2.5 REQ 3 ===== -->
+<section id="c2-r3">
+  <div class="sec-tag">Caso 2 · ★ Respuesta oficial</div>
+  <h2>Requerimiento 3 — Costo de ventas</h2>
+  <p class="lead">Aquí entra una idea nueva e importante: no todo lo que se produce se vende. El costo de ventas mide solo lo que <em>salió</em> hacia el cliente.</p>
+
+  <h3>Teoría: costo de ventas con inventario periódico</h3>
+  <p>En una empresa comercial, el curso (PPT2) define: <em>Costo de Ventas = Inventario inicial + Compras − Inventario final</em>. En una empresa <strong>industrial</strong> la lógica es idéntica, solo que "Compras" se reemplaza por lo que la fábrica produjo:</p>
+  <div class="fbox">
+    \[ \text{Costo de Ventas} = \text{Inv. inicial PT} + \text{Costo de producción terminada} - \text{Inv. final PT} \]
+  </div>
+  <div class="call intuicion">
+    <div class="ct">◆ Intuición</div>
+    <p>Imagina el almacén de mochilas como una piscina. El <strong>inventario inicial</strong> es el agua con la que empiezas; la <strong>producción del mes</strong> es el agua que entra; el <strong>inventario final</strong> es el agua que queda. Lo que "salió" de la piscina (se vendió) es: lo que había + lo que entró − lo que quedó. Eso es el costo de ventas.</p>
+  </div>
+  <div class="call clave">
+    <div class="ct">● Clave — método promedio</div>
+    <p>Como el examen pide <strong>método promedio</strong>, todas las mochilas disponibles (las iniciales + las producidas) se "revuelven" en un solo costo unitario promedio. No distinguimos lotes —eso sería PEPS—: aquí todo se mezcla en un precio único.</p>
+  </div>
+
+  <div class="step">
+    <div class="step-n">1</div>
+    <div class="step-h"><div class="st-k">Paso 1</div><div class="st-t">Mochilas disponibles para la venta</div></div>
+  </div>
+  <div class="rc">
+    <div class="rc-box rc-razon">
+      <div class="rc-h">▸ Razonamiento</div>
+      <p>Sumamos lo que había al inicio (300 mochilas, S/&nbsp;18&nbsp;000) más lo que se produjo este mes (1&nbsp;800 mochilas, S/&nbsp;122&nbsp;500). Eso es todo lo que la empresa <em>pudo</em> vender.</p>
+    </div>
+    <div class="rc-box rc-calc">
+      <div class="rc-h">▸ Cálculo</div>
+      <span class="mono">           Unid.     S/<br>Inv. inicial  300   18 000<br>Producción  1 800  122 500<br><span class="op">──────────────────────</span><br>Disponible  2 100  <span class="res">140 500</span></span>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">2</div>
+    <div class="step-h"><div class="st-k">Paso 2</div><div class="st-t">Costo unitario promedio</div></div>
+  </div>
+  <div class="rc">
+    <div class="rc-box rc-razon">
+      <div class="rc-h">▸ Razonamiento</div>
+      <p>El método promedio reparte el costo total disponible entre todas las unidades disponibles. Es el costo "revuelto" de cada mochila, sin importar si era vieja o recién producida.</p>
+    </div>
+    <div class="rc-box rc-calc">
+      <div class="rc-h">▸ Cálculo</div>
+      <span class="mono">C.U. promedio<br>= 140 500 / 2 100<br>= <span class="res">S/ 66.90</span><br><span class="op">(exacto 66.9048)</span></span>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">3</div>
+    <div class="step-h"><div class="st-k">Paso 3</div><div class="st-t">Inventario final y costo de ventas</div></div>
+  </div>
+  <div class="rc">
+    <div class="rc-box rc-razon">
+      <div class="rc-h">▸ Razonamiento</div>
+      <p>Quedaron 420 mochilas sin vender: las valoramos al costo promedio. El costo de ventas es todo lo disponible menos ese inventario final. Equivale a las 1&nbsp;680 mochilas vendidas (2&nbsp;100 − 420) al costo promedio.</p>
+    </div>
+    <div class="rc-box rc-calc">
+      <div class="rc-h">▸ Cálculo</div>
+      <span class="mono">Inv. final = 420 × 66.9048<br>           = <span class="res">S/ 28 100.00</span><br><br>Costo de ventas<br>= 140 500 − 28 100<br>= <span class="res">S/ 112 400.00</span><br><span class="op">(= 1 680 × 66.9048)</span></span>
+    </div>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Concepto</th><th class="num">Unidades</th><th class="num">S/</th></tr></thead>
+      <tbody>
+        <tr><td>Inventario inicial de productos terminados</td><td class="num">300</td><td class="num">18 000.00</td></tr>
+        <tr><td>(+) Costo de producción terminada del mes</td><td class="num">1 800</td><td class="num">122 500.00</td></tr>
+        <tr class="row-sub"><td><strong>= Disponible para la venta</strong></td><td class="num">2 100</td><td class="num">140 500.00</td></tr>
+        <tr><td>(−) Inventario final (420 × S/ 66.9048)</td><td class="num">420</td><td class="num">(28 100.00)</td></tr>
+        <tr class="row-total"><td>= COSTO DE VENTAS (1 680 mochilas vendidas)</td><td class="num">1 680</td><td class="num">112 400.00</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="bn-grid">
+    <div class="bn"><div class="bn-k">Costo unitario promedio</div><div class="bn-v">S/ 66.90</div><div class="bn-note">140 500 ÷ 2 100</div></div>
+    <div class="bn gold"><div class="bn-k">Inventario final (420 u)</div><div class="bn-v">S/ 28 100</div><div class="bn-note">Mochilas sin vender</div></div>
+    <div class="bn teal"><div class="bn-k">Costo de ventas (1 680 u)</div><div class="bn-v">S/ 112 400</div><div class="bn-note">Lo que costó lo vendido</div></div>
+  </div>
+
+  <div class="call insight">
+    <div class="ct">✸ Insight — ¿por qué el costo unitario promedio (66.90) ≠ costo de producción unitario (68.06)?</div>
+    <p>No es un error. El costo de producción unitario (S/&nbsp;68.06) es solo de las mochilas de <em>este</em> mes. El costo promedio (S/&nbsp;66.90) mezcla esas con las 300 del inventario inicial, que eran más baratas (18&nbsp;000&nbsp;÷&nbsp;300&nbsp;=&nbsp;S/&nbsp;60 c/u). Al promediar unidades caras con unidades baratas, el resultado queda en medio. Esa es, literalmente, la esencia del método promedio.</p>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ===== 2.6 REQ 4 ===== -->
+<section id="c2-r4">
+  <div class="sec-tag">Caso 2 · ★ Respuesta oficial</div>
+  <h2>Requerimiento 4 — Utilidad bruta</h2>
+  <p class="lead">El cierre del caso: cuánto ganó la empresa con lo que vendió, antes de considerar los gastos de oficina y comerciales.</p>
+
+  <div class="step">
+    <div class="step-n">1</div>
+    <div class="step-h"><div class="st-k">Paso 1</div><div class="st-t">Ventas del mes</div></div>
+  </div>
+  <div class="rc">
+    <div class="rc-box rc-razon">
+      <div class="rc-h">▸ Razonamiento</div>
+      <p>Se vendieron 1&nbsp;680 mochilas (las disponibles menos las 420 que quedaron). Cada una a un valor de venta de S/&nbsp;120.</p>
+    </div>
+    <div class="rc-box rc-calc">
+      <div class="rc-h">▸ Cálculo</div>
+      <span class="mono">Ventas = 1 680 × 120<br>       = <span class="res">S/ 201 600</span></span>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-n">2</div>
+    <div class="step-h"><div class="st-k">Paso 2</div><div class="st-t">Utilidad bruta y margen</div></div>
+  </div>
+  <div class="fbox">
+    \[ \text{Utilidad Bruta} = \text{Ventas} - \text{Costo de Ventas} \qquad ; \qquad \text{Margen} = \frac{\text{Utilidad Bruta}}{\text{Ventas}}\times 100 \]
+  </div>
+  <div class="rc">
+    <div class="rc-box rc-razon">
+      <div class="rc-h">▸ Razonamiento</div>
+      <p>La utilidad bruta es lo que dejan las ventas después de cubrir lo que costó <em>fabricar</em> lo vendido. El margen lo expresa en porcentaje, para saber qué tan rentable es cada sol vendido.</p>
+    </div>
+    <div class="rc-box rc-calc">
+      <div class="rc-h">▸ Cálculo</div>
+      <span class="mono">U. Bruta = 201 600 − 112 400<br>         = <span class="res">S/ 89 200</span><br><br>Margen = 89 200 / 201 600<br>       = <span class="res">44.25 %</span></span>
+    </div>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Concepto</th><th class="num">S/</th><th class="num">%</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Ventas (1 680 mochilas × S/ 120)</strong></td><td class="num">201 600.00</td><td class="num">100.00 %</td></tr>
+        <tr><td>(−) Costo de Ventas</td><td class="num">(112 400.00)</td><td class="num">55.75 %</td></tr>
+        <tr class="row-total"><td>= UTILIDAD BRUTA</td><td class="num">89 200.00</td><td class="num">44.25 %</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="chart-card">
+    <div class="ch-t">Ventas, costo de ventas y utilidad bruta</div>
+    <div class="ch-s">De cada S/ 100 vendido en mochilas, S/ 44.25 quedan como utilidad bruta — antes de los gastos de administración y ventas.</div>
+    <div class="chart-box"><canvas id="chVentas"></canvas></div>
+  </div>
+
+  <div class="call advertencia">
+    <div class="ct">▲ Advertencia — la utilidad bruta NO es la utilidad final</div>
+    <p>El examen solo pide la utilidad bruta, pero entiende su límite: aún <em>no</em> se han restado los gastos de ventas (comisiones S/&nbsp;3&nbsp;400 + publicidad S/&nbsp;2&nbsp;800) ni los de administración (sueldo S/&nbsp;6&nbsp;200 + servicios de oficina S/&nbsp;1&nbsp;500). Esos S/&nbsp;13&nbsp;900 <strong>no entran al costo de producción ni al costo de ventas</strong> — son gastos del periodo que se restarían <em>después</em> de la utilidad bruta para llegar a la utilidad operativa. Es el mismo principio costo/gasto del Caso 1.</p>
+  </div>
+
+  <div class="bn-grid">
+    <div class="bn teal"><div class="bn-k">Ventas</div><div class="bn-v">S/ 201 600</div><div class="bn-note">1 680 mochilas a S/ 120</div></div>
+    <div class="bn"><div class="bn-k">Costo de ventas</div><div class="bn-v">S/ 112 400</div><div class="bn-note">55.75 % de las ventas</div></div>
+    <div class="bn gold"><div class="bn-k">Utilidad bruta</div><div class="bn-v">S/ 89 200</div><div class="bn-note">Margen bruto del 44.25 %</div></div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- ============================================================
+     CIERRE
+     ============================================================ -->
+<section id="errores">
+  <div class="sec-tag">Cierre · Para no perder puntos</div>
+  <h2>Los 10 errores típicos de este examen</h2>
+  <p class="lead">Cada error de esta lista le cuesta puntos a alguien en cada examen. Si los reconoces de antemano, los esquivas. Léelos como una "lista de seguridad" antes de entregar.</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th style="width:40px">#</th><th>El error</th><th>Por qué se cae</th><th>La forma correcta</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1</strong></td><td>Meter el IGV (y la percepción) al costo de importación.</td><td>Se suma "todo lo pagado" sin distinguir.</td><td>IGV = crédito fiscal; percepción = cuenta por cobrar. <strong>No</strong> son costo.</td></tr>
+        <tr><td><strong>2</strong></td><td>Calcular el ISC sobre el CIF solo.</td><td>Se olvida que el ISC se monta sobre el escalón anterior.</td><td>Base del ISC = <strong>CIF + Ad Valorem</strong>. Es un efecto cascada.</td></tr>
+        <tr><td><strong>3</strong></td><td>No sumar el flete al costo de la compra del 06.05.</td><td>Se registra solo el precio de lista (S/ 56).</td><td>NIC 2: el flete entra al costo → c.u. real = S/ 63.00.</td></tr>
+        <tr><td><strong>4</strong></td><td>Aplicar PEPS al revés.</td><td>Se confunde con UEPS o con promedio.</td><td>Salen <strong>primero las entradas más antiguas</strong>; el saldo queda con las recientes.</td></tr>
+        <tr><td><strong>5</strong></td><td>Consumir el vino importado el 10.05.</td><td>No se respeta la cronología de las fechas.</td><td>La importación llega el <strong>14.05</strong>: el 10.05 aún no existe ese lote.</td></tr>
+        <tr><td><strong>6</strong></td><td>Mandar la rotura de botellas al Costo del Servicio.</td><td>"Salió del almacén, será costo".</td><td>Pérdida anormal sin responsable → <strong>otros gastos</strong>, fuera del costo.</td></tr>
+        <tr><td><strong>7</strong></td><td>Usar la depreciación anual en un estado mensual.</td><td>Se toma S/ 8 000 en lugar de S/ 666.67.</td><td>El examen es de <strong>un mes</strong>: depreciación ÷ 12.</td></tr>
+        <tr><td><strong>8</strong></td><td>Clasificar "captación de clientes" como gasto administrativo.</td><td>Se confunde administración con ventas.</td><td>Captar clientes / comisiones / publicidad = <strong>gasto de ventas</strong>.</td></tr>
+        <tr><td><strong>9</strong></td><td>Sumar costo primo + costo de conversión como si fuera el costo de producción.</td><td>Se ignora que la MOD está en ambos.</td><td>Costo de producción = MPD + MOD + CIF (la MOD <strong>una sola vez</strong>).</td></tr>
+        <tr><td><strong>10</strong></td><td>Confundir costo de producción con costo de ventas.</td><td>Se entrega el de producción sin ajustar por inventarios.</td><td>Costo de ventas = Inv. inicial + Producción − Inv. final (al costo <strong>promedio</strong>).</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="call advertencia">
+    <div class="ct">▲ El meta-error</div>
+    <p>Por encima de los diez, hay un error que los engloba: <strong>resolver sin haber leído despacio</strong>. Cada decisión fina de estos casos —la rotura a gasto, el supervisor a costo, los cierres a material directo— depende de <em>una frase</em> del enunciado. El examen no premia velocidad: premia leer con criterio.</p>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<section id="sintesis">
+  <div class="sec-tag">Cierre · Todo en una página</div>
+  <h2>Síntesis de fórmulas y resultados</h2>
+  <p class="lead">El "machete" del examen: todas las fórmulas que usaste, agrupadas por tema, y el tablero de resultados de ambos casos para verificación rápida.</p>
+
+  <h3>Formulario esencial</h3>
+  <h4>Costeo de importación</h4>
+  <div class="fbox">
+    \[ \text{CIF} = \text{FOB (o costo)} + \text{Flete} + \text{Seguro} \]
+    \[ \text{Ad Valorem} = \%\times\text{CIF} \qquad \text{ISC} = \%\times(\text{CIF}+\text{Ad Valorem}) \]
+    \[ \text{Costo de importación} = \text{CIF} + \text{Ad Valorem} + \text{ISC} + \text{gastos nacionales no recuperables} \]
+  </div>
+  <h4>Valuación de inventarios</h4>
+  <div class="fbox">
+    \[ \text{Costo de adquisición} = \text{Precio} + \text{Fletes} + \text{Seguros} + \text{Derechos no recuperables} - \text{Descuentos} \]
+    \[ \text{Entradas} = \text{Salidas} + \text{Inventario final} \quad\text{(el kardex siempre cuadra)} \]
+  </div>
+  <h4>Empresa de servicios</h4>
+  <div class="fbox">
+    \[ \text{Costo del Servicio} = \text{Materiales directos} + \text{Mano de obra} + \text{CIF del servicio} \]
+    \[ \text{Utilidad Bruta} = \text{Ventas} - \text{Costo del Servicio} \]
+    \[ \text{Utilidad Operativa} = \text{Utilidad Bruta} - \text{G. Administración} - \text{G. Ventas} \]
+  </div>
+  <h4>Empresa industrial</h4>
+  <div class="fbox">
+    \[ \text{Costo de Producción} = \text{MPD} + \text{MOD} + \text{CIF} \]
+    \[ \text{Costo Primo} = \text{MPD} + \text{MOD} \qquad \text{Costo de Conversión} = \text{MOD} + \text{CIF} \]
+    \[ \text{Costo de Ventas} = \text{Inv. inicial} + \text{Costo de producción terminada} - \text{Inv. final} \]
+  </div>
+  <h4>Análisis vertical</h4>
+  <div class="fbox">
+    \[ \%\text{ de la línea} = \frac{\text{Importe de la línea}}{\text{Ventas}} \times 100 \]
+  </div>
+
+  <h3>Tablero de resultados</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Caso 1 · Sabores Ejecutivos</th><th class="num">Resultado</th></tr></thead>
+      <tbody>
+        <tr><td>Costo de la importación (36 botellas)</td><td class="num">S/ 3 286.16</td></tr>
+        <tr><td>Consumo de vino en el servicio (54 bot.)</td><td class="num">S/ 3 651.39</td></tr>
+        <tr><td>Rotura — otros gastos (4 bot.)</td><td class="num">S/ 365.13</td></tr>
+        <tr><td>Saldo final de inventario (20 bot.)</td><td class="num">S/ 1 825.64</td></tr>
+        <tr><td>Costo del Servicio</td><td class="num">S/ 26 348.06</td></tr>
+        <tr><td>Gastos de Administración</td><td class="num">S/ 12 320.00</td></tr>
+        <tr><td>Gastos de Ventas</td><td class="num">S/ 6 200.00</td></tr>
+        <tr class="row-total"><td>Resultado antes de impuestos</td><td class="num">S/ 22 766.81</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Caso 2 · Mochilas Norteñas</th><th class="num">Resultado</th></tr></thead>
+      <tbody>
+        <tr><td>Materiales Directos (MPD)</td><td class="num">S/ 41 100</td></tr>
+        <tr><td>Mano de Obra Directa (MOD)</td><td class="num">S/ 72 000</td></tr>
+        <tr><td>Costos Indirectos de Fabricación (CIF)</td><td class="num">S/ 9 400</td></tr>
+        <tr><td>Costo de producción total · unitario</td><td class="num">S/ 122 500 · 68.06</td></tr>
+        <tr><td>Costo primo · costo de conversión</td><td class="num">S/ 113 100 · 81 400</td></tr>
+        <tr><td>Costo de ventas (1 680 mochilas)</td><td class="num">S/ 112 400.00</td></tr>
+        <tr><td>Ventas</td><td class="num">S/ 201 600.00</td></tr>
+        <tr class="row-total"><td>Utilidad Bruta (margen 44.25 %)</td><td class="num">S/ 89 200.00</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="call insight">
+    <div class="ct">✸ El hilo conductor de todo el examen</div>
+    <p>Si te quedas con una sola idea, que sea esta: <strong>todo desembolso es, o costo, o gasto</strong>. El costo se "guarda" (en el inventario, en el costo del servicio, en el costo de producción) y se enfrenta a la venta. El gasto se va directo al resultado del periodo. Importación, kardex, clasificación de planillas, estado de resultados — los cuatro temas son variaciones de esa única pregunta: <em>¿esto se guarda o se va al resultado?</em></p>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<section id="maestria">
+  <div class="sec-tag">Cierre · Autoevaluación</div>
+  <h2>Checklist de maestría</h2>
+  <p class="lead">No basta con leer: hay que poder <em>hacerlo solo</em>. Marca cada casilla únicamente cuando puedas explicar el concepto en voz alta, sin mirar. Eso es dominar el tema.</p>
+
+  <style>
+    .chklist{list-style:none;margin:14px 0;padding:0;display:flex;flex-direction:column;gap:9px;}
+    .chklist li{display:flex;align-items:flex-start;gap:11px;background:var(--surface);
+      border:1px solid var(--line);border-radius:11px;padding:12px 15px;font-size:.93rem;
+      color:var(--ink-soft);transition:border-color .15s;}
+    .chklist li:hover{border-color:var(--terra);}
+    .chklist input{appearance:none;-webkit-appearance:none;width:19px;height:19px;flex:none;
+      margin-top:1px;border:1.8px solid var(--ink-mute);border-radius:6px;cursor:pointer;
+      position:relative;transition:.15s;}
+    .chklist input:checked{background:var(--teal);border-color:var(--teal);}
+    .chklist input:checked::after{content:"✓";position:absolute;inset:0;display:flex;
+      align-items:center;justify-content:center;color:var(--surface);font-size:13px;font-weight:900;}
+    .chklist input:checked + span{color:var(--ink-mute);text-decoration:line-through;}
+    .chk-h{font-family:'Fraunces',serif;font-size:1.05rem;color:var(--terra);
+      margin:20px 0 4px;font-weight:600;}
+  </style>
+
+  <div class="chk-h">Caso 1 — Servicios e inventarios</div>
+  <ul class="chklist">
+    <li><input type="checkbox" id="m1"><span>Sé decodificar un INCOTERM (CFR) y construir el valor CIF.</span></li>
+    <li><input type="checkbox" id="m2"><span>Distingo qué tributo de importación es costo (Ad Valorem, ISC) y cuál no (IGV, percepción), y sé <em>por qué</em>.</span></li>
+    <li><input type="checkbox" id="m3"><span>Calculo el ISC con su base correcta (CIF + Ad Valorem) y entiendo el efecto cascada.</span></li>
+    <li><input type="checkbox" id="m4"><span>Armo un Kardex PEPS movimiento por movimiento y lo cuadro (entradas = salidas + saldo).</span></li>
+    <li><input type="checkbox" id="m5"><span>Decido el destino de una pérdida de inventario (merma normal / otros gastos / cuenta por cobrar) según el enunciado.</span></li>
+    <li><input type="checkbox" id="m6"><span>Clasifico personal y partidas entre Costo del Servicio, gasto administrativo y gasto de ventas, y resuelvo prorrateos.</span></li>
+    <li><input type="checkbox" id="m7"><span>Construyo el Estado de Resultados de una empresa de servicios y lo analizo en porcentajes.</span></li>
+  </ul>
+
+  <div class="chk-h">Caso 2 — Industria</div>
+  <ul class="chklist">
+    <li><input type="checkbox" id="m8"><span>Identifico los 3 elementos del costo (MPD, MOD, CIF) en cualquier enunciado industrial.</span></li>
+    <li><input type="checkbox" id="m9"><span>Justifico con criterio cuándo un material es directo o indirecto.</span></li>
+    <li><input type="checkbox" id="m10"><span>Calculo costo primo y costo de conversión, y explico por qué no se suman entre sí.</span></li>
+    <li><input type="checkbox" id="m11"><span>Diferencio costo de producción de costo de ventas, y aplico el método promedio.</span></li>
+    <li><input type="checkbox" id="m12"><span>Calculo la utilidad bruta y su margen, sabiendo qué gastos quedan fuera del costo.</span></li>
+  </ul>
+
+  <div class="call tip">
+    <div class="ct">✦ Cómo usar este checklist</div>
+    <p>Da una primera pasada hoy y marca lo que ya dominas. Lo que quede sin marcar es tu <strong>plan de estudio</strong>: vuelve a esa sección, tápala y reconstrúyela en una hoja en blanco. Cuando puedas hacerlo sin ayuda, recién entonces marca la casilla. El objetivo no es tener todo marcado rápido — es tenerlo marcado <em>de verdad</em>.</p>
+  </div>
+
+  <div class="call insight">
+    <div class="ct">✸ Última idea</div>
+    <p>Un examen de costos no mide si memorizaste fórmulas: mide si entiendes <em>a dónde va cada sol</em>. Si dominas eso —si frente a cualquier desembolso sabes decir "esto es costo y se guarda" o "esto es gasto y se va al resultado", y sabes <em>por qué</em>— entonces ya no estás resolviendo un examen: estás pensando como un contador de costos. Eso es ser maestro del tema. Mucho éxito, Pingüino.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="ft-main">Contabilidad de Costos I · Examen Parcial resuelto</div>
+  <div class="ft-sub">Material de estudio paso a paso · Universidad de Piura · Curso A1CC1<br>
+  Cálculos verificados numéricamente · Teoría contrastada con los recursos del curso (PPT1–PPT4, PD2–PD5).</div>
+  <a href="#inicio" class="toplink">↑ Volver al inicio</a>
+</footer>
+
+</main>
+</div>
+
+<script>
+/* ===== TEMA CLARO / OSCURO ===== */
+(function(){
+  var root=document.documentElement,
+      tog=document.getElementById('themeToggle'),
+      lbl=document.getElementById('themeLbl');
+  function setTheme(t){
+    root.setAttribute('data-theme',t);
+    lbl.textContent = (t==='dark') ? 'Modo oscuro' : 'Modo claro';
+    if(window.__repaintCharts) window.__repaintCharts();
+  }
+  tog.addEventListener('click',function(){
+    setTheme(root.getAttribute('data-theme')==='dark' ? 'light' : 'dark');
+  });
+  tog.addEventListener('keydown',function(e){
+    if(e.key==='Enter'||e.key===' '){ e.preventDefault(); tog.click(); }
+  });
+})();
+
+/* ===== GRÁFICOS (Chart.js) — datos verificados ===== */
+window.addEventListener('DOMContentLoaded',function(){
+  function cv(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+  function pal(){
+    return {
+      teal:cv('--teal'), terra:cv('--terra'), gold:cv('--gold'),
+      plum:cv('--plum'), sage:cv('--sage'), orange:cv('--orange'),
+      ink:cv('--ink'), inkMute:cv('--ink-mute'), grid:cv('--grid'), surface:cv('--surface')
+    };
+  }
+  var nf = new Intl.NumberFormat('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2});
+  var charts=[];
+
+  if(window.Chart){
+    Chart.defaults.font.family='Manrope, sans-serif';
+
+    /* -- doughnut genérico -- */
+    function donut(id,labels,data,keys,unit){
+      var el=document.getElementById(id); if(!el) return null;
+      var c=pal();
+      var ch=new Chart(el,{
+        type:'doughnut',
+        data:{labels:labels,datasets:[{data:data,
+          backgroundColor:keys.map(function(k){return c[k];}),
+          borderColor:c.surface,borderWidth:3,hoverOffset:6}]},
+        options:{
+          maintainAspectRatio:false, cutout:'56%',
+          plugins:{
+            legend:{position:'bottom',
+              labels:{color:c.ink,boxWidth:12,boxHeight:12,padding:13,
+                font:{size:12,family:'Manrope'}}},
+            tooltip:{
+              backgroundColor:c.surface,titleColor:c.ink,bodyColor:c.ink,
+              borderColor:c.grid,borderWidth:1,padding:11,
+              callbacks:{label:function(ctx){
+                var tot=ctx.dataset.data.reduce(function(a,b){return a+b;},0);
+                var pct=(ctx.parsed/tot*100).toFixed(1);
+                var val=(unit==='%') ? ctx.parsed.toFixed(2)+' %' : 'S/ '+nf.format(ctx.parsed);
+                return '  '+ctx.label+': '+val+'  ('+pct+'%)';
+              }}}
+          }
+        }
+      });
+      ch._keys=keys; ch._kind='donut';
+      charts.push(ch); return ch;
+    }
+
+    /* -- barras -- */
+    function bars(id,labels,data,keys){
+      var el=document.getElementById(id); if(!el) return null;
+      var c=pal();
+      var ch=new Chart(el,{
+        type:'bar',
+        data:{labels:labels,datasets:[{data:data,
+          backgroundColor:keys.map(function(k){return c[k];}),
+          borderRadius:9,borderWidth:0,maxBarThickness:96}]},
+        options:{
+          maintainAspectRatio:false,
+          plugins:{
+            legend:{display:false},
+            tooltip:{backgroundColor:c.surface,titleColor:c.ink,bodyColor:c.ink,
+              borderColor:c.grid,borderWidth:1,padding:11,
+              callbacks:{label:function(ctx){return '  S/ '+nf.format(ctx.parsed.y);}}}
+          },
+          scales:{
+            x:{ticks:{color:c.ink,font:{size:12,family:'Manrope'}},
+               grid:{display:false},border:{color:c.grid}},
+            y:{beginAtZero:true,
+               ticks:{color:c.inkMute,font:{size:11,family:'JetBrains Mono'},
+                 callback:function(v){return 'S/ '+v.toLocaleString('es-PE');}},
+               grid:{color:c.grid},border:{display:false}}
+          }
+        }
+      });
+      ch._keys=keys; ch._kind='bar';
+      charts.push(ch); return ch;
+    }
+
+    /* === Caso 1 === */
+    donut('chImport',
+      ['Valor CIF (mercadería + flete + seguro)','Ad Valorem (6%)','ISC (20%)','Operador logístico','Transporte interno'],
+      [1530.00, 91.80, 324.36, 920.00, 420.00],
+      ['teal','terra','gold','plum','sage'],'S/');
+
+    donut('chCostoServ',
+      ['Materiales directos','Mano de obra del servicio','CIF del servicio'],
+      [8451.39, 10800.00, 7096.67],
+      ['teal','terra','gold'],'S/');
+
+    donut('chEERR',
+      ['Costo del Servicio','Gastos de Administración','Gastos de Ventas','Otros gastos (rotura)','Utilidad (resultado)'],
+      [38.75, 18.12, 9.12, 0.54, 33.48],
+      ['terra','orange','gold','plum','teal'],'%');
+
+    /* === Caso 2 === */
+    donut('chCostoProd',
+      ['Materiales Directos (MPD)','Mano de Obra Directa (MOD)','Costos Indirectos (CIF)'],
+      [41100, 72000, 9400],
+      ['teal','terra','gold'],'S/');
+
+    bars('chVentas',
+      ['Ventas','Costo de ventas','Utilidad bruta'],
+      [201600, 112400, 89200],
+      ['teal','terra','gold']);
+
+    /* -- recoloreo al cambiar de tema -- */
+    window.__repaintCharts=function(){
+      var c=pal();
+      charts.forEach(function(ch){
+        ch.data.datasets[0].backgroundColor=ch._keys.map(function(k){return c[k];});
+        if(ch._kind==='donut'){
+          ch.data.datasets[0].borderColor=c.surface;
+          ch.options.plugins.legend.labels.color=c.ink;
+        }else{
+          ch.options.scales.x.ticks.color=c.ink;
+          ch.options.scales.x.border.color=c.grid;
+          ch.options.scales.y.ticks.color=c.inkMute;
+          ch.options.scales.y.grid.color=c.grid;
+        }
+        var tt=ch.options.plugins.tooltip;
+        tt.backgroundColor=c.surface; tt.titleColor=c.ink; tt.bodyColor=c.ink; tt.borderColor=c.grid;
+        ch.update();
+      });
+    };
+  }
+
+  /* ===== MathJax: renderizar fórmulas ===== */
+  if(window.MathJax && MathJax.typesetPromise){ MathJax.typesetPromise(); }
+
+  /* ===== ÍNDICE LATERAL ACTIVO ===== */
+  var links={};
+  document.querySelectorAll('nav.toc a[href^="#"]').forEach(function(a){
+    links[a.getAttribute('href').slice(1)]=a;
+  });
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){
+        Object.keys(links).forEach(function(k){ links[k].classList.remove('active'); });
+        if(links[en.target.id]) links[en.target.id].classList.add('active');
+      }
+    });
+  },{rootMargin:'-22% 0px -68% 0px',threshold:0});
+  document.querySelectorAll('main section[id], main header[id]').forEach(function(s){
+    if(links[s.id]) obs.observe(s);
+  });
+});
+</script>
+
+</body>
+</html>
