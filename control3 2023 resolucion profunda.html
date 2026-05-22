@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Control N°3 (2023-I) · Resolución profunda · Est. 1 · UDEP</title>
+
+<!-- KaTeX -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false},{left:'\\\\[',right:'\\\\]',display:true},{left:'\\\\(',right:'\\\\)',display:false}],throwOnError:false});"></script>
+
+<!-- Fuentes -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Karla:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --cream:#FBF8F1;
+  --cream-2:#F4EFE4;
+  --paper:#FFFCF6;
+  --ink:#1A2A40;
+  --ink-soft:#34465F;
+  --ink-muted:#6B7A8F;
+  --burgundy:#7A1F2A;
+  --burgundy-soft:#9D3742;
+  --gold:#A88838;
+  --gold-soft:#C9A961;
+  --sage:#5A6B4E;
+  --sage-soft:#7E8E70;
+  --rule:#D9D0BD;
+  --rule-soft:#E8E1D2;
+  --shadow:rgba(26,42,64,0.08);
+  --highlight:#FFF3B0;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:17px;scroll-behavior:smooth}
+body{
+  font-family:'Karla',sans-serif;
+  background:var(--cream);
+  color:var(--ink);
+  line-height:1.65;
+  font-weight:400;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ===== Layout ===== */
+.app{
+  display:grid;
+  grid-template-columns:280px 1fr;
+  max-width:1400px;
+  margin:0 auto;
+  min-height:100vh;
+}
+
+aside.sidebar{
+  position:sticky;
+  top:0;
+  height:100vh;
+  background:var(--cream-2);
+  border-right:1px solid var(--rule);
+  padding:36px 28px;
+  overflow-y:auto;
+}
+
+main.content{
+  padding:48px 56px 96px 56px;
+  background:var(--paper);
+  min-height:100vh;
+}
+
+/* ===== Sidebar ===== */
+.brand{
+  font-family:'Cormorant Garamond',serif;
+  font-weight:600;
+  font-size:1.6rem;
+  color:var(--burgundy);
+  line-height:1.15;
+  margin-bottom:6px;
+  letter-spacing:0.5px;
+}
+.brand-sub{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.7rem;
+  color:var(--ink-muted);
+  text-transform:uppercase;
+  letter-spacing:1.5px;
+  margin-bottom:28px;
+}
+
+nav.toc{margin-top:18px}
+nav.toc .toc-title{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.7rem;
+  text-transform:uppercase;
+  letter-spacing:1.5px;
+  color:var(--ink-muted);
+  margin-bottom:14px;
+  padding-bottom:8px;
+  border-bottom:1px solid var(--rule);
+}
+nav.toc a{
+  display:block;
+  text-decoration:none;
+  color:var(--ink-soft);
+  font-size:0.92rem;
+  padding:8px 0 8px 14px;
+  border-left:2px solid transparent;
+  transition:all 0.2s;
+  line-height:1.35;
+}
+nav.toc a:hover{
+  color:var(--burgundy);
+  border-left-color:var(--burgundy);
+  background:rgba(122,31,42,0.04);
+}
+nav.toc a.section{
+  font-family:'Cormorant Garamond',serif;
+  font-weight:600;
+  font-size:1.05rem;
+  color:var(--ink);
+  margin-top:14px;
+  padding-left:0;
+  border-left:none;
+}
+nav.toc a.section:hover{background:none}
+nav.toc a .num{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.75rem;
+  color:var(--burgundy);
+  margin-right:6px;
+}
+
+/* ===== Header ===== */
+.doc-header{
+  border-bottom:2px solid var(--ink);
+  padding-bottom:24px;
+  margin-bottom:40px;
+}
+.doc-eyebrow{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.75rem;
+  text-transform:uppercase;
+  letter-spacing:2px;
+  color:var(--burgundy);
+  margin-bottom:10px;
+}
+.doc-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.8rem;
+  font-weight:600;
+  color:var(--ink);
+  line-height:1.05;
+  margin-bottom:6px;
+}
+.doc-subtitle{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-size:1.4rem;
+  color:var(--ink-soft);
+  font-weight:400;
+}
+.doc-meta{
+  display:flex;
+  gap:24px;
+  margin-top:16px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.78rem;
+  color:var(--ink-muted);
+  flex-wrap:wrap;
+}
+.doc-meta span{display:flex;align-items:center;gap:6px}
+.doc-meta span::before{
+  content:'';
+  display:inline-block;
+  width:6px;
+  height:6px;
+  background:var(--gold);
+  border-radius:50%;
+}
+
+/* ===== Tipografía de secciones ===== */
+h2.section-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.1rem;
+  font-weight:600;
+  color:var(--ink);
+  margin-top:64px;
+  margin-bottom:14px;
+  padding-bottom:10px;
+  border-bottom:1px solid var(--rule);
+  display:flex;
+  align-items:baseline;
+  gap:14px;
+}
+h2.section-title .num{
+  font-family:'JetBrains Mono',monospace;
+  font-size:1rem;
+  color:var(--burgundy);
+  font-weight:500;
+}
+
+h3.subsection{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.5rem;
+  font-weight:600;
+  color:var(--burgundy);
+  margin-top:36px;
+  margin-bottom:12px;
+  font-style:italic;
+}
+
+h4.minor{
+  font-family:'Karla',sans-serif;
+  font-size:0.85rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:1.5px;
+  color:var(--ink-soft);
+  margin-top:24px;
+  margin-bottom:8px;
+}
+
+p{margin-bottom:14px;color:var(--ink-soft)}
+p.intro{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.25rem;
+  font-style:italic;
+  color:var(--ink);
+  line-height:1.5;
+  margin-bottom:24px;
+  max-width:75ch;
+}
+
+strong{color:var(--ink);font-weight:600}
+em{font-style:italic;color:var(--burgundy-soft)}
+
+/* ===== Cards (bloques pedagógicos) ===== */
+.card{
+  background:var(--paper);
+  border:1px solid var(--rule);
+  border-radius:6px;
+  padding:24px 28px;
+  margin:20px 0;
+  box-shadow:0 1px 3px var(--shadow);
+}
+
+.card.theory{
+  border-left:4px solid var(--sage);
+  background:linear-gradient(to right, rgba(90,107,78,0.04), var(--paper) 8%);
+}
+.card.theory .label{color:var(--sage)}
+
+.card.identify{
+  border-left:4px solid var(--gold);
+  background:linear-gradient(to right, rgba(168,136,56,0.05), var(--paper) 8%);
+}
+.card.identify .label{color:var(--gold)}
+
+.card.solve{
+  border-left:4px solid var(--burgundy);
+  background:linear-gradient(to right, rgba(122,31,42,0.04), var(--paper) 8%);
+}
+.card.solve .label{color:var(--burgundy)}
+
+.card.answer{
+  border:2px solid var(--burgundy);
+  background:var(--cream-2);
+  text-align:left;
+  padding:20px 28px;
+}
+.card.answer .answer-line{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.3rem;
+  color:var(--ink);
+  margin-bottom:6px;
+}
+.card.answer .answer-value{
+  font-family:'JetBrains Mono',monospace;
+  font-size:1.4rem;
+  color:var(--burgundy);
+  font-weight:600;
+}
+
+.card.warning{
+  border-left:4px solid #C75A4C;
+  background:#FBEFEC;
+}
+.card.warning .label{color:#A03826}
+
+.card.insight{
+  border-left:4px solid var(--gold-soft);
+  background:rgba(168,136,56,0.06);
+}
+.card.insight .label{color:var(--gold)}
+
+.card .label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.7rem;
+  text-transform:uppercase;
+  letter-spacing:1.8px;
+  font-weight:600;
+  margin-bottom:10px;
+  display:block;
+}
+
+/* ===== Tabla de contingencia ===== */
+.contingency{
+  margin:28px auto;
+  border-collapse:collapse;
+  font-family:'Karla',sans-serif;
+  font-size:0.95rem;
+  background:var(--paper);
+  box-shadow:0 2px 8px var(--shadow);
+}
+.contingency th, .contingency td{
+  border:1px solid var(--rule);
+  padding:10px 16px;
+  text-align:center;
+  min-width:80px;
+}
+.contingency th{
+  background:var(--ink);
+  color:var(--cream);
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.1rem;
+  font-weight:500;
+  letter-spacing:0.5px;
+}
+.contingency .row-label{
+  background:var(--cream-2);
+  font-family:'Cormorant Garamond',serif;
+  font-weight:600;
+  color:var(--ink);
+  font-size:1.05rem;
+  text-align:left;
+  padding-left:18px;
+}
+.contingency .total-row{
+  background:var(--cream-2);
+  font-weight:600;
+  color:var(--burgundy);
+  border-top:2px solid var(--ink);
+}
+.contingency .total-col{
+  background:var(--cream-2);
+  font-weight:600;
+  color:var(--burgundy);
+  border-left:2px solid var(--ink);
+}
+.contingency .total-cell{
+  background:var(--burgundy);
+  color:var(--cream);
+  font-weight:600;
+}
+.contingency .event-tag{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.7rem;
+  color:var(--burgundy);
+  display:block;
+  margin-top:2px;
+  font-weight:500;
+}
+.contingency td.highlight{
+  background:var(--highlight);
+  font-weight:600;
+}
+
+/* ===== Listas, ecuaciones, pasos ===== */
+ul.bullets, ol.steps{
+  margin-left:24px;
+  margin-bottom:16px;
+}
+ul.bullets li, ol.steps li{
+  margin-bottom:8px;
+  color:var(--ink-soft);
+}
+ol.steps{counter-reset:step;list-style:none;margin-left:0}
+ol.steps > li{
+  counter-increment:step;
+  position:relative;
+  padding-left:48px;
+  margin-bottom:18px;
+}
+ol.steps > li::before{
+  content:counter(step,decimal-leading-zero);
+  position:absolute;
+  left:0;
+  top:0;
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.85rem;
+  color:var(--cream);
+  background:var(--burgundy);
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:600;
+}
+
+.eq-block{
+  margin:18px 0;
+  padding:14px 18px;
+  background:var(--cream-2);
+  border-radius:4px;
+  border-left:3px solid var(--gold);
+  overflow-x:auto;
+}
+.eq-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:0.7rem;
+  text-transform:uppercase;
+  letter-spacing:1.5px;
+  color:var(--ink-muted);
+  margin-bottom:6px;
+}
+
+/* ===== Diagrama de Venn ===== */
+.venn-wrap{
+  display:flex;
+  justify-content:center;
+  margin:24px 0;
+}
+
+/* ===== Comparativa de métodos ===== */
+.two-col{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+  margin:24px 0;
+}
+.two-col .col{
+  background:var(--paper);
+  border:1px solid var(--rule);
+  border-radius:6px;
+  padding:18px 22px;
+}
+.two-col .col.alt{background:var(--cream-2)}
+.two-col h5{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-size:1.15rem;
+  color:var(--burgundy);
+  margin-bottom:10px;
+}
+
+/* ===== Concepto inline ===== */
+.concept{
+  background:rgba(168,136,56,0.15);
+  padding:1px 6px;
+  border-radius:2px;
+  font-weight:500;
+  color:var(--ink);
+}
+.event-name{
+  font-family:'JetBrains Mono',monospace;
+  background:var(--cream-2);
+  padding:2px 7px;
+  border-radius:3px;
+  font-size:0.88em;
+  color:var(--burgundy);
+  font-weight:500;
+}
+
+/* ===== Identificación / decisión ===== */
+.decision-tree{
+  background:var(--cream-2);
+  border-radius:6px;
+  padding:20px 24px;
+  margin:18px 0;
+  font-family:'Karla',sans-serif;
+}
+.decision-tree .branch{
+  padding:6px 0 6px 24px;
+  border-left:2px solid var(--rule);
+  margin-left:10px;
+}
+.decision-tree .q{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-weight:600;
+  color:var(--ink);
+  font-size:1.05rem;
+}
+.decision-tree .a{
+  color:var(--burgundy);
+  font-weight:500;
+}
+
+/* ===== Resumen final ===== */
+.summary-table{
+  width:100%;
+  border-collapse:collapse;
+  margin:20px 0;
+  font-family:'Karla',sans-serif;
+}
+.summary-table th, .summary-table td{
+  border-bottom:1px solid var(--rule);
+  padding:12px 14px;
+  text-align:left;
+}
+.summary-table th{
+  background:var(--ink);
+  color:var(--cream);
+  font-family:'Cormorant Garamond',serif;
+  font-weight:500;
+  font-size:1.05rem;
+}
+.summary-table td.value{
+  font-family:'JetBrains Mono',monospace;
+  color:var(--burgundy);
+  font-weight:600;
+}
+.summary-table tr:nth-child(even) td{background:var(--cream-2)}
+
+/* ===== Decoraciones ===== */
+.ornament{
+  text-align:center;
+  margin:40px 0;
+  color:var(--gold);
+  font-size:1.4rem;
+  letter-spacing:1.2rem;
+}
+
+/* ===== Print ===== */
+@media print{
+  body{background:white;font-size:11pt}
+  .app{display:block}
+  aside.sidebar{display:none}
+  main.content{padding:24px}
+  .card{box-shadow:none;break-inside:avoid;page-break-inside:avoid}
+  h2.section-title{page-break-after:avoid}
+  h3.subsection{page-break-after:avoid}
+  .doc-header{page-break-after:avoid}
+}
+
+/* ===== iPad Pro 12.9 optimization ===== */
+@media (max-width: 1180px) {
+  .app{grid-template-columns:240px 1fr}
+  main.content{padding:40px 44px 80px}
+}
+@media (max-width: 900px) {
+  .app{display:block}
+  aside.sidebar{position:static;height:auto;padding:24px}
+  main.content{padding:32px}
+  .two-col{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- ============ SIDEBAR ============ -->
+<aside class="sidebar">
+  <div class="brand">Estadística 1<br>Control N°3</div>
+  <div class="brand-sub">2023-I · Fila B · Prof. Agurto</div>
+
+  <nav class="toc">
+    <div class="toc-title">Contenido</div>
+    <a href="#contexto" class="section"><span class="num">00</span>Contexto y tabla</a>
+    <a href="#tipo">El tipo de muestreo</a>
+    <a href="#marco">Marco teórico esencial</a>
+
+    <a href="#parte-a" class="section"><span class="num">A</span>Tres votantes · 1 derecha</a>
+    <a href="#a-identif">Identificación</a>
+    <a href="#a-metodo1">Método combinatorio</a>
+    <a href="#a-metodo2">Método condicional</a>
+    <a href="#a-vs-binomial">¿Y si fuera con reemplazo?</a>
+
+    <a href="#parte-b" class="section"><span class="num">B</span>Condicional Izq · Neutral</a>
+    <a href="#b-teoria">Probabilidad condicional</a>
+    <a href="#b-calculo">Cálculo</a>
+
+    <a href="#parte-c" class="section"><span class="num">C</span>Tres votantes · 2 neutrales</a>
+    <a href="#c-metodo">Resolución completa</a>
+
+    <a href="#parte-d" class="section"><span class="num">D</span>Centro o A favor</a>
+    <a href="#d-union">Regla de la unión</a>
+    <a href="#d-venn">Visualización Venn</a>
+
+    <a href="#resumen" class="section"><span class="num">★</span>Resumen final</a>
+  </nav>
+</aside>
+
+<!-- ============ MAIN ============ -->
+<main class="content">
+
+<!-- ============ HEADER ============ -->
+<header class="doc-header">
+  <div class="doc-eyebrow">Resolución profunda · UDEP Lima</div>
+  <h1 class="doc-title">Probabilidad clásica, condicional y reglas de la unión</h1>
+  <p class="doc-subtitle">Control N°3 de Estadística 1 · 26 de mayo de 2023 · Fila "b"</p>
+  <div class="doc-meta">
+    <span>Capítulo 3</span>
+    <span>4 preguntas · 5.00 pts</span>
+    <span>20 minutos</span>
+    <span>Sin libros · solo calculadora</span>
+  </div>
+</header>
+
+<p class="intro">Este control mezcla tres herramientas que parecen distintas pero comparten una misma estructura: <em>contar bien lo posible y contar bien lo favorable</em>. La tabla de contingencia es el "tablero" sobre el cual jugamos. Lo que cambia es la pregunta — y por tanto, la regla — que cada inciso nos pide. Vamos a desmenuzar cada una.</p>
+
+<!-- ============ SECCIÓN 0: CONTEXTO ============ -->
+<h2 class="section-title" id="contexto"><span class="num">00</span>Contexto y tabla de contingencia</h2>
+
+<p>El enunciado nos da una muestra de <strong>400 votantes</strong> clasificados por <em>partido político</em> (izquierda, centro, derecha) y por <em>opinión</em> sobre un nuevo impuesto predial (a favor, neutral, en contra). Lo que tenemos es una <span class="concept">tabla de contingencia 3×3</span>: el cruce de dos variables categóricas.</p>
+
+<p>Conviene <strong>nombrar los eventos</strong> antes de calcular nada. Esto convierte la tabla de "números sueltos" en un lenguaje que se puede manipular:</p>
+
+<table class="contingency">
+  <thead>
+    <tr>
+      <th rowspan="2">Partido político</th>
+      <th colspan="3">Opinión sobre el impuesto</th>
+      <th rowspan="2">Total</th>
+    </tr>
+    <tr>
+      <th>A favor <span class="event-tag">D</span></th>
+      <th>Neutral <span class="event-tag">E</span></th>
+      <th>En contra <span class="event-tag">F</span></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="row-label">Izquierda <span class="event-tag">A</span></td>
+      <td>120</td><td>20</td><td>20</td>
+      <td class="total-col">160</td>
+    </tr>
+    <tr>
+      <td class="row-label">Centro <span class="event-tag">B</span></td>
+      <td>50</td><td>30</td><td>60</td>
+      <td class="total-col">140</td>
+    </tr>
+    <tr>
+      <td class="row-label">Derecha <span class="event-tag">C</span></td>
+      <td>50</td><td>10</td><td>40</td>
+      <td class="total-col">100</td>
+    </tr>
+    <tr class="total-row">
+      <td class="row-label" style="color:var(--burgundy)">Total</td>
+      <td>220</td><td>60</td><td>120</td>
+      <td class="total-cell">400</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="card theory">
+  <span class="label">Lectura de la tabla</span>
+  <p><strong>Celdas internas</strong> son <em>frecuencias conjuntas</em>: cuentan elementos que cumplen <em>dos condiciones a la vez</em>. Por ejemplo, "120" significa <span class="event-name">|A ∩ D|</span> = 120 personas son <em>izquierda Y a favor</em>.</p>
+  <p><strong>Totales de fila y columna</strong> son <em>frecuencias marginales</em>: cuentan elementos que cumplen <em>una sola condición</em>, sumando sobre la otra. Por ejemplo, "160" = <span class="event-name">|A|</span> = izquierda (sin importar opinión).</p>
+  <p><strong>Total general (400)</strong> es <em>el tamaño del espacio muestral</em> $|\Omega| = 400$. Es el denominador natural cuando aplicamos probabilidad clásica.</p>
+</div>
+
+<h3 class="subsection" id="tipo">¿De qué tipo de muestreo estamos hablando?</h3>
+
+<p>Antes de tocar ninguna fórmula hay una pregunta crucial: cuando seleccionamos <strong>tres votantes al azar</strong>, ¿pueden repetirse personas o no?</p>
+
+<div class="card identify">
+  <span class="label">Convención del curso</span>
+  <p>En problemas como este — donde se eligen <em>personas</em> de una población finita y no se dice nada sobre devolverlas — el muestreo es <strong>sin reemplazo</strong>. Tomamos tres personas distintas, simultáneamente o una tras otra sin reponer.</p>
+  <p>Esto importa porque <strong>al sacar una persona, la composición de los restantes cambia</strong>. Esa dependencia entre extracciones es la firma del muestreo sin reemplazo.</p>
+</div>
+
+<div class="card warning">
+  <span class="label">Atención · trampa común</span>
+  <p>Cuando el problema diga "3 personas extraídas <em>al azar</em>" sin más, asume <strong>sin reemplazo</strong>. Si dice "se elige una, se anota, se devuelve y se elige otra", entonces es <strong>con reemplazo</strong>. Distinguirlos cambia el método (combinatoria/hipergeométrica vs. binomial).</p>
+</div>
+
+<!-- ============ MARCO TEÓRICO ============ -->
+<h2 class="section-title" id="marco"><span class="num">★</span>Marco teórico esencial</h2>
+
+<p>Para no perdernos en las cuatro partes, fijemos las herramientas que vamos a usar. Cada parte del control activa una o varias de estas reglas.</p>
+
+<h3 class="subsection">1. Probabilidad clásica (regla de Laplace)</h3>
+
+<p>Cuando todos los resultados del espacio muestral son <strong>igualmente probables</strong>, la probabilidad de un evento se reduce a contar:</p>
+
+<div class="eq-block">
+  <div class="eq-label">Definición clásica</div>
+  $$P(A) = \frac{\text{casos favorables a } A}{\text{casos totales}} = \frac{|A|}{|\Omega|}$$
+</div>
+
+<p>En nuestra tabla, $|\Omega|=400$ y los "casos favorables" son las celdas o sumas de celdas que cumplen la condición pedida. Todo el control se mueve sobre esta base.</p>
+
+<h3 class="subsection">2. Probabilidad condicional</h3>
+
+<p>La probabilidad condicional cambia el espacio muestral: en vez de mirar a los 400 votantes, restringimos la atención a un subgrupo y nos preguntamos qué fracción de <em>ese subgrupo</em> cumple cierta característica.</p>
+
+<div class="eq-block">
+  <div class="eq-label">Probabilidad condicional</div>
+  $$P(A \mid B) = \frac{P(A \cap B)}{P(B)} = \frac{|A \cap B|}{|B|} \quad \text{si } P(B) > 0$$
+</div>
+
+<div class="card insight">
+  <span class="label">Intuición</span>
+  <p>Cuando lees <em>"sabiendo que..."</em>, <em>"dado que..."</em>, <em>"si el votante es neutral, ¿cuál es la probabilidad de...?"</em>, esa <strong>información previa restringe el universo</strong>. En la tabla, eso significa <em>quedarse con una fila o una columna</em> y reescalar sobre su total marginal.</p>
+</div>
+
+<h3 class="subsection">3. Coeficiente binomial: contar grupos sin orden</h3>
+
+<p>Si queremos elegir $k$ elementos de un conjunto de $n$ <strong>sin importar el orden</strong>, el número de formas posibles es:</p>
+
+<div class="eq-block">
+  $$\binom{n}{k} = \frac{n!}{k!\,(n-k)!}$$
+</div>
+
+<p>Cuando el problema dice "seleccionamos 3 votantes" entendemos que <em>el orden no importa</em> (un grupo de 3 personas es el mismo grupo). Por eso usaremos combinaciones, no permutaciones.</p>
+
+<h3 class="subsection">4. Regla de la unión (suma de probabilidades)</h3>
+
+<p>Cuando dos eventos pueden ocurrir simultáneamente (no son disjuntos), la probabilidad de su unión <strong>resta la intersección</strong> para no contarla dos veces:</p>
+
+<div class="eq-block">
+  <div class="eq-label">Principio de inclusión-exclusión</div>
+  $$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$
+</div>
+
+<p>Si fueran <strong>disjuntos</strong> (no pueden ocurrir a la vez), $P(A \cap B) = 0$ y la regla se simplifica a $P(A \cup B) = P(A) + P(B)$. Pero en nuestra tabla las clasificaciones de partido y opinión <em>pueden combinarse</em>, así que casi nunca son disjuntas.</p>
+
+<h3 class="subsection">5. Regla del producto (para extracciones sin reemplazo)</h3>
+
+<p>Cuando elegimos varios elementos uno tras otro, la probabilidad del compuesto es el producto de probabilidades condicionales:</p>
+
+<div class="eq-block">
+  $$P(A_1 \cap A_2 \cap A_3) = P(A_1) \cdot P(A_2 \mid A_1) \cdot P(A_3 \mid A_1 \cap A_2)$$
+</div>
+
+<p>Cada extracción modifica la composición de los que quedan, así que el denominador cambia en cada paso. Esta es nuestra "puerta de entrada" alternativa a la combinatoria.</p>
+
+<div class="ornament">·  ·  ·</div>
+
+<!-- ============================================ -->
+<!-- ============ PARTE A =================== -->
+<!-- ============================================ -->
+<h2 class="section-title" id="parte-a"><span class="num">A</span>Tres votantes: uno de derecha, los otros no</h2>
+
+<div class="card">
+  <span class="label" style="color:var(--ink-muted)">Enunciado</span>
+  <p style="font-style:italic;font-size:1.05rem;color:var(--ink)"><strong>(1.75p)</strong> Si seleccionamos al azar a tres votantes ¿Cuál es la probabilidad de que <strong>uno sea de derecha y los otros no lo sean</strong>?</p>
+</div>
+
+<h3 class="subsection" id="a-identif">Paso 1 · Identificación del tipo de problema</h3>
+
+<p>Detectemos las pistas:</p>
+
+<ul class="bullets">
+  <li>"Seleccionamos al azar a <strong>tres votantes</strong>" → es un experimento <em>compuesto</em> (tres extracciones).</li>
+  <li>No hay reposición → <strong>sin reemplazo</strong>.</li>
+  <li>"<strong>Uno</strong> sea de derecha y <strong>los otros no</strong>" → exactamente 1 éxito en 3 ensayos, pero <em>cualquiera de los tres</em> puede ser el "uno". Hay que considerar todas las posiciones posibles.</li>
+</ul>
+
+<div class="decision-tree">
+  <div class="q">¿Cuántas extracciones? → <span class="a">Tres.</span></div>
+  <div class="branch">
+    <div class="q">¿Con o sin reemplazo? → <span class="a">Sin reemplazo (votantes distintos).</span></div>
+    <div class="branch">
+      <div class="q">¿Importa el orden de extracción? → <span class="a">No (formamos un grupo).</span></div>
+      <div class="branch">
+        <div class="q">¿Conviene usar combinaciones o regla del producto? → <span class="a">Ambas funcionan. Las haré juntas para verificación cruzada.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h4 class="minor">Definición precisa de los eventos</h4>
+
+<p>Definamos:</p>
+<ul class="bullets">
+  <li><span class="event-name">C</span> = "el votante elegido es <strong>de derecha</strong>". En la población hay 100 personas de derecha (fila C, total). Entonces $|C|=100$.</li>
+  <li><span class="event-name">C'</span> = "el votante elegido <strong>no es</strong> de derecha". Su complemento. $|C'| = 400-100 = 300$.</li>
+</ul>
+
+<p>Queremos formar grupos de 3 votantes que contengan <strong>exactamente uno de derecha</strong> (y por tanto dos de "no derecha").</p>
+
+<h3 class="subsection" id="a-metodo1">Paso 2 · Método combinatorio (recomendado para examen)</h3>
+
+<div class="card theory">
+  <span class="label">Teoría aplicable</span>
+  <p>Si elegimos $k$ elementos sin orden de una población de $n$, hay $\binom{n}{k}$ grupos posibles. Cuando la población está dividida en dos "tipos" (éxito y fracaso), el número de grupos con exactamente $x$ éxitos es:</p>
+  <div class="eq-block" style="background:transparent;border:none;padding:0;margin:8px 0">
+    $$\binom{K}{x}\binom{N-K}{n-x}$$
+  </div>
+  <p>donde $N$ = población total, $K$ = elementos de tipo "éxito", $n$ = tamaño de la muestra, $x$ = éxitos deseados.</p>
+  <p>Esta estructura es la <strong>distribución hipergeométrica</strong> que verán formalmente en el Cap. 4. Aquí la usamos como herramienta de conteo.</p>
+</div>
+
+<h4 class="minor">Identificación de las variables hipergeométricas</h4>
+
+<table class="contingency" style="width:auto;margin:14px auto">
+  <thead><tr><th>Símbolo</th><th>Significado</th><th>Valor</th></tr></thead>
+  <tbody>
+    <tr><td class="row-label">N</td><td>Población total</td><td>400</td></tr>
+    <tr><td class="row-label">K</td><td>Éxitos en la población (derecha)</td><td>100</td></tr>
+    <tr><td class="row-label">N − K</td><td>Fracasos (no derecha)</td><td>300</td></tr>
+    <tr><td class="row-label">n</td><td>Tamaño de la muestra</td><td>3</td></tr>
+    <tr><td class="row-label">x</td><td>Éxitos deseados (derecha en muestra)</td><td>1</td></tr>
+  </tbody>
+</table>
+
+<h4 class="minor">Cálculo</h4>
+
+<ol class="steps">
+  <li>
+    <strong>Casos favorables.</strong> Elegir 1 votante de los 100 de derecha y 2 votantes de los 300 que no lo son:
+    <div class="eq-block">
+      $$\text{Favorables} = \binom{100}{1}\binom{300}{2}$$
+      $$= 100 \cdot \frac{300 \cdot 299}{2} = 100 \cdot 44\,850 = 4\,485\,000$$
+    </div>
+  </li>
+  <li>
+    <strong>Casos totales.</strong> Elegir 3 votantes cualesquiera de los 400:
+    <div class="eq-block">
+      $$|\Omega| = \binom{400}{3} = \frac{400 \cdot 399 \cdot 398}{3!} = \frac{63\,520\,800}{6} = 10\,586\,800$$
+    </div>
+  </li>
+  <li>
+    <strong>Aplicar Laplace.</strong>
+    <div class="eq-block">
+      $$P(\text{exactamente 1 de derecha}) = \frac{\binom{100}{1}\binom{300}{2}}{\binom{400}{3}} = \frac{4\,485\,000}{10\,586\,800}$$
+      $$= \frac{22\,425}{52\,934} \approx 0{,}4236$$
+    </div>
+  </li>
+</ol>
+
+<div class="card answer">
+  <div class="answer-line"><strong>Respuesta (a):</strong></div>
+  <div class="answer-value">P = 22 425 / 52 934 ≈ 0,4236 (≈ 42,36 %)</div>
+</div>
+
+<h3 class="subsection" id="a-metodo2">Paso 3 · Verificación por método condicional</h3>
+
+<p>Probemos a llegar al mismo número desde otro ángulo. Pensemos en las tres extracciones <strong>en orden</strong>. Hay tres "patrones" posibles donde aparece exactamente un votante de derecha (D = derecha, N = no derecha):</p>
+
+<table class="contingency" style="width:auto;margin:14px auto">
+  <thead><tr><th>Patrón</th><th>1ª extracción</th><th>2ª extracción</th><th>3ª extracción</th></tr></thead>
+  <tbody>
+    <tr><td class="row-label">DNN</td><td>derecha</td><td>no</td><td>no</td></tr>
+    <tr><td class="row-label">NDN</td><td>no</td><td>derecha</td><td>no</td></tr>
+    <tr><td class="row-label">NND</td><td>no</td><td>no</td><td>derecha</td></tr>
+  </tbody>
+</table>
+
+<p>Calculemos la probabilidad de uno cualquiera, por ejemplo DNN, aplicando la <span class="concept">regla del producto</span>:</p>
+
+<div class="eq-block">
+  $$P(\text{DNN}) = \underbrace{\frac{100}{400}}_{\text{1ª: derecha}} \cdot \underbrace{\frac{300}{399}}_{\text{2ª: no derecha, restan 399}} \cdot \underbrace{\frac{299}{398}}_{\text{3ª: otra no derecha, restan 398}}$$
+</div>
+
+<div class="card insight">
+  <span class="label">Por qué los denominadores bajan</span>
+  <p>Después de la primera extracción quedan 399 personas (sacamos una). De esas 399, 300 son "no derecha" (porque sacamos una de derecha, no de las no-derecha). Después de la segunda quedan 398 personas, y como ya sacamos una "no derecha", quedan 299 disponibles para la tercera. Cada paso refleja la <strong>memoria</strong> del muestreo sin reemplazo.</p>
+</div>
+
+<p>Por <strong>simetría</strong>, los tres patrones (DNN, NDN, NND) dan exactamente la misma probabilidad. ¿Por qué?</p>
+
+<div class="card theory">
+  <span class="label">Demostración de la simetría</span>
+  <p>Mira los tres productos:</p>
+  <div class="eq-block" style="background:transparent;border:none;padding:0;margin:6px 0;font-size:0.95rem">
+    $$P(\text{DNN}) = \tfrac{100}{400}\cdot\tfrac{300}{399}\cdot\tfrac{299}{398}$$
+    $$P(\text{NDN}) = \tfrac{300}{400}\cdot\tfrac{100}{399}\cdot\tfrac{299}{398}$$
+    $$P(\text{NND}) = \tfrac{300}{400}\cdot\tfrac{299}{399}\cdot\tfrac{100}{398}$$
+  </div>
+  <p>Los <em>numeradores</em> son siempre 100, 300, 299 (en algún orden) y los <em>denominadores</em> son siempre 400, 399, 398. Como el producto no depende del orden de los factores, los tres son iguales. Por eso multiplicamos por 3.</p>
+</div>
+
+<p>Entonces:</p>
+
+<div class="eq-block">
+  $$P = 3 \cdot \frac{100 \cdot 300 \cdot 299}{400 \cdot 399 \cdot 398} = 3 \cdot \frac{8\,970\,000}{63\,520\,800} = \frac{26\,910\,000}{63\,520\,800} \approx 0{,}4236 \quad \checkmark$$
+</div>
+
+<p>Coinciden ambos métodos. <strong>Verificación cruzada exitosa.</strong></p>
+
+<h3 class="subsection" id="a-vs-binomial">Bonus pedagógico: ¿qué pasaría con reemplazo (caso binomial)?</h3>
+
+<p>Solo para comparar y entender la diferencia, supongamos que <em>sí</em> se reemplaza al votante después de cada extracción. Entonces las tres extracciones son independientes con $P(D) = 100/400 = 0{,}25$ constante.</p>
+
+<div class="two-col">
+  <div class="col">
+    <h5>Sin reemplazo (lo correcto aquí)</h5>
+    <div class="eq-block" style="background:transparent;border:none;padding:0;margin:0">
+      $$P = \frac{\binom{100}{1}\binom{300}{2}}{\binom{400}{3}} \approx 0{,}4236$$
+    </div>
+  </div>
+  <div class="col alt">
+    <h5>Con reemplazo (sólo como referencia)</h5>
+    <div class="eq-block" style="background:transparent;border:none;padding:0;margin:0">
+      $$P = \binom{3}{1}(0{,}25)^1(0{,}75)^2 \approx 0{,}4219$$
+    </div>
+  </div>
+</div>
+
+<div class="card insight">
+  <span class="label">Lección</span>
+  <p>Las dos respuestas son <em>muy cercanas</em> porque la población (400) es grande comparada con la muestra (3). En general: <strong>cuando $n \ll N$, la hipergeométrica se aproxima por la binomial</strong>. Pero en un examen, debes usar la versión correcta según el enunciado. Aquí, sin reemplazo.</p>
+</div>
+
+<div class="card warning">
+  <span class="label">★ Examen</span>
+  <p>El profesor Agurto suele preferir el <strong>método combinatorio</strong> en el Cap. 3 porque deja muy claros los "favorables sobre totales". Es la presentación más limpia para mostrar el sustento exigido en la nota del examen ("deberá mostrar claramente las operaciones realizadas"). Úsalo como método principal y, si tienes tiempo, valida con condicionales.</p>
+</div>
+
+<!-- ============================================ -->
+<!-- ============ PARTE B =================== -->
+<!-- ============================================ -->
+<h2 class="section-title" id="parte-b"><span class="num">B</span>Si la opinión es neutral, ¿probabilidad de izquierda?</h2>
+
+<div class="card">
+  <span class="label" style="color:var(--ink-muted)">Enunciado</span>
+  <p style="font-style:italic;font-size:1.05rem;color:var(--ink)"><strong>(0.75p)</strong> Si seleccionamos al azar a un votante cuya opinión es <strong>neutral</strong> ¿Cuál es la probabilidad de que pertenezca a la <strong>izquierda</strong>?</p>
+</div>
+
+<h3 class="subsection" id="b-teoria">Paso 1 · Identificación</h3>
+
+<p>Hay una pista lingüística muy importante: la frase <em>"cuya opinión es neutral"</em> <strong>no es algo que queramos verificar</strong>, es <strong>algo que ya nos dieron como dato</strong>. Estamos restringidos al subconjunto de los neutrales. <em>Esa es la firma inequívoca de la probabilidad condicional.</em></p>
+
+<div class="decision-tree">
+  <div class="q">¿La frase contiene "si ya...", "sabiendo que...", "dado que...", "cuya..."? → <span class="a">Sí → condicional.</span></div>
+  <div class="branch">
+    <div class="q">¿Cuál es la condición (lo conocido)? → <span class="a">El votante es neutral (evento E).</span></div>
+    <div class="q">¿Qué se pregunta? → <span class="a">Probabilidad de izquierda (evento A).</span></div>
+    <div class="q">Forma estándar: → <span class="a">$P(A \mid E)$</span></div>
+  </div>
+</div>
+
+<h4 class="minor">Definición de los eventos</h4>
+
+<ul class="bullets">
+  <li><span class="event-name">A</span> = "el votante es de izquierda". $|A| = 160$.</li>
+  <li><span class="event-name">E</span> = "su opinión es neutral". $|E| = 60$.</li>
+  <li><span class="event-name">A ∩ E</span> = "izquierda Y neutral". $|A \cap E| = 20$ (celda fila Izquierda, columna Neutral).</li>
+</ul>
+
+<h3 class="subsection" id="b-calculo">Paso 2 · Cálculo</h3>
+
+<div class="card theory">
+  <span class="label">Teoría aplicable</span>
+  $$P(A \mid E) = \frac{P(A \cap E)}{P(E)} = \frac{|A \cap E|}{|E|}$$
+  <p>Cuando todos los resultados son equiprobables, los denominadores ($|\Omega|=400$) se cancelan arriba y abajo y queda <em>"casilla sobre marginal"</em>.</p>
+</div>
+
+<ol class="steps">
+  <li>
+    <strong>Numerador.</strong> Casos donde se cumplen <em>las dos</em> condiciones simultáneamente:
+    <div class="eq-block">
+      $$|A \cap E| = 20 \quad \text{(celda Izquierda ∩ Neutral)}$$
+    </div>
+  </li>
+  <li>
+    <strong>Denominador.</strong> El universo restringido es <em>solo los neutrales</em>:
+    <div class="eq-block">
+      $$|E| = 60$$
+    </div>
+  </li>
+  <li>
+    <strong>División.</strong>
+    <div class="eq-block">
+      $$P(A \mid E) = \frac{20}{60} = \frac{1}{3} \approx 0{,}3333$$
+    </div>
+  </li>
+</ol>
+
+<div class="card answer">
+  <div class="answer-line"><strong>Respuesta (b):</strong></div>
+  <div class="answer-value">P(A | E) = 1/3 ≈ 0,3333 (≈ 33,33 %)</div>
+</div>
+
+<h4 class="minor">Lectura intuitiva del resultado</h4>
+
+<p>De los 60 votantes neutrales, 20 son de izquierda. Esa es <strong>1 de cada 3 personas neutrales</strong>. Si te dijera "elegí un neutral al azar" y te preguntara su partido, apostarías 1 de cada 3 veces a izquierda. <em>El espacio muestral ya no son los 400 votantes; ahora son los 60 neutrales.</em></p>
+
+<div class="card insight">
+  <span class="label">Verificación con la fórmula completa</span>
+  <p>Si usáramos la versión con probabilidades en lugar de frecuencias:</p>
+  <div class="eq-block" style="background:transparent;border:none;padding:0;margin:6px 0">
+    $$P(A \mid E) = \frac{P(A \cap E)}{P(E)} = \frac{20/400}{60/400} = \frac{20}{60} = \frac{1}{3} \quad \checkmark$$
+  </div>
+  <p>Los $/400$ se cancelan, confirmando el atajo "casilla sobre marginal".</p>
+</div>
+
+<div class="card warning">
+  <span class="label">★ Examen</span>
+  <p>Cuando hagas $P(A \mid B)$ con tabla de contingencia, casi siempre puedes ir directo a <em>celda interna / marginal de la condición</em>. Pero <strong>siempre escribe la fórmula completa antes</strong>, porque el profesor califica el sustento. No bastan los números: hay que mostrar de dónde salen.</p>
+</div>
+
+<!-- ============================================ -->
+<!-- ============ PARTE C =================== -->
+<!-- ============================================ -->
+<h2 class="section-title" id="parte-c"><span class="num">C</span>Tres votantes: dos neutrales y uno no</h2>
+
+<div class="card">
+  <span class="label" style="color:var(--ink-muted)">Enunciado</span>
+  <p style="font-style:italic;font-size:1.05rem;color:var(--ink)"><strong>(1.75p)</strong> Si seleccionamos al azar a tres votantes ¿Cuál es la probabilidad de que <strong>dos tengan opinión neutral y el otro no</strong>?</p>
+</div>
+
+<h3 class="subsection" id="c-metodo">Paso 1 · Identificación y mapeo</h3>
+
+<p>Este problema tiene <strong>exactamente la misma estructura</strong> que la parte (a), solo cambian los números:</p>
+
+<table class="contingency" style="width:auto;margin:14px auto">
+  <thead><tr><th>Símbolo</th><th>Parte (a)</th><th>Parte (c)</th></tr></thead>
+  <tbody>
+    <tr><td class="row-label">N (población)</td><td>400</td><td>400</td></tr>
+    <tr><td class="row-label">K (éxitos en pob.)</td><td>100 (derecha)</td><td>60 (neutrales)</td></tr>
+    <tr><td class="row-label">N − K (fracasos)</td><td>300</td><td>340</td></tr>
+    <tr><td class="row-label">n (tamaño muestra)</td><td>3</td><td>3</td></tr>
+    <tr><td class="row-label">x (éxitos en muestra)</td><td>1</td><td>2</td></tr>
+  </tbody>
+</table>
+
+<h4 class="minor">Definición de los eventos</h4>
+<ul class="bullets">
+  <li><span class="event-name">E</span> = "neutral". $|E| = 60$.</li>
+  <li><span class="event-name">E'</span> = "no neutral". $|E'| = 400 - 60 = 340$.</li>
+</ul>
+
+<h3 class="subsection">Paso 2 · Método combinatorio</h3>
+
+<ol class="steps">
+  <li>
+    <strong>Casos favorables.</strong> Elegir 2 neutrales entre 60 y 1 no-neutral entre 340:
+    <div class="eq-block">
+      $$\text{Favorables} = \binom{60}{2}\binom{340}{1}$$
+      $$\binom{60}{2} = \frac{60 \cdot 59}{2} = 1\,770$$
+      $$\binom{340}{1} = 340$$
+      $$\text{Favorables} = 1\,770 \cdot 340 = 601\,800$$
+    </div>
+  </li>
+  <li>
+    <strong>Casos totales.</strong> Igual que en (a):
+    <div class="eq-block">
+      $$\binom{400}{3} = 10\,586\,800$$
+    </div>
+  </li>
+  <li>
+    <strong>División.</strong>
+    <div class="eq-block">
+      $$P(\text{2 neutrales, 1 no}) = \frac{\binom{60}{2}\binom{340}{1}}{\binom{400}{3}} = \frac{601\,800}{10\,586\,800}$$
+      $$= \frac{3\,009}{52\,934} \approx 0{,}0568$$
+    </div>
+  </li>
+</ol>
+
+<div class="card answer">
+  <div class="answer-line"><strong>Respuesta (c):</strong></div>
+  <div class="answer-value">P = 3 009 / 52 934 ≈ 0,0568 (≈ 5,68 %)</div>
+</div>
+
+<h3 class="subsection">Paso 3 · Verificación por método condicional</h3>
+
+<p>Hay tres "patrones" posibles (E = neutral, N = no neutral): EEN, ENE, NEE.</p>
+
+<div class="eq-block">
+  $$P(\text{EEN}) = \frac{60}{400} \cdot \frac{59}{399} \cdot \frac{340}{398}$$
+</div>
+
+<p>Por simetría (mismo razonamiento que en la parte a), los tres patrones tienen igual probabilidad. Multiplicamos por 3:</p>
+
+<div class="eq-block">
+  $$P = 3 \cdot \frac{60 \cdot 59 \cdot 340}{400 \cdot 399 \cdot 398} = 3 \cdot \frac{1\,203\,600}{63\,520\,800} = \frac{3\,610\,800}{63\,520\,800} \approx 0{,}0568 \quad \checkmark$$
+</div>
+
+<h4 class="minor">Lectura intuitiva</h4>
+
+<p>El resultado es chiquito (~5,7 %) y eso tiene sentido: solo el 15 % de los votantes son neutrales ($60/400$), así que sacar <em>dos</em> neutrales en tres extracciones consecutivas debe ser raro. La probabilidad de éxito por extracción es baja, y necesitamos dos éxitos.</p>
+
+<div class="card insight">
+  <span class="label">Mapa mental para el examen</span>
+  <p>Cuando aparezca "<em>seleccionamos n al azar y queremos exactamente x con tal característica</em>", la receta es:</p>
+  <ol style="margin-left:24px;margin-top:6px">
+    <li>Identifica $N$, $K$, $n$, $x$.</li>
+    <li>Numerador: $\binom{K}{x}\binom{N-K}{n-x}$.</li>
+    <li>Denominador: $\binom{N}{n}$.</li>
+    <li>Divide y listo.</li>
+  </ol>
+</div>
+
+<!-- ============================================ -->
+<!-- ============ PARTE D =================== -->
+<!-- ============================================ -->
+<h2 class="section-title" id="parte-d"><span class="num">D</span>Un votante: de centro <em>o</em> a favor</h2>
+
+<div class="card">
+  <span class="label" style="color:var(--ink-muted)">Enunciado</span>
+  <p style="font-style:italic;font-size:1.05rem;color:var(--ink)"><strong>(0.75p)</strong> Si seleccionamos al azar a un votante ¿Cuál es la probabilidad de que sea <strong>de centro o su opinión sea a favor</strong> del nuevo plan?</p>
+</div>
+
+<h3 class="subsection" id="d-union">Paso 1 · Identificación de la unión</h3>
+
+<p>La palabra clave es <em>"o"</em>. En probabilidad, "o" (en sentido inclusivo) corresponde al símbolo $\cup$ (unión): cumple <strong>el primero, o el segundo, o ambos</strong>.</p>
+
+<div class="decision-tree">
+  <div class="q">¿Aparece la conjunción "o" entre dos características? → <span class="a">Sí → regla de la unión.</span></div>
+  <div class="branch">
+    <div class="q">¿Los dos eventos pueden ocurrir a la vez (no son disjuntos)? → <span class="a">Sí, un votante puede ser de centro Y a favor (la celda existe: 50).</span></div>
+    <div class="branch">
+      <div class="q">¿Entonces qué fórmula? → <span class="a">Inclusión-exclusión completa: $P(B \cup D) = P(B)+P(D)-P(B\cap D)$.</span></div>
+    </div>
+  </div>
+</div>
+
+<h4 class="minor">Definición de los eventos</h4>
+<ul class="bullets">
+  <li><span class="event-name">B</span> = "votante de centro". $|B| = 140$.</li>
+  <li><span class="event-name">D</span> = "votante a favor". $|D| = 220$.</li>
+  <li><span class="event-name">B ∩ D</span> = "centro Y a favor". $|B \cap D| = 50$ (celda interna).</li>
+</ul>
+
+<h3 class="subsection">Paso 2 · Demostración de la fórmula (por qué se resta)</h3>
+
+<div class="card theory">
+  <span class="label">Demostración del principio inclusión-exclusión</span>
+  <p>Consideremos $B \cup D$ como la unión de tres "regiones" disjuntas:</p>
+  <ol style="margin-left:24px;margin-top:6px">
+    <li>Solo $B$ (centro pero no a favor): $B \cap D^c$.</li>
+    <li>Solo $D$ (a favor pero no centro): $D \cap B^c$.</li>
+    <li>Ambos: $B \cap D$.</li>
+  </ol>
+  <p>Como estas tres regiones son disjuntas, sus probabilidades se suman:</p>
+  <div class="eq-block" style="background:transparent;border:none;padding:0;margin:6px 0">
+    $$P(B \cup D) = P(B \cap D^c) + P(D \cap B^c) + P(B \cap D)$$
+  </div>
+  <p>Por otro lado, $P(B) = P(B \cap D^c) + P(B \cap D)$ (B se parte en "solo B" y "ambos"). Análogamente para $D$. Sumando:</p>
+  <div class="eq-block" style="background:transparent;border:none;padding:0;margin:6px 0">
+    $$P(B) + P(D) = P(B \cap D^c) + 2\,P(B \cap D) + P(D \cap B^c)$$
+  </div>
+  <p>La intersección aparece <strong>dos veces</strong>. Para corregirla, restamos $P(B \cap D)$ una vez, y obtenemos justamente $P(B \cup D)$:</p>
+  <div class="eq-block" style="background:transparent;border:none;padding:0;margin:6px 0">
+    $$\boxed{P(B \cup D) = P(B) + P(D) - P(B \cap D)}$$
+  </div>
+</div>
+
+<h3 class="subsection" id="d-venn">Paso 3 · Visualización con diagrama de Venn</h3>
+
+<div class="venn-wrap">
+<svg width="540" height="320" viewBox="0 0 540 320" xmlns="http://www.w3.org/2000/svg">
+  <!-- Marco -->
+  <rect x="10" y="10" width="520" height="300" fill="#FFFCF6" stroke="#34465F" stroke-width="1.2"/>
+  <text x="20" y="32" font-family="JetBrains Mono" font-size="11" fill="#6B7A8F">Ω = 400 votantes</text>
+
+  <!-- Círculo B (centro) -->
+  <circle cx="200" cy="170" r="105" fill="#7A1F2A" fill-opacity="0.15" stroke="#7A1F2A" stroke-width="1.8"/>
+  <text x="135" y="80" font-family="Cormorant Garamond" font-size="20" font-style="italic" fill="#7A1F2A">B = Centro</text>
+
+  <!-- Círculo D (a favor) -->
+  <circle cx="330" cy="170" r="120" fill="#A88838" fill-opacity="0.18" stroke="#A88838" stroke-width="1.8"/>
+  <text x="380" y="70" font-family="Cormorant Garamond" font-size="20" font-style="italic" fill="#A88838">D = A favor</text>
+
+  <!-- Etiquetas internas -->
+  <text x="150" y="175" font-family="Karla" font-size="18" font-weight="600" fill="#1A2A40" text-anchor="middle">90</text>
+  <text x="150" y="195" font-family="JetBrains Mono" font-size="10" fill="#6B7A8F" text-anchor="middle">Solo B</text>
+
+  <text x="265" y="175" font-family="Karla" font-size="18" font-weight="600" fill="#1A2A40" text-anchor="middle">50</text>
+  <text x="265" y="195" font-family="JetBrains Mono" font-size="10" fill="#6B7A8F" text-anchor="middle">B ∩ D</text>
+
+  <text x="385" y="175" font-family="Karla" font-size="18" font-weight="600" fill="#1A2A40" text-anchor="middle">170</text>
+  <text x="385" y="195" font-family="JetBrains Mono" font-size="10" fill="#6B7A8F" text-anchor="middle">Solo D</text>
+
+  <!-- Fuera -->
+  <text x="480" y="280" font-family="Karla" font-size="14" font-weight="600" fill="#34465F" text-anchor="middle">90</text>
+  <text x="480" y="296" font-family="JetBrains Mono" font-size="9" fill="#6B7A8F" text-anchor="middle">ni B ni D</text>
+
+  <!-- Suma -->
+  <line x1="55" y1="295" x2="180" y2="295" stroke="#A88838" stroke-width="1"/>
+  <text x="55" y="290" font-family="JetBrains Mono" font-size="9" fill="#6B7A8F">90+50+170+90 = 400 ✓</text>
+</svg>
+</div>
+
+<div class="card insight">
+  <span class="label">Cómo armé el diagrama</span>
+  <p>De la tabla:</p>
+  <ul class="bullets" style="margin-top:4px">
+    <li><strong>$B \cap D$</strong> = centro ∩ a favor = 50 (celda fila Centro × col. A favor).</li>
+    <li><strong>Solo $B$</strong> = centro pero no a favor = $140 - 50 = 90$.</li>
+    <li><strong>Solo $D$</strong> = a favor pero no centro = $220 - 50 = 170$.</li>
+    <li><strong>Ni $B$ ni $D$</strong> = $400 - (90 + 50 + 170) = 400 - 310 = 90$.</li>
+  </ul>
+  <p>Suma: $90 + 50 + 170 + 90 = 400 \checkmark$. La región sombreada de la unión $B \cup D$ tiene $90 + 50 + 170 = 310$ elementos.</p>
+</div>
+
+<h3 class="subsection">Paso 4 · Cálculo</h3>
+
+<ol class="steps">
+  <li>
+    <strong>Probabilidades marginales.</strong>
+    <div class="eq-block">
+      $$P(B) = \frac{140}{400} = \frac{7}{20}, \quad P(D) = \frac{220}{400} = \frac{11}{20}$$
+    </div>
+  </li>
+  <li>
+    <strong>Probabilidad de la intersección.</strong>
+    <div class="eq-block">
+      $$P(B \cap D) = \frac{50}{400} = \frac{1}{8}$$
+    </div>
+  </li>
+  <li>
+    <strong>Aplicar inclusión-exclusión.</strong>
+    <div class="eq-block">
+      $$P(B \cup D) = \frac{140}{400} + \frac{220}{400} - \frac{50}{400} = \frac{140 + 220 - 50}{400} = \frac{310}{400} = \frac{31}{40} = 0{,}775$$
+    </div>
+  </li>
+</ol>
+
+<div class="card answer">
+  <div class="answer-line"><strong>Respuesta (d):</strong></div>
+  <div class="answer-value">P(B ∪ D) = 31/40 = 0,775 (77,5 %)</div>
+</div>
+
+<h4 class="minor">Lectura del resultado</h4>
+
+<p>El 77,5 % de los votantes cumple al menos una de las dos condiciones (es de centro o está a favor, o ambas). Eso encaja con la suma directa de las regiones del Venn: $310/400 = 0{,}775$.</p>
+
+<div class="card warning">
+  <span class="label">★ Trampa típica</span>
+  <p>Un error frecuente es <em>olvidar restar la intersección</em>:</p>
+  <div class="eq-block" style="background:transparent;border:none;padding:0;margin:6px 0">
+    $$\text{Error: } P(B) + P(D) = \frac{140 + 220}{400} = \frac{360}{400} = 0{,}9 \quad \text{✗}$$
+  </div>
+  <p>Esto cuenta dos veces a las 50 personas que son centro Y a favor. Si los eventos <em>fueran</em> disjuntos (es decir, $|B \cap D|=0$, ninguna persona cumple ambos), entonces sí sería válido simplemente sumar. Pero aquí no lo son.</p>
+</div>
+
+<div class="card insight">
+  <span class="label">Verificación alternativa: contando con la tabla</span>
+  <p>"Centro o a favor" abarca toda la fila de Centro (140) más toda la columna de A favor (220), pero como la celda Centro ∩ A favor (50) está en ambas, debe contarse una sola vez:</p>
+  <div class="eq-block" style="background:transparent;border:none;padding:0;margin:6px 0">
+    $$|B \cup D| = 140 + 220 - 50 = 310 \quad \Rightarrow \quad P = \frac{310}{400} = 0{,}775 \quad \checkmark$$
+  </div>
+</div>
+
+<div class="ornament">·  ·  ·</div>
+
+<!-- ============================================ -->
+<!-- ============ RESUMEN FINAL ================== -->
+<!-- ============================================ -->
+<h2 class="section-title" id="resumen"><span class="num">★</span>Resumen final de respuestas</h2>
+
+<table class="summary-table">
+  <thead>
+    <tr><th>Parte</th><th>Pregunta</th><th>Herramienta</th><th>Resultado</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>a</strong></td>
+      <td>3 votantes: 1 de derecha, 2 no</td>
+      <td>Combinatoria (hipergeométrica)</td>
+      <td class="value">22 425 / 52 934 ≈ 0,4236</td>
+    </tr>
+    <tr>
+      <td><strong>b</strong></td>
+      <td>P(Izq | Neutral)</td>
+      <td>Probabilidad condicional</td>
+      <td class="value">1/3 ≈ 0,3333</td>
+    </tr>
+    <tr>
+      <td><strong>c</strong></td>
+      <td>3 votantes: 2 neutrales, 1 no</td>
+      <td>Combinatoria (hipergeométrica)</td>
+      <td class="value">3 009 / 52 934 ≈ 0,0568</td>
+    </tr>
+    <tr>
+      <td><strong>d</strong></td>
+      <td>P(Centro o A favor)</td>
+      <td>Regla de la unión</td>
+      <td class="value">31/40 = 0,775</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 class="subsection">Patrones que se repiten en este tipo de exámenes</h3>
+
+<div class="card theory">
+  <span class="label">Radar de problemas</span>
+  <p style="margin-bottom:8px"><strong>1. "Seleccionamos n al azar, exactamente x con tal característica"</strong> → fórmula hipergeométrica $\binom{K}{x}\binom{N-K}{n-x}/\binom{N}{n}$ (sin reemplazo).</p>
+  <p style="margin-bottom:8px"><strong>2. "Sabiendo que / dado que / cuya..."</strong> → condicional $P(A \mid B) = |A\cap B|/|B|$.</p>
+  <p style="margin-bottom:8px"><strong>3. "Es A o es B"</strong> → unión con inclusión-exclusión $P(A) + P(B) - P(A \cap B)$.</p>
+  <p style="margin-bottom:0"><strong>4. "Ninguno cumple X"</strong> → complemento $P(X^c) = 1 - P(X)$ o producto sin reemplazo de "no éxito" en cada extracción.</p>
+</div>
+
+<div class="card insight">
+  <span class="label">Checklist antes de entregar</span>
+  <ul class="bullets" style="margin-top:6px">
+    <li>¿Definiste los eventos en notación clara antes de calcular?</li>
+    <li>¿Escribiste la fórmula general antes de sustituir los números?</li>
+    <li>¿Verificaste que las probabilidades estén entre 0 y 1?</li>
+    <li>¿Las sumas marginales y totales cuadran con 400?</li>
+    <li>¿Mostraste el sustento de cada operación (no solo el resultado)?</li>
+  </ul>
+</div>
+
+<div class="ornament">F I N</div>
+
+</main>
+</div>
+</body>
+</html>
