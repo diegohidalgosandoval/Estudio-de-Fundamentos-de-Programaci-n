@@ -1,0 +1,1672 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#FAF7F2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0E1421" media="(prefers-color-scheme: dark)">
+<title>PD7 · Jugos Tropicales S.A. · Costeo y control de la Mano de Obra</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<script>
+  MathJax = {
+    tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+    svg: { fontCache: 'global' },
+    options: { renderActions: { addMenu: [0, '', ''] } }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+<style>
+:root{
+  --paper:#FAF7F2;--paper-soft:#F3EFE6;--paper-elev:#FFFFFF;
+  --ink:#1B2845;--ink-soft:#44506C;--ink-faint:#7B8499;
+  --rule:#E5DFD2;--rule-strong:#C9C0AB;
+  --terra:#C04B2E;--terra-soft:#F5DDD2;
+  --teal:#2A6F6A;--teal-soft:#D4E4E1;
+  --gold:#D4A24C;--gold-soft:#F4E4C4;
+  --plum:#6B3A52;--plum-soft:#EBD6E0;
+  --sage:#7C9B7A;--sage-soft:#DDE6D9;
+  --orange:#DC7E50;--orange-soft:#F5DCC8;
+  --navy:#1B2845;
+  --shadow-1:0 1px 2px rgba(27,40,69,.06),0 1px 3px rgba(27,40,69,.04);
+  --shadow-2:0 4px 8px rgba(27,40,69,.06),0 8px 24px rgba(27,40,69,.08);
+  --shadow-3:0 12px 32px rgba(27,40,69,.12),0 24px 64px rgba(27,40,69,.08);
+  --fs-base:19px;
+  --fs-display-1:3.8rem;--fs-display-2:2.6rem;--fs-display-3:1.85rem;
+  --fs-body:1rem;--fs-small:.86rem;--fs-tiny:.74rem;
+  --radius-xs:6px;--radius-sm:10px;--radius-md:16px;--radius-lg:24px;--radius-xl:36px;
+  --nav-h:64px;
+  --safe-top:env(safe-area-inset-top,0px);--safe-bot:env(safe-area-inset-bottom,0px);
+  --safe-left:env(safe-area-inset-left,0px);--safe-right:env(safe-area-inset-right,0px);
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+[data-theme="dark"]{
+  --paper:#0E1421;--paper-soft:#161E2F;--paper-elev:#1B2540;
+  --ink:#F1EBDD;--ink-soft:#BFC4D3;--ink-faint:#7E8699;
+  --rule:#28324B;--rule-strong:#3A4666;
+  --terra:#E37456;--terra-soft:#3C2620;
+  --teal:#5DBDB4;--teal-soft:#1B3633;
+  --gold:#E8C277;--gold-soft:#3C2F18;
+  --plum:#B98199;--plum-soft:#36202B;
+  --sage:#A6C2A2;--sage-soft:#1F2B1E;
+  --orange:#F09D70;--orange-soft:#3A2618;
+  --navy:#F1EBDD;
+}
+[data-theme="sepia"]{
+  --paper:#F5EBD8;--paper-soft:#EDDFC6;--paper-elev:#FBF3E2;
+  --ink:#3D2B14;--ink-soft:#5D4525;--ink-faint:#8A7250;
+  --rule:#D9C8A8;--rule-strong:#BAA376;
+  --terra:#B23E1F;--terra-soft:#EDC9B5;
+  --teal:#1F5853;--teal-soft:#C9DBD5;
+  --gold:#B58438;--gold-soft:#EAD3A0;
+  --plum:#5F2E45;--plum-soft:#E0C2CE;
+  --sage:#607E5B;--sage-soft:#CCD6C2;
+  --orange:#C8643A;--orange-soft:#EDC7B0;
+}
+html[data-fs="sm"]{--fs-base:16px}
+html[data-fs="md"]{--fs-base:18px}
+html[data-fs="lg"]{--fs-base:19px}
+html[data-fs="xl"]{--fs-base:21px}
+html[data-fs="xxl"]{--fs-base:24px}
+html[data-fs="xxxl"]{--fs-base:27px}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{font-size:var(--fs-base);scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:'Manrope',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+  background:var(--paper);color:var(--ink);line-height:1.65;
+  font-feature-settings:"ss01","cv11","kern","liga";font-weight:400;
+  letter-spacing:-.005em;
+  transition:background .4s var(--ease),color .4s var(--ease);
+  overflow-x:hidden;padding-left:var(--safe-left);padding-right:var(--safe-right);
+}
+body::before{content:'';position:fixed;inset:0;
+  background-image:radial-gradient(at 20% 30%,rgba(212,162,76,.04) 0,transparent 50%),radial-gradient(at 80% 70%,rgba(42,111,106,.04) 0,transparent 50%);
+  pointer-events:none;z-index:0}
+.nav{position:fixed;top:var(--safe-top);left:0;right:0;height:var(--nav-h);
+  background:rgba(250,247,242,.78);
+  -webkit-backdrop-filter:saturate(180%) blur(24px);
+  backdrop-filter:saturate(180%) blur(24px);
+  border-bottom:.5px solid var(--rule);z-index:1000;
+  display:flex;align-items:center;
+  padding:0 max(1.25rem,var(--safe-left)) 0 max(1.25rem,var(--safe-right));
+  transition:transform .32s var(--ease),background .4s var(--ease);
+  transform:translateY(0)}
+[data-theme="dark"] .nav{background:rgba(14,20,33,.78)}
+[data-theme="sepia"] .nav{background:rgba(245,235,216,.85)}
+.nav.is-hidden{transform:translateY(calc(-100% - var(--safe-top)))}
+.nav-brand{display:flex;align-items:center;gap:.6rem;
+  font-family:'Fraunces',serif;font-weight:700;font-size:1.02rem;letter-spacing:-.01em}
+.nav-brand .dot{width:10px;height:10px;border-radius:999px;background:var(--terra);box-shadow:0 0 0 3px var(--terra-soft)}
+.nav-brand .label{color:var(--ink)}
+.nav-brand .sub{color:var(--ink-faint);font-weight:500;font-family:'Manrope',sans-serif;font-size:.78rem;display:block}
+.nav-spacer{flex:1}
+.nav-actions{display:flex;align-items:center;gap:.45rem}
+.nav-btn{width:42px;height:42px;border-radius:12px;background:transparent;border:1px solid transparent;
+  color:var(--ink-soft);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;
+  transition:all .2s var(--ease);font-family:inherit;font-size:.95rem}
+.nav-btn:hover,.nav-btn:focus-visible{background:var(--paper-soft);color:var(--ink);outline:none}
+.nav-btn:active{transform:scale(.94)}
+.nav-btn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.nav-btn.is-active{background:var(--terra-soft);color:var(--terra)}
+.nav-toc-btn{display:none}
+.a11y-pop{position:fixed;top:calc(var(--nav-h) + var(--safe-top) + 8px);right:16px;width:320px;
+  background:var(--paper-elev);border:1px solid var(--rule);border-radius:var(--radius-md);
+  box-shadow:var(--shadow-3);padding:18px;z-index:1100;
+  opacity:0;transform:translateY(-8px) scale(.96);pointer-events:none;
+  transition:all .24s var(--ease)}
+.a11y-pop.is-open{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+.a11y-row+.a11y-row{margin-top:1rem;padding-top:1rem;border-top:1px solid var(--rule)}
+.a11y-label{font-size:.74rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-faint);margin-bottom:.55rem;display:block}
+.a11y-segs{display:flex;gap:4px;background:var(--paper-soft);padding:4px;border-radius:10px}
+.a11y-seg{flex:1;border:none;background:transparent;cursor:pointer;padding:.55rem .4rem;
+  border-radius:7px;font-family:inherit;font-size:.82rem;font-weight:600;color:var(--ink-soft);
+  transition:all .18s var(--ease)}
+.a11y-seg:hover{color:var(--ink)}
+.a11y-seg.is-on{background:var(--paper-elev);color:var(--ink);box-shadow:var(--shadow-1)}
+.shell{position:relative;z-index:1;padding-top:calc(var(--nav-h) + var(--safe-top) + 1.5rem);
+  padding-bottom:8rem;max-width:1480px;margin:0 auto}
+@media (min-width:1100px){.shell{display:grid;grid-template-columns:280px minmax(0,1fr);gap:3rem;padding-left:2.5rem;padding-right:2.5rem}}
+@media (min-width:1400px){.shell{grid-template-columns:320px minmax(0,1fr);gap:4rem}}
+.toc{display:none}
+@media (min-width:1100px){
+  .toc{display:block;position:sticky;top:calc(var(--nav-h) + var(--safe-top) + 1.5rem);
+    align-self:start;max-height:calc(100vh - var(--nav-h) - var(--safe-top) - 3rem);
+    overflow-y:auto;padding-right:.5rem;scrollbar-width:thin}
+  .toc::-webkit-scrollbar{width:4px}
+  .toc::-webkit-scrollbar-thumb{background:var(--rule);border-radius:999px}
+}
+.toc-title{font-size:.72rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--ink-faint);margin-bottom:1rem;padding-bottom:.75rem;border-bottom:1px solid var(--rule)}
+.toc ol{list-style:none}
+.toc li{margin:.05rem 0}
+.toc a{display:flex;align-items:flex-start;gap:.7rem;padding:.5rem .65rem;text-decoration:none;
+  color:var(--ink-soft);font-size:.88rem;font-weight:500;border-radius:8px;
+  transition:all .18s var(--ease);border-left:2px solid transparent;line-height:1.4}
+.toc a:hover{color:var(--ink);background:var(--paper-soft)}
+.toc a.is-active{color:var(--terra);background:var(--terra-soft);border-left-color:var(--terra);font-weight:700}
+.toc-num{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--ink-faint);
+  font-weight:700;letter-spacing:.04em;flex-shrink:0;padding-top:.07rem}
+.toc a.is-active .toc-num{color:var(--terra)}
+@media (max-width:1099.9px){
+  .nav-toc-btn{display:inline-flex}
+  .toc{display:block;position:fixed;top:0;left:0;width:min(85vw,380px);height:100vh;
+    background:var(--paper-elev);border-right:1px solid var(--rule);box-shadow:var(--shadow-3);
+    padding:calc(var(--nav-h) + var(--safe-top) + 1.5rem) 1.5rem 2rem 1.5rem;
+    transform:translateX(-105%);transition:transform .36s var(--ease);z-index:980;overflow-y:auto}
+  .toc.is-open{transform:translateX(0)}
+  .toc-overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:970;
+    opacity:0;pointer-events:none;transition:opacity .3s var(--ease)}
+  .toc-overlay.is-open{opacity:1;pointer-events:auto}
+}
+.content{min-width:0;padding:0 1.25rem}
+@media (min-width:1100px){.content{padding:0}}
+.hero{position:relative;margin-bottom:4rem;padding:2rem 0 1rem 0;border-bottom:1px solid var(--rule)}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:.55rem;font-family:'JetBrains Mono',monospace;
+  font-size:.72rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--terra);background:var(--terra-soft);padding:.45rem .85rem;border-radius:999px;margin-bottom:1.75rem}
+.hero-eyebrow .pulse{width:7px;height:7px;border-radius:999px;background:var(--terra);
+  box-shadow:0 0 0 0 currentColor;animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(192,75,46,.5)}70%{box-shadow:0 0 0 10px rgba(192,75,46,0)}100%{box-shadow:0 0 0 0 rgba(192,75,46,0)}}
+.hero h1{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(2.4rem,6vw,var(--fs-display-1));
+  line-height:1.02;letter-spacing:-.035em;color:var(--ink);margin-bottom:1.25rem;
+  font-variation-settings:"opsz" 96}
+.hero h1 em{font-style:italic;color:var(--terra);font-weight:500}
+.hero-sub{font-size:1.15rem;color:var(--ink-soft);max-width:64ch;line-height:1.55}
+.hero-meta{display:flex;flex-wrap:wrap;gap:1.25rem 2rem;margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--rule)}
+.hero-meta-item .k{font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);display:block;margin-bottom:.3rem}
+.hero-meta-item .v{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:500;color:var(--ink)}
+section.q{margin-bottom:5rem;scroll-margin-top:calc(var(--nav-h) + var(--safe-top) + 2rem)}
+.q-head{display:flex;align-items:baseline;gap:1rem;margin-bottom:2rem;padding-bottom:1.25rem;border-bottom:2px solid var(--ink)}
+.q-num{font-family:'JetBrains Mono',monospace;font-size:.82rem;font-weight:700;letter-spacing:.18em;color:var(--terra);flex-shrink:0}
+.q-title{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(1.55rem,3.6vw,var(--fs-display-2));
+  letter-spacing:-.022em;line-height:1.1;color:var(--ink);font-variation-settings:"opsz" 60;flex:1}
+.step{margin:2.25rem 0}
+.step-label{display:inline-flex;align-items:center;gap:.55rem;font-family:'JetBrains Mono',monospace;
+  font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:.7rem}
+.step-label::before{content:'';display:inline-block;width:18px;height:1px;background:var(--teal)}
+.step h3{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(1.25rem,2.4vw,var(--fs-display-3));
+  letter-spacing:-.018em;line-height:1.2;color:var(--ink);margin-bottom:.85rem}
+.step h4{font-family:'Manrope',sans-serif;font-weight:700;font-size:1.05rem;color:var(--ink);
+  margin:1.4rem 0 .65rem;letter-spacing:-.005em}
+p{color:var(--ink-soft);margin-bottom:1rem;max-width:72ch}
+p strong,li strong{color:var(--ink);font-weight:700}
+ul,ol{margin:.85rem 0 1.1rem 1.25rem;color:var(--ink-soft)}
+li{margin-bottom:.45rem;max-width:70ch}
+.box{border-radius:var(--radius-md);padding:1.35rem 1.5rem;margin:1.5rem 0;position:relative;overflow:hidden}
+.box-head{display:flex;align-items:center;gap:.6rem;font-family:'JetBrains Mono',monospace;
+  font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:.75rem}
+.box-head svg{width:16px;height:16px;flex-shrink:0}
+.box p:last-child,.box ul:last-child,.box ol:last-child{margin-bottom:0}
+.box p,.box li{max-width:none;color:var(--ink)}
+.box.intuicion{background:var(--gold-soft);border-left:4px solid var(--gold)}
+.box.intuicion .box-head{color:var(--gold)}
+[data-theme="dark"] .box.intuicion .box-head{color:#E8C277}
+.box.clave{background:var(--terra-soft);border-left:4px solid var(--terra)}
+.box.clave .box-head{color:var(--terra)}
+.box.formula{background:var(--teal-soft);border-left:4px solid var(--teal)}
+.box.formula .box-head{color:var(--teal)}
+.box.insight{background:var(--plum-soft);border-left:4px solid var(--plum)}
+.box.insight .box-head{color:var(--plum)}
+.box.tip{background:var(--sage-soft);border-left:4px solid var(--sage)}
+.box.tip .box-head{color:var(--sage)}
+.box.adv{background:var(--orange-soft);border-left:4px solid var(--orange)}
+.box.adv .box-head{color:var(--orange)}
+.razonamiento-calculo{display:grid;grid-template-columns:1fr;gap:1rem;margin:1.25rem 0}
+@media (min-width:760px){.razonamiento-calculo{grid-template-columns:1.1fr .9fr;gap:1.5rem}}
+.rc-block{background:var(--paper-elev);border:1px solid var(--rule);border-radius:var(--radius-md);padding:1.35rem 1.5rem}
+.rc-block-tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:700;
+  letter-spacing:.16em;text-transform:uppercase;padding:.3rem .65rem;border-radius:6px;margin-bottom:.85rem}
+.rc-block.razon .rc-block-tag{background:var(--plum-soft);color:var(--plum)}
+.rc-block.calc .rc-block-tag{background:var(--teal-soft);color:var(--teal)}
+.rc-block p{color:var(--ink);max-width:none}
+.rc-block code,.rc-block .mono{font-family:'JetBrains Mono',monospace;font-size:.92rem;color:var(--ink)}
+.calc-row{display:flex;justify-content:space-between;align-items:baseline;padding:.45rem 0;border-bottom:1px dashed var(--rule);font-family:'JetBrains Mono',monospace;font-size:.92rem}
+.calc-row:last-child{border-bottom:0}
+.calc-row.tot{border-top:2px solid var(--ink);border-bottom:0;margin-top:.5rem;padding-top:.65rem;font-weight:700}
+.calc-row .lbl{color:var(--ink-soft);font-family:'Manrope',sans-serif;font-size:.95rem}
+.calc-row .val{font-family:'JetBrains Mono',monospace;font-weight:500;color:var(--ink)}
+.calc-row.tot .lbl,.calc-row.tot .val{color:var(--ink);font-weight:700}
+.big-number{background:var(--ink);color:var(--paper);border-radius:var(--radius-lg);
+  padding:2rem 2.25rem;margin:2rem 0;display:grid;grid-template-columns:1fr;gap:1.25rem;position:relative;overflow:hidden}
+@media (min-width:720px){.big-number{grid-template-columns:auto 1fr;align-items:center;gap:2rem}}
+.big-number::before{content:'';position:absolute;right:-40px;top:-40px;width:180px;height:180px;
+  border-radius:50%;background:radial-gradient(circle,var(--terra) 0%,transparent 70%);opacity:.4}
+[data-theme="dark"] .big-number{background:var(--paper-elev);color:var(--ink)}
+.big-number .label{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:700;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem;display:block}
+.big-number .num{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(2.4rem,7vw,4.4rem);
+  line-height:1;letter-spacing:-.035em;color:var(--paper);font-variation-settings:"opsz" 144}
+[data-theme="dark"] .big-number .num{color:var(--ink)}
+.big-number .num .cur{font-size:.45em;vertical-align:.4em;color:var(--gold);margin-right:.2em;font-weight:500}
+.big-number .caption{color:rgba(250,247,242,.78);font-size:.95rem;line-height:1.55;position:relative;z-index:1}
+[data-theme="dark"] .big-number .caption{color:var(--ink-soft)}
+.table-wrap{overflow-x:auto;margin:1.5rem 0;border-radius:var(--radius-md);border:1px solid var(--rule);-webkit-overflow-scrolling:touch}
+table.tbl{width:100%;border-collapse:collapse;font-family:'JetBrains Mono',monospace;font-size:.88rem}
+table.tbl th,table.tbl td{padding:.85rem 1rem;text-align:right;border-bottom:1px solid var(--rule);white-space:nowrap}
+table.tbl th{background:var(--paper-soft);font-weight:700;color:var(--ink);text-transform:uppercase;font-size:.72rem;letter-spacing:.1em}
+table.tbl td:first-child,table.tbl th:first-child{text-align:left;font-family:'Manrope',sans-serif;font-size:.92rem}
+table.tbl tr:last-child td{border-bottom:0}
+table.tbl tr.sep td{border-top:2px solid var(--ink);font-weight:700}
+table.tbl tr.tot td{background:var(--ink);color:var(--paper);font-weight:700}
+[data-theme="dark"] table.tbl tr.tot td{background:var(--terra);color:white}
+table.tbl tr.sub td{background:var(--gold-soft);font-weight:700}
+table.tbl td.neg{color:var(--terra)}
+.boleta{background:var(--paper-elev);border:1px solid var(--rule);border-radius:var(--radius-md);
+  padding:1.5rem 1.75rem;margin:1.75rem 0;font-family:'JetBrains Mono',monospace;font-size:.88rem;
+  box-shadow:var(--shadow-1);position:relative}
+.boleta::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--terra) 0%,var(--gold) 50%,var(--teal) 100%);
+  border-radius:var(--radius-md) var(--radius-md) 0 0}
+.boleta-head{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:1px dashed var(--rule);padding-bottom:.85rem;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem}
+.boleta-head .title{font-family:'Fraunces',serif;font-size:1.05rem;font-weight:600;color:var(--ink)}
+.boleta-head .sub{font-size:.72rem;color:var(--ink-faint);letter-spacing:.08em}
+.bol-row{display:flex;justify-content:space-between;padding:.4rem 0;gap:1rem}
+.bol-row.tot{font-weight:700;border-top:1px solid var(--ink);padding-top:.6rem;margin-top:.5rem;color:var(--ink)}
+.bol-row .lbl{color:var(--ink-soft)}
+.bol-row .v{color:var(--ink);font-weight:600;white-space:nowrap}
+.bol-row.tot .lbl,.bol-row.tot .v{color:var(--ink)}
+.bol-row.detail .lbl{padding-left:1rem;color:var(--ink-faint);font-size:.82rem}
+.chart-wrap{background:var(--paper-elev);border:1px solid var(--rule);border-radius:var(--radius-md);
+  padding:1.5rem;margin:1.75rem 0;box-shadow:var(--shadow-1)}
+.chart-wrap h4{font-family:'Fraunces',serif;font-weight:500;font-size:1.15rem;margin-bottom:.35rem;letter-spacing:-.01em;color:var(--ink)}
+.chart-wrap .sub{font-size:.84rem;color:var(--ink-faint);margin-bottom:1.25rem}
+.chart-canvas{position:relative;height:320px}
+@media (min-width:760px){.chart-canvas{height:380px}}
+.diagram{background:var(--paper-elev);border:1px solid var(--rule);border-radius:var(--radius-md);
+  padding:1.5rem;margin:1.75rem 0;overflow-x:auto;box-shadow:var(--shadow-1)}
+.diagram svg{display:block;max-width:100%;height:auto;margin:0 auto}
+.errores{display:grid;grid-template-columns:1fr;gap:.75rem;margin:1.5rem 0}
+@media (min-width:760px){.errores{grid-template-columns:1fr 1fr}}
+.err{background:var(--paper-elev);border:1px solid var(--rule);border-left:3px solid var(--orange);
+  border-radius:var(--radius-sm);padding:1rem 1.15rem}
+.err .n{font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;letter-spacing:.14em;color:var(--orange);margin-bottom:.3rem}
+.err .t{font-weight:700;color:var(--ink);font-size:.96rem;margin-bottom:.25rem}
+.err .d{color:var(--ink-soft);font-size:.88rem;line-height:1.5}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.85rem;margin:1.5rem 0}
+.kpi{background:var(--paper-elev);border:1px solid var(--rule);border-radius:var(--radius-md);padding:1.15rem 1.25rem}
+.kpi .l{font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:.5rem;display:block}
+.kpi .v{font-family:'Fraunces',serif;font-size:1.55rem;font-weight:500;line-height:1.05;color:var(--ink);letter-spacing:-.02em}
+.kpi .u{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--ink-faint);margin-top:.25rem;display:block}
+.kpi.accent{background:var(--terra);color:white;border-color:var(--terra)}
+.kpi.accent .l{color:rgba(255,255,255,.75)}
+.kpi.accent .v{color:white}
+.kpi.accent .u{color:rgba(255,255,255,.65)}
+mjx-container{font-size:1.08em !important;color:var(--ink) !important}
+.scroll-bar{position:fixed;top:calc(var(--nav-h) + var(--safe-top));left:0;height:2px;
+  background:var(--terra);width:0%;z-index:999;transition:width .08s linear}
+.footer{margin-top:4rem;padding:2rem 1.25rem;border-top:1px solid var(--rule);text-align:center;
+  color:var(--ink-faint);font-size:.82rem;line-height:1.6}
+.footer .crest{font-family:'Fraunces',serif;font-style:italic;color:var(--ink-soft);font-size:1rem;margin-bottom:.5rem}
+details{background:var(--paper-soft);border-radius:var(--radius-sm);padding:.95rem 1.1rem;margin:1rem 0;border:1px solid var(--rule)}
+details summary{cursor:pointer;font-weight:600;color:var(--ink);list-style:none;font-size:.95rem;
+  display:flex;justify-content:space-between;align-items:center}
+details summary::-webkit-details-marker{display:none}
+details summary::after{content:'+';font-family:'JetBrains Mono',monospace;color:var(--terra);font-size:1.2rem;font-weight:400;transition:transform .2s var(--ease)}
+details[open] summary::after{transform:rotate(45deg)}
+details[open] summary{margin-bottom:.8rem;padding-bottom:.65rem;border-bottom:1px solid var(--rule)}
+.chip{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.74rem;font-weight:600;
+  padding:.2rem .5rem;border-radius:5px;background:var(--paper-soft);color:var(--ink);
+  border:1px solid var(--rule);margin:0 .15rem;white-space:nowrap}
+.chip.terra{background:var(--terra-soft);color:var(--terra);border-color:transparent}
+.chip.teal{background:var(--teal-soft);color:var(--teal);border-color:transparent}
+.chip.gold{background:var(--gold-soft);color:#8A6A28;border-color:transparent}
+[data-theme="dark"] .chip.gold{color:var(--gold)}
+.chip.plum{background:var(--plum-soft);color:var(--plum);border-color:transparent}
+.chip.sage{background:var(--sage-soft);color:var(--sage);border-color:transparent}
+@media print{.nav,.toc,.toc-overlay,.a11y-pop,.scroll-bar{display:none !important}
+  .shell{display:block;padding:0 !important;max-width:100% !important}
+  section.q{page-break-inside:avoid}body{background:white;color:black}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important}}
+*:focus-visible{outline:2px solid var(--terra);outline-offset:3px;border-radius:4px}
+</style>
+</head>
+<body>
+
+<div class="scroll-bar" id="scrollBar"></div>
+
+<nav class="nav" id="nav" aria-label="Navegación principal">
+  <div class="nav-brand">
+    <span class="dot" aria-hidden="true"></span>
+    <span>
+      <span class="label">PD7 · Jugos Tropicales</span>
+      <span class="sub">Mano de Obra · Costos I</span>
+    </span>
+  </div>
+  <div class="nav-spacer"></div>
+  <div class="nav-actions">
+    <button class="nav-btn nav-toc-btn" id="tocBtn" aria-label="Abrir tabla de contenidos" title="Tabla de contenidos">
+      <svg viewBox="0 0 24 24"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="14" y2="18"/></svg>
+    </button>
+    <button class="nav-btn" id="a11yBtn" aria-label="Opciones de accesibilidad" title="Accesibilidad">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><path d="M12 8v6m-4 6l4-6 4 6M6 12h12"/></svg>
+    </button>
+    <button class="nav-btn" id="themeBtn" aria-label="Cambiar tema" title="Cambiar tema">
+      <svg viewBox="0 0 24 24" id="themeIcon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</nav>
+
+<div class="a11y-pop" id="a11yPop" role="dialog" aria-label="Opciones de accesibilidad">
+  <div class="a11y-row">
+    <span class="a11y-label">Tamaño de letra</span>
+    <div class="a11y-segs" role="group" aria-label="Tamaño de letra">
+      <button class="a11y-seg" data-fs="sm" style="font-size:.7rem">A</button>
+      <button class="a11y-seg" data-fs="md" style="font-size:.85rem">A</button>
+      <button class="a11y-seg is-on" data-fs="lg" style="font-size:.95rem">A</button>
+      <button class="a11y-seg" data-fs="xl" style="font-size:1.05rem">A</button>
+      <button class="a11y-seg" data-fs="xxl" style="font-size:1.15rem">A</button>
+      <button class="a11y-seg" data-fs="xxxl" style="font-size:1.25rem">A</button>
+    </div>
+  </div>
+  <div class="a11y-row">
+    <span class="a11y-label">Tema</span>
+    <div class="a11y-segs" role="group" aria-label="Tema">
+      <button class="a11y-seg is-on" data-th="light">Claro</button>
+      <button class="a11y-seg" data-th="sepia">Sepia</button>
+      <button class="a11y-seg" data-th="dark">Oscuro</button>
+    </div>
+  </div>
+</div>
+
+<div class="toc-overlay" id="tocOverlay"></div>
+
+<div class="shell">
+
+  <aside class="toc" id="toc" aria-label="Tabla de contenidos">
+    <div class="toc-title">Recorrido pedagógico</div>
+    <ol>
+      <li><a href="#caso"><span class="toc-num">00</span><span>Panorama del caso</span></a></li>
+      <li><a href="#teoria"><span class="toc-num">01</span><span>Teoría base de MOD</span></a></li>
+      <li><a href="#p1a"><span class="toc-num">P1A</span><span>Costo del consumo de naranjas</span></a></li>
+      <li><a href="#p1b"><span class="toc-num">P1B</span><span>Cajas de jugo procesadas</span></a></li>
+      <li><a href="#p2"><span class="toc-num">P2</span><span>Costo integral MOD &amp; admin</span></a></li>
+      <li><a href="#p3"><span class="toc-num">P3</span><span>Costo de producción</span></a></li>
+      <li><a href="#p4"><span class="toc-num">P4</span><span>Costo de ventas PEPS</span></a></li>
+      <li><a href="#p5"><span class="toc-num">P5</span><span>Gastos administrativos y ventas</span></a></li>
+      <li><a href="#p6"><span class="toc-num">P6</span><span>Estado de Resultados</span></a></li>
+      <li><a href="#errores"><span class="toc-num">10</span><span>Errores típicos</span></a></li>
+      <li><a href="#resumen"><span class="toc-num">11</span><span>Resumen ejecutivo</span></a></li>
+    </ol>
+  </aside>
+
+  <main class="content">
+
+    <header class="hero">
+      <div class="hero-eyebrow">
+        <span class="pulse"></span>
+        Práctica Dirigida N.º 7 · Marzo 2026
+      </div>
+      <h1>Jugos Tropicales S.A.<br><em>el caso completo,</em> con cada razón y cada centavo justificado.</h1>
+      <p class="hero-sub">
+        Resolveremos las seis preguntas paso a paso, desde la lectura del Kardex hasta el Estado de Resultados y su análisis porcentual. En cada paso verás: la <em>teoría</em> que justifica el procedimiento, la <em>intuición</em> económica detrás, los <em>cálculos</em> con números a la vista, y los <em>errores típicos</em> que un estudiante de primer curso debe evitar.
+      </p>
+      <div class="hero-meta">
+        <div class="hero-meta-item"><span class="k">Empresa</span><span class="v">Jugos Tropicales S.A.</span></div>
+        <div class="hero-meta-item"><span class="k">Producto</span><span class="v">Jugo de naranja · cajas 1 L</span></div>
+        <div class="hero-meta-item"><span class="k">Régimen laboral</span><span class="v">General</span></div>
+        <div class="hero-meta-item"><span class="k">Método inventario</span><span class="v">PEPS · permanente y periódico</span></div>
+        <div class="hero-meta-item"><span class="k">Período</span><span class="v">Marzo 2026</span></div>
+      </div>
+    </header>
+    <section class="q" id="caso">
+      <header class="q-head">
+        <span class="q-num">00</span>
+        <h2 class="q-title">Panorama del caso · qué nos dieron y qué nos piden</h2>
+      </header>
+
+      <p>Antes de meternos en cálculos, tomemos un mapa aéreo. La práctica nos entrega cuatro <strong>bloques de información</strong> y nos pide <strong>seis entregables</strong>. Si los identificamos bien desde el inicio, cada cálculo sabrá dónde encajar.</p>
+
+      <div class="razonamiento-calculo">
+        <div class="rc-block razon">
+          <span class="rc-block-tag">Lo que tenemos</span>
+          <ul style="margin:0;padding-left:1.1rem;">
+            <li><strong>Materiales directos:</strong> naranjas (Kardex PEPS), estabilizantes &amp; saborizantes, azúcar.</li>
+            <li><strong>MOD:</strong> 10 obreros, Régimen General, con horas extras en 5 de ellos.</li>
+            <li><strong>CIF:</strong> mat. indirectos, energía, depreciaciones (con prorrateos).</li>
+            <li><strong>Personal de soporte:</strong> administrativos y vendedores.</li>
+            <li><strong>Inventarios:</strong> producto terminado al inicio y final.</li>
+            <li><strong>Precio:</strong> S/ 8 + IGV por caja.</li>
+          </ul>
+        </div>
+        <div class="rc-block calc">
+          <span class="rc-block-tag">Lo que nos piden</span>
+          <ol style="margin:0;padding-left:1.4rem;">
+            <li>Kardex: costo de naranjas en producción + otros gastos.</li>
+            <li>Cajas procesadas.</li>
+            <li>Costo integral MOD y gasto integral personal administrativo.</li>
+            <li>Costo de producción total y unitario.</li>
+            <li>Costo de ventas (PEPS, sistema periódico).</li>
+            <li>Detalle de gastos admin y ventas.</li>
+            <li>Estado de Resultados con análisis porcentual.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="box insight">
+        <div class="box-head"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>El orden importa</div>
+        <p>Vamos a resolver en el orden de las preguntas <strong>porque cada respuesta alimenta a la siguiente</strong>: las cajas procesadas (1B) son el denominador del costo unitario (3); el costo unitario es el insumo para el costo de ventas PEPS (4); el costo de ventas alimenta la línea principal del Estado de Resultados (6). Esto se llama <em>encadenamiento contable</em>: cada cifra es una pieza de Lego que conecta con la siguiente.</p>
+      </div>
+    </section>
+
+    <section class="q" id="teoria">
+      <header class="q-head">
+        <span class="q-num">01</span>
+        <h2 class="q-title">Teoría base · qué significa "costo integral" de la mano de obra</h2>
+      </header>
+
+      <p>El concepto más importante de esta práctica es el de <strong>costo integral</strong> (también llamado <em>costo laboral total</em> o <em>costo empresa</em>). Vamos a desarmarlo despacio porque casi todos los errores del capítulo provienen de no entenderlo bien.</p>
+
+      <div class="box intuicion">
+        <div class="box-head"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M12 2l3 7h7l-6 4 2 7-6-4-6 4 2-7-6-4h7z"/></svg>Intuición clave</div>
+        <p>Cuando contratas a un obrero por <strong>S/ 1 500 mensuales</strong>, esa cifra <strong>no es el costo real para la empresa</strong>. Es solo el monto que aparece en su boleta como "remuneración básica". El verdadero costo incluye <em>todo lo que la empresa desembolsa o se compromete a desembolsar</em> por tener a ese trabajador. Piénsalo así: si la empresa no contratara, esos pagos no existirían. <strong>Todo lo que se origina por la existencia del puesto de trabajo es costo del puesto.</strong></p>
+      </div>
+
+      <h3 style="margin-top:2.5rem;">Los seis componentes del costo integral en Régimen General</h3>
+
+      <div class="table-wrap">
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th>Concepto</th>
+            <th>¿Por qué existe?</th>
+            <th>Cálculo mensual</th>
+            <th>Base legal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1. Remuneración básica + asig. familiar</strong></td>
+            <td style="white-space:normal;">Es lo que el trabajador recibe por su tiempo y esfuerzo. La asignación familiar (10% RMV = S/ 113) la cobran quienes tienen hijos menores o estudiando.</td>
+            <td>Sueldo + S/ 113 si aplica</td>
+            <td>D.S. 003-97-TR / Ley 25129</td>
+          </tr>
+          <tr>
+            <td><strong>2. Gratificaciones (Julio + Diciembre)</strong></td>
+            <td style="white-space:normal;">Por ley se pagan dos sueldos completos al año. La empresa debe <em>provisionar mensualmente</em> 1/6 del sueldo para no descapitalizarse.</td>
+            <td>Sueldo computable ÷ 6</td>
+            <td>Ley 27735</td>
+          </tr>
+          <tr>
+            <td><strong>3. Bonificación extraordinaria 9%</strong></td>
+            <td style="white-space:normal;">Cuando se aprobó la Ley 29351, las gratificaciones quedaron <em>inafectas</em> al EsSalud (9%). Como ese 9% ya no va al Estado, la empresa <strong>se lo entrega al trabajador</strong> como bonificación extraordinaria.</td>
+            <td>Gratificación × 9%</td>
+            <td>Ley 29351 / Ley 30334</td>
+          </tr>
+          <tr>
+            <td><strong>4. CTS</strong></td>
+            <td style="white-space:normal;">Es un seguro de desempleo. Se deposita semestralmente (mayo y noviembre). Equivale a un sueldo por año + 1/6 de gratificación.</td>
+            <td>Sueldo × 7 ÷ 72 ≈ 9.72%</td>
+            <td>D.S. 001-97-TR</td>
+          </tr>
+          <tr>
+            <td><strong>5. Vacaciones</strong></td>
+            <td style="white-space:normal;">30 días de descanso pagado al año. La empresa provisiona 1/12 cada mes.</td>
+            <td>Sueldo ÷ 12</td>
+            <td>D.Leg. 713</td>
+          </tr>
+          <tr>
+            <td><strong>6. EsSalud (aporte del empleador)</strong></td>
+            <td style="white-space:normal;">Salud pública para el trabajador y sus derechohabientes. Lo paga la empresa, NO se descuenta del sueldo del trabajador.</td>
+            <td>Remuneración × 9%</td>
+            <td>Ley 26790</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="box formula">
+        <div class="box-head"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M4 4h16M4 12h16M4 20h16"/></svg>Fórmula del costo integral por trabajador (Rég. General, mensual)</div>
+        <p style="text-align:center;margin:.5rem 0;">
+        $$ C_{integral} = R + \frac{R}{6} + \frac{R}{6}\cdot 9\% + \frac{7R}{72} + \frac{R}{12} + 0.09\,R $$
+        </p>
+        <p style="text-align:center;margin-top:.8rem;">donde $R$ = remuneración computable = básico + asignación familiar.</p>
+        <p style="text-align:center;margin-top:.8rem;">
+        Sumando los porcentajes: $R \cdot (1 + 0.1667 + 0.0150 + 0.0972 + 0.0833 + 0.09) \approx 1.4522 \, R$
+        </p>
+        <p style="margin-top:1rem;">Es decir: <strong>cada sol de remuneración computable cuesta a la empresa ~S/ 1.45 al mes</strong>. Esto se conoce como <em>multiplicador laboral</em> del Régimen General.</p>
+      </div>
+
+      <h3>Horas extras · la regla 25/35</h3>
+      <p>Cuando el trabajador labora <strong>más allá de su jornada legal</strong> (8h/día o 48h/semana), las horas adicionales tienen un <em>recargo</em>:</p>
+      <ul>
+        <li><strong>Primeras 2 horas extras del día:</strong> se pagan con un <span class="chip terra">+25%</span> sobre la hora normal.</li>
+        <li><strong>Tercera hora extra en adelante:</strong> se pagan con un <span class="chip terra">+35%</span> sobre la hora normal.</li>
+      </ul>
+
+      <div class="box clave">
+        <div class="box-head"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M21 11a8.38 8.38 0 0 1-15.71 4.13L3 21l1.87-2.29A8.38 8.38 0 1 1 21 11z"/></svg>Detalle crítico sobre las horas extras</div>
+        <p>Las horas extras <strong>siempre llevan EsSalud (9%)</strong>, porque son remuneración. Pero <strong>no entran en el cómputo de CTS, gratificaciones ni vacaciones</strong>, salvo que sean <em>regulares</em> (al menos 3 meses al semestre). En esta práctica los obreros hacen extras solo 3 días, así que NO son regulares → solo EsSalud aplica sobre ellas.</p>
+      </div>
+
+      <div class="box tip">
+        <div class="box-head"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Hora normal · fórmula</div>
+        <p style="margin:.4rem 0;">
+        $$ \text{Hora normal} = \frac{\text{Rem. mensual}}{30 \text{ días}} \div 8 \text{ horas} = \frac{R}{240} $$
+        </p>
+      </div>
+    </section>
+    <section class="q" id="p1a">
+      <header class="q-head">
+        <span class="q-num">P1A</span>
+        <h2 class="q-title">Pregunta 1A · costo de naranjas para producción y separación del siniestro</h2>
+      </header>
+
+      <p>El Kardex que nos entregaron está bien hecho con método <strong>PEPS</strong> (Primeras Entradas, Primeras Salidas). Nuestro trabajo no es <em>recrearlo</em>, sino <em>leerlo con criterio contable</em>: separar qué parte del consumo es <strong>costo de producción</strong> y qué parte es <strong>otra cuenta</strong> (gasto o cuenta por cobrar).</p>
+
+      <div class="step">
+        <span class="step-label">Paso 1</span>
+        <h3>Reconstruyamos las salidas que el Kardex registró</h3>
+        <p>En marzo hubo <strong>cuatro salidas</strong> de almacén. Las leemos del Kardex tal cual:</p>
+
+        <div class="table-wrap">
+        <table class="tbl">
+          <thead>
+            <tr><th>Fecha</th><th>Cantidad (kg)</th><th>Costo (S/)</th><th>Destino</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>10/3</td><td>4 100</td><td>2 115.00</td><td>Producción</td></tr>
+            <tr><td>23/3</td><td>4 300</td><td>2 411.57</td><td>Producción</td></tr>
+            <tr><td>25/3</td><td>300</td><td>174.62</td><td><strong>Reponer pérdida por corto circuito</strong></td></tr>
+            <tr><td>30/3</td><td>8 000</td><td>5 373.57</td><td>Producción</td></tr>
+            <tr class="sub"><td>TOTAL</td><td>16 700</td><td>10 074.76</td><td>—</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="step-label">Paso 2</span>
+        <h3>Pregunta clave: ¿la salida del 25/3 es costo de producción?</h3>
+
+        <div class="razonamiento-calculo">
+          <div class="rc-block razon">
+            <span class="rc-block-tag">Razonamiento</span>
+            <p>La salida del 25/3 fue <strong>para reponer materias primas que se perdieron por un corto circuito eléctrico</strong>. Esto NO es:</p>
+            <ul style="margin:.5rem 0 0 1.1rem;">
+              <li>una merma normal del proceso (eso es esperado y va al costo),</li>
+              <li>ni un descuido del operario en producción.</li>
+            </ul>
+            <p style="margin-top:.7rem;">Es un <strong>evento extraordinario</strong>, ajeno al curso normal del negocio. Por lo tanto, esos S/ 174.62 <strong>no deben inflar el costo del jugo</strong>: lo correcto es expensarlos como <span class="chip plum">Otros gastos</span> (o como <span class="chip teal">Otras cuentas por cobrar</span> si hubiera seguro).</p>
+          </div>
+          <div class="rc-block calc">
+            <span class="rc-block-tag">Marco teórico</span>
+            <p><strong>Tres reglas de tratamiento contable de pérdidas:</strong></p>
+            <ol style="margin:.5rem 0 0 1.1rem;">
+              <li><strong>Mermas normales</strong> (esperadas en el proceso) → integran el <em>costo de producción</em>. Inflarán el costo unitario del producto bueno.</li>
+              <li><strong>Pérdidas anormales asegurables</strong> (siniestros con cobertura) → <em>Otras cuentas por cobrar</em> (la aseguradora pagará).</li>
+              <li><strong>Pérdidas anormales no aseguradas</strong> (no hay quien las reembolse) → <em>Otros gastos</em> en el Estado de Resultados.</li>
+            </ol>
+            <p style="margin-top:.7rem;">El enunciado <strong>no menciona seguro</strong>, así que aplicamos la regla 3.</p>
+          </div>
+        </div>
+
+        <div class="box intuicion">
+          <div class="box-head"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg>Intuición económica</div>
+          <p>Si dejáramos esos S/ 174.62 dentro del costo de producción, estaríamos <strong>diciéndole a los compradores que el jugo es más caro de fabricar de lo que realmente es</strong>. Si mañana fijamos precio sobre ese costo inflado, perderíamos competitividad. <strong>El costo unitario debe reflejar lo que cuesta producir bien, no lo que cuesta fabricar más los accidentes.</strong> Los accidentes son responsabilidad del control interno y se reportan aparte.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="step-label">Paso 3</span>
+        <h3>Cálculo limpio</h3>
+
+        <div class="razonamiento-calculo">
+          <div class="rc-block calc">
+            <span class="rc-block-tag">Costo de naranjas a producción</span>
+            <div class="calc-row"><span class="lbl">Salida 10/3 (4 100 kg)</span><span class="val">2 115.00</span></div>
+            <div class="calc-row"><span class="lbl">Salida 23/3 (4 300 kg)</span><span class="val">2 411.57</span></div>
+            <div class="calc-row"><span class="lbl">Salida 30/3 (8 000 kg)</span><span class="val">5 373.57</span></div>
+            <div class="calc-row tot"><span class="lbl">Costo naranjas para producción</span><span class="val">S/ 9 900.14</span></div>
+          </div>
+          <div class="rc-block calc">
+            <span class="rc-block-tag">Otros gastos</span>
+            <div class="calc-row"><span class="lbl">Salida 25/3 (300 kg)</span><span class="val">174.62</span></div>
+            <div class="calc-row tot"><span class="lbl">Otros gastos / cargo no operativo</span><span class="val">S/ 174.62</span></div>
+            <p style="font-size:.85rem;margin-top:.85rem;color:var(--ink-soft);">→ Aparecerá <em>debajo</em> de la utilidad operativa en el Estado de Resultados.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="big-number">
+        <div>
+          <span class="label">Respuesta P1A</span>
+          <div class="num"><span class="cur">S/</span>9 900.14</div>
+        </div>
+        <div class="caption">
+          Es el costo de las naranjas que efectivamente forman parte del costo de producción del mes. Los S/ 174.62 restantes (siniestro del 25/3) se reconocen como <strong>Otros gastos</strong> en el Estado de Resultados.
+        </div>
+      </div>
+    </section>
+
+    <section class="q" id="p1b">
+      <header class="q-head">
+        <span class="q-num">P1B</span>
+        <h2 class="q-title">Pregunta 1B · cuántas cajas de 1 litro procesamos</h2>
+      </header>
+
+      <p>Para calcular las cajas necesitamos seguir la <strong>cadena física</strong>: kg que entran → kg que se pierden en el proceso (merma) → kg netos → litros de jugo → cajas. Cada eslabón tiene una regla.</p>
+
+      <div class="step">
+        <span class="step-label">Paso 1</span>
+        <h3>¿Cuántos kg entraron al proceso productivo?</h3>
+        <p>Solo los que efectivamente fueron a hacer jugo: <strong>las 4 100 + 4 300 + 8 000 = 16 400 kg</strong>. Los 300 kg del 25/3 NO entraron al proceso para hacer jugo: fueron a reponer una pérdida (que tampoco entró al proceso). Por eso quedan fuera.</p>
+      </div>
+
+      <div class="step">
+        <span class="step-label">Paso 2</span>
+        <h3>Aplicamos la merma normal</h3>
+
+        <div class="box formula">
+          <div class="box-head"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M3 12h18M12 3v18"/></svg>¿Qué es merma normal?</div>
+          <p>Es la pérdida <strong>esperada e inevitable</strong> del proceso productivo. En el caso de las naranjas hay cáscara, semillas, pulpa que no se usa, agua que se evapora… ese desperdicio es <em>inherente</em> a producir jugo. Por eso el costo de esos kg perdidos sí va al costo del jugo: forma parte del precio de fabricar bien.</p>
+        </div>
+
+        <div class="razonamiento-calculo">
+          <div class="rc-block razon">
+            <span class="rc-block-tag">Razonamiento</span>
+            <p>El enunciado dice: <em>"de los kg enviados a producción, se tiene una merma normal del 5%"</em>. Entonces de cada 100 kg de naranjas que entran, 5 kg se pierden como cáscara/pulpa/etc. y 95 kg se convierten efectivamente en jugo.</p>
+          </div>
+          <div class="rc-block calc">
+            <span class="rc-block-tag">Cálculo</span>
+            <div class="calc-row"><span class="lbl">Kg a producción</span><span class="val">16 400</span></div>
+            <div class="calc-row"><span class="lbl">(−) Merma 5%</span><span class="val">−820</span></div>
+            <div class="calc-row tot"><span class="lbl">Kg netos para jugo</span><span class="val">15 580</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="step-label">Paso 3</span>
+        <h3>Conversión a litros y cajas</h3>
+
+        <div class="razonamiento-calculo">
+          <div class="rc-block razon">
+            <span class="rc-block-tag">Receta</span>
+            <p>El enunciado dice: <strong>2 kg de naranjas → 1 litro de jugo</strong>. Y cada caja es de <strong>1 litro</strong>. Por lo tanto: 2 kg netos → 1 caja.</p>
+          </div>
+          <div class="rc-block calc">
+            <span class="rc-block-tag">Cálculo</span>
+            <div class="calc-row"><span class="lbl">Kg netos</span><span class="val">15 580</span></div>
+            <div class="calc-row"><span class="lbl">÷ Receta (2 kg/L)</span><span class="val">÷ 2</span></div>
+            <div class="calc-row tot"><span class="lbl">Litros = Cajas</span><span class="val">7 790</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="diagram">
+        <svg viewBox="0 0 900 280" xmlns="http://www.w3.org/2000/svg" aria-label="Diagrama de flujo de kg a cajas">
+          <defs>
+            <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+              <path d="M0,0 L10,5 L0,10 z" fill="var(--terra)"/>
+            </marker>
+            <marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+              <path d="M0,0 L10,5 L0,10 z" fill="var(--orange)"/>
+            </marker>
+          </defs>
+          <rect x="20" y="100" width="160" height="80" rx="14" fill="var(--teal-soft)" stroke="var(--teal)" stroke-width="1.5"/>
+          <text x="100" y="130" text-anchor="middle" font-family="Manrope" font-size="13" fill="var(--teal)" font-weight="700">Kg a producción</text>
+          <text x="100" y="158" text-anchor="middle" font-family="JetBrains Mono" font-size="20" fill="var(--ink)" font-weight="700">16 400</text>
+          <line x1="180" y1="140" x2="260" y2="140" stroke="var(--terra)" stroke-width="2" marker-end="url(#arr)"/>
+          <text x="220" y="130" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="var(--terra)">−5% merma</text>
+          <rect x="190" y="20" width="120" height="60" rx="10" fill="var(--orange-soft)" stroke="var(--orange)" stroke-width="1.2"/>
+          <text x="250" y="42" text-anchor="middle" font-family="Manrope" font-size="11" fill="var(--orange)" font-weight="700">Merma normal</text>
+          <text x="250" y="65" text-anchor="middle" font-family="JetBrains Mono" font-size="15" fill="var(--ink)" font-weight="700">820 kg</text>
+          <line x1="100" y1="100" x2="220" y2="80" stroke="var(--orange)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arr2)"/>
+          <rect x="270" y="100" width="160" height="80" rx="14" fill="var(--gold-soft)" stroke="var(--gold)" stroke-width="1.5"/>
+          <text x="350" y="130" text-anchor="middle" font-family="Manrope" font-size="13" fill="var(--gold)" font-weight="700">Kg netos</text>
+          <text x="350" y="158" text-anchor="middle" font-family="JetBrains Mono" font-size="20" fill="var(--ink)" font-weight="700">15 580</text>
+          <line x1="430" y1="140" x2="510" y2="140" stroke="var(--terra)" stroke-width="2" marker-end="url(#arr)"/>
+          <text x="470" y="130" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="var(--terra)">÷ 2 kg/L</text>
+          <rect x="520" y="100" width="160" height="80" rx="14" fill="var(--plum-soft)" stroke="var(--plum)" stroke-width="1.5"/>
+          <text x="600" y="130" text-anchor="middle" font-family="Manrope" font-size="13" fill="var(--plum)" font-weight="700">Litros de jugo</text>
+          <text x="600" y="158" text-anchor="middle" font-family="JetBrains Mono" font-size="20" fill="var(--ink)" font-weight="700">7 790</text>
+          <line x1="680" y1="140" x2="730" y2="140" stroke="var(--terra)" stroke-width="2" marker-end="url(#arr)"/>
+          <text x="705" y="130" text-anchor="middle" font-family="JetBrains Mono" font-size="11" fill="var(--terra)">1 L/caja</text>
+          <rect x="740" y="80" width="140" height="120" rx="16" fill="var(--terra)" stroke="var(--terra)" stroke-width="2"/>
+          <text x="810" y="125" text-anchor="middle" font-family="Manrope" font-size="12" fill="white" font-weight="700">CAJAS</text>
+          <text x="810" y="170" text-anchor="middle" font-family="Fraunces" font-size="32" fill="white" font-weight="600">7 790</text>
+          <text x="450" y="250" text-anchor="middle" font-family="Manrope" font-size="11" fill="var(--ink-faint)" font-style="italic">Los 300 kg del 25/3 no aparecen en este flujo: nunca entraron al proceso productivo</text>
+        </svg>
+      </div>
+
+      <div class="big-number">
+        <div>
+          <span class="label">Respuesta P1B</span>
+          <div class="num">7 790 <span style="font-size:.35em;color:var(--gold);vertical-align:.3em;">cajas</span></div>
+        </div>
+        <div class="caption">
+          De los 16 400 kg de naranjas que entraron a producción, perdimos 820 kg como merma normal (5%). Los 15 580 kg netos, a razón de 2 kg por litro y 1 litro por caja, nos dieron <strong>7 790 cajas de 1 L de jugo de naranja</strong>.
+        </div>
+      </div>
+    </section>
+    <section class="q" id="p2">
+      <header class="q-head">
+        <span class="q-num">P2</span>
+        <h2 class="q-title">Pregunta 2 · costo integral de MOD y gasto integral del personal administrativo</h2>
+      </header>
+
+      <p>Esta es <strong>la pregunta central del capítulo</strong>. Vamos a construirla en cinco etapas: (a) costo por obrero <em>sin</em> horas extras, (b) costo total de los 10 obreros, (c) horas extras, (d) costo total MOD, y (e) gasto administrativo integral. Cada etapa replica la lógica del costo integral que vimos en la teoría base.</p>
+
+      <h3 style="margin-top:2rem;">2.1 · Costo integral por obrero (sin horas extras)</h3>
+
+      <div class="step">
+        <span class="step-label">Paso 1</span>
+        <h4>Identificamos la "remuneración computable"</h4>
+        <p>Cada uno de los 10 obreros gana:</p>
+        <ul>
+          <li>Remuneración básica: <strong>S/ 1 500</strong></li>
+          <li>Asignación familiar: <strong>S/ 113</strong> <span style="color:var(--ink-faint);font-size:.88em;">(10% de RMV; la reciben todos los obreros del caso)</span></li>
+        </ul>
+        <p>Esa suma de <strong>S/ 1 613</strong> es la <strong>remuneración computable</strong>, que es la base sobre la cual se calculan todos los beneficios sociales.</p>
+      </div>
+
+      <div class="step">
+        <span class="step-label">Paso 2</span>
+        <h4>Calculamos cada componente con su intuición</h4>
+
+        <div class="boleta">
+          <div class="boleta-head">
+            <div class="title">Boleta · costo empresa por obrero</div>
+            <div class="sub">MARZO 2026 · RÉGIMEN GENERAL</div>
+          </div>
+
+          <div class="bol-row"><span class="lbl">Remuneración básica</span><span class="v">1 500.00</span></div>
+          <div class="bol-row"><span class="lbl">Asignación familiar</span><span class="v">113.00</span></div>
+          <div class="bol-row" style="border-top:1px dashed var(--rule);padding-top:.5rem;margin-top:.4rem;"><span class="lbl"><strong>Rem. computable (R)</strong></span><span class="v"><strong>1 613.00</strong></span></div>
+
+          <div class="bol-row" style="margin-top:.8rem;"><span class="lbl">Gratificaciones (R ÷ 6)</span><span class="v">268.83</span></div>
+          <div class="bol-row detail"><span class="lbl">↳ <em>2 gratificaciones al año ÷ 12 meses = sueldo ÷ 6</em></span></div>
+
+          <div class="bol-row"><span class="lbl">Bonif. Extraord. 9% Ley 29351</span><span class="v">24.20</span></div>
+          <div class="bol-row detail"><span class="lbl">↳ <em>9% sobre la gratificación: 268.83 × 0.09</em></span></div>
+
+          <div class="bol-row"><span class="lbl">CTS (R × 7/72)</span><span class="v">156.82</span></div>
+          <div class="bol-row detail"><span class="lbl">↳ <em>(R + R/6) ÷ 12 = R × (1 + 1/6) ÷ 12 = R × 7/72</em></span></div>
+
+          <div class="bol-row"><span class="lbl">Vacaciones (R ÷ 12)</span><span class="v">134.42</span></div>
+          <div class="bol-row detail"><span class="lbl">↳ <em>1 sueldo al año ÷ 12 meses</em></span></div>
+
+          <div class="bol-row"><span class="lbl">EsSalud (R × 9%)</span><span class="v">145.17</span></div>
+          <div class="bol-row detail"><span class="lbl">↳ <em>Aporte del empleador, no se descuenta al obrero</em></span></div>
+
+          <div class="bol-row tot"><span class="lbl">COSTO INTEGRAL POR OBRERO</span><span class="v">S/ 2 342.43</span></div>
+        </div>
+
+        <details>
+          <summary>Ver la derivación de CTS = R × 7/72 en detalle</summary>
+          <p>Por ley, la CTS de un año entero equivale a <strong>una remuneración computable + 1/6 de la gratificación legal</strong> (porque la grat. del semestre anterior se incluye en el cómputo).</p>
+          <p>Como la gratificación legal anual son 2 sueldos, 1/6 de "una" gratificación = R/6 anual.</p>
+          <p>Por lo tanto: CTS anual = R + R/6 = R · (1 + 1/6) = R · 7/6.</p>
+          <p>Provisión mensual: dividimos entre 12 → <strong>CTS mensual = R · 7/72</strong>.</p>
+          <p>Para R = 1 613: CTS = 1 613 × 7/72 = <strong>156.82</strong>.</p>
+        </details>
+      </div>
+
+      <h3>2.2 · Costo de los 10 obreros (sin horas extras)</h3>
+
+      <div class="razonamiento-calculo">
+        <div class="rc-block razon">
+          <span class="rc-block-tag">Razonamiento</span>
+          <p>Los 10 obreros tienen exactamente la misma estructura remunerativa: básico S/ 1 500 + asignación familiar S/ 113. Como ninguno difiere, basta con <strong>multiplicar por 10</strong> el costo integral por obrero.</p>
+        </div>
+        <div class="rc-block calc">
+          <span class="rc-block-tag">Cálculo</span>
+          <div class="calc-row"><span class="lbl">Costo integral × obrero</span><span class="val">2 342.43</span></div>
+          <div class="calc-row"><span class="lbl">× 10 obreros</span><span class="val">× 10</span></div>
+          <div class="calc-row tot"><span class="lbl">Subtotal MOD sin HE</span><span class="val">S/ 23 424.34</span></div>
+        </div>
+      </div>
+
+      <h3>2.3 · Horas extras de 5 obreros</h3>
+
+      <div class="step">
+        <span class="step-label">Paso 1</span>
+        <h4>Contar las horas</h4>
+        <p>El enunciado dice: <em>"5 de ellos hicieron 5 horas extras cada uno, los días 11, 12 y 13"</em>. Lectura cuidadosa:</p>
+        <ul>
+          <li>Obreros con HE: <strong>5</strong></li>
+          <li>HE por obrero por día: <strong>5</strong></li>
+          <li>Días con HE: <strong>3</strong> (11, 12 y 13 de marzo)</li>
+          <li>Total HE por obrero: 5 × 3 = <strong>15 horas</strong></li>
+          <li>Total HE en la empresa: 5 obreros × 15 h = <strong>75 horas</strong></li>
+        </ul>
+      </div>
+
+      <div class="step">
+        <span class="step-label">Paso 2</span>
+        <h4>Hora normal y composición de las 5 HE diarias</h4>
+
+        <div class="box formula">
+          <div class="box-head">Hora normal</div>
+          <p style="margin:.4rem 0;">
+          $$ H_{normal} = \frac{1\,613}{30 \cdot 8} = \frac{1\,613}{240} = S/\,6.7208 $$
+          </p>
+        </div>
+
+        <p>Como cada obrero hizo <strong>5 HE en un mismo día</strong>, aplicamos la regla 25/35:</p>
+        <ul>
+          <li>Primeras 2 horas del día → 25% de recargo → se pagan a 6.7208 × 1.25 = <strong>S/ 8.40</strong> c/u</li>
+          <li>Las 3 horas restantes → 35% de recargo → se pagan a 6.7208 × 1.35 = <strong>S/ 9.07</strong> c/u</li>
+        </ul>
+      </div>
+
+      <div class="step">
+        <span class="step-label">Paso 3</span>
+        <h4>Cálculo limpio del pago de HE</h4>
+
+        <div class="razonamiento-calculo">
+          <div class="rc-block calc">
+            <span class="rc-block-tag">Por obrero, por día</span>
+            <div class="calc-row"><span class="lbl">2 h × 1.25 × 6.7208</span><span class="val">16.802</span></div>
+            <div class="calc-row"><span class="lbl">3 h × 1.35 × 6.7208</span><span class="val">27.219</span></div>
+            <div class="calc-row tot"><span class="lbl">Pago HE / obrero / día</span><span class="val">S/ 44.02</span></div>
+          </div>
+          <div class="rc-block calc">
+            <span class="rc-block-tag">Total HE del mes</span>
+            <div class="calc-row"><span class="lbl">× 3 días</span><span class="val">132.06</span></div>
+            <div class="calc-row"><span class="lbl">× 5 obreros</span><span class="val">× 5</span></div>
+            <div class="calc-row tot"><span class="lbl">Pago HE total</span><span class="val">S/ 660.32</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="step-label">Paso 4</span>
+        <h4>EsSalud sobre las HE</h4>
+
+        <div class="box clave">
+          <div class="box-head">Reglita</div>
+          <p>Las HE <strong>SÍ pagan EsSalud (9%)</strong>, porque son remuneración. Pero <strong>NO entran a CTS/Grat/Vac</strong> porque no son regulares (solo se hicieron 3 días, no llegan al umbral de "permanentes").</p>
+        </div>
+
+        <div class="calc-row" style="background:var(--paper-soft);padding:.65rem .9rem;border-radius:8px;border:none;">
+          <span class="lbl">EsSalud sobre HE = 660.32 × 9%</span><span class="val"><strong>= S/ 59.43</strong></span>
+        </div>
+      </div>
+
+      <h3>2.4 · Costo total integral de MOD</h3>
+
+      <div class="boleta">
+        <div class="boleta-head">
+          <div class="title">Costo Integral · Mano de Obra Directa</div>
+          <div class="sub">10 OBREROS · MARZO 2026</div>
+        </div>
+        <div class="bol-row"><span class="lbl">Subtotal 10 obreros (sin HE)</span><span class="v">23 424.34</span></div>
+        <div class="bol-row"><span class="lbl">Pago horas extras (5 obreros)</span><span class="v">660.32</span></div>
+        <div class="bol-row"><span class="lbl">EsSalud sobre HE (9%)</span><span class="v">59.43</span></div>
+        <div class="bol-row tot"><span class="lbl">COSTO INTEGRAL MOD</span><span class="v">S/ 24 144.10</span></div>
+      </div>
+
+      <div class="big-number">
+        <div>
+          <span class="label">MOD Integral</span>
+          <div class="num"><span class="cur">S/</span>24 144</div>
+        </div>
+        <div class="caption">
+          Este es el verdadero costo de la mano de obra directa para Jugos Tropicales en marzo. Si hubiéramos sumado solo los sueldos básicos (S/ 15 000), habríamos subestimado el costo en <strong>casi 9 144 soles</strong> — la magnitud del error es enorme.
+        </div>
+      </div>
+
+      <h3>2.5 · Gasto integral del personal administrativo</h3>
+
+      <p>Para los administrativos el procedimiento es <strong>idéntico</strong> al de la MOD, con tres diferencias importantes:</p>
+      <ul>
+        <li>El enunciado dice "remuneración básica de personal administrativo es <strong>en total</strong> S/ 12 200". Es decir, ese 12 200 ya es <em>la suma de todos los sueldos</em>, no el sueldo de un solo administrativo.</li>
+        <li>No perciben asignación familiar → la remuneración computable es directamente 12 200.</li>
+        <li>El resultado <strong>no es un costo</strong> (no toca al producto), <strong>es un gasto</strong> (administrativo). Por lo tanto irá al Estado de Resultados, no al inventario.</li>
+      </ul>
+
+      <div class="boleta">
+        <div class="boleta-head">
+          <div class="title">Gasto Integral · Personal Administrativo</div>
+          <div class="sub">MARZO 2026 · RÉGIMEN GENERAL</div>
+        </div>
+        <div class="bol-row"><span class="lbl">Remuneración básica (total)</span><span class="v">12 200.00</span></div>
+        <div class="bol-row"><span class="lbl">Gratificaciones (12 200 ÷ 6)</span><span class="v">2 033.33</span></div>
+        <div class="bol-row"><span class="lbl">Bonif. Extraord. 9% Ley 29351</span><span class="v">183.00</span></div>
+        <div class="bol-row"><span class="lbl">CTS (12 200 × 7/72)</span><span class="v">1 186.11</span></div>
+        <div class="bol-row"><span class="lbl">Vacaciones (12 200 ÷ 12)</span><span class="v">1 016.67</span></div>
+        <div class="bol-row"><span class="lbl">EsSalud (12 200 × 9%)</span><span class="v">1 098.00</span></div>
+        <div class="bol-row tot"><span class="lbl">GASTO INTEGRAL ADMINISTRATIVO</span><span class="v">S/ 17 717.11</span></div>
+      </div>
+
+      <div class="box insight">
+        <div class="box-head">Verificación rápida con el multiplicador</div>
+        <p>Recordemos que el multiplicador del Régimen General es ~1.4522. Verificación:<br>
+        12 200 × 1.4522 = 17 717.04 ✓ (las dos centésimas son por redondeo del multiplicador; el cálculo exacto es 17 717.11). Coincide perfectamente.</p>
+      </div>
+
+      <div class="chart-wrap">
+        <h4>Anatomía del costo MOD · ¿en qué se va cada sol?</h4>
+        <div class="sub">De los S/ 24 144 totales, ~67% es lo que efectivamente el obrero recibe en la mano; el resto son beneficios diferidos y aportes patronales.</div>
+        <div class="chart-canvas"><canvas id="chartMOD"></canvas></div>
+      </div>
+    </section>
+    <section class="q" id="p3">
+      <header class="q-head">
+        <span class="q-num">P3</span>
+        <h2 class="q-title">Pregunta 3 · costo de producción total y unitario por caja</h2>
+      </header>
+
+      <p>El costo de producción es la suma de los <strong>tres elementos del costo</strong>: Materiales Directos (MD) + Mano de Obra Directa (MOD) + Costos Indirectos de Fabricación (CIF). Esta es la fórmula universal de la contabilidad de costos.</p>
+
+      <div class="box formula">
+        <div class="box-head">Fórmula</div>
+        <p style="text-align:center;margin:.4rem 0;">
+        $$ \text{Costo de producción} = MD + MOD + CIF $$
+        </p>
+        <p style="text-align:center;margin-top:.5rem;">
+        $$ \text{Costo unitario} = \frac{\text{Costo de producción}}{\text{Unidades buenas producidas}} $$
+        </p>
+      </div>
+
+      <h3>3.1 · Materiales Directos</h3>
+
+      <div class="step">
+        <span class="step-label">Paso 1</span>
+        <h4>Estabilizantes &amp; saborizantes — método del consumo</h4>
+
+        <p>El enunciado no nos da Kardex de estabilizantes; nos da <strong>inventario inicial, compras y saldo final</strong>. Para hallar el consumo aplicamos la ecuación fundamental del inventario:</p>
+
+        <div class="box formula">
+          <p style="text-align:center;margin:.3rem 0;">
+          $$ \text{Consumo} = \text{Inv. Inicial} + \text{Compras} - \text{Inv. Final} $$
+          </p>
+        </div>
+
+        <div class="razonamiento-calculo">
+          <div class="rc-block razon">
+            <span class="rc-block-tag">Intuición</span>
+            <p>Todo lo que <strong>tuvimos disponible</strong> (lo del inicio + lo que compramos), <strong>menos lo que queda</strong>, es lo que <strong>se usó</strong>. Es la lógica más simple del mundo: si empecé con S/ 250, compré S/ 860 y al final me sobran S/ 475, gasté S/ 635.</p>
+          </div>
+          <div class="rc-block calc">
+            <span class="rc-block-tag">Cálculo</span>
+            <div class="calc-row"><span class="lbl">Inv. inicial</span><span class="val">250.00</span></div>
+            <div class="calc-row"><span class="lbl">(+) Compras</span><span class="val">860.00</span></div>
+            <div class="calc-row"><span class="lbl">(−) Inv. final</span><span class="val">−475.00</span></div>
+            <div class="calc-row tot"><span class="lbl">Consumo estabilizantes</span><span class="val">S/ 635.00</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="step-label">Paso 2</span>
+        <h4>Resumen de materiales directos</h4>
+
+        <div class="boleta">
+          <div class="boleta-head"><div class="title">Materiales Directos · Marzo 2026</div><div class="sub">CONSUMO REAL DE PRODUCCIÓN</div></div>
+          <div class="bol-row"><span class="lbl">Naranjas (de P1A)</span><span class="v">9 900.14</span></div>
+          <div class="bol-row"><span class="lbl">Estabilizantes y saborizantes</span><span class="v">635.00</span></div>
+          <div class="bol-row"><span class="lbl">Azúcar</span><span class="v">420.00</span></div>
+          <div class="bol-row tot"><span class="lbl">TOTAL MD</span><span class="v">S/ 10 955.14</span></div>
+        </div>
+      </div>
+
+      <h3>3.2 · CIF (Costos Indirectos de Fabricación)</h3>
+
+      <div class="step">
+        <span class="step-label">Paso 1</span>
+        <h4>Identificar qué se incluye y qué se prorratea</h4>
+
+        <div class="box intuicion">
+          <div class="box-head">Intuición · costo vs. gasto</div>
+          <p>El criterio de oro: <strong>todo lo que ocurre dentro de la fábrica es COSTO; todo lo que ocurre fuera (oficinas, ventas, publicidad) es GASTO</strong>. Cuando un recurso se reparte entre fábrica y oficinas (como la luz o el edificio), <strong>aplicamos el porcentaje de uso de fábrica</strong> al costo y el resto al gasto.</p>
+        </div>
+
+        <div class="table-wrap">
+        <table class="tbl">
+          <thead><tr><th>Concepto</th><th>Total</th><th>% Fáb.</th><th>→ CIF</th><th>% Ofic.</th><th>→ G. Adm.</th></tr></thead>
+          <tbody>
+            <tr><td>Materiales indirectos</td><td>542</td><td>100%</td><td>542.00</td><td>—</td><td>—</td></tr>
+            <tr><td>Energía, agua, luz</td><td>3 200</td><td>80%</td><td>2 560.00</td><td>20%</td><td>640.00</td></tr>
+            <tr><td>Depreciación máquinas fábrica</td><td>980</td><td>100%</td><td>980.00</td><td>—</td><td>—</td></tr>
+            <tr><td>Depreciación mobiliario oficina</td><td>783</td><td>—</td><td>—</td><td>100%</td><td>783.00</td></tr>
+            <tr><td>Depreciación del local</td><td>2 100</td><td>70%</td><td>1 470.00</td><td>30%</td><td>630.00</td></tr>
+            <tr class="sub"><td>Subtotal</td><td>—</td><td>—</td><td>5 552.00</td><td>—</td><td>2 053.00</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p style="font-size:.9em;color:var(--ink-soft);font-style:italic;">Nota: la depreciación de mobiliario de oficina es 100% oficina; la de máquinas de fábrica es 100% fábrica. Solo la luz y el edificio se reparten porque son recursos compartidos físicamente.</p>
+      </div>
+
+      <h3>3.3 · Ensamble del costo total</h3>
+
+      <div class="boleta">
+        <div class="boleta-head"><div class="title">Costo de Producción · Marzo 2026</div><div class="sub">MD + MOD + CIF</div></div>
+        <div class="bol-row"><span class="lbl">Materiales Directos (MD)</span><span class="v">10 955.14</span></div>
+        <div class="bol-row"><span class="lbl">Mano de Obra Directa (MOD)</span><span class="v">24 144.10</span></div>
+        <div class="bol-row"><span class="lbl">Costos Indirectos de Fabricación (CIF)</span><span class="v">5 552.00</span></div>
+        <div class="bol-row tot"><span class="lbl">COSTO DE PRODUCCIÓN TOTAL</span><span class="v">S/ 40 651.24</span></div>
+      </div>
+
+      <h3>3.4 · Costo unitario por caja</h3>
+
+      <div class="razonamiento-calculo">
+        <div class="rc-block razon">
+          <span class="rc-block-tag">Razonamiento</span>
+          <p>El costo total se reparte solo entre las <strong>unidades buenas</strong> (las que efectivamente se pueden vender). En este caso, las 7 790 cajas que calculamos en P1B. <strong>La merma normal ya está absorbida en el costo de los MD</strong> porque costeamos los 16 400 kg completos antes de que se desperdicie nada.</p>
+        </div>
+        <div class="rc-block calc">
+          <span class="rc-block-tag">Cálculo</span>
+          <p style="text-align:center;margin:.3rem 0;">
+          $$ C_u = \frac{40\,651.24}{7\,790} $$
+          </p>
+          <div class="calc-row tot" style="margin-top:.7rem;"><span class="lbl">Costo unitario por caja</span><span class="val">S/ 5.2184</span></div>
+        </div>
+      </div>
+
+      <div class="big-number">
+        <div>
+          <span class="label">Respuesta P3</span>
+          <div class="num"><span class="cur">S/</span>5.22 <span style="font-size:.32em;color:var(--gold);vertical-align:.4em;">/ caja</span></div>
+        </div>
+        <div class="caption">
+          Producir <strong>cada caja</strong> de jugo de naranja le costó a Jugos Tropicales <strong>S/ 5.2184</strong> en marzo 2026. Considerando que vende cada caja a S/ 8 (sin IGV), el margen bruto por caja es de aproximadamente <strong>S/ 2.78 (≈ 35%)</strong>.
+        </div>
+      </div>
+
+      <div class="chart-wrap">
+        <h4>Composición del costo de producción</h4>
+        <div class="sub">La MOD representa más de la mitad del costo total — por eso esta práctica se enfoca en su tratamiento integral.</div>
+        <div class="chart-canvas"><canvas id="chartCostoProd"></canvas></div>
+      </div>
+    </section>
+
+    <section class="q" id="p4">
+      <header class="q-head">
+        <span class="q-num">P4</span>
+        <h2 class="q-title">Pregunta 4 · costo de ventas con PEPS · sistema de inventario periódico</h2>
+      </header>
+
+      <p>El Kardex de naranjas usa PEPS pero en sistema <strong>permanente</strong>: cada movimiento se costea al instante. Para el producto terminado (las cajas de jugo) nos piden el método <strong>PEPS periódico</strong>: calcular el costo de ventas usando una sola ecuación al final del período.</p>
+
+      <div class="box formula">
+        <div class="box-head">Ecuación del sistema periódico</div>
+        <p style="text-align:center;margin:.4rem 0;">
+        $$ \text{Costo de Ventas} = \text{Inv. Inicial PT} + \text{Costo de Producción} - \text{Inv. Final PT} $$
+        </p>
+      </div>
+
+      <div class="step">
+        <span class="step-label">Paso 1</span>
+        <h4>Identificar el inventario inicial y su costo unitario</h4>
+
+        <div class="razonamiento-calculo">
+          <div class="rc-block razon">
+            <span class="rc-block-tag">Razonamiento</span>
+            <p>El enunciado dice: <em>"Se tenían al inicio de mes 2 120 cajas de jugo de naranja a un costo total de S/ 9 540"</em>. Estas cajas vienen de períodos anteriores con un costo unitario distinto al de la producción de marzo.</p>
+            <p style="margin-top:.6rem;">Costo unitario II = 9 540 ÷ 2 120 = <strong>S/ 4.50 / caja</strong>.</p>
+          </div>
+          <div class="rc-block calc">
+            <span class="rc-block-tag">Cálculo</span>
+            <div class="calc-row"><span class="lbl">Inv. Inicial cajas</span><span class="val">2 120</span></div>
+            <div class="calc-row"><span class="lbl">Inv. Inicial S/</span><span class="val">9 540.00</span></div>
+            <div class="calc-row"><span class="lbl">→ Cu II</span><span class="val">S/ 4.50</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="step-label">Paso 2</span>
+        <h4>Valorar el inventario final con criterio PEPS</h4>
+
+        <div class="box intuicion">
+          <div class="box-head">La intuición PEPS</div>
+          <p>PEPS dice: "<strong>las primeras unidades en entrar son las primeras en salir</strong>". Si las primeras en salir son las del inicio, entonces <strong>las que quedan al final son las últimas en entrar</strong>, es decir, <strong>las que produjimos en marzo</strong>.</p>
+          <p style="margin-top:.6rem;">Por eso, las 500 cajas que quedan al final del mes se valoran al costo unitario de marzo: <strong>S/ 5.2184</strong>, no al costo del inventario inicial.</p>
+        </div>
+
+        <div class="razonamiento-calculo">
+          <div class="rc-block calc">
+            <span class="rc-block-tag">Cálculo del Inv. Final</span>
+            <div class="calc-row"><span class="lbl">Cajas al final</span><span class="val">500</span></div>
+            <div class="calc-row"><span class="lbl">× Costo unitario marzo</span><span class="val">× 5.2184</span></div>
+            <div class="calc-row tot"><span class="lbl">Valor Inv. Final</span><span class="val">S/ 2 609.19</span></div>
+          </div>
+          <div class="rc-block razon">
+            <span class="rc-block-tag">Verificación lógica</span>
+            <p>Tenía 2 120 + 7 790 = 9 910 cajas disponibles en total. Si quedan 500, se vendieron 9 410. PEPS me dice que de esas 9 410 vendidas, <strong>las 2 120 del inicio salieron primero</strong>, y las restantes <strong>7 290 cajas</strong> son de la producción de marzo.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="step-label">Paso 3</span>
+        <h4>Cálculo del costo de ventas</h4>
+
+        <div class="boleta">
+          <div class="boleta-head"><div class="title">Costo de Ventas · Método PEPS · Sistema Periódico</div><div class="sub">MARZO 2026 · PRODUCTO TERMINADO</div></div>
+          <div class="bol-row"><span class="lbl">Inv. Inicial PT (2 120 cajas × S/ 4.50)</span><span class="v">9 540.00</span></div>
+          <div class="bol-row"><span class="lbl">(+) Costo de producción del mes</span><span class="v">40 651.24</span></div>
+          <div class="bol-row" style="border-top:1px dashed var(--rule);padding-top:.5rem;margin-top:.4rem;"><span class="lbl"><strong>Disponible para venta</strong></span><span class="v"><strong>50 191.24</strong></span></div>
+          <div class="bol-row" style="margin-top:.5rem;"><span class="lbl">(−) Inv. Final PT (500 cajas × S/ 5.2184)</span><span class="v">−2 609.19</span></div>
+          <div class="bol-row tot"><span class="lbl">COSTO DE VENTAS</span><span class="v">S/ 47 582.04</span></div>
+        </div>
+
+        <details>
+          <summary>Verificación PEPS alternativa (capa por capa)</summary>
+          <p>Si trabajamos PEPS "manualmente" capa por capa, las 9 410 cajas vendidas se descomponen así:</p>
+          <ul>
+            <li>2 120 cajas del Inv. Inicial × S/ 4.50 = S/ 9 540.00</li>
+            <li>7 290 cajas de la producción de marzo × S/ 5.2184 = S/ 38 042.04</li>
+            <li><strong>Total: S/ 47 582.04</strong> ✓ — coincide exactamente con el método periódico.</li>
+          </ul>
+        </details>
+      </div>
+
+      <div class="big-number">
+        <div>
+          <span class="label">Respuesta P4</span>
+          <div class="num"><span class="cur">S/</span>47 582</div>
+        </div>
+        <div class="caption">
+          El <strong>costo de ventas</strong> de marzo 2026 fue de S/ 47 582.04 — corresponde a 9 410 cajas vendidas, valoradas siguiendo el método PEPS: las más antiguas (a S/ 4.50) primero, las nuevas (a S/ 5.2184) después.
+        </div>
+      </div>
+    </section>
+    <section class="q" id="p5">
+      <header class="q-head">
+        <span class="q-num">P5</span>
+        <h2 class="q-title">Pregunta 5 · gastos administrativos y gastos de ventas</h2>
+      </header>
+
+      <p>Los <strong>gastos operativos</strong> son los desembolsos que sostienen la empresa pero que no tocan el producto. Por eso van directo al Estado de Resultados como reducción de la utilidad bruta, sin pasar nunca por el inventario.</p>
+
+      <div class="box intuicion">
+        <div class="box-head"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/></svg>Pista mnemotécnica</div>
+        <p>Si lo que pago se queda "dentro" del producto que va al almacén, es <strong>costo</strong> (inventariable). Si lo que pago "se quema" en el período (no genera inventario), es <strong>gasto</strong>. Una caja que termina en el almacén lleva adentro su parte de MD + MOD + CIF; nunca lleva adentro la publicidad ni el sueldo del gerente.</p>
+      </div>
+
+      <h3>5.1 · Gastos administrativos</h3>
+
+      <div class="boleta">
+        <div class="boleta-head"><div class="title">Gastos Administrativos</div><div class="sub">MARZO 2026</div></div>
+        <div class="bol-row"><span class="lbl">Gasto integral personal administrativo (de P2)</span><span class="v">17 717.11</span></div>
+        <div class="bol-row"><span class="lbl">Energía, agua, luz oficinas (20% × 3 200)</span><span class="v">640.00</span></div>
+        <div class="bol-row"><span class="lbl">Depreciación mobiliario y equipos oficina</span><span class="v">783.00</span></div>
+        <div class="bol-row"><span class="lbl">Depreciación local oficinas (30% × 2 100)</span><span class="v">630.00</span></div>
+        <div class="bol-row tot"><span class="lbl">TOTAL GASTOS ADMINISTRATIVOS</span><span class="v">S/ 19 770.11</span></div>
+      </div>
+
+      <h3>5.2 · Gastos de ventas</h3>
+
+      <div class="boleta">
+        <div class="boleta-head"><div class="title">Gastos de Ventas</div><div class="sub">MARZO 2026</div></div>
+        <div class="bol-row"><span class="lbl">Remuneración personal de ventas (ya integral)</span><span class="v">2 517.00</span></div>
+        <div class="bol-row detail"><span class="lbl">↳ <em>El enunciado dice "ya incluye derechos y contribuciones": no aplicamos multiplicador.</em></span></div>
+        <div class="bol-row"><span class="lbl">Publicidad</span><span class="v">1 260.00</span></div>
+        <div class="bol-row tot"><span class="lbl">TOTAL GASTOS DE VENTAS</span><span class="v">S/ 3 777.00</span></div>
+      </div>
+
+      <div class="box clave">
+        <div class="box-head">Atención a la redacción</div>
+        <p>Cuando el problema dice <em>"S/ 2 517 (ya incluye derechos y contribuciones)"</em>, está dándonos el costo integral <strong>ya calculado</strong>. Si volviéramos a aplicarle el multiplicador 1.4522, estaríamos pagando dos veces los beneficios sociales — un error gravísimo que la profesora suele sancionar.</p>
+      </div>
+    </section>
+
+    <section class="q" id="p6">
+      <header class="q-head">
+        <span class="q-num">P6</span>
+        <h2 class="q-title">Pregunta 6 · Estado de Resultados y análisis porcentual</h2>
+      </header>
+
+      <p>El Estado de Resultados es la "fotografía" de cómo la empresa <strong>ganó o perdió plata</strong> en el período. Se construye en una <strong>cascada</strong>: empezamos con las ventas y le vamos restando los costos y gastos, capa por capa, hasta llegar a la utilidad neta.</p>
+
+      <div class="step">
+        <span class="step-label">Paso 1</span>
+        <h4>Calcular las ventas</h4>
+
+        <div class="razonamiento-calculo">
+          <div class="rc-block razon">
+            <span class="rc-block-tag">Razonamiento</span>
+            <p>Vendimos las 9 410 cajas a S/ 8 cada una (precio sin IGV; el IGV es un impuesto que NO entra al Estado de Resultados, porque se lo trasladamos a SUNAT, no es nuestro).</p>
+          </div>
+          <div class="rc-block calc">
+            <span class="rc-block-tag">Cálculo</span>
+            <div class="calc-row"><span class="lbl">Cajas vendidas</span><span class="val">9 410</span></div>
+            <div class="calc-row"><span class="lbl">× Precio (sin IGV)</span><span class="val">× 8.00</span></div>
+            <div class="calc-row tot"><span class="lbl">Ventas netas</span><span class="val">S/ 75 280.00</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <span class="step-label">Paso 2</span>
+        <h4>Construir la cascada completa con análisis porcentual</h4>
+
+        <div class="box intuicion">
+          <div class="box-head">¿Qué es el análisis porcentual?</div>
+          <p>Es expresar cada línea del Estado de Resultados <strong>como porcentaje de las ventas netas</strong> (que valen 100%). Sirve para comparar empresas de distinto tamaño o ver la <em>estructura</em> del negocio: cuánto de cada sol vendido se lo lleva el costo del producto, cuánto los gastos, cuánto queda como ganancia.</p>
+        </div>
+
+        <div class="table-wrap">
+        <table class="tbl">
+          <thead><tr><th>Concepto</th><th>Monto (S/)</th><th>% sobre ventas</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Ventas netas</strong></td><td><strong>75 280.00</strong></td><td><strong>100.00%</strong></td></tr>
+            <tr><td>(−) Costo de Ventas</td><td class="neg">(47 582.04)</td><td class="neg">(63.21%)</td></tr>
+            <tr class="sep"><td><strong>Utilidad Bruta</strong></td><td><strong>27 697.96</strong></td><td><strong>36.79%</strong></td></tr>
+            <tr><td>(−) Gastos Administrativos</td><td class="neg">(19 770.11)</td><td class="neg">(26.26%)</td></tr>
+            <tr><td>(−) Gastos de Ventas</td><td class="neg">(3 777.00)</td><td class="neg">(5.02%)</td></tr>
+            <tr class="sep"><td><strong>Utilidad Operativa</strong></td><td><strong>4 150.85</strong></td><td><strong>5.51%</strong></td></tr>
+            <tr><td>(−) Otros gastos (siniestro naranjas)</td><td class="neg">(174.62)</td><td class="neg">(0.23%)</td></tr>
+            <tr class="sep"><td><strong>Utilidad antes del Impuesto a la Renta</strong></td><td><strong>3 976.23</strong></td><td><strong>5.28%</strong></td></tr>
+            <tr><td>(−) Impuesto a la Renta (29.5%)</td><td class="neg">(1 172.99)</td><td class="neg">(1.56%)</td></tr>
+            <tr class="tot"><td>UTILIDAD NETA</td><td>2 803.24</td><td>3.72%</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p style="font-size:.9em;color:var(--ink-soft);font-style:italic;">Nota: el IR se calcula al 29.5% (tasa del Régimen General). Si la profesora prefiere truncar el EE.RR. en la utilidad antes del IR, sería válido eliminar las dos últimas líneas; las dejamos por completitud y rigor financiero.</p>
+      </div>
+
+      <h3>6.3 · Lectura interpretativa del Estado de Resultados</h3>
+
+      <div class="kpis">
+        <div class="kpi"><span class="l">Margen bruto</span><span class="v">36.8%</span><span class="u">Utilidad bruta / Ventas</span></div>
+        <div class="kpi"><span class="l">Margen operativo</span><span class="v">5.5%</span><span class="u">Utilidad operativa / Ventas</span></div>
+        <div class="kpi accent"><span class="l">Margen neto</span><span class="v">3.7%</span><span class="u">Utilidad neta / Ventas</span></div>
+        <div class="kpi"><span class="l">Peso costo ventas</span><span class="v">63.2%</span><span class="u">de cada sol vendido</span></div>
+        <div class="kpi"><span class="l">Peso gastos admin.</span><span class="v">26.3%</span><span class="u">El gasto más pesado</span></div>
+      </div>
+
+      <div class="box insight">
+        <div class="box-head"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>Qué nos cuenta este Estado de Resultados</div>
+        <p>De cada S/ 100 que Jugos Tropicales vendió en marzo, S/ 63.21 se fueron en producir lo vendido (costo de ventas), S/ 26.26 en sostener la administración, S/ 5.02 en vender y promocionar, y al final apenas <strong>S/ 3.72 quedaron como ganancia limpia</strong>. El <strong>punto débil</strong> es el alto peso de los gastos administrativos: una empresa con esta estructura debería revisar si necesita tanto personal administrativo o tanto local administrativo en relación con su volumen de venta.</p>
+      </div>
+
+      <div class="chart-wrap">
+        <h4>Cascada del Estado de Resultados</h4>
+        <div class="sub">De los S/ 75 280 en ventas, cada barra muestra cuánto sobrevive después de cada deducción.</div>
+        <div class="chart-canvas"><canvas id="chartCascada"></canvas></div>
+      </div>
+    </section>
+
+    <section class="q" id="errores">
+      <header class="q-head">
+        <span class="q-num">10</span>
+        <h2 class="q-title">10 errores típicos · qué evitar el día del parcial</h2>
+      </header>
+
+      <p>Estos son los tropiezos más frecuentes en este tipo de problemas. Si los memorizas, evitas perder puntos por descuidos.</p>
+
+      <div class="errores">
+        <div class="err"><div class="n">ERROR 01</div><div class="t">Sumar el siniestro al costo de producción</div><div class="d">Los 300 kg del 25/3 (S/ 174.62) son extraordinarios → Otros gastos. No deben inflar el costo unitario del jugo.</div></div>
+        <div class="err"><div class="n">ERROR 02</div><div class="t">Incluir los 300 kg en la merma normal</div><div class="d">La merma normal es 5% solo de los 16 400 kg que sí entraron a producción, no de los 16 700 totales.</div></div>
+        <div class="err"><div class="n">ERROR 03</div><div class="t">Olvidar la asignación familiar como base</div><div class="d">La rem. computable es 1 613 (no 1 500). Si calculas beneficios sobre 1 500, subestimas todo el costo MOD.</div></div>
+        <div class="err"><div class="n">ERROR 04</div><div class="t">Aplicar CTS/Grat/Vac a las horas extras</div><div class="d">Solo aplicaría si fueran HE regulares (≥3 meses). 3 días no califican: solo EsSalud 9% sobre HE.</div></div>
+        <div class="err"><div class="n">ERROR 05</div><div class="t">Doble cómputo en personal de ventas</div><div class="d">El S/ 2 517 "ya incluye derechos y contribuciones": NO aplicarle el multiplicador 1.4522 otra vez.</div></div>
+        <div class="err"><div class="n">ERROR 06</div><div class="t">No prorratear energía y depreciación del local</div><div class="d">Energía 80/20 y local 70/30: la parte de fábrica va a CIF; la de oficinas va a Gastos Admin.</div></div>
+        <div class="err"><div class="n">ERROR 07</div><div class="t">Confundir depreciación de mobiliario vs. máquinas</div><div class="d">Mobiliario de oficina es 100% gasto admin; máquinas de fábrica es 100% CIF. Sin prorrateo.</div></div>
+        <div class="err"><div class="n">ERROR 08</div><div class="t">Valorar el Inv. Final PEPS al costo del inicio</div><div class="d">PEPS dice "lo que queda es lo último que entró". Las 500 cajas finales se valoran a S/ 5.2184 (marzo), no a S/ 4.50 (inicio).</div></div>
+        <div class="err"><div class="n">ERROR 09</div><div class="t">Incluir IGV en las ventas</div><div class="d">Cada caja se vende a S/ 8 + IGV. El IGV no es nuestra plata; nunca va al Estado de Resultados.</div></div>
+        <div class="err"><div class="n">ERROR 10</div><div class="t">Dividir el costo total entre los kg totales</div><div class="d">El costo unitario es por <em>caja</em> (7 790), no por kg. Aunque "1 caja = 1 L = 2 kg netos", el denominador correcto siempre es la unidad vendible.</div></div>
+      </div>
+    </section>
+
+    <section class="q" id="resumen">
+      <header class="q-head">
+        <span class="q-num">11</span>
+        <h2 class="q-title">Resumen ejecutivo · todas las respuestas en una sola vista</h2>
+      </header>
+
+      <p>Si vas justo de tiempo, esta es la tabla a la que volver. Cada celda contiene la respuesta final con su lógica condensada.</p>
+
+      <div class="kpis">
+        <div class="kpi"><span class="l">P1A · Naranjas a producción</span><span class="v">9 900.14</span><span class="u">S/ · sin el siniestro del 25/3</span></div>
+        <div class="kpi"><span class="l">P1A · Otros gastos</span><span class="v">174.62</span><span class="u">S/ · siniestro extraordinario</span></div>
+        <div class="kpi"><span class="l">P1B · Cajas procesadas</span><span class="v">7 790</span><span class="u">cajas de 1 L</span></div>
+        <div class="kpi accent"><span class="l">P2 · MOD Integral</span><span class="v">24 144.10</span><span class="u">S/ · 10 obreros + HE</span></div>
+        <div class="kpi"><span class="l">P2 · Gasto admin. integral</span><span class="v">17 717.11</span><span class="u">S/ · personal</span></div>
+        <div class="kpi"><span class="l">P3 · Costo producción total</span><span class="v">40 651.24</span><span class="u">S/ · MD+MOD+CIF</span></div>
+        <div class="kpi accent"><span class="l">P3 · Costo unitario</span><span class="v">5.2184</span><span class="u">S/ por caja</span></div>
+        <div class="kpi"><span class="l">P4 · Costo de ventas (PEPS)</span><span class="v">47 582.04</span><span class="u">S/ · 9 410 cajas</span></div>
+        <div class="kpi"><span class="l">P5 · Gastos administrativos</span><span class="v">19 770.11</span><span class="u">S/ · incluye personal</span></div>
+        <div class="kpi"><span class="l">P5 · Gastos de ventas</span><span class="v">3 777.00</span><span class="u">S/ · personal + publicidad</span></div>
+        <div class="kpi"><span class="l">P6 · Utilidad operativa</span><span class="v">4 150.85</span><span class="u">S/ · 5.51% sobre ventas</span></div>
+        <div class="kpi accent"><span class="l">P6 · Utilidad neta</span><span class="v">2 803.24</span><span class="u">S/ · 3.72% sobre ventas</span></div>
+      </div>
+
+      <div class="box tip">
+        <div class="box-head"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Checklist para el día del parcial</div>
+        <ol>
+          <li>Lee el Kardex completo antes de tocar lápiz. <strong>Marca el siniestro</strong>.</li>
+          <li>Calcula kg netos = kg producción × 95%. <strong>El 5% se queda en el costo</strong>.</li>
+          <li>Costo integral por obrero = básico + asig + grat (R/6) + bonif 9% + CTS (7R/72) + vac (R/12) + EsSalud 9%.</li>
+          <li>Horas extras: 2h × 1.25 + resto × 1.35. <strong>EsSalud sí, beneficios no</strong>.</li>
+          <li>Prorratea energía (80/20) y local (70/30) en CIF/GAdm.</li>
+          <li>Costo unitario = costo total ÷ unidades buenas (cajas).</li>
+          <li>Inv. Final PEPS = al costo unitario del <em>último</em> período.</li>
+          <li>Ventas SIN IGV, costo ventas con PEPS periódico.</li>
+          <li>Análisis porcentual: cada línea ÷ ventas × 100.</li>
+        </ol>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="crest">PD7 · Contabilidad de Costos I · UDEP</div>
+      <div>Material didáctico autogenerado · Verificado numéricamente con Python · Marzo 2026</div>
+      <div style="margin-top:.5rem;">Diseñado para estudio profundo en MacBook 16", iPad y iPhone</div>
+    </footer>
+  </main>
+</div>
+<script>
+(function(){
+  'use strict';
+
+  const root = document.documentElement;
+  const STORAGE_KEY = 'pd7_prefs_v1';
+
+  // ===== Preferences =====
+  function loadPrefs(){
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if(!raw) return { theme: 'light', fs: 'lg' };
+      return JSON.parse(raw);
+    } catch(e){ return { theme: 'light', fs: 'lg' }; }
+  }
+  function savePrefs(p){
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); } catch(e){}
+  }
+  let prefs = loadPrefs();
+
+  function applyTheme(t){
+    if(t === 'light'){ root.removeAttribute('data-theme'); }
+    else { root.setAttribute('data-theme', t); }
+    document.querySelectorAll('[data-th]').forEach(b => {
+      b.classList.toggle('is-on', b.dataset.th === t);
+    });
+    prefs.theme = t; savePrefs(prefs);
+    if(window.refreshCharts) window.refreshCharts();
+  }
+  function applyFs(f){
+    root.setAttribute('data-fs', f);
+    document.querySelectorAll('[data-fs]').forEach(b => {
+      b.classList.toggle('is-on', b.dataset.fs === f);
+    });
+    prefs.fs = f; savePrefs(prefs);
+  }
+  applyTheme(prefs.theme || 'light');
+  applyFs(prefs.fs || 'lg');
+
+  // ===== A11Y popover =====
+  const a11yBtn = document.getElementById('a11yBtn');
+  const a11yPop = document.getElementById('a11yPop');
+  a11yBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const open = a11yPop.classList.toggle('is-open');
+    a11yBtn.classList.toggle('is-active', open);
+  });
+  document.addEventListener('click', (e) => {
+    if(a11yPop.classList.contains('is-open') &&
+       !a11yPop.contains(e.target) &&
+       !a11yBtn.contains(e.target)){
+      a11yPop.classList.remove('is-open');
+      a11yBtn.classList.remove('is-active');
+    }
+  });
+
+  a11yPop.querySelectorAll('[data-fs]').forEach(b => {
+    b.addEventListener('click', () => applyFs(b.dataset.fs));
+  });
+  a11yPop.querySelectorAll('[data-th]').forEach(b => {
+    b.addEventListener('click', () => applyTheme(b.dataset.th));
+  });
+
+  // ===== Theme quick-toggle =====
+  const themeBtn = document.getElementById('themeBtn');
+  themeBtn.addEventListener('click', () => {
+    const order = ['light','sepia','dark'];
+    const cur = root.getAttribute('data-theme') || 'light';
+    const next = order[(order.indexOf(cur)+1) % order.length];
+    applyTheme(next);
+  });
+
+  // ===== Nav auto-hide on scroll =====
+  const nav = document.getElementById('nav');
+  let lastY = 0;
+  let ticking = false;
+  function onScroll(){
+    const y = window.scrollY;
+    const goingDown = y > lastY;
+    if(y > 120 && goingDown){
+      nav.classList.add('is-hidden');
+    } else {
+      nav.classList.remove('is-hidden');
+    }
+    lastY = y;
+
+    // Progress bar
+    const docH = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docH > 0 ? (y / docH) * 100 : 0;
+    document.getElementById('scrollBar').style.width = pct + '%';
+
+    ticking = false;
+  }
+  window.addEventListener('scroll', () => {
+    if(!ticking){
+      requestAnimationFrame(onScroll);
+      ticking = true;
+    }
+  }, { passive: true });
+
+  // ===== TOC drawer (mobile) =====
+  const tocBtn = document.getElementById('tocBtn');
+  const toc = document.getElementById('toc');
+  const tocOverlay = document.getElementById('tocOverlay');
+  function closeTOC(){
+    toc.classList.remove('is-open');
+    tocOverlay.classList.remove('is-open');
+  }
+  tocBtn.addEventListener('click', () => {
+    toc.classList.add('is-open');
+    tocOverlay.classList.add('is-open');
+  });
+  tocOverlay.addEventListener('click', closeTOC);
+  toc.querySelectorAll('a').forEach(a => a.addEventListener('click', closeTOC));
+
+  // ===== Active TOC item =====
+  const sections = Array.from(document.querySelectorAll('section.q'));
+  const tocLinks = Array.from(document.querySelectorAll('.toc a'));
+  function updateActiveTOC(){
+    const offset = 200;
+    let active = sections[0];
+    for(const s of sections){
+      const rect = s.getBoundingClientRect();
+      if(rect.top <= offset){ active = s; }
+      else break;
+    }
+    tocLinks.forEach(a => {
+      const isAct = a.getAttribute('href') === '#' + active.id;
+      a.classList.toggle('is-active', isAct);
+    });
+  }
+  window.addEventListener('scroll', updateActiveTOC, { passive: true });
+  updateActiveTOC();
+
+  // ===== Charts =====
+  function getCSSVar(name){
+    return getComputedStyle(root).getPropertyValue(name).trim();
+  }
+
+  let charts = [];
+  function buildCharts(){
+    charts.forEach(c => c.destroy());
+    charts = [];
+    if(typeof Chart === 'undefined') return;
+
+    const ink = getCSSVar('--ink');
+    const inkSoft = getCSSVar('--ink-soft');
+    const inkFaint = getCSSVar('--ink-faint');
+    const rule = getCSSVar('--rule');
+    const terra = getCSSVar('--terra');
+    const teal = getCSSVar('--teal');
+    const gold = getCSSVar('--gold');
+    const plum = getCSSVar('--plum');
+    const sage = getCSSVar('--sage');
+    const orange = getCSSVar('--orange');
+
+    Chart.defaults.font.family = "'Manrope', sans-serif";
+    Chart.defaults.font.size = 12;
+    Chart.defaults.color = inkSoft;
+
+    // Chart 1: MOD composition (doughnut)
+    const c1 = document.getElementById('chartMOD');
+    if(c1){
+      charts.push(new Chart(c1, {
+        type: 'doughnut',
+        data: {
+          labels: ['Sueldo + asig. fam.','Gratificaciones','Bonif. 9%','CTS','Vacaciones','EsSalud','Horas extras + EsSalud HE'],
+          datasets: [{
+            data: [16130, 2688.33, 241.95, 1568.19, 1344.17, 1451.70, 719.75],
+            backgroundColor: [terra, gold, orange, teal, sage, plum, '#9BAEC3'],
+            borderColor: getCSSVar('--paper-elev'),
+            borderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: '60%',
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: { padding: 14, usePointStyle: true, pointStyle: 'circle', boxWidth: 8 }
+            },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => {
+                  const total = ctx.dataset.data.reduce((a,b)=>a+b, 0);
+                  const pct = (ctx.parsed / total * 100).toFixed(1);
+                  return ` ${ctx.label}: S/ ${ctx.parsed.toFixed(2)} (${pct}%)`;
+                }
+              }
+            }
+          }
+        }
+      }));
+    }
+
+    // Chart 2: Composición costo de producción (bar)
+    const c2 = document.getElementById('chartCostoProd');
+    if(c2){
+      charts.push(new Chart(c2, {
+        type: 'bar',
+        data: {
+          labels: ['Materiales Directos','Mano de Obra Directa','CIF'],
+          datasets: [{
+            label: 'S/',
+            data: [10955.14, 24144.10, 5552.00],
+            backgroundColor: [terra, teal, gold],
+            borderRadius: 8,
+            borderSkipped: false,
+            barThickness: 56
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          indexAxis: 'y',
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => {
+                  const total = 40651.24;
+                  const pct = (ctx.parsed.x / total * 100).toFixed(1);
+                  return ` S/ ${ctx.parsed.x.toFixed(2)} (${pct}%)`;
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              grid: { color: rule, drawBorder: false },
+              ticks: {
+                color: inkFaint,
+                callback: (v) => 'S/ ' + (v/1000) + 'k'
+              }
+            },
+            y: { grid: { display: false }, ticks: { color: ink, font: { weight: '600', size: 13 } } }
+          }
+        }
+      }));
+    }
+
+    // Chart 3: Cascada del EE.RR.
+    const c3 = document.getElementById('chartCascada');
+    if(c3){
+      charts.push(new Chart(c3, {
+        type: 'bar',
+        data: {
+          labels: ['Ventas','U. Bruta','U. Operativa','U. antes IR','U. Neta'],
+          datasets: [{
+            label: 'S/',
+            data: [75280, 27697.96, 4150.85, 3976.23, 2803.24],
+            backgroundColor: [teal, gold, terra, plum, sage],
+            borderRadius: 10,
+            borderSkipped: false
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => {
+                  const pct = (ctx.parsed.y / 75280 * 100).toFixed(2);
+                  return ` S/ ${ctx.parsed.y.toFixed(2)} (${pct}% de ventas)`;
+                }
+              }
+            }
+          },
+          scales: {
+            x: { grid: { display: false }, ticks: { color: ink, font: { weight: '600' } } },
+            y: {
+              grid: { color: rule, drawBorder: false },
+              ticks: { color: inkFaint, callback: (v) => 'S/ ' + (v/1000) + 'k' }
+            }
+          }
+        }
+      }));
+    }
+  }
+  window.refreshCharts = buildCharts;
+
+  // Build charts after the page renders fully
+  if(document.readyState === 'complete'){
+    setTimeout(buildCharts, 100);
+  } else {
+    window.addEventListener('load', () => setTimeout(buildCharts, 100));
+  }
+
+  // Smooth-scroll fix for in-page anchors
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const id = a.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if(el){
+        e.preventDefault();
+        const top = el.getBoundingClientRect().top + window.scrollY - 80;
+        window.scrollTo({ top, behavior: 'smooth' });
+        history.replaceState(null, '', '#' + id);
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
