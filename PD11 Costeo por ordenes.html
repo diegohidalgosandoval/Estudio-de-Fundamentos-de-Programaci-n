@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="claro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>PD11 · Costeo por Órdenes — Guía de estudio</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] },
+  startup: { typeset: false }
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+<style>
+/* ===================== SISTEMA DE TEMAS ===================== */
+:root{
+  --bg:#F1EADB; --surface:#FBF7EF; --surface-2:#EDE4D2; --surface-3:#E4D9C2;
+  --ink:#23262B; --ink-2:#3C434D; --ink-soft:#5C6470; --ink-faint:#8A8474;
+  --border:#DDD2BC; --border-strong:#C9BC9F;
+  --terracotta:#BF4A2C; --teal:#216D67; --gold:#A9790C; --plum:#6E3A6E; --sage:#4F7A4B; --orange:#C5621A; --blue:#2C5E8A;
+  --accent:#BF4A2C; --accent-ink:#fff;
+  --shadow:0 1px 2px rgba(40,30,15,.06), 0 8px 28px -12px rgba(40,30,15,.18);
+  --shadow-lg:0 12px 40px -14px rgba(40,30,15,.30);
+  --radius:16px; --radius-sm:10px;
+  --maxw:74ch; --fs:145%;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --serif:'Fraunces',Georgia,serif;
+  --sans:'Manrope',system-ui,sans-serif;
+}
+[data-theme="sepia"]{
+  --bg:#EADDC4; --surface:#F6ECD6; --surface-2:#E4D4B6; --surface-3:#DAC79F;
+  --ink:#3A2E1C; --ink-2:#4E3F28; --ink-soft:#6B5836; --ink-faint:#8D7A55;
+  --border:#D6C19A; --border-strong:#C2A877;
+  --terracotta:#A9401F; --teal:#1C5E54; --gold:#8F6406; --plum:#5F3060; --sage:#446A3F; --orange:#AE520F; --blue:#27557C;
+  --accent:#A9401F;
+}
+[data-theme="pizarra"]{
+  --bg:#1E2A2A; --surface:#243433; --surface-2:#2C3F3D; --surface-3:#35514D;
+  --ink:#EAF1EC; --ink-2:#CFE0D6; --ink-soft:#A7BDB2; --ink-faint:#7F968C;
+  --border:#3A524E; --border-strong:#4C6A65;
+  --terracotta:#E98463; --teal:#6FC9BC; --gold:#E6BE6A; --plum:#C79BD0; --sage:#9ED08C; --orange:#EDA362; --blue:#84B8E6;
+  --accent:#6FC9BC; --accent-ink:#10201E;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 30px -12px rgba(0,0,0,.55);
+}
+[data-theme="oscuro"]{
+  --bg:#15171C; --surface:#1D2026; --surface-2:#252932; --surface-3:#2F343F;
+  --ink:#ECEEF2; --ink-2:#D2D6DE; --ink-soft:#A2A9B5; --ink-faint:#767D8B;
+  --border:#30353F; --border-strong:#434A57;
+  --terracotta:#F0825E; --teal:#56C4B8; --gold:#E4B45C; --plum:#C99AD6; --sage:#93CE86; --orange:#EE9D5A; --blue:#79B2E8;
+  --accent:#F0825E; --accent-ink:#1a1208;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 34px -14px rgba(0,0,0,.65);
+}
+[data-theme="alto-contraste"]{
+  --bg:#000000; --surface:#0A0A0A; --surface-2:#141414; --surface-3:#1E1E1E;
+  --ink:#FFFFFF; --ink-2:#FFFFFF; --ink-soft:#E6E6E6; --ink-faint:#BDBDBD;
+  --border:#5A5A5A; --border-strong:#8A8A8A;
+  --terracotta:#FF9E73; --teal:#5BE6D6; --gold:#FFD24D; --plum:#E2A6F0; --sage:#9FF08C; --orange:#FFB05C; --blue:#86C5FF;
+  --accent:#FFD24D; --accent-ink:#000;
+  --shadow:0 0 0 1px #5A5A5A; --shadow-lg:0 0 0 2px #8A8A8A;
+}
+
+/* ===================== BASE ===================== */
+*{box-sizing:border-box}
+html{font-size:var(--fs); scroll-behavior:smooth; -webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto} *{transition:none!important;animation:none!important}}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:var(--sans); font-size:1rem; line-height:1.72;
+  font-weight:450; letter-spacing:.005em;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+  transition:background .35s ease, color .35s ease;
+  overflow-x:hidden;
+}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 clamp(16px,4vw,40px)}
+
+h1,h2,h3,h4{font-family:var(--serif); line-height:1.18; letter-spacing:-.012em; color:var(--ink); font-weight:600}
+h2{font-size:1.92em; margin:2.4em 0 .2em; font-weight:700}
+h3{font-size:1.4em; margin:1.9em 0 .1em}
+h4{font-size:1.12em; margin:1.5em 0 .1em; font-weight:600}
+p{margin:.85em 0}
+strong{font-weight:700; color:var(--ink)}
+em{font-style:italic}
+a{color:var(--accent); text-decoration-thickness:.08em; text-underline-offset:.18em}
+sup{font-size:.7em}
+
+/* ===================== TOPBAR ===================== */
+.topbar{
+  position:fixed; top:0; left:0; right:0; z-index:60; height:60px;
+  display:flex; align-items:center; gap:12px;
+  padding:0 clamp(12px,3vw,22px);
+  background:color-mix(in srgb, var(--surface) 88%, transparent);
+  backdrop-filter:saturate(1.4) blur(14px); -webkit-backdrop-filter:saturate(1.4) blur(14px);
+  border-bottom:1px solid var(--border);
+  transition:transform .4s cubic-bezier(.4,0,.2,1);
+  padding-top:env(safe-area-inset-top);
+}
+.topbar.hidden{transform:translateY(-105%)}
+.iconbtn{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:42px; height:42px; border-radius:12px; cursor:pointer;
+  background:var(--surface-2); color:var(--ink); border:1px solid var(--border);
+  font-size:1.15rem; transition:background .2s, transform .15s; flex:none;
+}
+.iconbtn:hover{background:var(--surface-3)} .iconbtn:active{transform:scale(.92)}
+.iconbtn:focus-visible, a:focus-visible, button:focus-visible{outline:3px solid var(--accent); outline-offset:2px}
+.brand{display:flex; flex-direction:column; line-height:1.12; min-width:0}
+.brand .k{font-family:var(--serif); font-weight:700; font-size:1.02rem; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.brand .s{font-size:.66rem; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-faint); font-weight:600}
+.topbar .spacer{flex:1}
+.progresswrap{position:fixed; top:0; left:0; right:0; height:3px; z-index:61; background:transparent; pointer-events:none}
+.progressbar{height:100%; width:0; background:linear-gradient(90deg,var(--accent),var(--teal)); transition:width .1s linear}
+.topbar.hidden + .progresswrap{top:0}
+
+/* ===================== SIDEBAR ===================== */
+.sidebar{
+  position:fixed; top:0; left:0; bottom:0; width:312px; z-index:70;
+  background:var(--surface); border-right:1px solid var(--border);
+  display:flex; flex-direction:column;
+  transform:translateX(-104%); transition:transform .4s cubic-bezier(.4,0,.2,1);
+  padding-top:env(safe-area-inset-top); box-shadow:var(--shadow-lg);
+}
+.sidebar.open{transform:translateX(0)}
+.sidebar .shead{padding:18px 20px 12px; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:12px}
+.sidebar .shead .logo{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,var(--terracotta),var(--gold));display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--serif);font-weight:900;font-size:1.1rem;flex:none}
+.sidebar .shead .t{font-family:var(--serif);font-weight:700;font-size:1.05rem}
+.sidebar .shead .u{font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);font-weight:600}
+.toc{overflow-y:auto; padding:12px 12px 40px; flex:1; overscroll-behavior:contain}
+.toc a{display:block; text-decoration:none; color:var(--ink-soft); font-size:.86rem; font-weight:500;
+  padding:8px 12px; border-radius:9px; margin:1px 0; border-left:2.5px solid transparent; transition:all .18s; line-height:1.35}
+.toc a:hover{background:var(--surface-2); color:var(--ink)}
+.toc a.active{background:color-mix(in srgb,var(--accent) 14%,transparent); color:var(--ink); border-left-color:var(--accent); font-weight:700}
+.toc a.lvl2{padding-left:26px; font-size:.8rem; color:var(--ink-faint)}
+.toc .grp{font-size:.64rem; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-faint); font-weight:700; padding:16px 12px 6px}
+.toc .grp:first-child{padding-top:4px}
+.overlay{position:fixed; inset:0; background:rgba(10,8,4,.46); z-index:65; opacity:0; visibility:hidden; transition:opacity .35s; backdrop-filter:blur(2px)}
+.overlay.show{opacity:1; visibility:visible}
+@media(min-width:1180px){
+  .sidebar{transform:translateX(0)}
+  body.nav-collapsed .sidebar{transform:translateX(-104%)}
+  .appmain{margin-left:312px; transition:margin .4s cubic-bezier(.4,0,.2,1)}
+  body.nav-collapsed .appmain{margin-left:0}
+  .overlay{display:none}
+  .topbar{left:312px; transition:left .4s cubic-bezier(.4,0,.2,1), transform .4s}
+  body.nav-collapsed .topbar{left:0}
+  .progresswrap{left:312px; transition:left .4s} body.nav-collapsed .progresswrap{left:0}
+}
+
+/* ===================== PANEL ACCESIBILIDAD ===================== */
+.a11y{
+  position:fixed; top:72px; right:clamp(10px,3vw,22px); z-index:75; width:min(340px,92vw);
+  background:var(--surface); border:1px solid var(--border-strong); border-radius:var(--radius);
+  box-shadow:var(--shadow-lg); padding:16px 16px 18px;
+  opacity:0; visibility:hidden; transform:translateY(-10px) scale(.98); transform-origin:top right;
+  transition:opacity .25s, transform .25s, visibility .25s;
+}
+.a11y.open{opacity:1; visibility:visible; transform:translateY(0) scale(1)}
+.a11y h5{margin:0 0 4px; font-family:var(--serif); font-size:1.05rem; font-weight:700}
+.a11y .sub{font-size:.74rem; color:var(--ink-faint); margin:0 0 14px; font-weight:500}
+.a11y .lbl{font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft); font-weight:700; margin:14px 0 7px}
+.swatches{display:grid; grid-template-columns:repeat(5,1fr); gap:7px}
+.sw{height:42px; border-radius:10px; cursor:pointer; border:2px solid var(--border); position:relative; display:flex; align-items:flex-end; justify-content:center; padding-bottom:3px; overflow:hidden; transition:transform .15s}
+.sw:hover{transform:translateY(-2px)} .sw.sel{border-color:var(--accent); box-shadow:0 0 0 2px var(--accent)}
+.sw span{font-size:.54rem; font-weight:700; letter-spacing:.04em; z-index:2}
+.sw.s-claro{background:#F1EADB;color:#23262B} .sw.s-sepia{background:#EADDC4;color:#3A2E1C}
+.sw.s-pizarra{background:#243433;color:#EAF1EC} .sw.s-oscuro{background:#1D2026;color:#ECEEF2}
+.sw.s-alto{background:#000;color:#FFD24D;border-color:#5A5A5A}
+.fontrow{display:flex; align-items:center; gap:8px}
+.fontrow .fbtn{flex:none; width:46px; height:46px; border-radius:12px; border:1px solid var(--border); background:var(--surface-2); color:var(--ink); font-size:1.3rem; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center}
+.fontrow .fbtn:hover{background:var(--surface-3)} .fontrow .fbtn:active{transform:scale(.9)}
+.fontrow .fval{flex:1; text-align:center; font-family:var(--mono); font-weight:700; font-size:1rem; background:var(--surface-2); border-radius:12px; padding:13px 0; border:1px solid var(--border)}
+.minibtn{font-size:.72rem; padding:6px 12px; border-radius:8px; border:1px solid var(--border); background:var(--surface-2); color:var(--ink-soft); cursor:pointer; font-weight:600; font-family:var(--sans)}
+.minibtn:hover{background:var(--surface-3); color:var(--ink)}
+.seg{display:flex; gap:5px; background:var(--surface-2); padding:5px; border-radius:12px; border:1px solid var(--border)}
+.seg button{flex:1; border:none; background:transparent; color:var(--ink-soft); font-size:.76rem; font-weight:700; padding:9px 4px; border-radius:8px; cursor:pointer; font-family:var(--sans)}
+.seg button.on{background:var(--accent); color:var(--accent-ink)}
+.a11y .resetrow{margin-top:14px; display:flex; justify-content:flex-end}
+
+/* ===================== HERO / PORTADA ===================== */
+.appmain{min-height:100vh; padding-top:60px}
+.hero{padding:clamp(34px,7vw,76px) 0 clamp(20px,4vw,34px)}
+.hero .eyebrow{display:inline-flex; align-items:center; gap:8px; font-size:.72rem; letter-spacing:.18em; text-transform:uppercase; color:var(--terracotta); font-weight:800; margin-bottom:18px; padding:6px 13px; background:color-mix(in srgb,var(--terracotta) 12%,transparent); border-radius:100px}
+.hero h1{font-size:clamp(2.3rem,6.5vw,3.7rem); font-weight:900; margin:0 0 .18em; letter-spacing:-.02em}
+.hero .lede{font-size:1.18em; color:var(--ink-2); max-width:60ch; font-weight:500}
+.hero .meta{display:flex; flex-wrap:wrap; gap:10px; margin-top:26px}
+.chip{display:inline-flex; align-items:center; gap:7px; font-size:.78rem; font-weight:600; padding:8px 14px; border-radius:100px; background:var(--surface); border:1px solid var(--border); color:var(--ink-soft)}
+.chip b{color:var(--ink); font-weight:700}
+
+/* ===================== CALLOUTS ===================== */
+.callout{margin:1.5em 0; padding:1.05em 1.2em 1.05em 1.25em; border-radius:14px; border:1px solid var(--border); border-left:4px solid var(--c,var(--accent)); background:var(--surface); position:relative; box-shadow:var(--shadow)}
+.callout .ctag{display:inline-flex; align-items:center; gap:7px; font-size:.68rem; letter-spacing:.13em; text-transform:uppercase; font-weight:800; color:var(--c,var(--accent)); margin-bottom:.3em}
+.callout p:first-of-type{margin-top:0} .callout p:last-child{margin-bottom:0}
+.callout .ico{font-size:.95em}
+.c-intuicion{--c:var(--gold)} .c-clave{--c:var(--terracotta)} .c-formula{--c:var(--teal)}
+.c-insight{--c:var(--plum)} .c-advertencia{--c:var(--orange)} .c-tip{--c:var(--sage)} .c-duda{--c:var(--blue)}
+.c-formula{background:color-mix(in srgb,var(--teal) 7%,var(--surface))}
+.c-clave{background:color-mix(in srgb,var(--terracotta) 7%,var(--surface))}
+.c-advertencia{background:color-mix(in srgb,var(--orange) 9%,var(--surface))}
+
+/* ===================== STEP / CALC ===================== */
+.step{margin:1.6em 0; border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; background:var(--surface); box-shadow:var(--shadow)}
+.step-head{display:flex; align-items:center; gap:12px; padding:14px 18px; background:var(--surface-2); border-bottom:1px solid var(--border)}
+.step-num{flex:none; width:34px; height:34px; border-radius:10px; background:var(--accent); color:var(--accent-ink); display:flex; align-items:center; justify-content:center; font-family:var(--serif); font-weight:900; font-size:1.05rem}
+.step-head .st{font-family:var(--serif); font-weight:700; font-size:1.12em; line-height:1.2}
+.step-body{padding:16px 18px}
+.step-reasoning{border-left:3px solid var(--gold); background:color-mix(in srgb,var(--gold) 6%,transparent); padding:.85em 1.1em; border-radius:0 10px 10px 0; margin:1em 0; font-size:.97em}
+.step-reasoning .rl{font-size:.66rem; letter-spacing:.13em; text-transform:uppercase; color:var(--gold); font-weight:800; display:block; margin-bottom:.25em}
+.calc-block{font-family:var(--mono); background:var(--surface-3); border:1px solid var(--border); border-radius:10px; padding:.95em 1.1em; margin:1em 0; font-size:.88em; line-height:1.85; overflow-x:auto; color:var(--ink)}
+.calc-block .cl{color:var(--ink-faint)} .calc-block .hl{color:var(--terracotta); font-weight:700}
+.calc-block .gl{color:var(--teal); font-weight:700} .calc-block .res{color:var(--accent); font-weight:700}
+.calc-block .sep{border-top:1px dashed var(--border-strong); margin:.5em 0}
+
+/* ===================== TABLAS ===================== */
+.tablewrap{overflow-x:auto; margin:1.4em 0; border-radius:12px; border:1px solid var(--border); box-shadow:var(--shadow); -webkit-overflow-scrolling:touch}
+table{border-collapse:collapse; width:100%; font-size:.9em; background:var(--surface); min-width:min(100%,520px)}
+caption{caption-side:top; text-align:left; font-size:.78rem; color:var(--ink-faint); font-weight:600; padding:0 0 8px}
+th,td{padding:11px 14px; text-align:right; border-bottom:1px solid var(--border)}
+th:first-child,td:first-child{text-align:left}
+thead th{background:var(--surface-3); font-size:.72rem; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); font-weight:800; border-bottom:2px solid var(--border-strong)}
+tbody tr:hover{background:var(--surface-2)}
+tbody tr:last-child td{border-bottom:none}
+.num{font-family:var(--mono); font-variant-numeric:tabular-nums}
+tr.total td{background:var(--surface-2); font-weight:800; border-top:2px solid var(--border-strong)}
+tr.total td .num{color:var(--accent)}
+td.dim{color:var(--ink-faint)} .miss{color:var(--orange); font-weight:700; font-family:var(--sans)}
+.tag-base{display:inline-block; font-size:.6rem; font-weight:800; letter-spacing:.04em; padding:2px 7px; border-radius:6px; background:color-mix(in srgb,var(--teal) 16%,transparent); color:var(--teal); text-transform:uppercase; vertical-align:middle}
+
+/* HOJA DE COSTOS */
+.job-sheet{border:2px solid var(--border-strong); border-radius:14px; overflow:hidden; margin:1.6em 0; box-shadow:var(--shadow); background:var(--surface)}
+.job-sheet .js-head{background:linear-gradient(135deg,var(--terracotta),var(--gold)); color:#fff; padding:14px 18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px}
+.job-sheet .js-head .jt{font-family:var(--serif); font-weight:800; font-size:1.15rem}
+.job-sheet .js-head .jo{font-family:var(--mono); font-weight:700; font-size:.82rem; background:rgba(255,255,255,.22); padding:4px 11px; border-radius:8px}
+.job-sheet table{min-width:480px}
+.js-section td:first-child{font-weight:800; color:var(--terracotta); background:var(--surface-2); font-family:var(--serif)}
+
+/* BIG NUMBERS */
+.bigrow{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px; margin:1.6em 0}
+.bignum{background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:18px; box-shadow:var(--shadow); border-top:3px solid var(--c,var(--accent))}
+.bignum .bl{font-size:.7rem; letter-spacing:.07em; text-transform:uppercase; color:var(--ink-faint); font-weight:700}
+.bignum .bv{font-family:var(--serif); font-weight:900; font-size:1.9rem; color:var(--c,var(--accent)); line-height:1.1; margin:.15em 0; font-variant-numeric:tabular-nums}
+.bignum .bs{font-size:.8rem; color:var(--ink-soft)}
+.bignum.t{--c:var(--teal)} .bignum.g{--c:var(--gold)} .bignum.p{--c:var(--plum)} .bignum.s{--c:var(--sage)} .bignum.o{--c:var(--orange)}
+
+/* CHART */
+.chartcard{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:18px; margin:1.6em 0; box-shadow:var(--shadow)}
+.chartcard .ct{font-family:var(--serif); font-weight:700; font-size:1.08em; margin-bottom:2px}
+.chartcard .cs{font-size:.8rem; color:var(--ink-faint); margin-bottom:14px}
+.chartbox{position:relative; height:clamp(260px,42vw,360px)}
+
+/* MISC */
+.divider{height:1px; background:linear-gradient(90deg,transparent,var(--border-strong),transparent); margin:3em 0}
+.pill{display:inline-block; font-family:var(--mono); font-size:.85em; background:var(--surface-3); padding:.1em .5em; border-radius:6px; border:1px solid var(--border); font-weight:600}
+section.sec{scroll-margin-top:80px}
+.endcard{background:linear-gradient(135deg,color-mix(in srgb,var(--teal) 12%,var(--surface)),var(--surface)); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin:2em 0}
+.footer{padding:50px 0 70px; color:var(--ink-faint); font-size:.82rem; text-align:center; border-top:1px solid var(--border); margin-top:50px}
+ul.clean{list-style:none; padding-left:0} ul.clean li{padding-left:1.6em; position:relative; margin:.55em 0}
+ul.clean li::before{content:"▸"; position:absolute; left:0; color:var(--accent); font-weight:700}
+ol.steps{padding-left:1.3em} ol.steps li{margin:.5em 0; padding-left:.3em}
+.kbd{font-family:var(--mono); font-size:.8em; background:var(--surface-3); border:1px solid var(--border-strong); border-bottom-width:2px; border-radius:6px; padding:1px 6px}
+.skip{position:absolute; left:-999px; top:0; background:var(--accent); color:var(--accent-ink); padding:10px 16px; border-radius:0 0 8px 0; z-index:200; font-weight:700}
+.skip:focus{left:0}
+mjx-container{overflow-x:auto; overflow-y:hidden; max-width:100%}
+</style>
+</head>
+<body>
+<a href="#main" class="skip">Saltar al contenido</a>
+
+<!-- ===== PROGRESO ===== -->
+<div class="progresswrap"><div class="progressbar" id="progress"></div></div>
+
+<!-- ===== TOPBAR ===== -->
+<header class="topbar" id="topbar">
+  <button class="iconbtn" id="navToggle" aria-label="Abrir/cerrar índice" aria-expanded="false">☰</button>
+  <div class="brand">
+    <span class="k">PD11 · Costeo por Órdenes</span>
+    <span class="s">Contabilidad de Costos 1 · UDEP</span>
+  </div>
+  <div class="spacer"></div>
+  <button class="iconbtn" id="a11yToggle" aria-label="Opciones de accesibilidad y visualización">⚙</button>
+</header>
+
+<!-- ===== PANEL ACCESIBILIDAD ===== -->
+<div class="a11y" id="a11yPanel" role="dialog" aria-label="Accesibilidad y visualización">
+  <h5>Visualización</h5>
+  <p class="sub">Ajusta el estudio a tu gusto. Se guarda en este dispositivo.</p>
+
+  <div class="lbl">Tema</div>
+  <div class="swatches" id="swatches">
+    <div class="sw s-claro"   data-theme="claro"          role="button" tabindex="0" aria-label="Tema claro"><span>Claro</span></div>
+    <div class="sw s-sepia"   data-theme="sepia"          role="button" tabindex="0" aria-label="Tema sepia"><span>Sepia</span></div>
+    <div class="sw s-pizarra" data-theme="pizarra"        role="button" tabindex="0" aria-label="Tema pizarra"><span>Pizarra</span></div>
+    <div class="sw s-oscuro"  data-theme="oscuro"         role="button" tabindex="0" aria-label="Tema oscuro"><span>Oscuro</span></div>
+    <div class="sw s-alto"    data-theme="alto-contraste" role="button" tabindex="0" aria-label="Tema alto contraste"><span>A.C.</span></div>
+  </div>
+
+  <div class="lbl">Tamaño de letra</div>
+  <div class="fontrow">
+    <button class="fbtn" id="fMinus" aria-label="Reducir letra">−</button>
+    <div class="fval" id="fVal">145%</div>
+    <button class="fbtn" id="fPlus" aria-label="Aumentar letra">+</button>
+  </div>
+
+  <div class="lbl">Ancho de lectura</div>
+  <div class="seg" id="widthSeg">
+    <button data-w="comodo">Cómodo</button>
+    <button data-w="amplio">Amplio</button>
+    <button data-w="completo">Completo</button>
+  </div>
+
+  <div class="resetrow"><button class="minibtn" id="resetAll">↺ Restablecer todo</button></div>
+</div>
+
+<!-- ===== SIDEBAR ===== -->
+<nav class="sidebar" id="sidebar" aria-label="Índice">
+  <div class="shead">
+    <div class="logo">O</div>
+    <div>
+      <div class="t">Índice</div>
+      <div class="u">Guía de estudio · 11</div>
+    </div>
+  </div>
+  <div class="toc" id="toc">
+    <div class="grp">Fundamentos</div>
+    <a href="#portada">Portada</a>
+    <a href="#mapa">Mapa del sistema por órdenes</a>
+    <a href="#teoria-elementos">Los 3 elementos del costo</a>
+    <a href="#teoria-tasa">La tasa predeterminada de CIF</a>
+    <a href="#teoria-bases">Bases por departamento</a>
+    <a href="#teoria-desviacion">Sobre y subaplicación</a>
+    <a href="#teoria-ajuste">El ajuste: cuenta y signo</a>
+
+    <div class="grp">Ejercicio 1 · Escritorios</div>
+    <a href="#e1-enunciado">Enunciado y datos</a>
+    <a href="#e1-p1" class="lvl2">Paso 1 · Tasas CIF</a>
+    <a href="#e1-p2" class="lvl2">Paso 2 · Costo de la orden</a>
+    <a href="#e1-p3" class="lvl2">Paso 3 · Sobre/subaplicación</a>
+    <a href="#e1-p4" class="lvl2">Paso 4 · Costo ajustado</a>
+    <a href="#e1-graficos" class="lvl2">Gráficos</a>
+
+    <div class="grp">Ejercicio 2 · Diseños S.A.</div>
+    <a href="#e2-aviso">Aviso: datos faltantes</a>
+    <a href="#e2-p1" class="lvl2">Paso 1 · Tasas CIF</a>
+    <a href="#e2-p2" class="lvl2">Paso 2 · Hoja de costos</a>
+    <a href="#e2-p3" class="lvl2">Paso 3 · Desviación y cuenta</a>
+
+    <div class="grp">Cierre</div>
+    <a href="#errores">Errores típicos</a>
+    <a href="#sintesis">Síntesis y formulario</a>
+  </div>
+</nav>
+<div class="overlay" id="overlay"></div>
+
+<main id="main" class="appmain">
+<div class="wrap">
+
+<!-- ===================== PORTADA ===================== -->
+<section class="hero sec" id="portada">
+  <span class="eyebrow">◆ Práctica Dirigida Nº 11 · Unidad 6</span>
+  <h1>Costeo por Órdenes</h1>
+  <p class="lede">Una guía para aprender desde cero <em>por qué</em> se costea pedido por pedido, cómo se reparten los costos indirectos con tasas predeterminadas y qué significa que la fábrica haya “aplicado de más” o “de menos”. Cada número viene con su razonamiento.</p>
+  <div class="meta">
+    <span class="chip">📘 <b>2</b> casos resueltos</span>
+    <span class="chip">🏭 Corte · Ensamblado · Acabado</span>
+    <span class="chip">🎯 Tasas, hoja de costos y ajuste</span>
+    <span class="chip">✅ Números verificados en Python</span>
+  </div>
+
+  <div class="callout c-intuicion" style="margin-top:30px">
+    <span class="ctag"><span class="ico">💡</span> Intuición de partida</span>
+    <p>Imagina dos negocios. Una <strong>panadería</strong> hace miles de panes idénticos: no tiene sentido calcular el costo de “un pan en particular”, basta repartir el costo total entre todos. Un <strong>sastre</strong>, en cambio, cose un terno a la medida de cada cliente: cada terno es único, lleva su propia tela, sus propias horas, su propio costo. El <strong>costeo por órdenes</strong> es la contabilidad del sastre: acumula los costos <em>orden por orden</em>, porque cada pedido es distinto.</p>
+  </div>
+
+  <div class="callout c-tip">
+    <span class="ctag"><span class="ico">🧭</span> Cómo usar esta guía</span>
+    <p>Lee primero los <strong>Fundamentos</strong> (la teoría que hace todo obvio) y recién luego los ejercicios. En cada paso encontrarás un bloque <em>de razonamiento</em> (por qué se hace) seguido del <em>cálculo</em> (cómo se hace). Si ya dominas la teoría, salta directo al <a href="#e1-enunciado">Ejercicio 1</a>.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===================== MAPA DEL SISTEMA ===================== -->
+<section class="sec" id="mapa">
+  <h2>El mapa del sistema por órdenes</h2>
+  <p>Antes de calcular nada, conviene tener la película completa en la cabeza. En una fábrica que trabaja a pedido, cada orden de producción (OP) es como una <strong>cuenta abierta</strong> a la que le vamos “cargando” todo lo que consume hasta terminarla. Esos cargos vienen de tres fuentes, y solo tres:</p>
+
+  <div class="bigrow">
+    <div class="bignum">
+      <div class="bl">Elemento 1</div>
+      <div class="bv" style="font-size:1.4rem">Materiales<br>Directos</div>
+      <div class="bs">La madera, los listones, la fórmica. Lo que se <em>ve</em> en el producto.</div>
+    </div>
+    <div class="bignum t">
+      <div class="bl">Elemento 2</div>
+      <div class="bv" style="font-size:1.4rem">Mano de Obra<br>Directa (MOD)</div>
+      <div class="bs">Las horas del obrero que <em>transforma</em> ese pedido.</div>
+    </div>
+    <div class="bignum g">
+      <div class="bl">Elemento 3</div>
+      <div class="bv" style="font-size:1.4rem">CIF<br>aplicados</div>
+      <div class="bs">Todo lo demás de fábrica (luz, depreciación, supervisión) repartido con una <em>tasa</em>.</div>
+    </div>
+  </div>
+
+  <div class="callout c-clave">
+    <span class="ctag"><span class="ico">🔑</span> La ecuación que gobierna todo</span>
+    <p>El costo de cualquier orden terminada es siempre la suma de sus tres elementos:</p>
+    <p style="text-align:center; margin-top:.6em">\[ \text{Costo de la orden} = \underbrace{MD}_{\text{materiales}} + \underbrace{MOD}_{\text{mano de obra}} + \underbrace{CIF_{\text{aplicados}}}_{\text{indirectos}} \]</p>
+  </div>
+
+  <p>Los dos primeros elementos son fáciles: se pueden <strong>medir directamente</strong> en cada orden (¿cuántos listones usé?, ¿cuántas horas trabajó el obrero en este pedido?). El tercero —los CIF— es el problema interesante de todo el curso, y la razón de ser de esta práctica. Vamos a entenderlo bien.</p>
+
+  <div class="callout c-duda">
+    <span class="ctag"><span class="ico">❔</span> ¿Por qué los CIF son el “problema difícil”?</span>
+    <p>Porque son <strong>indirectos</strong>: no se pueden rastrear a una orden específica. La factura de electricidad de la fábrica es una sola para todo el mes y para <em>todas</em> las órdenes a la vez. ¿Cómo decides cuánta luz “gastó” la orden OP‑10? No puedes medirlo. Necesitas una regla de reparto. Esa regla es la <strong>tasa de aplicación de CIF</strong>.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===================== ELEMENTOS ===================== -->
+<section class="sec" id="teoria-elementos">
+  <h2>Los tres elementos, uno por uno</h2>
+
+  <h3>① Materiales Directos (MD)</h3>
+  <p>Son los insumos físicos que se incorporan al producto y que se pueden identificar y medir en cada orden. En el Ejercicio 1 el enunciado nos da directamente el total (<span class="pill">S/ 21 680</span>). En el Ejercicio 2 nos dan el <em>costo unitario</em> de cada material (listón a S/ 30, fórmica a S/ 52) para que lo multipliquemos por la cantidad consumida.</p>
+
+  <h3>② Mano de Obra Directa (MOD)</h3>
+  <p>Es el costo de las horas del obrero que efectivamente trabaja <em>transformando</em> la orden. La fórmula es sencilla:</p>
+  <div class="callout c-formula">
+    <span class="ctag"><span class="ico">∑</span> Fórmula · MOD</span>
+    <p style="text-align:center">\[ MOD = \text{Horas-MOD trabajadas} \times \text{Costo por hora-MOD} \]</p>
+  </div>
+  <div class="callout c-advertencia">
+    <span class="ctag"><span class="ico">⚠</span> Atención al “ya incluye”</span>
+    <p>Cuando el enunciado dice que el jornal <strong>“incluye beneficios y aportes”</strong> (Ej. 1: S/ 9.12/hora) o que la remuneración <strong>“ya incluye derechos laborales y contribuciones”</strong> (Ej. 2: S/ 1 810/mes), te está ahorrando el cálculo de CTS, gratificaciones y EsSalud que hiciste en las unidades de Mano de Obra. <em>No vuelvas a sumarlos.</em> El costo por hora ya está “completo”.</p>
+  </div>
+
+  <h3>③ Costos Indirectos de Fabricación (CIF)</h3>
+  <p>Aquí está el corazón del tema. Como no se pueden medir por orden, se <strong>aplican</strong> usando una tasa que se calcula <em>por adelantado</em>. A esto le dedicamos la siguiente sección entera.</p>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===================== TASA PREDETERMINADA ===================== -->
+<section class="sec" id="teoria-tasa">
+  <h2>La tasa predeterminada de CIF</h2>
+
+  <div class="callout c-intuicion">
+    <span class="ctag"><span class="ico">💡</span> El porqué, primero</span>
+    <p>Pregunta clave: si los CIF reales (la luz, el agua, la depreciación) recién los conoces a <strong>fin de mes</strong>, pero la orden OP‑10 se terminó y se entregó <strong>el día 12</strong>… ¿con qué número costeas la orden ese día 12? No puedes esperar a fin de mes para decirle el precio al cliente. La solución es <strong>predecir</strong>: calculas una tasa <em>al inicio del año</em> con cifras presupuestadas, y la usas durante todo el año a medida que terminas órdenes. Eso es “predeterminada”: determinada <em>antes</em>.</p>
+  </div>
+
+  <p>La tasa predeterminada es un cociente: cuántos soles de CIF “corresponden” a cada unidad de la base de reparto. Se calcula así:</p>
+
+  <div class="callout c-formula">
+    <span class="ctag"><span class="ico">∑</span> Fórmula maestra · Tasa de CIF</span>
+    <p style="text-align:center">\[ \text{Tasa CIF} = \dfrac{\text{CIF presupuestados (estimados)}}{\text{Base de reparto presupuestada}} \]</p>
+  </div>
+
+  <div class="callout c-insight">
+    <span class="ctag"><span class="ico">🔭</span> Insight: arriba el dinero, abajo la actividad</span>
+    <p>En el numerador siempre va <strong>dinero</strong> (los CIF en soles). En el denominador siempre va una <strong>medida de actividad</strong> que “provoca” esos CIF: horas máquina, horas de mano de obra, unidades, etc. La tasa traduce “actividad” en “soles de CIF”. Por eso, una vez que sabes <em>cuánta actividad</em> consumió una orden, multiplicas por la tasa y obtienes sus CIF.</p>
+  </div>
+
+  <h3>Aplicar la tasa: del presupuesto a la orden</h3>
+  <p>Ojo con un punto que confunde a todos al inicio. La <strong>tasa</strong> se calcula con cifras <em>presupuestadas</em> (estimadas para el año). Pero cuando la <strong>aplicas</strong> a una orden concreta, multiplicas por la base <em>real</em> que esa orden consumió:</p>
+
+  <div class="callout c-formula">
+    <span class="ctag"><span class="ico">∑</span> Fórmula · CIF aplicados a una orden</span>
+    <p style="text-align:center">\[ CIF_{\text{aplicados}} = \text{Tasa predeterminada} \times \text{Base REAL de la orden} \]</p>
+  </div>
+
+  <div class="callout c-clave">
+    <span class="ctag"><span class="ico">🔑</span> Presupuestado vs. real — no los mezcles</span>
+    <p><strong>Tasa</strong> = presupuestado ÷ presupuestado. <strong>Aplicación</strong> = tasa × <span class="pill">real</span>. La tasa “congela” la estimación del inicio del año; lo único real que entra al costear la orden son las <em>horas que esa orden realmente usó</em>.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===================== BASES POR DEPARTAMENTO ===================== -->
+<section class="sec" id="teoria-bases">
+  <h2>Bases distintas por departamento (tasas múltiples)</h2>
+
+  <p>Una fábrica puede tener varios departamentos productivos, y cada uno con una “personalidad” distinta. Un departamento muy <strong>automatizado</strong> consume CIF en función de cuánto trabajan las <em>máquinas</em>; un departamento muy <strong>manual</strong> los consume en función de cuánto trabajan las <em>personas</em>. Por eso cada departamento usa la base que mejor explica <em>su</em> consumo de CIF. A esto el sílabo lo llama <strong>tasas con base múltiple</strong>.</p>
+
+  <div class="tablewrap">
+  <table>
+    <caption>En las dos prácticas se repite el mismo patrón de bases:</caption>
+    <thead><tr><th>Departamento</th><th>Naturaleza</th><th>Base de reparto</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Corte / Cortado</strong></td><td>Intensivo en máquina</td><td><span class="tag-base">Horas máquina</span></td></tr>
+      <tr><td><strong>Ensamblado / Acabado</strong></td><td>Intensivo en mano de obra</td><td><span class="tag-base">Horas MOD</span></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="callout c-advertencia">
+    <span class="ctag"><span class="ico">⚠</span> La trampa #1 del examen</span>
+    <p>El enunciado te dará, para cada departamento, <strong>tanto las horas máquina como las horas MOD</strong>. Es una tentación: ¡hay un número de más! Debes usar <em>solo</em> la base que corresponde a ese departamento para los CIF. Las otras horas o se usan para la MOD (las horas-MOD) o son <strong>datos distractores</strong> que no entran en el CIF (p. ej., las horas máquina de un departamento que reparte por horas-MOD).</p>
+  </div>
+
+  <div class="callout c-tip">
+    <span class="ctag"><span class="ico">✅</span> Regla mnemotécnica</span>
+    <p>“<strong>Cada CIF con su base.</strong>” Si el departamento reparte por <em>horas máquina</em>, para el CIF usa horas máquina y <em>ignora</em> sus horas-MOD (esas solo sirven para pagar la MOD). Si reparte por <em>horas-MOD</em>, usa horas-MOD para el CIF e ignora sus horas máquina.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===================== SOBRE / SUB APLICACIÓN ===================== -->
+<section class="sec" id="teoria-desviacion">
+  <h2>Sobreaplicación y subaplicación de CIF</h2>
+
+  <div class="callout c-intuicion">
+    <span class="ctag"><span class="ico">💡</span> Intuición: la tasa fue una apuesta</span>
+    <p>Recuerda que la tasa nació de una <strong>predicción</strong> hecha al inicio del año. Como toda predicción, casi nunca acierta exactamente. Al final del período comparas lo que <em>cargaste</em> a las órdenes (CIF aplicados) contra lo que <em>realmente gastaste</em> (CIF reales). La diferencia es la <strong>desviación</strong>, y revela si tu apuesta se quedó corta o se pasó.</p>
+  </div>
+
+  <div class="bigrow">
+    <div class="bignum o">
+      <div class="bl">Si aplicado &gt; real</div>
+      <div class="bv" style="font-size:1.5rem">Sobre­aplicación</div>
+      <div class="bs">Cargaste a las órdenes <em>más</em> CIF del que gastaste. El costo quedó <strong>inflado</strong> → habrá que <strong>restar</strong>.</div>
+    </div>
+    <div class="bignum p">
+      <div class="bl">Si aplicado &lt; real</div>
+      <div class="bv" style="font-size:1.5rem">Sub­aplicación</div>
+      <div class="bs">Cargaste <em>menos</em> CIF del que gastaste. El costo quedó <strong>corto</strong> → habrá que <strong>sumar</strong>.</div>
+    </div>
+  </div>
+
+  <div class="callout c-formula">
+    <span class="ctag"><span class="ico">∑</span> Fórmula · Desviación</span>
+    <p style="text-align:center">\[ \text{Desviación} = CIF_{\text{aplicados}} - CIF_{\text{reales}} \]</p>
+    <p style="margin-top:.5em">Resultado <strong>positivo</strong> ⇒ sobreaplicación (sobró aplicación). Resultado <strong>negativo</strong> ⇒ subaplicación (faltó aplicación).</p>
+  </div>
+
+  <div class="callout c-insight">
+    <span class="ctag"><span class="ico">🔭</span> El truco de las tasas (útil en el Ej. 2)</span>
+    <p>Cuando el enunciado te da la <strong>tasa real</strong> y la <strong>tasa aplicada</strong> (predeterminada) sobre la <em>misma</em> base, puedes saber el <strong>signo</strong> de la desviación sin conocer las horas: si la tasa aplicada es mayor que la real, hay sobreaplicación; si es menor, subaplicación. El <em>monto</em> sí necesita las horas, porque \(\text{Desviación} = (\text{tasa aplicada} - \text{tasa real}) \times \text{horas reales}\).</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===================== EL AJUSTE ===================== -->
+<section class="sec" id="teoria-ajuste">
+  <h2>El ajuste: ¿a qué cuenta y con qué signo?</h2>
+
+  <p>Detectada la desviación, hay que <strong>corregir</strong> el costo para dejarlo en su valor real. Dos preguntas: <em>¿a qué cuenta de inventario afecta?</em> y <em>¿suma o resta?</em></p>
+
+  <h3>¿A qué cuenta? — sigue a la orden</h3>
+  <p>El ajuste “persigue” a la orden según dónde se encuentre al momento del cierre. La orden viaja por tres estaciones:</p>
+
+  <div class="tablewrap">
+  <table>
+    <caption>El estado de la orden decide la cuenta a ajustar:</caption>
+    <thead><tr><th>Estado de la orden</th><th>¿Dónde está su costo?</th><th>Cuenta a ajustar</th></tr></thead>
+    <tbody>
+      <tr><td>Sin terminar</td><td>Todavía en planta</td><td>Inventario de <strong>Productos en Proceso</strong></td></tr>
+      <tr><td>Terminada, no entregada</td><td>En el almacén de listos</td><td>Inventario de <strong>Productos Terminados</strong></td></tr>
+      <tr><td>Terminada y entregada</td><td>Ya salió: se vendió</td><td><strong>Costo de Ventas</strong></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="callout c-clave">
+    <span class="ctag"><span class="ico">🔑</span> Conecta con los dos ejercicios</span>
+    <p>En el <strong>Ejercicio 1</strong> la orden está <em>terminada pero no entregada</em> → el ajuste va a <strong>Productos Terminados</strong>. En el <strong>Ejercicio 2</strong> la orden está <em>terminada y entregada</em> → el ajuste va a <strong>Costo de Ventas</strong>. Mismo método, distinta estación.</p>
+  </div>
+
+  <h3>¿Suma o resta? — deshaz el error</h3>
+  <div class="callout c-insight">
+    <span class="ctag"><span class="ico">🔭</span> La lógica del “deshacer”</span>
+    <p>El ajuste hace lo <em>contrario</em> al error. Si <strong>sobreaplicaste</strong> (inflaste el costo cargando CIF de más), el ajuste <strong>resta</strong> para desinflarlo. Si <strong>subaplicaste</strong> (el costo quedó corto), el ajuste <strong>suma</strong> para completarlo. Así el inventario o el costo de ventas terminan reflejando el gasto <em>real</em>.</p>
+  </div>
+
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Desviación</th><th>El costo quedó…</th><th>El ajuste…</th></tr></thead>
+    <tbody>
+      <tr><td>Sobreaplicación</td><td class="dim">inflado (de más)</td><td class="miss">RESTA (−)</td></tr>
+      <tr><td>Subaplicación</td><td class="dim">corto (de menos)</td><td class="miss">SUMA (+)</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="callout c-tip">
+    <span class="ctag"><span class="ico">🧰</span> Ya tienes toda la teoría</span>
+    <p>Con esto puedes resolver cualquier ejercicio de costeo por órdenes: (1) calcula las tasas, (2) arma el costo de la orden con sus tres elementos, (3) compara aplicado vs. real para hallar la desviación, (4) ajusta en la cuenta correcta con el signo correcto. Vamos a verlo en acción.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============================================================ -->
+<!-- ===================== EJERCICIO 1 ========================== -->
+<!-- ============================================================ -->
+<section class="sec" id="e1-enunciado">
+  <h2>Ejercicio 1 · Fábrica de escritorios</h2>
+
+  <div class="callout c-clave">
+    <span class="ctag"><span class="ico">📄</span> El enunciado, en limpio</span>
+    <p>Una empresa fabrica escritorios con <strong>costeo por órdenes</strong>. Tiene dos departamentos productivos: <strong>Corte</strong> (reparte CIF por <em>horas máquina</em>) y <strong>Ensamblado</strong> (reparte CIF por <em>horas MOD</em>). En noviembre de 2024 trabajó la orden <strong>OP‑10</strong>: 20 escritorios de madera para un colegio. La orden quedó <strong>terminada pero aún no entregada</strong>.</p>
+  </div>
+
+  <h3>Datos presupuestados (para el año 2024)</h3>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Concepto</th><th>Corte</th><th>Ensamblado</th></tr></thead>
+    <tbody>
+      <tr><td>CIF totales estimados (S/)</td><td class="num">30 000</td><td class="num">20 000</td></tr>
+      <tr><td>Horas MOD estimadas</td><td class="num">1 600</td><td class="num">2 000</td></tr>
+      <tr><td>Horas máquina estimadas</td><td class="num">2 400</td><td class="num">1 500</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>Datos reales de la orden OP‑10 (noviembre)</h3>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Concepto</th><th>Corte</th><th>Ensamblado</th></tr></thead>
+    <tbody>
+      <tr><td>Horas máquina trabajadas</td><td class="num">180</td><td class="num">80</td></tr>
+      <tr><td>Horas MOD trabajadas</td><td class="num">100</td><td class="num">150</td></tr>
+      <tr><td>CIF reales del mes (S/)</td><td class="num">1 980</td><td class="num">1 250</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <ul class="clean">
+    <li>Jornal del obrero: <strong>S/ 9.12 por hora</strong> (ya incluye beneficios y aportes).</li>
+    <li>Materiales directos consumidos por la orden: <strong>S/ 21 680</strong>.</li>
+  </ul>
+
+  <div class="callout c-advertencia">
+    <span class="ctag"><span class="ico">⚠</span> Ya se ve la trampa</span>
+    <p>Fíjate que para cada departamento tenemos <em>las dos</em> clases de horas. Recuerda la regla “cada CIF con su base”: en Corte usaremos las <strong>180 horas máquina</strong> (no sus 100 horas-MOD) para el CIF; en Ensamblado usaremos las <strong>150 horas-MOD</strong> (no sus 80 horas máquina). Las horas-MOD de Corte (100) y las horas-MOD de Ensamblado (150) sí se usan, pero para calcular la <em>MOD</em>, no el CIF.</p>
+  </div>
+</section>
+
+<!-- ===================== E1 · PASO 1 ===================== -->
+<section class="sec" id="e1-p1">
+<div class="step">
+  <div class="step-head"><div class="step-num">1</div><div class="st">Hallar las tasas de aplicación de CIF</div></div>
+  <div class="step-body">
+    <p>Se pide una tasa por departamento. Aplicamos la fórmula maestra, cada uno con <em>su</em> base.</p>
+
+    <div class="step-reasoning">
+      <span class="rl">Razonamiento</span>
+      <strong>Corte</strong> reparte por horas máquina, así que su denominador son las <em>horas máquina presupuestadas</em> (2 400), no las horas-MOD. <strong>Ensamblado</strong> reparte por horas-MOD, así que su denominador son las <em>horas-MOD presupuestadas</em> (2 000). Usamos las cifras presupuestadas porque la tasa se fija al inicio del año.
+    </div>
+
+    <div class="calc-block">
+<span class="cl"># Corte — base: horas máquina</span>
+Tasa Corte = CIF estimado / H.máquina estimadas
+           = 30 000 / 2 400
+           = <span class="res">S/ 12.50 por hora máquina</span>
+<span class="sep"></span>
+<span class="cl"># Ensamblado — base: horas MOD</span>
+Tasa Ensamblado = CIF estimado / H.MOD estimadas
+                = 20 000 / 2 000
+                = <span class="res">S/ 10.00 por hora MOD</span>
+    </div>
+
+    <div class="callout c-formula" style="margin-bottom:0">
+      <span class="ctag"><span class="ico">∑</span> En notación</span>
+      <p style="text-align:center">\[ t_{\text{Corte}}=\dfrac{30\,000}{2\,400}=12{,}50 \quad ; \quad t_{\text{Ens}}=\dfrac{20\,000}{2\,000}=10{,}00 \]</p>
+    </div>
+
+    <div class="bigrow">
+      <div class="bignum"><div class="bl">Tasa Corte</div><div class="bv">12.50</div><div class="bs">S/ por hora máquina</div></div>
+      <div class="bignum t"><div class="bl">Tasa Ensamblado</div><div class="bv">10.00</div><div class="bs">S/ por hora MOD</div></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===================== E1 · PASO 2 ===================== -->
+<section class="sec" id="e1-p2">
+<div class="step">
+  <div class="step-head"><div class="step-num">2</div><div class="st">Calcular el costo total de la orden OP‑10</div></div>
+  <div class="step-body">
+    <p>Armamos los tres elementos del costo. Vamos uno por uno.</p>
+
+    <h4>2.1 · Materiales Directos</h4>
+    <div class="step-reasoning"><span class="rl">Razonamiento</span> El enunciado ya nos da el total consumido por la orden. No hay que calcular nada.</div>
+    <div class="calc-block">MD = <span class="res">S/ 21 680</span></div>
+
+    <h4>2.2 · Mano de Obra Directa</h4>
+    <div class="step-reasoning">
+      <span class="rl">Razonamiento</span> La MOD se paga por <em>hora-MOD trabajada</em>. Aquí sí usamos las horas-MOD de <strong>ambos</strong> departamentos (100 en Corte, 150 en Ensamblado), multiplicadas por el jornal de S/ 9.12 (que ya incluye beneficios, así que no sumamos nada más).
+    </div>
+    <div class="calc-block">
+MOD Corte      = 100 h-MOD × 9.12 = <span class="gl">S/ 912.00</span>
+MOD Ensamblado = 150 h-MOD × 9.12 = <span class="gl">S/ 1 368.00</span>
+<span class="sep"></span>
+MOD total = 912 + 1 368 = <span class="res">S/ 2 280.00</span>
+    </div>
+
+    <h4>2.3 · CIF aplicados</h4>
+    <div class="step-reasoning">
+      <span class="rl">Razonamiento</span> Aquí aplicamos la tasa de cada departamento a su <em>base real</em>. En Corte: tasa (12.50) × horas máquina reales (180). En Ensamblado: tasa (10.00) × horas-MOD reales (150). <strong>Ignoramos</strong> las 100 horas-MOD de Corte y las 80 horas máquina de Ensamblado: no son la base de su CIF.
+    </div>
+    <div class="calc-block">
+CIF Corte      = 12.50 × 180 h-máquina = <span class="hl">S/ 2 250.00</span>
+CIF Ensamblado = 10.00 × 150 h-MOD     = <span class="hl">S/ 1 500.00</span>
+<span class="sep"></span>
+CIF aplicado total = 2 250 + 1 500 = <span class="res">S/ 3 750.00</span>
+    </div>
+
+    <h4>2.4 · Hoja de costos de la orden OP‑10</h4>
+    <p>Reunimos todo en la <strong>hoja de costos</strong>, el documento estrella del costeo por órdenes: la “ficha” donde vive el costo de la orden.</p>
+
+    <div class="job-sheet">
+      <div class="js-head"><span class="jt">Hoja de Costos</span><span class="jo">OP‑10 · 20 escritorios</span></div>
+      <div class="tablewrap" style="margin:0;border:none;box-shadow:none;border-radius:0">
+      <table>
+        <thead><tr><th>Elemento</th><th>Corte</th><th>Ensamblado</th><th>Total</th></tr></thead>
+        <tbody>
+          <tr><td>Materiales Directos</td><td class="num dim">—</td><td class="num dim">—</td><td class="num">21 680.00</td></tr>
+          <tr><td>Mano de Obra Directa</td><td class="num">912.00</td><td class="num">1 368.00</td><td class="num">2 280.00</td></tr>
+          <tr><td>CIF aplicados</td><td class="num">2 250.00</td><td class="num">1 500.00</td><td class="num">3 750.00</td></tr>
+          <tr class="total"><td>Costo total OP‑10</td><td class="num"></td><td class="num"></td><td class="num">27 710.00</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+    <div class="calc-block">Costo total = MD + MOD + CIF aplicados
+            = 21 680 + 2 280 + 3 750
+            = <span class="res">S/ 27 710.00</span></div>
+
+    <div class="callout c-tip" style="margin-bottom:0">
+      <span class="ctag"><span class="ico">✅</span> Chequeo de sentido</span>
+      <p>20 escritorios cuestan S/ 27 710 ⇒ <strong>S/ 1 385.50 por escritorio</strong>. Razonable para un mueble de madera. Si te hubiera salido S/ 50 o S/ 50 000 por escritorio, sería señal de un error de base o de un cero perdido.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===================== E1 · PASO 3 ===================== -->
+<section class="sec" id="e1-p3">
+<div class="step">
+  <div class="step-head"><div class="step-num">3</div><div class="st">¿Hubo sobre o subaplicación? Monto y cuenta</div></div>
+  <div class="step-body">
+    <div class="step-reasoning">
+      <span class="rl">Razonamiento</span> Comparamos, en cada departamento, lo que <em>aplicamos</em> (con la tasa) contra los <em>CIF reales</em> del mes. Como OP‑10 fue la única orden trabajada en noviembre, los CIF aplicados a la orden son los CIF aplicados del mes, y se pueden comparar con los reales del mes.
+    </div>
+    <div class="calc-block">
+<span class="cl"># Desviación = aplicado − real</span>
+Corte:      2 250 − 1 980 = <span class="hl">+270</span>  → aplicado &gt; real → SOBREaplicación
+Ensamblado: 1 500 − 1 250 = <span class="hl">+250</span>  → aplicado &gt; real → SOBREaplicación
+<span class="sep"></span>
+Desviación TOTAL = 270 + 250 = <span class="res">+S/ 520 (sobreaplicación)</span>
+    </div>
+
+    <div class="bigrow">
+      <div class="bignum o"><div class="bl">Desviación Corte</div><div class="bv">+270</div><div class="bs">Sobreaplicación</div></div>
+      <div class="bignum o"><div class="bl">Desviación Ensamblado</div><div class="bv">+250</div><div class="bs">Sobreaplicación</div></div>
+      <div class="bignum"><div class="bl">Desviación total</div><div class="bv">+520</div><div class="bs">Sobreaplicación</div></div>
+    </div>
+
+    <div class="callout c-clave">
+      <span class="ctag"><span class="ico">🔑</span> ¿Qué cuenta se ajusta?</span>
+      <p>La orden está <strong>terminada pero no entregada</strong> ⇒ su costo descansa en el <strong>Inventario de Productos Terminados</strong>. Esa es la cuenta a ajustar. Y como hubo <strong>sobreaplicación</strong> (el costo quedó inflado en S/ 520), el ajuste <strong>resta</strong>.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===================== E1 · PASO 4 ===================== -->
+<section class="sec" id="e1-p4">
+<div class="step">
+  <div class="step-head"><div class="step-num">4</div><div class="st">Costo de producción ajustado de OP‑10</div></div>
+  <div class="step-body">
+    <div class="step-reasoning">
+      <span class="rl">Razonamiento</span> Partimos del costo con CIF aplicados (S/ 27 710) y “deshacemos” la sobreaplicación restando los S/ 520 que cargamos de más. El resultado es el costo que refleja los CIF <em>reales</em>.
+    </div>
+    <div class="calc-block">
+Costo con CIF aplicados ............ 27 710.00
+(−) Sobreaplicación de CIF .........    <span class="hl">520.00</span>
+<span class="sep"></span>
+Costo de producción AJUSTADO ....... <span class="res">S/ 27 190.00</span>
+    </div>
+
+    <div class="bigrow">
+      <div class="bignum"><div class="bl">Costo aplicado</div><div class="bv" style="font-size:1.5rem">27 710</div><div class="bs">S/ (con tasa)</div></div>
+      <div class="bignum o"><div class="bl">Ajuste</div><div class="bv" style="font-size:1.5rem">−520</div><div class="bs">sobreaplicación</div></div>
+      <div class="bignum t"><div class="bl">Costo ajustado</div><div class="bv" style="font-size:1.5rem">27 190</div><div class="bs">S/ (real)</div></div>
+    </div>
+
+    <div class="callout c-insight" style="margin-bottom:0">
+      <span class="ctag"><span class="ico">🔭</span> Lectura final</span>
+      <p>La fábrica había “apostado” cargando S/ 3 750 de CIF, pero en realidad solo gastó S/ 3 230 (1 980 + 1 250). Sobró S/ 520 de aplicación, que devolvemos al inventario. El costo verdadero de las 20 órdenes terminadas es <strong>S/ 27 190</strong> (S/ 1 359.50 por escritorio).</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===================== E1 · GRÁFICOS ===================== -->
+<section class="sec" id="e1-graficos">
+  <h3>Visualizar el Ejercicio 1</h3>
+
+  <div class="chartcard">
+    <div class="ct">Composición del costo de OP‑10</div>
+    <div class="cs">Qué pesa más dentro del costo de la orden (con CIF aplicados).</div>
+    <div class="chartbox"><canvas id="ch1comp"></canvas></div>
+  </div>
+
+  <div class="chartcard">
+    <div class="ct">CIF aplicado vs. CIF real, por departamento</div>
+    <div class="cs">La distancia entre las barras es la desviación. En ambos, aplicado &gt; real (sobreaplicación).</div>
+    <div class="chartbox"><canvas id="ch1dev"></canvas></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ============================================================ -->
+<!-- ===================== EJERCICIO 2 ========================== -->
+<!-- ============================================================ -->
+<section class="sec" id="e2-aviso">
+  <h2>Ejercicio 2 · Diseños S.A.</h2>
+
+  <div class="callout c-clave">
+    <span class="ctag"><span class="ico">📄</span> El enunciado, en limpio</span>
+    <p><strong>Diseños S.A.</strong> fabrica a pedido mesas de dibujo para arquitectos. Tiene dos procesos: <strong>Cortado</strong> (se incorporan <em>listones</em> de madera a S/ 30 c/u; reparte CIF por <em>horas máquina</em>) y <strong>Acabado</strong> (se une <em>fórmica</em> a S/ 52 c/u al armazón; reparte CIF por <em>horas MOD</em>). En octubre 2024 se inicia y termina el pedido <strong>OP‑15</strong>: 25 mesas, que se venden a S/ 500 cada una. Al 31.10.24 la orden quedó <strong>terminada y entregada</strong>. La remuneración mensual del obrero es S/ 1 810 (ya incluye derechos y contribuciones). La tasa <em>real</em> de CIF fue S/ 11 por hora máquina en Cortado y S/ 12 por hora MOD en Acabado.</p>
+  </div>
+
+  <div class="tablewrap">
+  <table>
+    <caption>Datos presupuestados (2024):</caption>
+    <thead><tr><th>Concepto</th><th>Cortado</th><th>Acabado</th></tr></thead>
+    <tbody>
+      <tr><td>Presupuesto CIF totales (S/)</td><td class="num">15 000</td><td class="num">10 000</td></tr>
+      <tr><td>Horas MOD estimadas</td><td class="num">800</td><td class="num">1 000</td></tr>
+      <tr><td>Horas máquina estimadas</td><td class="num">1 200</td><td class="num">750</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="callout c-advertencia">
+    <span class="ctag"><span class="ico">⚠</span> Transparencia: faltan datos en el enunciado recibido</span>
+    <p>Para ser honestos contigo (y no inventar números): la versión del enunciado que me llegó tiene una <strong>tabla de “información real” que no se transcribió</strong>. Concretamente faltan, para la orden OP‑15:</p>
+    <ul class="clean" style="margin-top:.4em">
+      <li>El <strong>número de listones</strong> consumidos en Cortado (para el MD a S/ 30 c/u).</li>
+      <li>El <strong>número de planchas de fórmica</strong> consumidas en Acabado (para el MD a S/ 52 c/u).</li>
+      <li>Las <strong>horas-MOD trabajadas</strong> en cada departamento (para la MOD y para el CIF de Acabado).</li>
+      <li>Las <strong>horas máquina trabajadas</strong> en Cortado (para el CIF de Cortado).</li>
+      <li>La forma de convertir el sueldo de <strong>S/ 1 810/mes</strong> a costo de MOD (faltan las horas o el número de obreros).</li>
+    </ul>
+    <p style="margin-top:.5em">Sin esos números <strong>no se puede</strong> calcular el monto exacto de la hoja de costos ni el monto de la desviación. Pero sí podemos: (1) resolver completamente las <strong>tasas</strong>; (2) dejar la <strong>hoja de costos armada como plantilla</strong> lista para completar; y (3) determinar el <strong>signo</strong> de la sobre/subaplicación y la <strong>cuenta</strong> a ajustar (¡eso sí se puede!). Cuando consigas la tabla real, reemplazas los huecos y terminas en dos minutos.</p>
+  </div>
+</section>
+
+<!-- ===================== E2 · PASO 1 ===================== -->
+<section class="sec" id="e2-p1">
+<div class="step">
+  <div class="step-head"><div class="step-num">1</div><div class="st">Determinar las tasas CIF de cada centro</div></div>
+  <div class="step-body">
+    <p>Este paso es 100% resoluble: solo necesita el presupuesto, que sí tenemos.</p>
+    <div class="step-reasoning">
+      <span class="rl">Razonamiento</span> Misma fórmula maestra. <strong>Cortado</strong> reparte por horas máquina ⇒ denominador 1 200 h-máquina. <strong>Acabado</strong> reparte por horas-MOD ⇒ denominador 1 000 h-MOD.
+    </div>
+    <div class="calc-block">
+<span class="cl"># Cortado — base: horas máquina</span>
+Tasa Cortado = 15 000 / 1 200 = <span class="res">S/ 12.50 por hora máquina</span>
+<span class="sep"></span>
+<span class="cl"># Acabado — base: horas MOD</span>
+Tasa Acabado = 10 000 / 1 000 = <span class="res">S/ 10.00 por hora MOD</span>
+    </div>
+    <div class="bigrow">
+      <div class="bignum"><div class="bl">Tasa Cortado</div><div class="bv">12.50</div><div class="bs">S/ por hora máquina</div></div>
+      <div class="bignum t"><div class="bl">Tasa Acabado</div><div class="bv">10.00</div><div class="bs">S/ por hora MOD</div></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===================== E2 · PASO 2 ===================== -->
+<section class="sec" id="e2-p2">
+<div class="step">
+  <div class="step-head"><div class="step-num">2</div><div class="st">Hoja de costos de OP‑15 (plantilla lista para completar)</div></div>
+  <div class="step-body">
+    <p>El enunciado pide la hoja desglosada <strong>por cada tipo de material</strong> y, en MOD y CIF, <strong>por departamento</strong>. Dejo la estructura exacta con las fórmulas; donde falta el dato real, marco el hueco en <span class="miss">naranja</span>.</p>
+
+    <div class="step-reasoning">
+      <span class="rl">Razonamiento del armado</span>
+      • <strong>MD Cortado</strong> = (nº de listones) × S/ 30. &nbsp; • <strong>MD Acabado</strong> = (nº de fórmicas) × S/ 52.<br>
+      • <strong>MOD</strong> por departamento = (horas-MOD reales del depto) × (costo por hora-MOD).<br>
+      • <strong>CIF Cortado</strong> = 12.50 × (horas máquina reales). &nbsp; • <strong>CIF Acabado</strong> = 10.00 × (horas-MOD reales).
+    </div>
+
+    <div class="job-sheet">
+      <div class="js-head"><span class="jt">Hoja de Costos</span><span class="jo">OP‑15 · 25 mesas</span></div>
+      <div class="tablewrap" style="margin:0;border:none;box-shadow:none;border-radius:0">
+      <table>
+        <thead><tr><th>Concepto</th><th>Cortado</th><th>Acabado</th><th>Total</th></tr></thead>
+        <tbody>
+          <tr class="js-section"><td>Materiales Directos</td><td></td><td></td><td></td></tr>
+          <tr><td>· Listones (× S/ 30)</td><td class="num miss">nº × 30</td><td class="num dim">—</td><td class="num miss">?</td></tr>
+          <tr><td>· Fórmica (× S/ 52)</td><td class="num dim">—</td><td class="num miss">nº × 52</td><td class="num miss">?</td></tr>
+          <tr class="js-section"><td>Mano de Obra Directa</td><td class="num miss">h × cph</td><td class="num miss">h × cph</td><td class="num miss">?</td></tr>
+          <tr class="js-section"><td>CIF aplicados</td><td class="num miss">12.50 × h-máq</td><td class="num miss">10.00 × h-MOD</td><td class="num miss">?</td></tr>
+          <tr class="total"><td>Costo total OP‑15</td><td></td><td></td><td class="num miss">?</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="callout c-duda">
+      <span class="ctag"><span class="ico">❔</span> Sobre el sueldo de S/ 1 810/mes</span>
+      <p>A diferencia del Ej. 1 (que daba el jornal por hora directo), aquí el dato es <em>mensual</em>. Para convertirlo a “costo por hora-MOD” se necesita el divisor de horas del mes (o el nº de obreros y sus horas), que está en la tabla faltante. Por eso lo dejo indicado como <span class="pill">cph</span> (costo por hora) en la plantilla: en cuanto tengas las horas, la MOD sale al instante.</p>
+    </div>
+
+    <div class="callout c-tip" style="margin-bottom:0">
+      <span class="ctag"><span class="ico">🧮</span> Dato que sí podemos anticipar</span>
+      <p>El ingreso por la venta sí está dado: 25 mesas × S/ 500 = <strong>S/ 12 500 de valor de venta</strong>. Una vez completada la hoja de costos, podrás comparar costo vs. venta para ver el margen del pedido.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ===================== E2 · PASO 3 ===================== -->
+<section class="sec" id="e2-p3">
+<div class="step">
+  <div class="step-head"><div class="step-num">3</div><div class="st">Sobre/subaplicación, signo del ajuste y cuenta</div></div>
+  <div class="step-body">
+    <div class="callout c-insight">
+      <span class="ctag"><span class="ico">🔭</span> Lo que SÍ se puede determinar sin las horas</span>
+      <p>El enunciado nos da tanto la <strong>tasa aplicada</strong> (la predeterminada del Paso 1) como la <strong>tasa real</strong>, ambas sobre la <em>misma</em> base de cada departamento. Comparar tasa contra tasa ya revela el <strong>signo</strong> de la desviación, aunque el <em>monto</em> dependa de las horas.</p>
+    </div>
+
+    <div class="tablewrap">
+    <table>
+      <thead><tr><th>Departamento</th><th>Tasa aplicada</th><th>Tasa real</th><th>Comparación</th><th>Resultado</th></tr></thead>
+      <tbody>
+        <tr><td>Cortado <span class="tag-base">h-máq</span></td><td class="num">12.50</td><td class="num">11.00</td><td class="num">aplicada &gt; real</td><td class="miss">SOBREaplicación</td></tr>
+        <tr><td>Acabado <span class="tag-base">h-MOD</span></td><td class="num">10.00</td><td class="num">12.00</td><td class="num">aplicada &lt; real</td><td class="miss">SUBaplicación</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="step-reasoning">
+      <span class="rl">Razonamiento</span>
+      En <strong>Cortado</strong> aplicamos a S/ 12.50/h pero el costo real fue solo S/ 11/h: cada hora cargó S/ 1.50 de más ⇒ <strong>sobreaplicación</strong> ⇒ el ajuste <strong>resta</strong>. En <strong>Acabado</strong> aplicamos a S/ 10/h pero el real fue S/ 12/h: cada hora cargó S/ 2 de menos ⇒ <strong>subaplicación</strong> ⇒ el ajuste <strong>suma</strong>.
+    </div>
+
+    <div class="calc-block">
+<span class="cl"># Monto (cuando tengas las horas reales):</span>
+Desv. Cortado = (12.50 − 11.00) × h-máq reales = <span class="hl">+1.50 × h-máq</span>  (resta)
+Desv. Acabado = (10.00 − 12.00) × h-MOD reales = <span class="hl">−2.00 × h-MOD</span>  (suma)
+    </div>
+
+    <div class="callout c-clave">
+      <span class="ctag"><span class="ico">🔑</span> ¿A qué cuenta?</span>
+      <p>La orden OP‑15 fue <strong>terminada y entregada</strong> al 31.10.24 ⇒ ya salió del almacén y se vendió ⇒ el ajuste de la desviación va a <strong>Costo de Ventas</strong> (a diferencia del Ej. 1, que iba a Productos Terminados por no estar entregada).</p>
+    </div>
+
+    <div class="callout c-tip" style="margin-bottom:0">
+      <span class="ctag"><span class="ico">📝</span> Resumen del Paso 3</span>
+      <ul class="clean" style="margin:.3em 0 0">
+        <li><strong>Cortado:</strong> sobreaplicación → ajuste <em>resta</em> → en Costo de Ventas.</li>
+        <li><strong>Acabado:</strong> subaplicación → ajuste <em>suma</em> → en Costo de Ventas.</li>
+        <li><strong>Neto:</strong> depende de las horas; podría ser sobre o sub según cuál pese más.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</section>
+
+<div class="chartcard">
+  <div class="ct">Tasa aplicada vs. tasa real por departamento (Ej. 2)</div>
+  <div class="cs">Cuando la barra “aplicada” supera a la “real” hay sobreaplicación; cuando queda por debajo, subaplicación.</div>
+  <div class="chartbox"><canvas id="ch2tasas"></canvas></div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ===================== ERRORES TÍPICOS ===================== -->
+<section class="sec" id="errores">
+  <h2>Errores típicos (y cómo evitarlos)</h2>
+  <p>Estos son los tropiezos que más cuestan puntos en este tema. Si los interiorizas, resolver se vuelve casi automático.</p>
+
+  <div class="callout c-advertencia">
+    <span class="ctag"><span class="ico">1</span> Usar la base equivocada para el CIF</span>
+    <p>El error rey. Si un departamento reparte por <em>horas máquina</em>, no uses sus horas-MOD para el CIF (¡aunque te las den!). Repite: “cada CIF con su base”. Las horas “sobrantes” suelen servir solo para la MOD o son distractores.</p>
+  </div>
+
+  <div class="callout c-advertencia">
+    <span class="ctag"><span class="ico">2</span> Mezclar presupuestado con real</span>
+    <p>La <strong>tasa</strong> se calcula con cifras presupuestadas. Pero cuando <strong>aplicas</strong>, multiplicas por las horas <em>reales</em> de la orden. Calcular el CIF aplicado con las horas presupuestadas (o la tasa con horas reales) es un clásico.</p>
+  </div>
+
+  <div class="callout c-advertencia">
+    <span class="ctag"><span class="ico">3</span> Volver a sumar beneficios a la MOD</span>
+    <p>Si el jornal “ya incluye beneficios y aportes”, está completo. Agregarle CTS, gratificaciones o EsSalud otra vez infla la MOD. El enunciado te avisó para que <em>no</em> lo hagas.</p>
+  </div>
+
+  <div class="callout c-advertencia">
+    <span class="ctag"><span class="ico">4</span> Confundir el signo del ajuste</span>
+    <p>Sobreaplicación = costo inflado = ajuste <strong>resta</strong>. Subaplicación = costo corto = ajuste <strong>suma</strong>. Memoriza el “deshacer”: el ajuste hace lo contrario del error.</p>
+  </div>
+
+  <div class="callout c-advertencia">
+    <span class="ctag"><span class="ico">5</span> Equivocar la cuenta de ajuste</span>
+    <p>Sigue a la orden: en proceso → Productos en Proceso; terminada sin entregar → Productos Terminados; entregada → Costo de Ventas. Leer mal el estado de la orden manda el ajuste a la cuenta equivocada.</p>
+  </div>
+
+  <div class="callout c-advertencia">
+    <span class="ctag"><span class="ico">6</span> Calcular la desviación al revés</span>
+    <p>Define siempre <em>aplicado − real</em>. Si te sale positivo es sobreaplicación; negativo, subaplicación. Hacerlo “real − aplicado” invierte todos los signos y te confunde en el ajuste.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===================== SÍNTESIS / FORMULARIO ===================== -->
+<section class="sec" id="sintesis">
+  <h2>Síntesis y formulario</h2>
+
+  <div class="endcard">
+    <h3 style="margin-top:0">Las 4 fórmulas que lo resuelven todo</h3>
+    <div class="callout c-formula" style="background:var(--surface)">
+      <span class="ctag">1 · Tasa predeterminada</span>
+      <p style="text-align:center">\[ \text{Tasa CIF}=\dfrac{\text{CIF presupuestado}}{\text{Base presupuestada}} \]</p>
+    </div>
+    <div class="callout c-formula" style="background:var(--surface)">
+      <span class="ctag">2 · Costo de la orden</span>
+      <p style="text-align:center">\[ \text{Costo}=MD+MOD+CIF_{\text{aplicados}} \]</p>
+      <p style="text-align:center; font-size:.92em">con \(CIF_{\text{aplicados}}=\text{Tasa}\times\text{base REAL}\) y \(MOD=\text{h-MOD}\times\text{costo/hora}\)</p>
+    </div>
+    <div class="callout c-formula" style="background:var(--surface)">
+      <span class="ctag">3 · Desviación</span>
+      <p style="text-align:center">\[ \text{Desv.}=CIF_{\text{aplicados}}-CIF_{\text{reales}} \quad (+\text{sobre},\ -\text{sub}) \]</p>
+    </div>
+    <div class="callout c-formula" style="background:var(--surface); margin-bottom:0">
+      <span class="ctag">4 · Costo ajustado</span>
+      <p style="text-align:center">\[ \text{Costo ajustado}=\text{Costo aplicado}\ \mp\ \text{Desviación} \]</p>
+      <p style="text-align:center; font-size:.92em">sobreaplicación ⇒ resta · subaplicación ⇒ suma</p>
+    </div>
+  </div>
+
+  <h3>El método en 4 pasos</h3>
+  <ol class="steps">
+    <li><strong>Tasas:</strong> una por departamento, con su base presupuestada.</li>
+    <li><strong>Costo de la orden:</strong> arma MD + MOD + CIF aplicados (CIF con la base real correcta) en la hoja de costos.</li>
+    <li><strong>Desviación:</strong> aplicado − real, por departamento; suma para el total.</li>
+    <li><strong>Ajuste:</strong> identifica la cuenta (según el estado de la orden) y el signo (sobre resta / sub suma); obtén el costo ajustado.</li>
+  </ol>
+
+  <h3>Tablero de resultados</h3>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Resultado</th><th>Ejercicio 1</th><th>Ejercicio 2</th></tr></thead>
+    <tbody>
+      <tr><td>Tasa Corte / Cortado</td><td class="num">12.50 /h-máq</td><td class="num">12.50 /h-máq</td></tr>
+      <tr><td>Tasa Ensamblado / Acabado</td><td class="num">10.00 /h-MOD</td><td class="num">10.00 /h-MOD</td></tr>
+      <tr><td>Materiales Directos</td><td class="num">21 680.00</td><td class="num miss">falta dato</td></tr>
+      <tr><td>Mano de Obra Directa</td><td class="num">2 280.00</td><td class="num miss">falta dato</td></tr>
+      <tr><td>CIF aplicados</td><td class="num">3 750.00</td><td class="num miss">falta dato</td></tr>
+      <tr><td>Costo total (aplicado)</td><td class="num">27 710.00</td><td class="num miss">falta dato</td></tr>
+      <tr><td>Desviación CIF</td><td class="num">+520 sobre</td><td class="num">Cort. sobre / Acab. sub</td></tr>
+      <tr><td>Cuenta a ajustar</td><td>Prod. Terminados</td><td>Costo de Ventas</td></tr>
+      <tr class="total"><td>Costo ajustado</td><td class="num">27 190.00</td><td class="num miss">falta dato</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="callout c-tip" style="margin-bottom:0">
+    <span class="ctag"><span class="ico">🎓</span> Para llevarte</span>
+    <p>El costeo por órdenes es, en el fondo, una sola idea repetida: <strong>cada pedido es una cuenta que acumula sus tres elementos</strong>, y el único elemento que se “estima por adelantado” —el CIF— se reconcilia al final comparando lo aplicado con lo real. Domina ese ciclo (tasa → aplicar → comparar → ajustar) y cualquier variante del examen es la misma película con otros números.</p>
+  </div>
+</section>
+
+</div><!-- /wrap -->
+
+<footer class="footer">
+  <div class="wrap">
+    <p><strong>PD11 · Costeo por Órdenes</strong> — Contabilidad de Costos 1 · Universidad de Piura, Campus Lima.</p>
+    <p>Guía de estudio con números verificados. El Ejercicio 2 quedó parcialmente abierto por datos faltantes en el enunciado, señalados con transparencia.</p>
+  </div>
+</footer>
+</main>
+<script>
+(function(){
+  "use strict";
+  var root=document.documentElement, body=document.body;
+  var LS={get:function(k){try{return localStorage.getItem(k)}catch(e){return null}},
+          set:function(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+
+  /* ---------- TEMA ---------- */
+  var swatches=document.getElementById('swatches');
+  function setTheme(t){
+    root.setAttribute('data-theme',t); LS.set('pd11_theme',t);
+    Array.prototype.forEach.call(swatches.querySelectorAll('.sw'),function(s){
+      s.classList.toggle('sel', s.getAttribute('data-theme')===t);
+    });
+    if(window.__chartsReady) rebuildCharts();
+  }
+  swatches.addEventListener('click',function(e){var s=e.target.closest('.sw'); if(s) setTheme(s.getAttribute('data-theme'));});
+  swatches.addEventListener('keydown',function(e){var s=e.target.closest('.sw'); if(s&&(e.key==='Enter'||e.key===' ')){e.preventDefault(); setTheme(s.getAttribute('data-theme'));}});
+
+  /* ---------- TAMAÑO DE LETRA ---------- */
+  var fVal=document.getElementById('fVal'), MIN=60, MAX=260, STEP=10, DEF=145;
+  var fs=parseInt(LS.get('pd11_fs'),10); if(isNaN(fs)) fs=DEF;
+  function applyFS(){fs=Math.max(MIN,Math.min(MAX,fs)); root.style.setProperty('--fs',fs+'%'); fVal.textContent=fs+'%'; LS.set('pd11_fs',fs);}
+  document.getElementById('fMinus').addEventListener('click',function(){fs-=STEP; applyFS();});
+  document.getElementById('fPlus').addEventListener('click',function(){fs+=STEP; applyFS();});
+
+  /* ---------- ANCHO ---------- */
+  var widthSeg=document.getElementById('widthSeg');
+  var WMAP={comodo:'74ch', amplio:'96ch', completo:'100%'};
+  function setWidth(w){
+    if(!WMAP[w]) w='comodo';
+    root.style.setProperty('--maxw',WMAP[w]); LS.set('pd11_width',w);
+    Array.prototype.forEach.call(widthSeg.querySelectorAll('button'),function(b){b.classList.toggle('on',b.getAttribute('data-w')===w);});
+  }
+  widthSeg.addEventListener('click',function(e){var b=e.target.closest('button'); if(b) setWidth(b.getAttribute('data-w'));});
+
+  /* ---------- RESET ---------- */
+  document.getElementById('resetAll').addEventListener('click',function(){
+    setTheme('claro'); fs=DEF; applyFS(); setWidth('comodo');
+  });
+
+  /* ---------- PANEL A11Y ---------- */
+  var a11yPanel=document.getElementById('a11yPanel'), a11yToggle=document.getElementById('a11yToggle');
+  a11yToggle.addEventListener('click',function(e){e.stopPropagation(); a11yPanel.classList.toggle('open');});
+  document.addEventListener('click',function(e){
+    if(a11yPanel.classList.contains('open') && !a11yPanel.contains(e.target) && e.target!==a11yToggle) a11yPanel.classList.remove('open');
+  });
+
+  /* ---------- SIDEBAR ---------- */
+  var sidebar=document.getElementById('sidebar'), overlay=document.getElementById('overlay'),
+      navToggle=document.getElementById('navToggle'), mqDesktop=window.matchMedia('(min-width:1180px)');
+  function closeMobileNav(){sidebar.classList.remove('open'); overlay.classList.remove('show'); navToggle.setAttribute('aria-expanded','false');}
+  function toggleNav(){
+    if(mqDesktop.matches){
+      var c=body.classList.toggle('nav-collapsed'); LS.set('pd11_nav', c?'1':'0');
+      navToggle.setAttribute('aria-expanded', c?'false':'true');
+    }else{
+      var o=sidebar.classList.toggle('open'); overlay.classList.toggle('show',o); navToggle.setAttribute('aria-expanded', o?'true':'false');
+    }
+  }
+  navToggle.addEventListener('click',toggleNav);
+  overlay.addEventListener('click',closeMobileNav);
+  document.getElementById('toc').addEventListener('click',function(e){if(e.target.tagName==='A'&&!mqDesktop.matches) closeMobileNav();});
+  if(mqDesktop.matches && LS.get('pd11_nav')==='1'){body.classList.add('nav-collapsed'); navToggle.setAttribute('aria-expanded','false');} else {navToggle.setAttribute('aria-expanded', mqDesktop.matches?'true':'false');}
+
+  /* ---------- TOPBAR OCULTAR / PROGRESO ---------- */
+  var topbar=document.getElementById('topbar'), progress=document.getElementById('progress'), lastY=window.pageYOffset, ticking=false;
+  function onScroll(){
+    var y=window.pageYOffset;
+    if(y>lastY && y>140){topbar.classList.add('hidden'); a11yPanel.classList.remove('open');}
+    else if(y<lastY){topbar.classList.remove('hidden');}
+    lastY=y;
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    progress.style.width=(h>0?(y/h*100):0)+'%';
+    ticking=false;
+  }
+  window.addEventListener('scroll',function(){if(!ticking){window.requestAnimationFrame(onScroll); ticking=true;}},{passive:true});
+
+  /* ---------- SCROLL-SPY ---------- */
+  var tocLinks=Array.prototype.slice.call(document.querySelectorAll('#toc a'));
+  var linkMap={}; tocLinks.forEach(function(a){linkMap[a.getAttribute('href').slice(1)]=a;});
+  var spy=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){
+        var id=en.target.id, link=linkMap[id];
+        if(link){tocLinks.forEach(function(a){a.classList.remove('active');}); link.classList.add('active');
+          if(mqDesktop.matches) link.scrollIntoView({block:'nearest'});}
+      }
+    });
+  },{rootMargin:'-15% 0px -75% 0px', threshold:0});
+  document.querySelectorAll('section.sec').forEach(function(s){if(s.id) spy.observe(s);});
+
+  /* ---------- CHARTS ---------- */
+  var charts=[];
+  function cv(n){return getComputedStyle(root).getPropertyValue(n).trim();}
+  function baseOpts(){
+    var ink=cv('--ink'), faint=cv('--ink-faint'), grid=cv('--border');
+    return {responsive:true, maintainAspectRatio:false,
+      plugins:{legend:{labels:{color:ink, font:{family:'Manrope',size:13,weight:'600'}, padding:16, usePointStyle:true, pointStyleWidth:12}}},
+      scales:{x:{ticks:{color:faint,font:{family:'Manrope',size:12}},grid:{color:grid,display:false},border:{color:grid}},
+              y:{ticks:{color:faint,font:{family:'JetBrains Mono',size:11}},grid:{color:grid},border:{color:grid},beginAtZero:true}}};
+  }
+  function buildCharts(){
+    if(typeof Chart==='undefined') return;
+    Chart.defaults.font.family='Manrope';
+    var terr=cv('--terracotta'), teal=cv('--teal'), gold=cv('--gold'), plum=cv('--plum'), ink=cv('--ink');
+    // 1. Composición
+    var c1=document.getElementById('ch1comp');
+    if(c1) charts.push(new Chart(c1,{type:'doughnut',
+      data:{labels:['Materiales Directos','Mano de Obra Directa','CIF aplicados'],
+        datasets:[{data:[21680,2280,3750],backgroundColor:[terr,teal,gold],borderColor:cv('--surface'),borderWidth:3}]},
+      options:{responsive:true,maintainAspectRatio:false,cutout:'58%',
+        plugins:{legend:{position:'bottom',labels:{color:ink,font:{family:'Manrope',size:13,weight:'600'},padding:14,usePointStyle:true,pointStyleWidth:12}},
+          tooltip:{callbacks:{label:function(ctx){var t=21680+2280+3750; return ctx.label+': S/ '+ctx.parsed.toLocaleString('es-PE')+' ('+(ctx.parsed/t*100).toFixed(1)+'%)';}}}}}}));
+    // 2. Aplicado vs real Ej1
+    var c2=document.getElementById('ch1dev'); var o2=baseOpts();
+    o2.plugins.tooltip={callbacks:{label:function(ctx){return ctx.dataset.label+': S/ '+ctx.parsed.y.toLocaleString('es-PE');}}};
+    if(c2) charts.push(new Chart(c2,{type:'bar',
+      data:{labels:['Corte','Ensamblado'],datasets:[
+        {label:'CIF aplicado',data:[2250,1500],backgroundColor:teal,borderRadius:6},
+        {label:'CIF real',data:[1980,1250],backgroundColor:gold,borderRadius:6}]},options:o2}));
+    // 3. Tasas Ej2
+    var c3=document.getElementById('ch2tasas'); var o3=baseOpts();
+    o3.plugins.tooltip={callbacks:{label:function(ctx){return ctx.dataset.label+': S/ '+ctx.parsed.y.toFixed(2);}}};
+    if(c3) charts.push(new Chart(c3,{type:'bar',
+      data:{labels:['Cortado (h-máq)','Acabado (h-MOD)'],datasets:[
+        {label:'Tasa aplicada',data:[12.50,10.00],backgroundColor:terr,borderRadius:6},
+        {label:'Tasa real',data:[11.00,12.00],backgroundColor:plum,borderRadius:6}]},options:o3}));
+    window.__chartsReady=true;
+  }
+  function rebuildCharts(){charts.forEach(function(c){c.destroy();}); charts=[]; buildCharts();}
+
+  /* ---------- INIT ---------- */
+  var savedTheme=LS.get('pd11_theme')||'claro'; setTheme(savedTheme);
+  applyFS();
+  setWidth(LS.get('pd11_width')||'comodo');
+  if(document.readyState!=='loading') buildCharts();
+  else window.addEventListener('DOMContentLoaded',buildCharts);
+  window.addEventListener('load',function(){
+    if(window.MathJax && window.MathJax.typesetPromise) window.MathJax.typesetPromise();
+  });
+})();
+</script>
+</body>
+</html>
