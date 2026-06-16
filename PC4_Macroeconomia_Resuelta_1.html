@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="claro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>PC4 Macroeconomía — Resolución paso a paso</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+    svg: { fontCache: 'global' },
+    options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] }
+  };
+</script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{
+  --fs:1; --maxw:820px;
+  --bg:#f4f0e7; --bg2:#efe9dc; --surface:#fffdf7; --surface2:#f8f4ea;
+  --ink:#221f19; --ink-soft:#3b362d; --muted:#736c5e; --faint:#9c9486;
+  --line:#e4ddcd; --line-strong:#d3cab5;
+  --accent:#2f6b5e; --accent-ink:#214c43; --accent2:#b0512c;
+  --shadow:0 1px 2px rgba(40,33,20,.05), 0 8px 28px -14px rgba(40,33,20,.22);
+  --shadow-lg:0 2px 6px rgba(40,33,20,.06), 0 24px 60px -28px rgba(40,33,20,.34);
+  --c-intu:#b07d23; --c-intu-bg:#faf2dd; --c-intu-bd:#ecd8a4;
+  --c-clave:#2f6b5e; --c-clave-bg:#e7f1ed; --c-clave-bd:#bcdacf;
+  --c-form:#3f4d8a; --c-form-bg:#ebedf7; --c-form-bd:#c8cdec;
+  --c-insi:#4f7a36; --c-insi-bg:#eef4e5; --c-insi-bd:#cfe0b6;
+  --c-adv:#b0402c; --c-adv-bg:#fae9e3; --c-adv-bd:#eec6ba;
+  --c-tip:#4b5560; --c-tip-bg:#edeff1; --c-tip-bd:#d2d7dc;
+  --ok:#2f7d52; --ok-bg:#e6f3ea; --no:#b0402c; --no-bg:#f8e6df;
+  --razon-bg:#f7f3ea; --razon-bd:#e2d8c2; --calc-bg:#1f2a27; --calc-ink:#eaf2ee; --calc-acc:#86c9b4;
+}
+[data-theme="sepia"]{
+  --bg:#ece0c9; --bg2:#e4d6ba; --surface:#f7eed9; --surface2:#f0e4cb;
+  --ink:#3a2f1d; --ink-soft:#4d4029; --muted:#7b6a4c; --faint:#9c8a68;
+  --line:#ddccac; --line-strong:#cdb78f;
+  --accent:#1f6f4f; --accent-ink:#175239; --accent2:#a8521f;
+  --c-intu:#9a6c12; --c-intu-bg:#f3e4bd; --c-intu-bd:#dcc488;
+  --c-clave:#1f6f4f; --c-clave-bg:#e3eedf; --c-clave-bd:#b9d3b3;
+  --c-form:#3a4a86; --c-form-bg:#e6e6ef; --c-form-bd:#c2c5e2;
+  --c-insi:#4a6e2f; --c-insi-bg:#e9f0d9; --c-insi-bd:#c6d6a8;
+  --c-adv:#a6391f; --c-adv-bg:#f3ddd1; --c-adv-bd:#e0bba8;
+  --c-tip:#4b5560; --c-tip-bg:#e7e6df; --c-tip-bd:#cfcabb;
+  --ok-bg:#dfeede; --no-bg:#f1ddd1; --razon-bg:#f0e6cf; --razon-bd:#d8c39c;
+}
+[data-theme="pizarra"]{
+  --bg:#1c2b29; --bg2:#172321; --surface:#23332f; --surface2:#1d2c29;
+  --ink:#e9f1ec; --ink-soft:#cfe0d8; --muted:#9bb3a9; --faint:#7b958b;
+  --line:#33453f; --line-strong:#41564f;
+  --accent:#7fd0b6; --accent-ink:#a7e3cf; --accent2:#e2956a;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 30px -16px rgba(0,0,0,.6);
+  --shadow-lg:0 2px 6px rgba(0,0,0,.35), 0 26px 64px -30px rgba(0,0,0,.7);
+  --c-intu:#e3c060; --c-intu-bg:#2c3a28; --c-intu-bd:#4a5733;
+  --c-clave:#7fd0b6; --c-clave-bg:#23362f; --c-clave-bd:#3a564b;
+  --c-form:#9fb0ee; --c-form-bg:#272f3f; --c-form-bd:#3d4767;
+  --c-insi:#a6cf78; --c-insi-bg:#283324; --c-insi-bd:#43542f;
+  --c-adv:#ef9b7e; --c-adv-bg:#352620; --c-adv-bd:#5a3a2d;
+  --c-tip:#aebcc4; --c-tip-bg:#28332f; --c-tip-bd:#41504a;
+  --ok:#86d6a5; --ok-bg:#21342a; --no:#ef9b7e; --no-bg:#352620;
+  --razon-bg:#1f2e2a; --razon-bd:#39504a; --calc-bg:#0f1a18; --calc-ink:#dff0e8; --calc-acc:#86c9b4;
+}
+[data-theme="oscuro"]{
+  --bg:#16151a; --bg2:#100f13; --surface:#201f26; --surface2:#1a1920;
+  --ink:#ece9f0; --ink-soft:#d2cfd9; --muted:#9b97a6; --faint:#76727f;
+  --line:#322f3a; --line-strong:#403c4a;
+  --accent:#67c9ad; --accent-ink:#8bdcc3; --accent2:#e0936a;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 30px -16px rgba(0,0,0,.7);
+  --shadow-lg:0 2px 6px rgba(0,0,0,.45), 0 26px 64px -30px rgba(0,0,0,.8);
+  --c-intu:#e6c468; --c-intu-bg:#2b2718; --c-intu-bd:#4d4426;
+  --c-clave:#67c9ad; --c-clave-bg:#1b2a26; --c-clave-bd:#2f4840;
+  --c-form:#a3b1f0; --c-form-bg:#21243a; --c-form-bd:#39406a;
+  --c-insi:#a9d27a; --c-insi-bg:#212c1c; --c-insi-bd:#3c4d2a;
+  --c-adv:#f0997b; --c-adv-bg:#33231d; --c-adv-bd:#56392c;
+  --c-tip:#b2bcc6; --c-tip-bg:#222630; --c-tip-bd:#3a414c;
+  --ok:#7ed6a3; --ok-bg:#1c2c22; --no:#f0997b; --no-bg:#33231d;
+  --razon-bg:#1c1b22; --razon-bd:#36333f; --calc-bg:#0c0b0f; --calc-ink:#e7e4ec; --calc-acc:#7fd0b6;
+}
+[data-theme="contraste"]{
+  --bg:#000; --bg2:#000; --surface:#0a0a0a; --surface2:#101010;
+  --ink:#fff; --ink-soft:#fff; --muted:#ffe14d; --faint:#ffe14d;
+  --line:#ffe14d; --line-strong:#ffe14d;
+  --accent:#ffe14d; --accent-ink:#ffe14d; --accent2:#7fdfff;
+  --shadow:0 0 0 1px #ffe14d; --shadow-lg:0 0 0 2px #ffe14d;
+  --c-intu:#ffe14d; --c-intu-bg:#000; --c-intu-bd:#ffe14d;
+  --c-clave:#7fffd4; --c-clave-bg:#000; --c-clave-bd:#7fffd4;
+  --c-form:#9fc8ff; --c-form-bg:#000; --c-form-bd:#9fc8ff;
+  --c-insi:#9dff7a; --c-insi-bg:#000; --c-insi-bd:#9dff7a;
+  --c-adv:#ff8a6e; --c-adv-bg:#000; --c-adv-bd:#ff8a6e;
+  --c-tip:#fff; --c-tip-bg:#000; --c-tip-bd:#fff;
+  --ok:#9dff7a; --ok-bg:#000; --no:#ff8a6e; --no-bg:#000;
+  --razon-bg:#0a0a0a; --razon-bd:#ffe14d; --calc-bg:#000; --calc-ink:#fff; --calc-acc:#ffe14d;
+}
+*{box-sizing:border-box}
+html{font-size:calc(17px * var(--fs)); scroll-behavior:smooth; -webkit-text-size-adjust:100%;}
+body{margin:0; background:var(--bg); color:var(--ink); font-family:"Manrope",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; line-height:1.72; font-weight:400; letter-spacing:.002em; transition:background .35s ease, color .35s ease; overflow-x:hidden;}
+::selection{background:var(--accent); color:var(--surface);}
+h1,h2,h3,h4{font-family:"Fraunces",Georgia,serif; line-height:1.18; color:var(--ink); font-weight:600; letter-spacing:-.01em;}
+p{margin:0 0 1.05em;}
+a{color:var(--accent-ink); text-underline-offset:3px; text-decoration-color:var(--line-strong);}
+code,kbd,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;}
+.topbar{position:fixed; top:0; left:0; right:0; height:54px; z-index:60; display:flex; align-items:center; gap:.7rem; padding:0 clamp(.7rem,3vw,1.4rem); background:color-mix(in srgb, var(--surface) 86%, transparent); -webkit-backdrop-filter:saturate(1.2) blur(12px); backdrop-filter:saturate(1.2) blur(12px); border-bottom:1px solid var(--line); transition:transform .35s cubic-bezier(.4,0,.2,1), background .35s;}
+.topbar.hide{transform:translateY(-100%);}
+.iconbtn{appearance:none; border:1px solid var(--line-strong); background:var(--surface2); color:var(--ink); width:38px; height:38px; border-radius:10px; cursor:pointer; font-size:1.05rem; display:inline-flex; align-items:center; justify-content:center; flex:0 0 auto; transition:transform .15s, background .2s, border-color .2s;}
+.iconbtn:hover{background:var(--accent); color:var(--surface); border-color:var(--accent);}
+.iconbtn:active{transform:scale(.94);}
+.topbar .tt{font-family:"Fraunces",serif; font-weight:600; font-size:1.02rem; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.topbar .tt small{display:block; font-family:"Manrope",sans-serif; font-weight:600; font-size:.62rem; letter-spacing:.16em; text-transform:uppercase; color:var(--muted);}
+.topbar .sp{flex:1 1 auto;}
+.progresswrap{position:absolute; left:0; bottom:-1px; height:2px; width:100%;}
+.progress{height:100%; width:0; background:linear-gradient(90deg,var(--accent),var(--accent2)); transition:width .1s linear;}
+.scrim{position:fixed; inset:0; background:rgba(15,12,6,.42); opacity:0; pointer-events:none; transition:opacity .3s; z-index:64;}
+.scrim.show{opacity:1; pointer-events:auto;}
+.toc{position:fixed; top:0; left:0; bottom:0; width:min(85vw,330px); z-index:66; background:var(--surface); border-right:1px solid var(--line); transform:translateX(-104%); transition:transform .36s cubic-bezier(.4,0,.2,1); display:flex; flex-direction:column; box-shadow:var(--shadow-lg);}
+.toc.open{transform:translateX(0);}
+.toc .head{padding:1.1rem 1.2rem .8rem; border-bottom:1px solid var(--line);}
+.toc .head h2{font-size:1.05rem; margin:0;}
+.toc .head p{margin:.2rem 0 0; font-size:.72rem; color:var(--muted); letter-spacing:.04em;}
+.toc nav{overflow-y:auto; padding:.7rem .7rem 2rem; -webkit-overflow-scrolling:touch;}
+.toc a{display:block; padding:.5rem .7rem; margin:.12rem 0; border-radius:9px; color:var(--ink-soft); text-decoration:none; font-size:.86rem; font-weight:600; border-left:3px solid transparent; transition:background .18s, color .18s, border-color .18s;}
+.toc a .n{font-family:"JetBrains Mono",monospace; font-size:.74rem; color:var(--accent2); margin-right:.5rem;}
+.toc a:hover{background:var(--surface2); color:var(--ink);}
+.toc a.active{background:var(--c-clave-bg); color:var(--accent-ink); border-left-color:var(--accent);}
+.toc a.sub{margin-left:.9rem; font-weight:500; font-size:.8rem; color:var(--muted);}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:5rem clamp(1rem,5vw,2.6rem) 6rem;}
+body[data-width="comodo"]{--maxw:760px;}
+body[data-width="amplio"]{--maxw:1040px;}
+body[data-width="completo"]{--maxw:none;}
+body[data-width="completo"] .wrap{padding-left:clamp(1rem,6vw,5rem); padding-right:clamp(1rem,6vw,5rem);}
+section{scroll-margin-top:72px; margin:0 0 2.4rem;}
+.cover{background:radial-gradient(1200px 400px at 15% -10%, color-mix(in srgb,var(--accent) 16%, transparent), transparent 60%),linear-gradient(180deg, var(--surface), var(--surface2)); border:1px solid var(--line); border-radius:20px; padding:clamp(1.6rem,4vw,2.8rem); box-shadow:var(--shadow-lg); position:relative; overflow:hidden; margin-bottom:2.2rem;}
+.cover .kick{font-size:.7rem; font-weight:700; letter-spacing:.22em; text-transform:uppercase; color:var(--accent2); margin:0 0 .8rem;}
+.cover h1{font-size:clamp(1.8rem,5.4vw,2.9rem); margin:0 0 .35rem; line-height:1.06;}
+.cover h1 em{font-style:italic; color:var(--accent-ink);}
+.cover .meta{display:flex; flex-wrap:wrap; gap:.5rem; margin-top:1.2rem;}
+.chip{font-size:.74rem; font-weight:600; padding:.32rem .7rem; border-radius:999px; background:var(--surface2); border:1px solid var(--line-strong); color:var(--ink-soft);}
+.chip b{color:var(--accent-ink);}
+.cover .lead{margin-top:1.3rem; font-size:1.02rem; color:var(--ink-soft); max-width:62ch;}
+.qhead{display:flex; align-items:baseline; gap:.8rem; margin:0 0 .2rem; flex-wrap:wrap;}
+.qnum{font-family:"JetBrains Mono",monospace; font-weight:700; font-size:.95rem; color:var(--surface); background:var(--accent); padding:.18rem .6rem; border-radius:8px; letter-spacing:.02em;}
+h2.qtitle{font-size:clamp(1.35rem,3.6vw,1.85rem); margin:.1rem 0 .1rem;}
+.pts{font-size:.72rem; font-weight:700; color:var(--accent2); letter-spacing:.08em; text-transform:uppercase;}
+h3{font-size:1.18rem; margin:1.8rem 0 .6rem;}
+h4{font-size:1rem; margin:1.3rem 0 .4rem; color:var(--accent-ink); letter-spacing:.01em;}
+.enunciado{background:var(--surface2); border:1px solid var(--line); border-left:4px solid var(--accent2); border-radius:0 12px 12px 0; padding:1rem 1.2rem; margin:.8rem 0 1.4rem; font-size:.95rem; color:var(--ink-soft);}
+.enunciado .lbl{font-size:.64rem; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--accent2); display:block; margin-bottom:.35rem;}
+.enunciado em{color:var(--muted);}
+.callout{border:1px solid; border-radius:13px; padding:.95rem 1.1rem .95rem 1.15rem; margin:1.1rem 0; position:relative; font-size:.95rem; box-shadow:var(--shadow);}
+.callout .ct{display:flex; align-items:center; gap:.5rem; font-weight:800; font-size:.7rem; letter-spacing:.14em; text-transform:uppercase; margin-bottom:.45rem;}
+.callout .ct .ic{font-size:.95rem;}
+.callout p:last-child{margin-bottom:0;}
+.callout.intu{background:var(--c-intu-bg); border-color:var(--c-intu-bd);} .callout.intu .ct{color:var(--c-intu);}
+.callout.clave{background:var(--c-clave-bg); border-color:var(--c-clave-bd);} .callout.clave .ct{color:var(--c-clave);}
+.callout.form{background:var(--c-form-bg); border-color:var(--c-form-bd);} .callout.form .ct{color:var(--c-form);}
+.callout.insi{background:var(--c-insi-bg); border-color:var(--c-insi-bd);} .callout.insi .ct{color:var(--c-insi);}
+.callout.adv{background:var(--c-adv-bg); border-color:var(--c-adv-bd);} .callout.adv .ct{color:var(--c-adv);}
+.callout.tip{background:var(--c-tip-bg); border-color:var(--c-tip-bd);} .callout.tip .ct{color:var(--c-tip);}
+.razon{background:var(--razon-bg); border:1px dashed var(--razon-bd); border-radius:13px; padding:1rem 1.15rem; margin:1.1rem 0;}
+.razon .ct{font-weight:800; font-size:.68rem; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); margin-bottom:.5rem; display:flex; align-items:center; gap:.45rem;}
+.razon ol{margin:.2rem 0 0; padding-left:1.25rem;} .razon ol li{margin:.35rem 0;}
+.calc{background:var(--calc-bg); color:var(--calc-ink); border-radius:13px; padding:1rem 1.15rem; margin:1.1rem 0; font-family:"JetBrains Mono",monospace; font-size:.86rem; line-height:1.7; overflow-x:auto; box-shadow:var(--shadow);}
+.calc .ct{font-weight:700; font-size:.66rem; letter-spacing:.16em; text-transform:uppercase; color:var(--calc-acc); margin-bottom:.55rem;}
+.calc .cmt{color:color-mix(in srgb,var(--calc-ink) 55%, transparent);}
+.calc b{color:var(--calc-acc); font-weight:700;}
+.result{display:flex; gap:.9rem; align-items:flex-start; background:linear-gradient(135deg, color-mix(in srgb,var(--accent) 12%, var(--surface)), var(--surface)); border:1px solid var(--c-clave-bd); border-left:5px solid var(--accent); border-radius:14px; padding:1.05rem 1.2rem; margin:1.3rem 0; box-shadow:var(--shadow);}
+.result .rt{font-size:.66rem; font-weight:800; letter-spacing:.16em; text-transform:uppercase; color:var(--accent2);}
+.result h4{margin:.15rem 0 .35rem; font-family:"Fraunces",serif; color:var(--ink);}
+.result p:last-child{margin-bottom:0;}
+.verdict{display:inline-flex; align-items:center; gap:.5rem; font-weight:800; font-family:"Fraunces",serif; font-size:1.05rem; padding:.45rem .9rem; border-radius:11px; margin:.2rem 0 .6rem;}
+.verdict .badge{width:30px;height:30px; border-radius:8px; display:inline-flex; align-items:center; justify-content:center; font-size:1.05rem; color:#fff;}
+.verdict.v{background:var(--ok-bg); color:var(--ok);} .verdict.v .badge{background:var(--ok);}
+.verdict.f{background:var(--no-bg); color:var(--no);} .verdict.f .badge{background:var(--no);}
+.tablewrap{overflow-x:auto; -webkit-overflow-scrolling:touch; margin:1.2rem 0; border:1px solid var(--line); border-radius:13px; box-shadow:var(--shadow);}
+table{border-collapse:collapse; width:100%; font-size:.88rem; min-width:440px; background:var(--surface);}
+caption{caption-side:top; text-align:left; font-size:.72rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); padding:.7rem 1rem .2rem;}
+thead th{background:var(--surface2); color:var(--ink); font-weight:700; text-align:left; padding:.6rem .85rem; border-bottom:2px solid var(--line-strong); font-size:.78rem; letter-spacing:.03em; text-transform:uppercase;}
+tbody td{padding:.58rem .85rem; border-bottom:1px solid var(--line); color:var(--ink-soft); vertical-align:top;}
+tbody tr:last-child td{border-bottom:0;}
+tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface2) 55%, transparent);}
+td .mono, th .mono{font-family:"JetBrains Mono",monospace;}
+.tag{font-size:.7rem; font-weight:700; padding:.12rem .5rem; border-radius:6px; white-space:nowrap;}
+.tag.def{background:var(--no-bg); color:var(--no);}
+.tag.zero{background:var(--c-tip-bg); color:var(--c-tip);}
+.tag.inf{background:var(--c-intu-bg); color:var(--c-intu);}
+.tag.v{background:var(--ok-bg); color:var(--ok);}
+.tag.f{background:var(--no-bg); color:var(--no);}
+.figure{background:#fbf9f3; border:1px solid #e6dfce; border-radius:15px; padding:1rem 1rem .4rem; margin:1.4rem 0; box-shadow:var(--shadow);}
+.figure .cap{font-size:.78rem; color:#6f6757; padding:.5rem .3rem .55rem; line-height:1.5; border-top:1px dashed #e0d8c5; margin-top:.3rem;}
+.figure .cap b{color:#3a3528;}
+.chartbox{position:relative; width:100%; height:clamp(290px,54vw,410px);}
+.figttl{font-family:"Fraunces",serif; font-weight:600; font-size:.96rem; color:#2b2722; text-align:center; padding:.2rem 0 .5rem;}
+ul.clean{list-style:none; padding-left:0; margin:.8rem 0;}
+ul.clean li{position:relative; padding-left:1.5rem; margin:.5rem 0;}
+ul.clean li::before{content:"›"; position:absolute; left:.2rem; top:-.05rem; color:var(--accent2); font-weight:800; font-size:1.05rem;}
+ol.steps{counter-reset:s; list-style:none; padding-left:0;}
+ol.steps>li{position:relative; padding:.15rem 0 .85rem 2.6rem; margin:0;}
+ol.steps>li::before{counter-increment:s; content:counter(s); position:absolute; left:0; top:.05rem; width:1.85rem; height:1.85rem; background:var(--accent); color:var(--surface); border-radius:9px; display:flex; align-items:center; justify-content:center; font-family:"JetBrains Mono",monospace; font-weight:700; font-size:.85rem;}
+ol.steps>li b{color:var(--accent-ink);}
+.fab{position:fixed; right:clamp(.8rem,3vw,1.5rem); bottom:clamp(.8rem,3vw,1.5rem); z-index:70; width:50px; height:50px; border-radius:50%; border:none; background:var(--accent); color:#fff; font-size:1.3rem; cursor:pointer; box-shadow:var(--shadow-lg); display:flex; align-items:center; justify-content:center; transition:transform .2s;}
+.fab:hover{transform:rotate(35deg) scale(1.05);}
+.a11y{position:fixed; right:clamp(.8rem,3vw,1.5rem); bottom:calc(clamp(.8rem,3vw,1.5rem) + 62px); z-index:70; width:min(90vw,310px); background:var(--surface); border:1px solid var(--line-strong); border-radius:16px; box-shadow:var(--shadow-lg); padding:1.1rem; transform:translateY(14px) scale(.96); opacity:0; pointer-events:none; transition:transform .26s, opacity .26s;}
+.a11y.open{transform:none; opacity:1; pointer-events:auto;}
+.a11y h3{font-size:.82rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin:.2rem 0 .6rem; font-family:"Manrope",sans-serif; font-weight:800;}
+.a11y .grp{margin-bottom:1.1rem;}
+.swatches{display:grid; grid-template-columns:repeat(5,1fr); gap:.45rem;}
+.sw{height:38px; border-radius:9px; border:2px solid var(--line-strong); cursor:pointer; position:relative; overflow:hidden; transition:transform .15s;}
+.sw:hover{transform:translateY(-2px);} .sw.sel{border-color:var(--accent); box-shadow:0 0 0 2px var(--accent);}
+.sw span{position:absolute; inset:0; display:flex; align-items:flex-end; justify-content:center; font-size:.54rem; font-weight:700; padding-bottom:2px; color:#000; background:rgba(255,255,255,.55);}
+.sw.t-claro{background:#f4f0e7;} .sw.t-sepia{background:#ece0c9;} .sw.t-pizarra{background:#1c2b29;} .sw.t-pizarra span{color:#fff; background:rgba(0,0,0,.4);} .sw.t-oscuro{background:#16151a;} .sw.t-oscuro span{color:#fff; background:rgba(0,0,0,.4);} .sw.t-contraste{background:#000;} .sw.t-contraste span{color:#ffe14d; background:rgba(0,0,0,.5);}
+.stepper{display:flex; align-items:center; gap:.5rem; background:var(--surface2); border:1px solid var(--line); border-radius:11px; padding:.35rem;}
+.stepper button{flex:0 0 auto; width:36px; height:36px; border-radius:8px; border:1px solid var(--line-strong); background:var(--surface); color:var(--ink); font-size:1.2rem; font-weight:700; cursor:pointer; line-height:1;}
+.stepper button:hover{background:var(--accent); color:#fff; border-color:var(--accent);}
+.stepper .val{flex:1 1 auto; text-align:center; font-family:"JetBrains Mono",monospace; font-weight:700; font-size:.9rem;}
+.stepper .reset{width:auto; padding:0 .6rem; font-size:.7rem; font-weight:700; letter-spacing:.05em;}
+.segmented{display:flex; gap:.3rem; background:var(--surface2); border:1px solid var(--line); border-radius:11px; padding:.3rem;}
+.segmented button{flex:1; border:none; background:transparent; color:var(--ink-soft); padding:.4rem .2rem; border-radius:8px; font-weight:700; font-size:.74rem; cursor:pointer;}
+.segmented button.sel{background:var(--accent); color:#fff;}
+.foot{margin-top:3rem; padding-top:1.5rem; border-top:1px solid var(--line); color:var(--muted); font-size:.82rem;}
+.src{font-size:.78rem; color:var(--muted); font-style:italic;}
+mark{background:color-mix(in srgb,var(--c-intu) 24%, transparent); color:inherit; padding:.05em .2em; border-radius:3px;}
+.kbd{font-family:"JetBrains Mono",monospace; font-size:.82em; background:var(--surface2); border:1px solid var(--line-strong); border-bottom-width:2px; border-radius:5px; padding:.05em .4em;}
+@media (max-width:520px){ table{font-size:.82rem;} .cover{border-radius:16px;} }
+@media print{ .topbar,.toc,.scrim,.fab,.a11y,.progresswrap{display:none!important;} .wrap{padding-top:1rem;} .figure,.callout,.calc{break-inside:avoid;} }
+</style>
+</head>
+<body data-width="comodo">
+
+<header class="topbar" id="topbar">
+  <button class="iconbtn" id="menuBtn" aria-label="Abrir índice">☰</button>
+  <div class="tt">PC4 · Macroeconomía<small>Economía II — Sección B · UDEP</small></div>
+  <div class="sp"></div>
+  <button class="iconbtn" id="topA11y" aria-label="Accesibilidad" title="Accesibilidad">Aa</button>
+  <div class="progresswrap"><div class="progress" id="progress"></div></div>
+</header>
+
+<div class="scrim" id="scrim"></div>
+<aside class="toc" id="toc">
+  <div class="head"><h2>Índice</h2><p>Práctica Calificada N.º 4</p></div>
+  <nav id="tocnav">
+    <a href="#portada"><span class="n">00</span>Presentación y método</a>
+    <a href="#mapa"><span class="n">01</span>Mapa: las 3 columnas teóricas</a>
+    <a href="#p1"><span class="n">P1</span>OM, inflación y crecimiento</a>
+    <a href="#p2a" class="sub">2a · "Desempleo mínimo"</a>
+    <a href="#p2b" class="sub">2b · Salario mínimo y desempleo</a>
+    <a href="#p3"><span class="n">P3</span>Subsidio al desempleo</a>
+    <a href="#p4a" class="sub">4a · Phillips solo a corto plazo</a>
+    <a href="#p4b" class="sub">4b · Curva vs. recta (Parkin)</a>
+    <a href="#p5a"><span class="n">P5</span>Puntos sobre IS y bajo LM</a>
+    <a href="#p5b" class="sub">5b · Por debajo de la LM</a>
+    <a href="#p6"><span class="n">P6</span>Política monetaria restrictiva</a>
+    <a href="#errores"><span class="n">!</span>Errores típicos</a>
+    <a href="#sintesis"><span class="n">S</span>Síntesis / machete</a>
+  </nav>
+</aside>
+
+<button class="fab" id="fab" aria-label="Opciones de lectura">⚙</button>
+<div class="a11y" id="a11y">
+  <div class="grp">
+    <h3>Tema de color</h3>
+    <div class="swatches" id="swatches">
+      <div class="sw t-claro sel" data-t="claro"><span>Claro</span></div>
+      <div class="sw t-sepia" data-t="sepia"><span>Sepia</span></div>
+      <div class="sw t-pizarra" data-t="pizarra"><span>Pizarra</span></div>
+      <div class="sw t-oscuro" data-t="oscuro"><span>Oscuro</span></div>
+      <div class="sw t-contraste" data-t="contraste"><span>A.C.</span></div>
+    </div>
+  </div>
+  <div class="grp">
+    <h3>Tamaño de letra</h3>
+    <div class="stepper">
+      <button id="fsDown" aria-label="Reducir">−</button>
+      <span class="val" id="fsVal">100%</span>
+      <button id="fsUp" aria-label="Aumentar">+</button>
+      <button class="reset" id="fsReset">reset</button>
+    </div>
+  </div>
+  <div class="grp" style="margin-bottom:.2rem;">
+    <h3>Ancho de lectura</h3>
+    <div class="segmented" id="widthSeg">
+      <button data-w="comodo" class="sel">Cómodo</button>
+      <button data-w="amplio">Amplio</button>
+      <button data-w="completo">Completo</button>
+    </div>
+  </div>
+</div>
+
+<main class="wrap">
+
+  <section id="portada">
+    <div class="cover">
+      <p class="kick">Universidad de Piura · Campus Lima · FCEE</p>
+      <h1>Práctica Calificada N.º 4<br><em>Macroeconomía</em> — resuelta paso a paso</h1>
+      <div class="meta">
+        <span class="chip"><b>Curso</b> · Economía II (Sección B)</span>
+        <span class="chip"><b>Fecha</b> · 18 nov 2025</span>
+        <span class="chip"><b>Duración</b> · 90 min</span>
+        <span class="chip"><b>Texto base</b> · Mankiw + Parkin + PPTs del curso</span>
+      </div>
+      <p class="lead">Cada pregunta se desarrolla desde cero: primero la <strong>teoría</strong> que la sostiene, luego la <strong>intuición</strong> que la vuelve obvia y, recién después, la <strong>respuesta redactada</strong> como la querría tu profesor. Para los <strong>verdadero/falso</strong>, recuerda la regla del examen: el "<em>porqué</em>" es parte de la afirmación; una conclusión correcta con razón equivocada se considera <strong>errada</strong>.</p>
+    </div>
+    <div class="callout tip">
+      <div class="ct"><span class="ic">🧭</span>Cómo leer este documento</div>
+      <p style="margin-bottom:.5rem;">Usa el botón <span class="kbd">☰</span> (arriba a la izquierda) para abrir el índice, y el botón <span class="kbd">⚙</span> (abajo a la derecha) para cambiar el <strong>tema de color</strong> (claro, sepia, pizarra, oscuro, alto contraste), el <strong>tamaño de letra</strong> (60 %–260 %) y el <strong>ancho</strong> de lectura. Funciona en Mac, iPad y iPhone, y a cualquier nivel de zoom.</p>
+      <p style="margin:0;">Los colores tienen significado: <b style="color:var(--c-intu)">intuición</b>, <b style="color:var(--c-clave)">concepto clave</b>, <b style="color:var(--c-form)">fórmula</b>, <b style="color:var(--c-insi)">insight</b>, <b style="color:var(--c-adv)">advertencia</b> y <b style="color:var(--c-tip)">tip de examen</b>.</p>
+    </div>
+    <div class="callout adv">
+      <div class="ct"><span class="ic">🔎</span>Nota de transparencia (datos verificados)</div>
+      <p style="margin-bottom:.5rem;">Esta práctica es <strong>conceptual</strong> (V/F y desarrollo), por lo que casi no hay números que calcular. El único cálculo —la teoría cuantitativa de la Pregunta 1— lo verifiqué en Python con un ejemplo numérico, y todo reconcilia.</p>
+      <p style="margin:0;">En la <strong>Pregunta 3</strong> se pide "el ejemplo que se explicó en clases" sobre subsaharianos en dos países europeos. Ese caso puntual de tu clase <em>no está</em> en los materiales del proyecto, así que desarrollo a fondo el <strong>mecanismo</strong> (que es lo que da los puntos) y propongo un ejemplo actual bien fundamentado, marcándolo claramente como ilustrativo para que lo ajustes al de tu profesor.</p>
+    </div>
+  </section>
+
+  <section id="mapa">
+    <h2 class="qtitle" style="font-size:clamp(1.5rem,4vw,2rem)">Las 3 columnas teóricas del examen</h2>
+    <p>Antes de tocar una sola pregunta, conviene ver el esqueleto. Todo el examen vive sobre tres ideas que están <em>conectadas</em> entre sí. Si entiendes el esqueleto, cada pregunta deja de ser un dato suelto y se vuelve una consecuencia.</p>
+    <div class="callout clave">
+      <div class="ct"><span class="ic">🧱</span>El esqueleto</div>
+      <ul class="clean" style="margin:0;">
+        <li><b>Dinero e inflación</b> (P1). La inflación de largo plazo es, en esencia, un fenómeno monetario: la teoría cuantitativa <em>MV = PY</em>.</li>
+        <li><b>Desempleo y mercado laboral</b> (P2, P3 y la Curva de Phillips de P4). De dónde sale el desempleo "natural": fricción, estructura, salario mínimo, sindicatos, salarios de eficiencia y prestaciones por desempleo.</li>
+        <li><b>El modelo keynesiano IS-LM y el mercado monetario</b> (P5, P6). Cómo la tasa de interés conecta el mercado de dinero con la demanda agregada, y cómo actúa el BCRP.</li>
+      </ul>
+    </div>
+    <div class="callout intu">
+      <div class="ct"><span class="ic">💡</span>El hilo que une todo</div>
+      <p style="margin:0;">La <strong>tasa de interés</strong> es el personaje que aparece en las tres columnas. El banco central mueve la <em>cantidad de dinero</em> → eso mueve la <em>tasa de interés</em> → eso mueve la <em>inversión y el consumo</em> → eso mueve la <em>demanda agregada</em> → eso mueve <em>producción, empleo e inflación</em>. Toda la PC4 es, en el fondo, recorrer esa cadena en distintos puntos.</p>
+    </div>
+  </section>
+
+  <section id="p1">
+    <div class="qhead"><span class="qnum">P1</span><span class="pts">3 puntos</span></div>
+    <h2 class="qtitle">¿Puede crecer la Oferta Monetaria sin causar inflación?</h2>
+    <div class="enunciado"><span class="lbl">Enunciado</span>Con frecuencia, las autoridades económicas de un país buscan que la tasa de inflación sea cero y, en consecuencia, deciden que la OM tenga también una tasa de crecimiento de cero. <em>¿Es eso siempre cierto, o existe alguna posibilidad de que la OM pueda aumentar, sin que tal aumento ocasione que haya inflación?</em></div>
+    <h3>1 · La teoría que necesitamos: la ecuación cuantitativa</h3>
+    <p>Mankiw (cap. 30) y Parkin (cap. 11) parten de una identidad que siempre se cumple, llamada <strong>ecuación de intercambio</strong> o <strong>ecuación cuantitativa</strong>:</p>
+    <div class="callout form">
+      <div class="ct"><span class="ic">∑</span>Fórmula — Ecuación cuantitativa</div>
+      <p style="margin:0">\[ M \cdot V = P \cdot Y \]</p>
+      <p style="margin:.6rem 0 0; font-size:.9rem;"><b>M</b> = cantidad de dinero (Oferta Monetaria) · <b>V</b> = velocidad de circulación (cuántas veces se gasta cada unidad monetaria al año) · <b>P</b> = nivel de precios · <b>Y</b> = PBI <em>real</em> (cantidad de bienes y servicios).</p>
+    </div>
+    <div class="razon">
+      <div class="ct"><span class="ic">🧠</span>¿Por qué esta igualdad es cierta "por construcción"?</div>
+      <ol>
+        <li>El lado derecho \(P \cdot Y\) es el <b>PBI nominal</b>: el valor en soles de todo lo que se produjo (precios × cantidades).</li>
+        <li>Ese mismo valor tuvo que pagarse con dinero. Si hay <b>M</b> soles y cada uno se usó <b>V</b> veces en el año, el gasto total fue \(M \cdot V\).</li>
+        <li>Lo gastado = lo vendido. Por eso \(M \cdot V = P \cdot Y\). <b>No es una teoría todavía: es una identidad contable.</b></li>
+      </ol>
+    </div>
+    <p>La <strong>teoría</strong> aparece cuando añadimos dos supuestos de la escuela clásica/neoclásica, válidos en el <em>largo plazo</em>:</p>
+    <ul class="clean">
+      <li><strong>V es estable</strong> (los hábitos de pago cambian lentamente).</li>
+      <li><strong>Y lo determinan factores reales</strong> (trabajo, capital, tecnología), no la cantidad de dinero → <em>neutralidad monetaria</em>.</li>
+    </ul>
+    <h3>2 · Pasamos la fórmula a "tasas de crecimiento"</h3>
+    <p>El enunciado habla de <em>tasas de crecimiento</em>. El truco estándar es tomar la ecuación en variaciones porcentuales. Como un producto en niveles se convierte en <strong>suma</strong> de tasas de crecimiento:</p>
+    <div class="callout form">
+      <div class="ct"><span class="ic">∑</span>Fórmula — Versión en tasas de crecimiento</div>
+      <p style="margin:0">\[ g_M + g_V = \pi + g_Y \]</p>
+      <p style="margin:.55rem 0 0; font-size:.9rem;">donde \(g_M\) = crecimiento de la OM, \(g_V\) = crecimiento de la velocidad, \(\pi\) = inflación (= \(g_P\)) y \(g_Y\) = crecimiento del PBI real.</p>
+    </div>
+    <p>Con \(g_V = 0\) (velocidad estable), despejamos la inflación:</p>
+    <div class="callout clave">
+      <div class="ct"><span class="ic">🎯</span>La ecuación que responde la pregunta</div>
+      <p style="margin:0; text-align:center; font-size:1.05rem;">\[ \boxed{\;\pi = g_M - g_Y\;} \]</p>
+      <p style="margin:.6rem 0 0;">La inflación es lo que crece la cantidad de dinero <strong>por encima</strong> de lo que crece la producción real. Si el dinero crece justo a la par de la producción, sobra exactamente cero → no hay inflación.</p>
+    </div>
+    <div class="callout intu">
+      <div class="ct"><span class="ic">💡</span>Intuición (sin fórmulas)</div>
+      <p style="margin:0">La inflación nace cuando hay <em>"demasiado dinero persiguiendo muy pocos bienes"</em>. Pero si <strong>al mismo tiempo</strong> que entra más dinero también hay <strong>más bienes</strong> que comprar, el dinero extra encuentra producto extra y los precios no tienen por qué subir. El problema no es que la OM crezca; el problema es que crezca <em>más rápido que la economía real</em>.</p>
+    </div>
+    <h3>3 · Verificación numérica (calculada en Python)</h3>
+    <p>Partamos de \(M_0=1000\), \(V=5\), \(Y_0=500\). Entonces \(P_0 = \dfrac{M_0 V}{Y_0}=\dfrac{1000\cdot5}{500}=10\). Ahora la economía <strong>crece 4 %</strong>: \(Y_1=520\). Veamos tres políticas distintas para la OM.</p>
+    <div class="tablewrap">
+      <table>
+        <caption>Tres escenarios · PBI real crece 4 % (g_Y = 4 %)</caption>
+        <thead><tr><th>Escenario</th><th class="mono">g_M</th><th class="mono">M₁</th><th class="mono">P₁=M₁V/Y₁</th><th class="mono">Inflación π</th><th>Resultado</th></tr></thead>
+        <tbody>
+          <tr><td><b>A.</b> Congelar la OM <span class="src">(lo que critican)</span></td><td class="mono">0 %</td><td class="mono">1000</td><td class="mono">9.615</td><td class="mono">−3.85 %</td><td><span class="tag def">DEFLACIÓN</span></td></tr>
+          <tr><td><b>B.</b> OM al ritmo del PBI real</td><td class="mono">4 %</td><td class="mono">1040</td><td class="mono">10.000</td><td class="mono">0.00 %</td><td><span class="tag zero">π = 0 ✔</span></td></tr>
+          <tr><td><b>C.</b> OM más rápido que la economía</td><td class="mono">10 %</td><td class="mono">1100</td><td class="mono">10.577</td><td class="mono">+5.77 %</td><td><span class="tag inf">INFLACIÓN</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="calc">
+      <div class="ct">▣ Verificación (Python)</div>
+      <div><span class="cmt"># Caso base</span><br>P0 = M0*V/Y0 = 1000*5/500 = <b>10.0</b><br>Y1 = 500 * 1.04 = <b>520</b><br><br><span class="cmt"># B) gM = gY = 4%</span><br>M1 = 1040 -> P1 = 1040*5/520 = <b>10.0000</b> -> pi = <b>0.000000 %</b>  (la OM AUMENTO y pi=0)<br><br><span class="cmt"># A) gM = 0% (congelada)</span><br>P1 = 1000*5/520 = <b>9.6154</b> -> pi = (9.6154/10 - 1) = <b>-3.846 %</b>  -> deflacion<br><br><span class="cmt"># C) gM = 10%</span><br>P1 = 1100*5/520 = <b>10.5769</b> -> pi_exacta = <b>+5.769 %</b><br>pi_aprox = gM - gY = 10 - 4 = <b>+6 %</b>  <span class="cmt"># exacta solo para cambios pequenos</span></div>
+    </div>
+    <div class="callout tip">
+      <div class="ct"><span class="ic">📌</span>Detalle fino que suma puntos</div>
+      <p style="margin:0;">La fórmula \(\pi = g_M - g_Y\) es una <strong>aproximación</strong> (exacta para cambios pequeños o continuos). En el escenario C el cálculo exacto da 5.77 % y la aproximación 6 %. Si piden el valor "exacto", usa \(\dfrac{P_1}{P_0}-1=\dfrac{1+g_M}{1+g_Y}-1\); si piden la idea, \(g_M-g_Y\) basta.</p>
+    </div>
+    <h3>4 · Visualización: la "frontera" de la inflación</h3>
+    <div class="figure">
+      <div class="figttl">Inflación según cuánto crece la Oferta Monetaria (con g_Y = 4 %)</div>
+      <div class="chartbox"><canvas id="chartP1"></canvas></div>
+      <div class="cap"><b>Lectura.</b> La recta es \(\pi = g_M - 4\). Mientras la OM crece <em>menos</em> que el 4 % real → deflación; <em>justo</em> al 4 % → inflación cero (la OM puede aumentar sin inflación); <em>por encima</em> del 4 % → inflación. La línea vertical marca \(g_M = g_Y\), donde "más dinero" y "más bienes" se cancelan.</div>
+    </div>
+    <div class="result">
+      <div class="ic" style="font-size:1.6rem">🟢</div>
+      <div>
+        <div class="rt">Respuesta</div>
+        <h4>No, no siempre es cierto. La OM sí puede aumentar sin causar inflación.</h4>
+        <p style="margin:0">Basta con que la <strong>Oferta Monetaria crezca al mismo ritmo que el PBI real</strong> (al ritmo del aumento de la capacidad productiva). Entonces \(\pi = g_M - g_Y = 0\). Exigir un crecimiento de la OM de <em>cero</em> mientras la economía crece sería incluso <strong>contraproducente</strong>: provocaría <strong>deflación</strong> (caída de precios), que frena el consumo y el crédito. La regla sensata no es "OM con crecimiento cero", sino "OM creciendo a la tasa de crecimiento del PBI real (potencial)".</p>
+      </div>
+    </div>
+    <div class="callout adv">
+      <div class="ct"><span class="ic">⚠️</span>Alcance del argumento</div>
+      <p style="margin:0;">Esto vale <strong>en el largo plazo</strong> (V estable y economía cerca del pleno empleo). En el <em>corto plazo</em>, cambios en V o un equilibrio por debajo del pleno empleo pueden romper la relación uno-a-uno; por eso la teoría cuantitativa se enseña como teoría <em>de largo plazo</em>.</p>
+    </div>
+  </section>
+
+  <section id="p2a">
+    <div class="qhead"><span class="qnum">P2 · a</span><span class="pts">V/F · 1.5 pts (−0.25 si erras)</span></div>
+    <h2 class="qtitle">"Desempleo Mínimo" y la Curva de Phillips de corto plazo</h2>
+    <div class="enunciado"><span class="lbl">Afirmación</span>A la tasa de desempleo que muestra la Curva de Phillips de corto plazo se le denomina también <em>"Desempleo Mínimo"</em>.</div>
+    <h3>1 · ¿Qué muestra realmente la Curva de Phillips de corto plazo (CPCP)?</h3>
+    <p>La CPCP (Parkin, fig. 12.8) no muestra <em>una</em> tasa de desempleo: muestra una <strong>relación inversa</strong> —un <em>menú</em>— entre inflación y desempleo, manteniendo constantes (i) la inflación esperada y (ii) la tasa natural de desempleo. Es una <strong>curva entera</strong> de combinaciones posibles, no un punto.</p>
+    <div class="figure">
+      <div class="figttl">Curva de Phillips: corto plazo (menú) vs. largo plazo (vertical)</div>
+      <div class="chartbox"><canvas id="chartPhillips"></canvas></div>
+      <div class="cap"><b>Lectura.</b> La <span style="color:#b0512c;font-weight:700">CPCP</span> es un menú de combinaciones (inflación, desempleo). La <span style="color:#2f6b5e;font-weight:700">CPLP</span> es <em>vertical</em> en la tasa natural (aquí 6 %). Fíjate: la economía puede estar <em>a la izquierda</em> de la tasa natural (desempleo &lt; 6 %) en un auge. Por eso <strong>ninguna</strong> tasa de la CPCP es un "mínimo".</div>
+    </div>
+    <div class="razon">
+      <div class="ct"><span class="ic">🧠</span>Dos razones por las que la afirmación falla</div>
+      <ol>
+        <li><b>La CPCP no señala "una" tasa, sino muchas.</b> Hablar de "la tasa de desempleo que muestra" la CPCP ya es impreciso: muestra todo un abanico.</li>
+        <li><b>La tasa de referencia es la tasa <i>natural</i>, y vive en la curva de LARGO plazo (vertical), no en la de corto.</b> Además, la tasa natural <u>no es un mínimo</u>: en un auge el desempleo cae <em>por debajo</em> de la natural. Un valor que se puede perforar hacia abajo no es, por definición, un "mínimo".</li>
+      </ol>
+    </div>
+    <div class="callout insi">
+      <div class="ct"><span class="ic">✦</span>Insight</div>
+      <p style="margin:0;">El nombre técnico de la tasa de desempleo de referencia es <strong>tasa natural de desempleo</strong> (friccional + estructural), asociada al <em>pleno empleo</em> y a la <strong>Curva de Phillips de largo plazo</strong>. "Desempleo mínimo" no es un término del marco de Phillips y sugiere falsamente un piso infranqueable.</p>
+    </div>
+    <div class="verdict f"><span class="badge">F</span>FALSO</div>
+    <div class="result">
+      <div class="ic" style="font-size:1.6rem">📝</div>
+      <div>
+        <div class="rt">Redacción sugerida</div>
+        <p style="margin:0"><strong>Falso.</strong> La Curva de Phillips de corto plazo no muestra "una" tasa de desempleo, sino un <em>menú</em> de combinaciones inflación–desempleo. La tasa de desempleo de referencia es la <strong>tasa natural</strong> (friccional + estructural), que corresponde a la Curva de Phillips de <em>largo plazo</em> (vertical) y al pleno empleo. Además, no es un "mínimo": en una expansión el desempleo puede caer transitoriamente <em>por debajo</em> de la tasa natural.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="p2b">
+    <div class="qhead"><span class="qnum">P2 · b</span><span class="pts">V/F · 1.5 pts (−0.25 si erras)</span></div>
+    <h2 class="qtitle">Remuneración Mínima Legal y Desempleo Estructural</h2>
+    <div class="enunciado"><span class="lbl">Afirmación</span>La relación entre el nivel de la Remuneración Mínima Legal (RML) y el nivel del Desempleo Estructural es <em>directa</em>: a mayor monto de la RML, mayor será el Desempleo Estructural.</div>
+    <h3>1 · La teoría: un precio mínimo en el mercado laboral</h3>
+    <p>El desempleo estructural (Mankiw cap. 28; Parkin cap. 8) aparece cuando el salario se mantiene <strong>por encima</strong> del nivel de equilibrio. La RML es justamente un <strong>precio mínimo</strong> (piso) al salario. Si ese piso queda por encima del salario que equilibra oferta y demanda de trabajo, ocurre lo mismo que con cualquier precio mínimo:</p>
+    <div class="razon">
+      <div class="ct"><span class="ic">🧠</span>Cadena lógica</div>
+      <ol>
+        <li>RML por encima del equilibrio → el salario no puede bajar a despejar el mercado.</li>
+        <li>A ese salario más alto, las <b>empresas demandan menos</b> trabajo (les cuesta más contratar).</li>
+        <li>A la vez, <b>más personas ofrecen</b> trabajo (atrae a más gente a buscar empleo).</li>
+        <li>Cantidad ofrecida &gt; cantidad demandada → <b>excedente de trabajo = desempleo</b> (estructural).</li>
+        <li>Cuanto <b>más alta</b> la RML sobre el equilibrio, <b>mayor</b> la brecha → mayor el excedente → mayor el desempleo estructural. Relación <b>directa (positiva)</b>.</li>
+      </ol>
+    </div>
+    <div class="callout intu">
+      <div class="ct"><span class="ic">💡</span>Intuición</div>
+      <p style="margin:0;">Es el mismo razonamiento de un "precio mínimo" en cualquier mercado: si obligas a que el precio esté por encima del de equilibrio, sobra producto. En el mercado laboral, lo que "sobra" son <strong>trabajadores sin empleo</strong>. Mientras más alto el piso, más grande el sobrante.</p>
+    </div>
+    <div class="callout tip">
+      <div class="ct"><span class="ic">📌</span>Matiz que demuestra dominio</div>
+      <p style="margin:0;">El efecto recae sobre todo en los <strong>trabajadores poco calificados y jóvenes</strong>, cuyo salario de equilibrio es bajo y queda por debajo del mínimo. Para los de salario alto, la RML no es una restricción activa. (Existe el debate Card–Krueger, pero la postura estándar de Mankiw/Parkin —y del curso— sostiene la relación directa.)</p>
+    </div>
+    <div class="verdict v"><span class="badge">V</span>VERDADERO</div>
+    <div class="result">
+      <div class="ic" style="font-size:1.6rem">📝</div>
+      <div>
+        <div class="rt">Redacción sugerida</div>
+        <p style="margin:0"><strong>Verdadero.</strong> La RML es un precio mínimo al salario. Cuando se fija por encima del salario de equilibrio, la cantidad ofrecida de trabajo supera a la demandada y aparece un excedente de mano de obra: desempleo estructural. A mayor RML (más por encima del equilibrio), mayor la brecha y mayor el desempleo estructural; por eso la relación es <em>directa</em>. Afecta especialmente a trabajadores de baja calificación y jóvenes.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="p3">
+    <div class="qhead"><span class="qnum">P3</span><span class="pts">3 puntos</span></div>
+    <h2 class="qtitle">El subsidio al desempleo y el desempleo de largo plazo</h2>
+    <div class="enunciado"><span class="lbl">Enunciado</span>¿En qué forma el subsidio al desempleo afecta al nivel del desempleo de largo plazo? Dé un ejemplo actual de cómo actúa ese factor sobre la inmigración de subsaharianos en dos países europeos, en uno de los cuales ese subsidio es más alto que en el otro, según se explicó en clases. <em>(Nota manuscrita del examen: "+ beneficios para los desempleados".)</em></div>
+    <h3>1 · El mecanismo: costo de oportunidad de la búsqueda</h3>
+    <p>El subsidio (o seguro) al desempleo es un programa que paga, parcialmente, los ingresos de quien está sin trabajo (Mankiw cap. 28; Parkin cap. 8). El concepto clave para entender su efecto es el <strong>costo de oportunidad de seguir buscando empleo</strong>.</p>
+    <div class="razon">
+      <div class="ct"><span class="ic">🧠</span>¿Por qué un subsidio sube el desempleo de largo plazo?</div>
+      <ol>
+        <li>Estar desempleado tiene un <b>costo</b>: dejas de ganar un sueldo.</li>
+        <li>El subsidio <b>reduce ese costo</b>: aunque no trabajes, recibes algo de ingreso.</li>
+        <li>Con un costo más bajo, el desempleado se vuelve <b>más selectivo</b> y se toma <b>más tiempo</b> buscando "el empleo ideal" en vez de aceptar el primero que aparece.</li>
+        <li>Búsquedas más largas → <b>mayor desempleo friccional</b>, que se incorpora a la <b>tasa natural (de largo plazo)</b> de desempleo.</li>
+      </ol>
+    </div>
+    <div class="callout clave">
+      <div class="ct"><span class="ic">🎯</span>Resultado teórico</div>
+      <p style="margin:0;">Cuanto <strong>más generoso</strong> el subsidio (monto, cobertura, duración), <strong>más sube</strong> el desempleo de largo plazo (la tasa natural). Es una relación <strong>directa</strong>. Parkin lo documenta: Canadá y Europa Occidental, con prestaciones más generosas que EE. UU., tienen tasas de desempleo más altas; y la ampliación de prestaciones en EE. UU. en los 60–70 elevó su tasa natural.</p>
+    </div>
+    <div class="callout intu">
+      <div class="ct"><span class="ic">💡</span>Intuición (el matiz justo)</div>
+      <p style="margin:0;">No es que la gente sea "floja". Un subsidio puede <em>mejorar</em> la calidad del emparejamiento trabajador–empleo (te da tiempo para encontrar algo acorde a tus habilidades). El punto económico es el <strong>trade-off</strong>: mejor emparejamiento a costa de búsquedas más largas y, por tanto, una tasa natural más alta. La nota manuscrita "+ beneficios → más desempleo" captura exactamente la dirección del efecto.</p>
+    </div>
+    <h3>2 · El ejemplo: subsaharianos y dos países europeos</h3>
+    <div class="callout adv">
+      <div class="ct"><span class="ic">🔎</span>Transparencia</div>
+      <p style="margin:0;">El caso puntual que usó tu profesor no aparece en los materiales del proyecto. Desarrollo el mecanismo aplicado a la migración (que es lo que se evalúa) y propongo un ejemplo <strong>ilustrativo y fundamentado</strong>; <strong>ajústalo</strong> a los dos países exactos que se mencionaron en clase.</p>
+    </div>
+    <div class="razon">
+      <div class="ct"><span class="ic">🧠</span>Cómo el subsidio orienta la inmigración subsahariana</div>
+      <ol>
+        <li>Un migrante subsahariano, al elegir destino dentro de Europa, compara —entre otras cosas— la <b>red de protección social</b> de cada país.</li>
+        <li>El país con <b>subsidio más alto/generoso</b> ofrece un "piso" de ingreso mientras el migrante no encuentra trabajo (o mientras busca uno mejor).</li>
+        <li>Eso <b>reduce el costo de oportunidad</b> de prolongar la búsqueda y, en el agregado, sostiene una <b>permanencia más larga en el desempleo</b> → tasa natural más alta en ese país.</li>
+        <li>El país con <b>subsidio más bajo</b> incentiva aceptar empleos más rápido (o desincentiva quedarse), de modo que la duración del desempleo tiende a ser menor.</li>
+      </ol>
+    </div>
+    <div class="callout tip">
+      <div class="ct"><span class="ic">📌</span>Ejemplo actual sugerido (verifícalo con tu clase)</div>
+      <p style="margin:.1rem 0 .5rem;">Un contraste habitual es entre un <strong>país de entrada</strong> con prestaciones menos generosas (p. ej. <strong>España</strong> o <strong>Italia</strong>, puertas de la ruta del Mediterráneo / Canarias) y un <strong>país de destino final</strong> con un Estado de bienestar más amplio (p. ej. <strong>Alemania</strong>, <strong>Francia</strong> o <strong>Suecia</strong>).</p>
+      <p style="margin:0;">Muchos migrantes <em>cruzan</em> por el país de entrada pero buscan asentarse donde las prestaciones son mayores. La evidencia comparada confirma que Alemania se ha consolidado como destino principal de migración hacia Europa y que la generosidad del sistema influye en los patrones de asentamiento. La lección económica es la misma: <strong>el país con subsidio más alto tiende a registrar mayor permanencia en el desempleo</strong> entre estos migrantes, contribuyendo a un desempleo de largo plazo más elevado.</p>
+    </div>
+    <div class="result">
+      <div class="ic" style="font-size:1.6rem">🟢</div>
+      <div>
+        <div class="rt">Respuesta</div>
+        <h4>El subsidio al desempleo <em>eleva</em> el desempleo de largo plazo (sube la tasa natural).</h4>
+        <p style="margin:0">Al reducir el costo de oportunidad de seguir desempleado, alarga la duración de la búsqueda de empleo y aumenta el desempleo friccional, que pasa a formar parte de la tasa natural. Aplicado a la inmigración subsahariana: entre dos países europeos, aquel con el <strong>subsidio más alto</strong> incentiva permanencias más largas sin empleo y, por tanto, exhibe un desempleo de largo plazo mayor que el país con subsidio más bajo. <span class="src">(Ejemplo ilustrativo: España/Italia con prestaciones menores vs. Alemania/Francia con prestaciones mayores — confirma los dos países de tu clase.)</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section id="p4a">
+    <div class="qhead"><span class="qnum">P4 · a</span><span class="pts">V/F · 1.5 pts (−0.25 si erras)</span></div>
+    <h2 class="qtitle">¿La Curva de Phillips existe solo en el corto plazo?</h2>
+    <div class="enunciado"><span class="lbl">Afirmación</span>La Curva de Phillips solo existe en el corto plazo, porque en el largo plazo la inflación no existe.</div>
+    <h3>1 · Qué pasa en el largo plazo (Friedman–Phelps)</h3>
+    <p>La Curva de Phillips <strong>también existe en el largo plazo</strong>: lo que cambia es su <em>forma</em>. En el largo plazo es una <strong>línea vertical</strong> en la tasa natural de desempleo (Parkin fig. 12.10; Mankiw cap. 35). La ecuación de Friedman–Phelps lo resume:</p>
+    <div class="callout form">
+      <div class="ct"><span class="ic">∑</span>Fórmula — Phillips ampliada por expectativas</div>
+      <p style="margin:0">\[ u = u_n - \alpha\,(\pi - \pi^e) \]</p>
+      <p style="margin:.55rem 0 0; font-size:.9rem;">En el largo plazo la gente acierta sus expectativas: \(\pi = \pi^e\) → el término se anula → \(u = u_n\). El desempleo vuelve a la tasa natural <strong>sea cual sea la inflación</strong>.</p>
+    </div>
+    <div class="razon">
+      <div class="ct"><span class="ic">🧠</span>Dos errores en la afirmación</div>
+      <ol>
+        <li><b>"Solo existe en el corto plazo" → falso.</b> Existe también a largo plazo, como recta <em>vertical</em> en \(u_n\). Lo que desaparece a largo plazo es el <em>trade-off</em> (la disyuntiva inflación–desempleo), no la curva.</li>
+        <li><b>"En el largo plazo la inflación no existe" → falso.</b> La inflación existe perfectamente a largo plazo. De hecho, la CPLP vertical dice que <em>cualquier</em> tasa de inflación es compatible con \(u_n\). Lo que el banco central no puede hacer a largo plazo es "comprar" menos desempleo con más inflación.</li>
+      </ol>
+    </div>
+    <div class="callout insi">
+      <div class="ct"><span class="ic">✦</span>Insight</div>
+      <p style="margin:0;">Confundir "no hay <em>trade-off</em>" con "no hay inflación" es el corazón del error. A largo plazo la inflación sí ocurre (la fija el crecimiento del dinero, P1); lo que <em>no</em> ocurre es que esa inflación reduzca el desempleo de forma permanente.</p>
+    </div>
+    <div class="verdict f"><span class="badge">F</span>FALSO</div>
+    <div class="result">
+      <div class="ic" style="font-size:1.6rem">📝</div>
+      <div>
+        <div class="rt">Redacción sugerida</div>
+        <p style="margin:0"><strong>Falso.</strong> La Curva de Phillips existe también en el largo plazo: ahí es <em>vertical</em> en la tasa natural de desempleo. Lo que desaparece a largo plazo es el <em>trade-off</em> entre inflación y desempleo, no la curva ni la inflación. La inflación sí existe a largo plazo —de hecho, cualquier tasa de inflación es compatible con la tasa natural—; lo que no se puede es reducir el desempleo de forma permanente generando más inflación.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="p4b">
+    <div class="qhead"><span class="qnum">P4 · b</span><span class="pts">V/F · 1.5 pts (−0.25 si erras)</span></div>
+    <h2 class="qtitle">Curva de Phillips: ¿línea curva (Parkin) o línea recta?</h2>
+    <div class="enunciado"><span class="lbl">Afirmación</span>Cuando la Curva de Phillips está representada mediante una línea curva con pendiente negativa, como lo hace M. Parkin, esa representación se asemeja más a la realidad que cuando está representada por una línea recta con pendiente negativa.</div>
+    <h3>1 · Por qué la realidad es <em>convexa</em>, no recta</h3>
+    <p>Parkin (fig. 12.8) dibuja la CPCP como una <strong>curva convexa</strong> (combada hacia el origen), no como una recta. Esa convexidad no es estética: refleja un hecho económico real sobre cómo se comporta la inflación cerca del pleno empleo.</p>
+    <div class="figure">
+      <div class="figttl">Misma idea, dos representaciones: curva (Parkin) vs. recta</div>
+      <div class="chartbox"><canvas id="chartParkin"></canvas></div>
+      <div class="cap"><b>Lectura.</b> Con la <span style="color:#2f6b5e;font-weight:700">curva convexa</span>, al acercarse al pleno empleo (desempleo bajo) la inflación se dispara: pequeñas caídas adicionales del desempleo cuestan cada vez <em>más</em> inflación. La <span style="color:#b0512c;font-weight:700">recta</span> supone, irrealmente, que ese "costo" en inflación es siempre el mismo (pendiente constante).</div>
+    </div>
+    <div class="razon">
+      <div class="ct"><span class="ic">🧠</span>¿Qué capta la curva que la recta no?</div>
+      <ol>
+        <li><b>No linealidad real.</b> Con desempleo alto, presionar la demanda casi no mueve la inflación (hay recursos ociosos de sobra). Con desempleo muy bajo, esa misma presión dispara salarios y precios.</li>
+        <li><b>Pendiente cambiante.</b> La recta tiene pendiente <em>constante</em>: dice que reducir el desempleo cuesta lo mismo en inflación siempre. Falso. La curva tiene pendiente <em>creciente en magnitud</em> hacia el pleno empleo: refleja que el trade-off empeora a medida que la economía se "recalienta".</li>
+        <li>Por eso la representación <b>curva se asemeja más a la realidad</b> que la recta.</li>
+      </ol>
+    </div>
+    <div class="callout intu">
+      <div class="ct"><span class="ic">💡</span>Intuición</div>
+      <p style="margin:0;">Piensa en una autopista. Con poco tráfico (desempleo alto), meter más autos casi no afecta la velocidad. Pero cerca de la saturación (desempleo bajo), un puñado de autos más colapsa todo. La inflación reacciona igual: poco sensible cuando hay holgura, hipersensible cerca del pleno empleo. Esa <em>aceleración</em> solo la captura una curva, no una recta.</p>
+    </div>
+    <div class="verdict v"><span class="badge">V</span>VERDADERO</div>
+    <div class="result">
+      <div class="ic" style="font-size:1.6rem">📝</div>
+      <div>
+        <div class="rt">Redacción sugerida</div>
+        <p style="margin:0"><strong>Verdadero.</strong> La relación entre inflación y desempleo es <em>no lineal</em> en la realidad: cerca del pleno empleo (desempleo bajo) la inflación se acelera, y con desempleo alto apenas reacciona. Una línea curva (convexa), como la de Parkin, captura esa pendiente cambiante; una recta supone, irrealmente, una pendiente constante. Por eso la representación curva se asemeja más a la realidad.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="p5a">
+    <div class="qhead"><span class="qnum">P5 · a</span><span class="pts">V/F · 2 pts (−0.25 si erras)</span></div>
+    <h2 class="qtitle">Puntos por encima de la línea IS</h2>
+    <div class="enunciado"><span class="lbl">Afirmación</span>Todos los puntos que están por encima de la línea IS reflejan una situación en la cual hay un exceso de Oferta Agregada, <em>debido a que en ellos la tasa de interés es mayor que la tasa de interés de referencia del BCRP</em>.</div>
+
+    <div class="callout clave">
+      <div class="ct"><span class="ic">🧱</span>Lo primero: separar los dos mercados</div>
+      <p style="margin:0;">En el modelo IS-LM hay <strong>dos mercados</strong> con dos curvas. <b>IS = mercado de BIENES</b> (su desequilibrio se mide en exceso de <em>oferta o demanda de bienes</em>). <b>LM = mercado de DINERO</b> (su desequilibrio se mide en exceso de <em>oferta o demanda de dinero</em>, y es ahí donde vive la <em>tasa de interés / BCRP</em>). Mezclar uno con otro es el error que estas preguntas buscan cazar.</p>
+    </div>
+
+    <h3>1 · ¿Qué es la curva IS y qué pasa fuera de ella?</h3>
+    <p>La <strong>IS</strong> reúne todas las combinaciones de tasa de interés \(i\) y producto \(Y\) en las que el <strong>mercado de bienes está en equilibrio</strong> (producción = demanda agregada: \(Y = C + I(i) + G + XN\)). Tiene pendiente negativa: una tasa de interés más alta reduce la inversión y, con ella, la demanda y el producto de equilibrio.</p>
+    <div class="razon">
+      <div class="ct"><span class="ic">🧠</span>Demostración: por encima de la IS hay exceso de oferta de bienes</div>
+      <ol>
+        <li>Toma un punto <b>por encima de la IS</b>: para ese \(Y\), la tasa de interés \(i\) es <em>mayor</em> que la que pide la IS.</li>
+        <li>Mayor \(i\) → menor inversión \(I(i)\) → la <b>demanda agregada cae por debajo de \(Y\)</b>.</li>
+        <li>Entonces la <b>producción (oferta) supera a la demanda</b> → <b>exceso de oferta de bienes (exceso de Oferta Agregada)</b>. Las empresas acumulan inventarios no deseados.</li>
+      </ol>
+    </div>
+    <div class="figure">
+      <div class="figttl">Curva IS (mercado de bienes) y sus dos regiones</div>
+      <div class="chartbox"><canvas id="chartIS"></canvas></div>
+      <div class="cap"><b>Lectura.</b> <span style="color:#b0512c;font-weight:700">Por encima de la IS</span>: la tasa es demasiado alta (o el producto demasiado alto) para el equilibrio de bienes → la oferta supera a la demanda → <em>exceso de Oferta Agregada</em>. <span style="color:#2f6b5e;font-weight:700">Por debajo de la IS</span>: exceso de demanda de bienes.</div>
+    </div>
+
+    <h3>2 · ¿Y la justificación del enunciado?</h3>
+    <p>La afirmación tiene <strong>dos partes</strong>: una conclusión y una causa ("debido a que…"). En este examen el "<em>porqué</em>" es parte de la afirmación, así que ambas deben ser correctas.</p>
+    <div class="tablewrap">
+      <table>
+        <caption>Disección de la afirmación 5a</caption>
+        <thead><tr><th>Parte</th><th>¿Qué dice?</th><th>¿Correcta?</th></tr></thead>
+        <tbody>
+          <tr><td><b>Conclusión</b></td><td>Por encima de la IS → exceso de Oferta Agregada (de bienes)</td><td><span class="tag v">CORRECTA</span></td></tr>
+          <tr><td><b>Justificación</b></td><td>"…porque la tasa es mayor que la de referencia del BCRP"</td><td><span class="tag f">INCORRECTA</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="razon">
+      <div class="ct"><span class="ic">🧠</span>Por qué la justificación está mal</div>
+      <ol>
+        <li>Estar por encima de la IS es un asunto del <b>mercado de BIENES</b>: la tasa es alta <em>respecto de la que equilibraría los bienes en ese nivel de \(Y\)</em>, no respecto de la tasa de referencia del BCRP.</li>
+        <li>La <b>"tasa de interés de referencia del BCRP"</b> es un concepto del <b>mercado de DINERO</b> (la maneja el banco central; corresponde a la curva LM). Usarla para explicar una posición sobre la IS <b>confunde el mercado de bienes con el mercado de dinero</b>.</li>
+        <li>De hecho, podrías estar por encima de la IS con una tasa <em>por debajo</em> de la referencia del BCRP. La posición frente a la IS no se define comparando con la tasa del BCRP.</li>
+      </ol>
+    </div>
+    <div class="verdict f"><span class="badge">F</span>FALSO</div>
+    <div class="result">
+      <div class="ic" style="font-size:1.6rem">📝</div>
+      <div>
+        <div class="rt">Redacción sugerida</div>
+        <p style="margin:0"><strong>Falso.</strong> Si bien es cierto que por encima de la IS hay <em>exceso de oferta de bienes</em> (la tasa es demasiado alta para el equilibrio del mercado de bienes, la inversión cae y la demanda queda por debajo de la producción), la <strong>justificación está equivocada</strong>: compararla con "la tasa de referencia del BCRP" mezcla el mercado de bienes (IS) con el mercado de dinero (LM/BCRP). La posición respecto de la IS depende del equilibrio del mercado de <em>bienes</em>, no de la tasa de política del banco central. Como la razón es incorrecta, la afirmación se considera falsa.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="p5b">
+    <div class="qhead"><span class="qnum">P5 · b</span><span class="pts">V/F · 2 pts (−0.25 si erras)</span></div>
+    <h2 class="qtitle">Puntos por debajo de la línea LM</h2>
+    <div class="enunciado"><span class="lbl">Afirmación</span>Todos los puntos que están por debajo de la línea LM reflejan una situación en la cual hay un exceso de <em>Demanda Agregada</em>, debido a que en ellos la tasa de interés es menor que la tasa de interés de equilibrio.</div>
+    <h3>1 · ¿Qué es la curva LM y qué pasa fuera de ella?</h3>
+    <p>La <strong>LM</strong> reúne las combinaciones \((Y, i)\) en las que el <strong>mercado de DINERO está en equilibrio</strong> (demanda de dinero = oferta de dinero). Tiene pendiente positiva: a mayor \(Y\) hay más transacciones → más demanda de dinero → se necesita una \(i\) más alta para volver a equilibrar.</p>
+    <div class="razon">
+      <div class="ct"><span class="ic">🧠</span>Demostración: por debajo de la LM hay exceso de demanda de DINERO</div>
+      <ol>
+        <li>Toma un punto <b>por debajo de la LM</b>: para ese \(Y\), la tasa \(i\) es <em>menor</em> que la de equilibrio del mercado de dinero.</li>
+        <li>Con \(i\) más baja, la gente quiere <b>más dinero</b> (cae el costo de tenerlo) → la <b>demanda de dinero supera a la oferta</b>.</li>
+        <li>Eso es un <b>exceso de demanda de DINERO</b> (no de demanda agregada de bienes). La gente vende bonos, el precio de los bonos baja y la tasa <em>sube</em> hasta volver a la LM.</li>
+      </ol>
+    </div>
+    <div class="figure">
+      <div class="figttl">Curva LM (mercado de dinero) y sus dos regiones</div>
+      <div class="chartbox"><canvas id="chartLM"></canvas></div>
+      <div class="cap"><b>Lectura.</b> <span style="color:#b0512c;font-weight:700">Por debajo de la LM</span>: la tasa es demasiado baja → la gente demanda más dinero del que hay → <em>exceso de demanda de DINERO</em> (no agregada). <span style="color:#2f6b5e;font-weight:700">Por encima de la LM</span>: exceso de oferta de dinero.</div>
+    </div>
+    <h3>2 · ¿Dónde falla la afirmación?</h3>
+    <div class="tablewrap">
+      <table>
+        <caption>Disección de la afirmación 5b</caption>
+        <thead><tr><th>Parte</th><th>¿Qué dice?</th><th>¿Correcta?</th></tr></thead>
+        <tbody>
+          <tr><td><b>Conclusión</b></td><td>Por debajo de la LM → exceso de <em>Demanda Agregada</em> (de bienes)</td><td><span class="tag f">INCORRECTA</span></td></tr>
+          <tr><td><b>Justificación</b></td><td>"…porque la tasa es menor que la de equilibrio"</td><td><span class="tag v">cierta para el mercado de dinero…</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout adv">
+      <div class="ct"><span class="ic">⚠️</span>El error fatal: "agregada" vs. "de dinero"</div>
+      <p style="margin:0;">La LM es el <strong>mercado de dinero</strong>. Por debajo de la LM hay exceso de <strong>demanda de DINERO</strong>, <em>no</em> de Demanda Agregada (de bienes). La afirmación etiqueta un desequilibrio <em>monetario</em> como si fuera de <em>bienes</em>. Es la imagen-espejo del error de 5a: ahí se justificaba un asunto de bienes con la tasa del BCRP; aquí se rotula un asunto de dinero como demanda agregada de bienes.</p>
+    </div>
+    <div class="callout insi">
+      <div class="ct"><span class="ic">✦</span>Insight (lo que une 5a y 5b)</div>
+      <p style="margin:0;">La regla de oro: <strong>posición frente a la IS ⇒ habla de BIENES</strong> (exceso de oferta/demanda de bienes); <strong>posición frente a la LM ⇒ habla de DINERO</strong> (exceso de oferta/demanda de dinero, tasa de interés, BCRP). Cualquier afirmación que cruce estos cables es falsa.</p>
+    </div>
+    <div class="verdict f"><span class="badge">F</span>FALSO</div>
+    <div class="result">
+      <div class="ic" style="font-size:1.6rem">📝</div>
+      <div>
+        <div class="rt">Redacción sugerida</div>
+        <p style="margin:0"><strong>Falso.</strong> Por debajo de la LM la tasa de interés está, en efecto, por debajo de la de equilibrio del mercado de dinero; pero eso genera un exceso de <strong>demanda de dinero</strong>, <em>no</em> un exceso de Demanda Agregada (de bienes). La LM describe el mercado <em>monetario</em>; el enunciado confunde un desequilibrio monetario con uno del mercado de bienes. Por etiquetar mal el resultado, la afirmación es falsa.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="p6">
+    <div class="qhead"><span class="qnum">P6</span><span class="pts">4 puntos · la secuencia importa</span></div>
+    <h2 class="qtitle">Política monetaria restrictiva en el modelo IS-LM</h2>
+    <div class="enunciado"><span class="lbl">Enunciado</span>La inflación alta preocupa a las autoridades monetarias, que adoptan <em>Políticas Monetarias restrictivas</em>. Con el Modelo IS-LM, explique <strong>detalladamente la secuencia de eventos</strong> que se suscita y cómo se pasa de un equilibrio macroeconómico a otro. Es indispensable incluir y explicar <strong>dos gráficos</strong>: el del <em>Mercado Monetario</em> y el del <em>Modelo IS-LM</em>. <em>(El orden de los eventos es decisivo para que la respuesta sea correcta.)</em></div>
+
+    <div class="callout clave">
+      <div class="ct"><span class="ic">🎯</span>La idea en una frase</div>
+      <p style="margin:0;">Política restrictiva = el BCRP <strong>retira liquidez</strong> (reduce la Oferta Monetaria / sube su tasa de referencia) → <strong>sube la tasa de interés</strong> → <strong>cae la inversión y el consumo sensible a la tasa</strong> → <strong>cae la demanda agregada y el producto</strong> → <strong>se enfría la inflación</strong>. En IS-LM esto se ve como un <strong>desplazamiento de la LM hacia la izquierda</strong>.</p>
+    </div>
+
+    <h3>1 · Gráfico 1 — Mercado Monetario (la chispa que enciende todo)</h3>
+    <p>El primer gráfico es el del <strong>mercado de dinero</strong> (preferencia por la liquidez de Keynes): oferta monetaria <strong>vertical</strong> (la fija el BCRP) y demanda de dinero con <strong>pendiente negativa</strong> (a menor tasa, más dinero se desea tener).</p>
+    <div class="figure">
+      <div class="figttl">Mercado Monetario · política restrictiva: la OM se contrae y la tasa sube</div>
+      <div class="chartbox"><canvas id="chartMM"></canvas></div>
+      <div class="cap"><b>Lectura.</b> El BCRP reduce la oferta monetaria de <b>OM₁ → OM₂</b> (la curva vertical se mueve a la izquierda). Como la demanda de dinero no cambia, la tasa de interés de equilibrio <b>sube de r₁ a r₂</b>. Es el reflejo exacto —invertido— de la lámina de "Política Monetaria Expansiva" del curso.</div>
+    </div>
+
+    <h3>2 · Gráfico 2 — Modelo IS-LM (cómo cambia el equilibrio macro)</h3>
+    <p>La reducción de la oferta real de dinero desplaza la <strong>LM hacia la izquierda/arriba</strong> (de LM₁ a LM₂): para cada nivel de \(Y\), ahora hace falta una tasa más alta para equilibrar el mercado de dinero. La <strong>IS no se mueve</strong> (la política no tocó el gasto del mercado de bienes). La economía se desliza <em>a lo largo de la IS</em> hasta el nuevo equilibrio.</p>
+    <div class="figure">
+      <div class="figttl">Modelo IS-LM · la LM se desplaza a la izquierda: sube la tasa, cae el producto</div>
+      <div class="chartbox"><canvas id="chartISLM"></canvas></div>
+      <div class="cap"><b>Lectura.</b> Del equilibrio <b>E₁ (Y₁, r₁)</b> se pasa a <b>E₂ (Y₂, r₂)</b>: la tasa de interés <b>sube</b> (r₂ &gt; r₁) y el producto <b>cae</b> (Y₂ &lt; Y₁). El movimiento es a lo largo de la IS, que permanece fija; lo que se desplaza es la LM.</div>
+    </div>
+
+    <h3>3 · La secuencia de eventos (en orden — esto es lo que califican)</h3>
+    <ol class="steps">
+      <li><b>Diagnóstico.</b> La inflación está alta. El BCRP decide aplicar una política monetaria <b>restrictiva (contractiva)</b>.</li>
+      <li><b>Acción del BCRP.</b> Reduce la Oferta Monetaria (vende bonos en operaciones de mercado abierto / sube la tasa de referencia). En el <b>Gráfico 1</b>: OM₁ → OM₂ (a la izquierda).</li>
+      <li><b>Sube la tasa de interés.</b> Con menos dinero y la misma demanda, la tasa de equilibrio del mercado monetario <b>sube de r₁ a r₂</b>. <span class="src">(Es lo que en 5a/5b llamábamos "tasa de referencia del BCRP": vive en el mercado de dinero / LM.)</span></li>
+      <li><b>Se encarece el crédito.</b> Una tasa más alta encarece pedir prestado → <b>cae la inversión</b> de las empresas y el <b>consumo</b> de bienes duraderos y vivienda.</li>
+      <li><b>Se desplaza la LM.</b> En el <b>Gráfico 2</b>, la menor oferta real de dinero mueve la <b>LM₁ → LM₂</b> (izquierda/arriba). La IS no se mueve.</li>
+      <li><b>Cae la demanda agregada y el producto.</b> La economía se desliza por la IS hasta <b>E₂</b>: el producto baja de <b>Y₁ a Y₂</b> y la tasa queda en <b>r₂</b>.</li>
+      <li><b>Se enfría la inflación.</b> Con menor demanda agregada y producto, ceden las presiones inflacionarias: la inflación baja. <b>Costo de corto plazo:</b> menor producción y mayor desempleo (es el movimiento descendente por la Curva de Phillips de corto plazo de la P4).</li>
+      <li><b>Nuevo equilibrio.</b> Se pasó del equilibrio macroeconómico <b>E₁(Y₁, r₁)</b> al <b>E₂(Y₂, r₂)</b>: <b>tasa más alta, producto menor e inflación contenida</b>.</li>
+    </ol>
+
+    <div class="callout intu">
+      <div class="ct"><span class="ic">💡</span>Cómo enlazan los dos gráficos</div>
+      <p style="margin:0;">El <strong>Gráfico 1 (mercado monetario)</strong> explica <em>por qué</em> sube la tasa: el BCRP retira dinero. El <strong>Gráfico 2 (IS-LM)</strong> traduce esa tasa más alta en <em>menos producto</em>: la LM se desplaza y la economía resbala por la IS. Uno es la causa (mercado de dinero), el otro es el efecto macro (bienes + dinero juntos).</p>
+    </div>
+
+    <div class="result">
+      <div class="ic" style="font-size:1.6rem">🟢</div>
+      <div>
+        <div class="rt">Síntesis de la respuesta</div>
+        <p style="margin:0">BCRP reduce la OM (Gráfico 1: OM a la izquierda) → sube la tasa de interés (r₁→r₂) → se encarece el crédito y cae inversión y consumo → la LM se desplaza a la izquierda (Gráfico 2) → la economía se mueve por la IS hasta E₂, con <strong>menor producto (Y₂&lt;Y₁) y mayor tasa (r₂&gt;r₁)</strong> → cae la demanda agregada y se controla la inflación, con un costo transitorio de menor producción y más desempleo.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="errores">
+    <h2 class="qtitle" style="font-size:clamp(1.5rem,4vw,2rem)">⚠️ Errores típicos que cuestan puntos</h2>
+    <div class="callout adv">
+      <div class="ct"><span class="ic">1</span>"Inflación cero exige crecimiento cero de la OM"</div>
+      <p style="margin:0;">No. La OM puede crecer al ritmo del PBI real sin inflación. Congelarla provocaría <em>deflación</em>. (P1)</p>
+    </div>
+    <div class="callout adv">
+      <div class="ct"><span class="ic">2</span>Llamar "mínimo" a la tasa natural de desempleo</div>
+      <p style="margin:0;">La tasa natural no es un piso infranqueable: en un auge el desempleo cae por debajo de ella. Y vive en la Phillips de <em>largo</em> plazo, no en la de corto. (P2a)</p>
+    </div>
+    <div class="callout adv">
+      <div class="ct"><span class="ic">3</span>Confundir "no hay trade-off" con "no hay inflación"</div>
+      <p style="margin:0;">A largo plazo la inflación existe (cualquier tasa es compatible con \(u_n\)); lo que se pierde es la disyuntiva inflación–desempleo. (P4a)</p>
+    </div>
+    <div class="callout adv">
+      <div class="ct"><span class="ic">4</span>Cruzar los cables IS ↔ LM</div>
+      <p style="margin:0;">La <b>IS</b> habla de <em>bienes</em> (exceso de oferta/demanda de bienes); la <b>LM</b> habla de <em>dinero</em> (tasa de interés, BCRP). Justificar la IS con la tasa del BCRP (5a) o rotular un desequilibrio de la LM como "demanda agregada" (5b) es el error clásico. (P5)</p>
+    </div>
+    <div class="callout adv">
+      <div class="ct"><span class="ic">5</span>Olvidar la SECUENCIA en la P6</div>
+      <p style="margin:0;">El profesor avisa que el orden importa. No basta decir "sube la tasa": hay que encadenar OM↓ → r↑ → inversión↓ → LM se desplaza → Y↓ → inflación↓. Y dibujar <em>los dos</em> gráficos. (P6)</p>
+    </div>
+    <div class="callout tip">
+      <div class="ct"><span class="ic">📌</span>Recordatorio de calificación</div>
+      <p style="margin:0;">En los V/F: respuesta correcta y bien explicada suma; respuesta <em>errada</em> resta 0.25. Y "si los conceptos o resultados no son claramente expuestos, se consideran errados". Conviene escribir poco pero exacto, y siempre justificar el <em>porqué</em>.</p>
+    </div>
+  </section>
+
+  <section id="sintesis">
+    <h2 class="qtitle" style="font-size:clamp(1.5rem,4vw,2rem)">∑ Síntesis / machete de respuestas</h2>
+    <div class="tablewrap">
+      <table>
+        <caption>Respuestas en una línea (para repasar a último minuto)</caption>
+        <thead><tr><th>Preg.</th><th>Veredicto</th><th>Clave de la respuesta</th></tr></thead>
+        <tbody>
+          <tr><td><b>1</b></td><td><span class="tag zero">desarrollo</span></td><td>No siempre. La OM puede crecer sin inflación si \(g_M=g_Y\) (al ritmo del PBI real). \(\pi=g_M-g_Y\). Congelarla → deflación.</td></tr>
+          <tr><td><b>2a</b></td><td><span class="tag f">FALSO</span></td><td>La CPCP es un menú, no "una" tasa. La tasa de referencia es la <em>natural</em> (Phillips de largo plazo, vertical) y no es un "mínimo".</td></tr>
+          <tr><td><b>2b</b></td><td><span class="tag v">VERDADERO</span></td><td>RML por encima del equilibrio → excedente de trabajo = desempleo estructural. A mayor RML, mayor brecha → relación directa.</td></tr>
+          <tr><td><b>3</b></td><td><span class="tag zero">desarrollo</span></td><td>El subsidio baja el costo de oportunidad de buscar → búsquedas más largas → sube el desempleo de largo plazo (tasa natural). Más subsidio ⇒ más desempleo.</td></tr>
+          <tr><td><b>4a</b></td><td><span class="tag f">FALSO</span></td><td>La Phillips existe a largo plazo (vertical en \(u_n\)). Lo que desaparece es el <em>trade-off</em>; la inflación sí existe a largo plazo.</td></tr>
+          <tr><td><b>4b</b></td><td><span class="tag v">VERDADERO</span></td><td>La relación inflación–desempleo es no lineal; la curva convexa (Parkin) capta la pendiente cambiante mejor que una recta.</td></tr>
+          <tr><td><b>5a</b></td><td><span class="tag f">FALSO</span></td><td>Conclusión correcta (encima de IS = exceso de oferta de bienes) pero <em>justificación</em> errada: invoca la tasa del BCRP (mercado de dinero) para explicar la IS (mercado de bienes).</td></tr>
+          <tr><td><b>5b</b></td><td><span class="tag f">FALSO</span></td><td>Debajo de la LM hay exceso de demanda de <em>dinero</em>, no de Demanda Agregada de bienes. Confunde mercado monetario con mercado de bienes.</td></tr>
+          <tr><td><b>6</b></td><td><span class="tag zero">desarrollo</span></td><td>OM↓ → r↑ (Gráfico mercado monetario) → inversión y consumo↓ → LM se desplaza a la izquierda (Gráfico IS-LM) → Y↓, r↑ → inflación↓. La secuencia y los dos gráficos son obligatorios.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout insi">
+      <div class="ct"><span class="ic">✦</span>Una frase para recordar todo</div>
+      <p style="margin:0;"><strong>Dinero:</strong> la inflación es lo que el dinero crece de más respecto a los bienes. <strong>Desempleo:</strong> todo lo que mantenga el salario alto o abarate estar sin empleo (RML, subsidios) sube la tasa natural. <strong>IS-LM:</strong> IS = bienes, LM = dinero (tasa/BCRP); no los cruces.</p>
+    </div>
+    <div class="foot">
+      <p style="margin:0 0 .4rem;"><strong>Fuentes y alineación con el curso.</strong> Desarrollo basado en N. G. Mankiw, <em>Principios de Economía</em> (7.ª ed., caps. 28, 30, 34–35) y M. Parkin, <em>Macroeconomía. Versión para Latinoamérica</em> (caps. 8, 11, 12, 16), más las láminas del curso (Mercado Monetario, Política Monetaria Expansiva/Restrictiva, OA-DA y Curva de Phillips) y el sílabo (Temas VIII–IX: Modelo IS-LM y disyuntiva inflación-desempleo). El ejemplo de la P3 sobre migración subsahariana se marcó como ilustrativo: ajústalo al caso exacto explicado en clase.</p>
+      <p style="margin:0; color:var(--faint);">Documento de estudio · resolución paso a paso · todos los números de la P1 fueron verificados en Python.</p>
+    </div>
+  </section>
+
+</main>
+
+<script>
+(function(){
+  "use strict";
+  var root = document.documentElement, body = document.body;
+
+  /* ---------- TOC / sidebar ---------- */
+  var toc=document.getElementById('toc'), scrim=document.getElementById('scrim'), menuBtn=document.getElementById('menuBtn');
+  function openToc(){ toc.classList.add('open'); scrim.classList.add('show'); }
+  function closeToc(){ toc.classList.remove('open'); scrim.classList.remove('show'); }
+  function toggleToc(){ toc.classList.contains('open') ? closeToc() : openToc(); }
+  menuBtn.addEventListener('click', toggleToc);
+  scrim.addEventListener('click', closeToc);
+  Array.prototype.forEach.call(document.querySelectorAll('#tocnav a'), function(a){
+    a.addEventListener('click', function(){ closeToc(); });
+  });
+
+  /* ---------- Topbar hide on scroll + progress ---------- */
+  var topbar=document.getElementById('topbar'), progress=document.getElementById('progress');
+  var lastY=window.scrollY, ticking=false;
+  function onScroll(){
+    var y=window.scrollY;
+    if(y>lastY && y>120){ topbar.classList.add('hide'); } else { topbar.classList.remove('hide'); }
+    lastY=y;
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    progress.style.width=(h>0?(y/h*100):0)+'%';
+    ticking=false;
+  }
+  window.addEventListener('scroll', function(){ if(!ticking){ window.requestAnimationFrame(onScroll); ticking=true; } }, {passive:true});
+
+  /* ---------- Active link via IntersectionObserver ---------- */
+  var links=Array.prototype.slice.call(document.querySelectorAll('#tocnav a'));
+  var map={}; links.forEach(function(l){ map[l.getAttribute('href').slice(1)]=l; });
+  var secs=Array.prototype.slice.call(document.querySelectorAll('main section'));
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          links.forEach(function(l){ l.classList.remove('active'); });
+          var l=map[e.target.id]; if(l) l.classList.add('active');
+        }
+      });
+    },{rootMargin:'-45% 0px -50% 0px'});
+    secs.forEach(function(s){ io.observe(s); });
+  }
+
+  /* ---------- A11Y panel ---------- */
+  var fab=document.getElementById('fab'), a11y=document.getElementById('a11y'), topA11y=document.getElementById('topA11y');
+  function toggleA11y(){ a11y.classList.toggle('open'); }
+  fab.addEventListener('click', toggleA11y);
+  topA11y.addEventListener('click', toggleA11y);
+  document.addEventListener('click', function(e){
+    if(a11y.classList.contains('open') && !a11y.contains(e.target) && e.target!==fab && e.target!==topA11y){ a11y.classList.remove('open'); }
+  });
+
+  /* ---------- Theme ---------- */
+  var swatches=document.getElementById('swatches');
+  swatches.addEventListener('click', function(e){
+    var sw=e.target.closest('.sw'); if(!sw) return;
+    root.setAttribute('data-theme', sw.getAttribute('data-t'));
+    Array.prototype.forEach.call(swatches.children, function(c){ c.classList.remove('sel'); });
+    sw.classList.add('sel');
+  });
+
+  /* ---------- Font size ---------- */
+  var fs=1, fsVal=document.getElementById('fsVal');
+  function applyFs(){ root.style.setProperty('--fs', fs.toFixed(2)); fsVal.textContent=Math.round(fs*100)+'%'; }
+  document.getElementById('fsUp').addEventListener('click', function(){ fs=Math.min(2.6, fs+0.1); applyFs(); });
+  document.getElementById('fsDown').addEventListener('click', function(){ fs=Math.max(0.6, fs-0.1); applyFs(); });
+  document.getElementById('fsReset').addEventListener('click', function(){ fs=1; applyFs(); });
+  applyFs();
+
+  /* ---------- Width ---------- */
+  var widthSeg=document.getElementById('widthSeg');
+  widthSeg.addEventListener('click', function(e){
+    var b=e.target.closest('button'); if(!b) return;
+    body.setAttribute('data-width', b.getAttribute('data-w'));
+    Array.prototype.forEach.call(widthSeg.children, function(c){ c.classList.remove('sel'); });
+    b.classList.add('sel');
+    setTimeout(resizeCharts, 350);
+  });
+
+  /* ================= CHARTS ================= */
+  var charts=[];
+  function resizeCharts(){ charts.forEach(function(c){ try{c.resize();}catch(_){} }); }
+
+  var FIG={ ink:'#2b2722', sub:'#6f6757', grid:'rgba(120,108,86,0.16)', is:'#b0512c', lm:'#2f6b5e', acc:'#3f4d8a', gold:'#b07d23', pt:'#23201b' };
+
+  function labelPlugin(items){
+    return {
+      id:'lbl_'+Math.random().toString(36).slice(2),
+      afterDraw:function(chart){
+        var ctx=chart.ctx, x=chart.scales.x, y=chart.scales.y;
+        if(!x||!y) return;
+        ctx.save();
+        items.forEach(function(it){
+          var px=x.getPixelForValue(it.x), py=y.getPixelForValue(it.y);
+          ctx.font=it.font||'700 12px Manrope, sans-serif';
+          ctx.fillStyle=it.color||FIG.ink;
+          ctx.textAlign=it.align||'left';
+          ctx.textBaseline=it.baseline||'middle';
+          var lines=String(it.text).split('\n');
+          for(var i=0;i<lines.length;i++){ ctx.fillText(lines[i], px, py+i*15); }
+        });
+        ctx.restore();
+      }
+    };
+  }
+  function line(data,color,opts){
+    opts=opts||{};
+    return Object.assign({ data:data, borderColor:color, backgroundColor:color, borderWidth:opts.w||3,
+      showLine:true, fill:false, pointRadius:0, tension:opts.tension||0, borderDash:opts.dash||[] }, opts.extra||{});
+  }
+  function pts(data,color){ return { data:data, borderColor:color, backgroundColor:color, showLine:false, pointRadius:5.5, pointHoverRadius:6 }; }
+  function baseOpts(xt,yt,xmin,xmax,ymin,ymax){
+    return {
+      responsive:true, maintainAspectRatio:false, animation:{duration:500},
+      layout:{padding:{top:14,right:18,bottom:6,left:6}},
+      plugins:{legend:{display:false}, tooltip:{enabled:false}},
+      scales:{
+        x:{type:'linear', min:xmin, max:xmax, title:{display:true,text:xt,color:FIG.sub,font:{size:11,weight:'700',family:'Manrope'}},
+           grid:{color:FIG.grid}, ticks:{color:FIG.sub,font:{size:10,family:'JetBrains Mono'}}},
+        y:{type:'linear', min:ymin, max:ymax, title:{display:true,text:yt,color:FIG.sub,font:{size:11,weight:'700',family:'Manrope'}},
+           grid:{color:FIG.grid}, ticks:{color:FIG.sub,font:{size:10,family:'JetBrains Mono'}}}
+      }
+    };
+  }
+
+  function buildCharts(){
+    if(typeof Chart==='undefined'){ setTimeout(buildCharts,250); return; }
+    Chart.defaults.font.family='Manrope';
+
+    /* ---- P1: inflación = gM - gY ---- */
+    (function(){
+      var el=document.getElementById('chartP1'); if(!el) return;
+      var li=[]; for(var g=-2;g<=12;g+=0.5){ li.push({x:g,y:g-4}); }
+      charts.push(new Chart(el,{type:'scatter',
+        data:{datasets:[
+          line([{x:-2,y:0},{x:12,y:0}], FIG.sub, {w:1.4,dash:[5,4]}),
+          line([{x:4,y:-6},{x:4,y:8}], FIG.gold, {w:1.4,dash:[5,4]}),
+          line(li, FIG.acc, {w:3.4}),
+          pts([{x:0,y:-4}], FIG.is), pts([{x:4,y:0}], FIG.lm), pts([{x:10,y:6}], FIG.gold)
+        ]},
+        options:baseOpts('Crecimiento de la Oferta Monetaria  g\u2098 (%)','Inflación  \u03c0 (%)',-2,12,-6,8),
+        plugins:[labelPlugin([
+          {x:0.2,y:-5.0,text:'DEFLACIÓN (\u03c0<0)',color:FIG.is,font:'800 11px Manrope'},
+          {x:6.2,y:6.6,text:'INFLACIÓN (\u03c0>0)',color:FIG.gold,font:'800 11px Manrope'},
+          {x:4.15,y:-1.0,text:'g\u2098 = g\u1d67 = 4%\n\u03c0 = 0',color:FIG.lm,font:'800 11px Manrope'},
+          {x:9.7,y:6.0,text:'+5.8%',color:FIG.gold,align:'right',font:'700 11px JetBrains Mono'}
+        ])]
+      }));
+    })();
+
+    /* ---- Phillips CP + LP ---- */
+    (function(){
+      var el=document.getElementById('chartPhillips'); if(!el) return;
+      var cp=[]; for(var u=3;u<=12;u+=0.25){ cp.push({x:u,y:4+36/u}); }
+      charts.push(new Chart(el,{type:'scatter',
+        data:{datasets:[
+          line([{x:6,y:0},{x:6,y:20}], FIG.lm, {w:3}),
+          line(cp, FIG.is, {w:3.2,tension:.3}),
+          pts([{x:6,y:10}], FIG.pt)
+        ]},
+        options:baseOpts('Tasa de desempleo  u (%)','Inflación  \u03c0 (%)',3,12,0,20),
+        plugins:[labelPlugin([
+          {x:3.3,y:15.6,text:'CPCP (corto plazo):\nun MENÚ de combinaciones',color:FIG.is,font:'800 11px Manrope'},
+          {x:6.25,y:18.2,text:'CPLP (largo plazo):\nvertical en u natural',color:FIG.lm,font:'800 11px Manrope'},
+          {x:6.3,y:10,text:'tasa natural\n(6%)',color:FIG.pt,font:'700 11px Manrope'},
+          {x:3.3,y:3.2,text:'← se puede estar a la izquierda de u natural en un auge',color:FIG.sub,font:'600 10px Manrope'}
+        ])]
+      }));
+    })();
+
+    /* ---- Phillips curva vs recta ---- */
+    (function(){
+      var el=document.getElementById('chartParkin'); if(!el) return;
+      var cv=[]; for(var u=3;u<=12;u+=0.25){ cv.push({x:u,y:4+36/u}); }
+      var rc=[{x:3,y:16},{x:12,y:7}];
+      charts.push(new Chart(el,{type:'scatter',
+        data:{datasets:[ line(rc, FIG.is, {w:2.6,dash:[7,5]}), line(cv, FIG.lm, {w:3.4,tension:.3}) ]},
+        options:baseOpts('Tasa de desempleo  u (%)','Inflación  \u03c0 (%)',3,12,5,18),
+        plugins:[labelPlugin([
+          {x:4.2,y:15.8,text:'CURVA (Parkin)\nmás realista',color:FIG.lm,font:'800 11px Manrope'},
+          {x:8.4,y:12.7,text:'RECTA\n(pendiente constante)',color:FIG.is,font:'800 11px Manrope'},
+          {x:3.15,y:9.0,text:'cerca del pleno empleo\nla inflación se acelera ↑',color:FIG.sub,font:'600 10px Manrope'}
+        ])]
+      }));
+    })();
+
+    /* ---- IS regions (P5a) ---- */
+    (function(){
+      var el=document.getElementById('chartIS'); if(!el) return;
+      charts.push(new Chart(el,{type:'scatter',
+        data:{datasets:[ line([{x:2,y:9},{x:14,y:3}], FIG.is, {w:3.4}) ]},
+        options:baseOpts('Producto  Y','Tasa de interés  i',2,14,1,11),
+        plugins:[labelPlugin([
+          {x:7,y:9.6,text:'↑ ENCIMA de la IS\nExceso de OFERTA de bienes\n(producción > demanda)',color:FIG.is,font:'800 11px Manrope'},
+          {x:3,y:2.4,text:'↓ DEBAJO de la IS\nExceso de DEMANDA de bienes',color:FIG.lm,font:'800 11px Manrope'},
+          {x:11.2,y:4.6,text:'IS (bienes)',color:FIG.is,font:'700 12px Manrope'}
+        ])]
+      }));
+    })();
+
+    /* ---- LM regions (P5b) ---- */
+    (function(){
+      var el=document.getElementById('chartLM'); if(!el) return;
+      charts.push(new Chart(el,{type:'scatter',
+        data:{datasets:[ line([{x:2,y:3},{x:14,y:9}], FIG.lm, {w:3.4}) ]},
+        options:baseOpts('Producto  Y','Tasa de interés  i',2,14,1,11),
+        plugins:[labelPlugin([
+          {x:3,y:9.6,text:'↑ ENCIMA de la LM\nExceso de OFERTA de dinero',color:FIG.lm,font:'800 11px Manrope'},
+          {x:7.4,y:2.6,text:'↓ DEBAJO de la LM\nExceso de DEMANDA de DINERO\n(¡de dinero, no agregada!)',color:FIG.is,font:'800 11px Manrope'},
+          {x:11.4,y:8.4,text:'LM (dinero)',color:FIG.lm,font:'700 12px Manrope'}
+        ])]
+      }));
+    })();
+
+    /* ---- Mercado monetario (P6) ---- */
+    (function(){
+      var el=document.getElementById('chartMM'); if(!el) return;
+      charts.push(new Chart(el,{type:'scatter',
+        data:{datasets:[
+          line([{x:1,y:9},{x:9,y:1}], FIG.acc, {w:3.2}),
+          line([{x:6,y:0},{x:6,y:10}], FIG.sub, {w:3,dash:[6,4]}),
+          line([{x:4,y:0},{x:4,y:10}], FIG.is, {w:3.4}),
+          line([{x:0,y:4},{x:6,y:4}], FIG.sub, {w:1.2,dash:[3,3]}),
+          line([{x:0,y:6},{x:4,y:6}], FIG.is, {w:1.2,dash:[3,3]}),
+          pts([{x:6,y:4}], FIG.sub), pts([{x:4,y:6}], FIG.is)
+        ]},
+        options:baseOpts('Cantidad de dinero','Tasa de interés  i',0,10,0,10),
+        plugins:[labelPlugin([
+          {x:6.15,y:9.4,text:'OM\u2081',color:FIG.sub,font:'800 12px Manrope'},
+          {x:3.0,y:9.4,text:'OM\u2082\n(restrictiva)',color:FIG.is,font:'800 12px Manrope',align:'center'},
+          {x:7.2,y:1.9,text:'Demanda de dinero',color:FIG.acc,font:'700 11px Manrope'},
+          {x:0.3,y:4,text:'r\u2081',color:FIG.sub,font:'800 12px JetBrains Mono'},
+          {x:0.3,y:6.4,text:'r\u2082',color:FIG.is,font:'800 12px JetBrains Mono'},
+          {x:4.3,y:7.6,text:'r sube →',color:FIG.is,font:'700 10px Manrope'}
+        ])]
+      }));
+    })();
+
+    /* ---- IS-LM (P6) ---- */
+    (function(){
+      var el=document.getElementById('chartISLM'); if(!el) return;
+      charts.push(new Chart(el,{type:'scatter',
+        data:{datasets:[
+          line([{x:2,y:9},{x:14,y:3}], FIG.is, {w:3.4}),            /* IS */
+          line([{x:2,y:3},{x:14,y:9}], FIG.lm, {w:3.2}),            /* LM1 */
+          line([{x:2,y:5},{x:12,y:10}], FIG.gold, {w:3.2,dash:[6,4]}),/* LM2 */
+          pts([{x:8,y:6}], FIG.pt), pts([{x:6,y:7}], FIG.is)
+        ]},
+        options:baseOpts('Producto  Y','Tasa de interés  i',2,14,2,10.5),
+        plugins:[labelPlugin([
+          {x:12.2,y:3.2,text:'IS',color:FIG.is,font:'800 13px Manrope'},
+          {x:13.2,y:9.2,text:'LM\u2081',color:FIG.lm,font:'800 13px Manrope'},
+          {x:11.4,y:9.9,text:'LM\u2082',color:FIG.gold,font:'800 13px Manrope'},
+          {x:8.25,y:5.4,text:'E\u2081 (Y\u2081, r\u2081)',color:FIG.pt,font:'700 11px Manrope'},
+          {x:5.7,y:7.7,text:'E\u2082 (Y\u2082, r\u2082)',color:FIG.is,font:'800 11px Manrope',align:'right'},
+          {x:8.6,y:9.3,text:'LM ← (política restrictiva)',color:FIG.gold,font:'700 10px Manrope',align:'right'},
+          {x:6.6,y:4.0,text:'Y baja, r sube',color:FIG.sub,font:'700 10px Manrope'}
+        ])]
+      }));
+    })();
+  }
+  buildCharts();
+  window.addEventListener('resize', function(){ clearTimeout(window.__rt); window.__rt=setTimeout(resizeCharts,200); });
+})();
+</script>
+</body>
+</html>
