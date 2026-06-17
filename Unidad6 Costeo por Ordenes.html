@@ -1,0 +1,1981 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="claro" data-width="comodo">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Costeo por Órdenes · Teoría con maestría · Contabilidad de Costos I</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']], processEscapes: true },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre','code'] },
+  startup: { typeset: false }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+/* ============ TOKENS DE COLOR POR TEMA ============ */
+:root{
+  --fs: 1.30;               /* escala de letra (130% por defecto) */
+  --maxw: 760px;            /* ancho de lectura */
+  --sb: 320px;              /* ancho sidebar */
+  --terracotta:#C04B2E; --teal:#2A6F6A; --gold:#B8860B;
+  --plum:#6E3A6E; --sage:#5D7B5D; --orange:#C8742A;
+}
+[data-theme="claro"]{
+  --bg:#F4F1EA; --surface:#FBF9F3; --surface-2:#EFEBE0; --code-bg:#F0ECE0;
+  --ink:#23303A; --ink-soft:#52606B; --ink-faint:#8A93A0; --border:#DED7C7;
+  --link:#9C3A22; --shadow:rgba(40,30,20,.10);
+}
+[data-theme="sepia"]{
+  --bg:#EFE6D6; --surface:#F7EFE0; --surface-2:#E7DBC5; --code-bg:#EAE0CC;
+  --ink:#3A2E21; --ink-soft:#5E4F3D; --ink-faint:#9A8970; --border:#D9C9AC;
+  --link:#9A4A1E; --shadow:rgba(60,40,20,.12);
+}
+[data-theme="pizarra"]{
+  --bg:#28333B; --surface:#313E48; --surface-2:#3B4A55; --code-bg:#222C33;
+  --ink:#E8EEF2; --ink-soft:#B5C2CC; --ink-faint:#7E8F9C; --border:#46555F;
+  --link:#E9A87C; --shadow:rgba(0,0,0,.30);
+  --terracotta:#E08763; --teal:#5FB6AE; --gold:#E0B84E; --plum:#C088C0; --sage:#92B78F; --orange:#E2945A;
+}
+[data-theme="oscuro"]{
+  --bg:#15191D; --surface:#1D2329; --surface-2:#262E35; --code-bg:#12161A;
+  --ink:#E7EBEF; --ink-soft:#AAB4BE; --ink-faint:#6E7882; --border:#323C45;
+  --link:#E89A72; --shadow:rgba(0,0,0,.45);
+  --terracotta:#E2885F; --teal:#56B8AF; --gold:#DFB94C; --plum:#C189C1; --sage:#90B98D; --orange:#E59658;
+}
+[data-theme="alto-contraste"]{
+  --bg:#000000; --surface:#0A0A0A; --surface-2:#161616; --code-bg:#000000;
+  --ink:#FFFFFF; --ink-soft:#EDEDED; --ink-faint:#C2C2C2; --border:#5A5A5A;
+  --link:#FFD24A; --shadow:rgba(0,0,0,.6);
+  --terracotta:#FF8A5C; --teal:#46E2D2; --gold:#FFD24A; --plum:#E6A6E6; --sage:#9EE89A; --orange:#FFA94D;
+}
+
+/* ============ BASE ============ */
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:'Manrope',system-ui,sans-serif; line-height:1.72;
+  -webkit-text-size-adjust:100%; overflow-x:hidden;
+}
+::selection{background:var(--terracotta); color:#fff}
+a{color:var(--link)}
+
+/* ============ BARRA SUPERIOR ============ */
+.topbar{
+  position:fixed; top:0; left:0; right:0; height:54px; z-index:60;
+  display:flex; align-items:center; gap:12px; padding:0 14px;
+  background:color-mix(in srgb, var(--surface) 92%, transparent);
+  backdrop-filter:saturate(1.3) blur(10px);
+  border-bottom:1px solid var(--border);
+  transition:transform .35s cubic-bezier(.4,0,.2,1);
+}
+.topbar.hide{transform:translateY(-100%)}
+.iconbtn{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:40px; height:40px; border-radius:10px; border:1px solid var(--border);
+  background:var(--surface-2); color:var(--ink); cursor:pointer; font-size:19px;
+  transition:.15s;
+}
+.iconbtn:hover{background:var(--terracotta); color:#fff; border-color:var(--terracotta)}
+.iconbtn:focus-visible{outline:3px solid var(--gold); outline-offset:2px}
+.tb-title{font-family:'Fraunces',serif; font-weight:600; font-size:16px; letter-spacing:.2px}
+.tb-title small{display:block; font-family:'Manrope'; font-weight:500; font-size:11px; color:var(--ink-faint); letter-spacing:.6px; text-transform:uppercase}
+.tb-spacer{flex:1}
+.progress-wrap{position:fixed; top:54px; left:0; right:0; height:3px; z-index:59; background:transparent}
+.progress-bar{height:100%; width:0%; background:linear-gradient(90deg,var(--terracotta),var(--gold)); transition:width .1s linear}
+
+/* ============ SIDEBAR ============ */
+.sidebar{
+  position:fixed; top:0; left:0; bottom:0; width:var(--sb); z-index:80;
+  background:var(--surface); border-right:1px solid var(--border);
+  transform:translateX(-102%); transition:transform .32s cubic-bezier(.4,0,.2,1);
+  display:flex; flex-direction:column; box-shadow:6px 0 30px var(--shadow);
+}
+.sidebar.open{transform:translateX(0)}
+.sb-head{padding:18px 20px 12px; border-bottom:1px solid var(--border)}
+.sb-head h1{font-family:'Fraunces',serif; font-size:19px; font-weight:700; margin:0 0 4px; line-height:1.2}
+.sb-head p{margin:0; font-size:12px; color:var(--ink-faint); letter-spacing:.4px}
+.sb-nav{overflow-y:auto; padding:10px 12px 30px; flex:1}
+.sb-nav a{
+  display:block; text-decoration:none; color:var(--ink-soft);
+  padding:8px 12px; border-radius:8px; font-size:13.5px; font-weight:500;
+  border-left:3px solid transparent; transition:.13s;
+}
+.sb-nav a:hover{background:var(--surface-2); color:var(--ink)}
+.sb-nav a.active{background:color-mix(in srgb,var(--terracotta) 14%,transparent); color:var(--ink); border-left-color:var(--terracotta); font-weight:700}
+.sb-nav a.sub{padding-left:26px; font-size:12.5px; color:var(--ink-faint)}
+.sb-nav .grp{font-family:'Fraunces',serif; font-size:11px; text-transform:uppercase; letter-spacing:1.2px; color:var(--ink-faint); margin:16px 12px 6px; font-weight:600}
+.overlay{position:fixed; inset:0; background:rgba(10,12,14,.45); z-index:70; opacity:0; pointer-events:none; transition:.3s}
+.overlay.show{opacity:1; pointer-events:auto}
+
+/* pin en escritorio ancho */
+@media(min-width:1180px){
+  body.pinned .sidebar{transform:translateX(0)}
+  body.pinned .overlay{display:none}
+  body.pinned main{margin-left:var(--sb)}
+  body.pinned .topbar{left:var(--sb)}
+  body.pinned .progress-wrap{left:var(--sb)}
+  body.pinned .pinhide{display:none}
+}
+
+/* ============ PANEL ACCESIBILIDAD ============ */
+.a11y-fab{position:fixed; right:16px; bottom:16px; z-index:75; width:52px; height:52px; border-radius:50%;
+  background:var(--teal); color:#fff; border:none; cursor:pointer; font-size:22px; box-shadow:0 6px 20px var(--shadow);
+  display:flex; align-items:center; justify-content:center; transition:.2s}
+.a11y-fab:hover{transform:scale(1.07)}
+.a11y-fab:focus-visible{outline:3px solid var(--gold); outline-offset:3px}
+.a11y-panel{position:fixed; right:16px; bottom:80px; z-index:76; width:min(330px,calc(100vw - 32px));
+  background:var(--surface); border:1px solid var(--border); border-radius:16px; box-shadow:0 14px 44px var(--shadow);
+  padding:18px; transform:translateY(14px) scale(.97); opacity:0; pointer-events:none; transition:.22s}
+.a11y-panel.show{transform:none; opacity:1; pointer-events:auto}
+.a11y-panel h3{font-family:'Fraunces',serif; font-size:13px; text-transform:uppercase; letter-spacing:1px; margin:0 0 10px; color:var(--ink-soft)}
+.a11y-panel h3:not(:first-child){margin-top:18px}
+.swatches{display:flex; gap:8px; flex-wrap:wrap}
+.sw{width:42px; height:42px; border-radius:10px; cursor:pointer; border:2px solid var(--border); position:relative; transition:.15s}
+.sw[aria-pressed="true"]{border-color:var(--gold); transform:scale(1.06)}
+.sw[data-set="claro"]{background:#F4F1EA}
+.sw[data-set="sepia"]{background:#EFE6D6}
+.sw[data-set="pizarra"]{background:#313E48}
+.sw[data-set="oscuro"]{background:#1D2329}
+.sw[data-set="alto-contraste"]{background:linear-gradient(135deg,#000 50%,#FFD24A 50%)}
+.fs-row{display:flex; align-items:center; gap:10px}
+.fs-row button{width:38px; height:38px; border-radius:9px; border:1px solid var(--border); background:var(--surface-2); color:var(--ink); font-size:18px; cursor:pointer}
+.fs-row button:hover{background:var(--terracotta); color:#fff}
+.fs-ind{flex:1; text-align:center; font-family:'JetBrains Mono',monospace; font-weight:700; font-size:14px}
+.fs-reset{font-size:11px!important; width:auto!important; padding:0 10px}
+.width-row{display:flex; gap:6px}
+.width-row button{flex:1; padding:9px 6px; border-radius:9px; border:1px solid var(--border); background:var(--surface-2); color:var(--ink-soft); font-size:12px; font-weight:600; cursor:pointer; transition:.13s}
+.width-row button[aria-pressed="true"]{background:var(--teal); color:#fff; border-color:var(--teal)}
+.dev-row{display:flex; gap:6px; flex-wrap:wrap}
+.dev-row button{flex:1 1 30%; min-width:90px; padding:11px 6px; border-radius:9px; border:1px solid var(--border); background:var(--surface-2); color:var(--ink); font-size:12.5px; font-weight:700; cursor:pointer; transition:.13s}
+.dev-row button[aria-pressed="true"]{background:var(--terracotta); color:#fff; border-color:var(--terracotta)}
+.dev-hint{font-size:11px; color:var(--ink-faint); margin:8px 2px 0; line-height:1.45}
+
+/* ============ CONTENIDO ============ */
+main{padding:74px 20px 120px; transition:margin-left .32s}
+.doc{max-width:var(--maxw); margin:0 auto; font-size:calc(1.04rem * var(--fs))}
+[data-width="comodo"]{--maxw:760px}
+[data-width="amplio"]{--maxw:1040px}
+[data-width="completo"]{--maxw:100%}
+.doc p, .doc li{font-size:inherit}
+section{scroll-margin-top:74px; margin-bottom:8px}
+.doc h2{font-family:'Fraunces',serif; font-weight:700; font-size:1.82em; line-height:1.18; margin:1.7em 0 .5em; letter-spacing:-.4px}
+.doc h3{font-family:'Fraunces',serif; font-weight:600; font-size:1.32em; margin:1.4em 0 .4em; color:var(--ink)}
+.doc h4{font-family:'Manrope'; font-weight:800; font-size:1.02em; margin:1.2em 0 .3em; letter-spacing:.2px; color:var(--ink-soft)}
+.doc p{margin:.7em 0}
+.doc ul,.doc ol{margin:.6em 0; padding-left:1.4em}
+.doc li{margin:.34em 0}
+.doc strong{color:var(--ink); font-weight:700}
+.eyebrow{font-family:'Fraunces',serif; font-size:.66em; text-transform:uppercase; letter-spacing:2px; color:var(--terracotta); font-weight:600; display:block; margin-bottom:.3em}
+.lead{font-size:1.12em; color:var(--ink-soft); line-height:1.65}
+.divnum{font-family:'JetBrains Mono',monospace; color:var(--ink-faint); font-size:.7em; font-weight:700}
+.kbd{font-family:'JetBrains Mono',monospace; background:var(--code-bg); padding:1px 7px; border-radius:5px; font-size:.86em; border:1px solid var(--border)}
+
+/* HERO */
+.hero{padding:18px 0 8px; border-bottom:2px solid var(--border); margin-bottom:10px}
+.hero .eyebrow{font-size:.72em}
+.hero h1{font-family:'Fraunces',serif; font-weight:900; font-size:2.7em; line-height:1.05; margin:.1em 0 .25em; letter-spacing:-1px}
+.hero .sub{font-size:1.1em; color:var(--ink-soft)}
+.hero-meta{display:flex; flex-wrap:wrap; gap:8px; margin-top:16px}
+.chip{font-size:.72em; font-weight:600; padding:5px 11px; border-radius:30px; background:var(--surface-2); border:1px solid var(--border); color:var(--ink-soft)}
+
+/* CALLOUTS */
+.callout{border-radius:14px; padding:15px 17px 15px 48px; margin:1.2em 0; position:relative; border:1px solid var(--border); background:var(--surface); font-size:.96em; line-height:1.62}
+.callout::before{position:absolute; left:14px; top:14px; font-size:20px; line-height:1}
+.callout .tag{display:block; font-family:'Fraunces',serif; font-weight:700; font-size:.82em; text-transform:uppercase; letter-spacing:1px; margin-bottom:.25em}
+.c-intuicion{background:color-mix(in srgb,var(--gold) 11%,var(--surface)); border-color:color-mix(in srgb,var(--gold) 40%,var(--border))}
+.c-intuicion::before{content:"💡"} .c-intuicion .tag{color:var(--gold)}
+.c-clave{background:color-mix(in srgb,var(--terracotta) 10%,var(--surface)); border-color:color-mix(in srgb,var(--terracotta) 40%,var(--border))}
+.c-clave::before{content:"🔑"} .c-clave .tag{color:var(--terracotta)}
+.c-formula{background:color-mix(in srgb,var(--teal) 11%,var(--surface)); border-color:color-mix(in srgb,var(--teal) 42%,var(--border))}
+.c-formula::before{content:"📐"} .c-formula .tag{color:var(--teal)}
+/* Fórmulas MathJax: nunca ensanchan la página; si una es muy larga, se desplaza dentro de su caja */
+mjx-container{max-width:100%}
+mjx-container[display="true"]{overflow-x:auto; overflow-y:hidden; padding:3px 0}
+.callout .fnote{margin:.15em 0 .9em; color:var(--ink-soft); font-size:.9em; font-style:italic; line-height:1.5}
+.c-insight{background:color-mix(in srgb,var(--plum) 11%,var(--surface)); border-color:color-mix(in srgb,var(--plum) 42%,var(--border))}
+.c-insight::before{content:"🧠"} .c-insight .tag{color:var(--plum)}
+.c-advertencia{background:color-mix(in srgb,var(--orange) 12%,var(--surface)); border-color:color-mix(in srgb,var(--orange) 44%,var(--border))}
+.c-advertencia::before{content:"⚠️"} .c-advertencia .tag{color:var(--orange)}
+.c-tip{background:color-mix(in srgb,var(--sage) 12%,var(--surface)); border-color:color-mix(in srgb,var(--sage) 42%,var(--border))}
+.c-tip::before{content:"🌱"} .c-tip .tag{color:var(--sage)}
+.c-duda{background:var(--surface-2); border-color:var(--border); border-style:dashed}
+.c-duda::before{content:"❓"} .c-duda .tag{color:var(--ink-soft)}
+
+/* RAZONAMIENTO + CÁLCULO */
+.step{margin:1.2em 0; border-radius:14px; overflow:hidden; border:1px solid var(--border)}
+.step-reasoning{background:color-mix(in srgb,var(--gold) 9%,var(--surface)); padding:13px 16px; font-size:.95em}
+.step-reasoning .lbl{font-family:'Fraunces',serif; font-weight:700; font-size:.78em; text-transform:uppercase; letter-spacing:1px; color:var(--gold); display:block; margin-bottom:.25em}
+.calc-block{background:var(--code-bg); padding:13px 16px; font-family:'JetBrains Mono',monospace; font-size:.88em; line-height:1.7; overflow-x:auto; border-top:1px solid var(--border)}
+.calc-block .res{color:var(--terracotta); font-weight:700}
+.calc-block .cmt{color:var(--ink-faint)}
+
+/* TABLAS */
+.tbl-wrap{overflow-x:auto; margin:1.2em 0; border:1px solid var(--border); border-radius:12px}
+table{border-collapse:collapse; width:100%; font-size:.9em; min-width:420px}
+th,td{padding:9px 12px; text-align:left; border-bottom:1px solid var(--border)}
+th{background:var(--surface-2); font-family:'Manrope'; font-weight:700; font-size:.92em; color:var(--ink-soft); letter-spacing:.3px}
+tbody tr:last-child td{border-bottom:none}
+td.num,th.num{text-align:right; font-family:'JetBrains Mono',monospace; font-size:.95em}
+tr.total td{font-weight:700; background:color-mix(in srgb,var(--teal) 8%,var(--surface)); border-top:2px solid var(--teal)}
+.cmp th:first-child{width:34%}
+
+/* BIG NUMBER GRID */
+.bn-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin:1.2em 0}
+.bn{background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:16px; text-align:center}
+.bn .v{font-family:'Fraunces',serif; font-weight:900; font-size:1.9em; line-height:1; color:var(--terracotta)}
+.bn .l{font-size:.74em; color:var(--ink-faint); margin-top:6px; letter-spacing:.3px}
+.bn.teal .v{color:var(--teal)} .bn.gold .v{color:var(--gold)} .bn.plum .v{color:var(--plum)}
+
+/* JOB COST SHEET */
+.job-sheet{border:2px solid var(--ink-soft); border-radius:12px; overflow:hidden; margin:1.4em 0; background:var(--surface); font-size:.9em}
+.job-sheet .js-head{background:var(--surface-2); padding:12px 16px; border-bottom:2px solid var(--ink-soft)}
+.js-head .t{font-family:'Fraunces',serif; font-weight:700; font-size:1.1em; text-align:center; letter-spacing:.5px}
+.js-meta{display:grid; grid-template-columns:1fr 1fr; gap:2px 16px; margin-top:8px; font-size:.86em}
+.js-meta span{color:var(--ink-faint)} .js-meta b{color:var(--ink)}
+.js-cols{display:grid; grid-template-columns:1fr 1fr 1fr}
+.js-cols>div{padding:10px 12px; border-right:1px solid var(--border)}
+.js-cols>div:last-child{border-right:none}
+.js-cols h5{margin:0 0 6px; font-size:.74em; text-transform:uppercase; letter-spacing:.6px; color:var(--ink-soft); font-family:'Manrope'; font-weight:800}
+.js-cols .row{display:flex; justify-content:space-between; font-family:'JetBrains Mono',monospace; font-size:.84em; padding:2px 0}
+.js-cols .tot{border-top:1px solid var(--border); margin-top:5px; padding-top:5px; font-weight:700}
+.js-foot{border-top:2px solid var(--ink-soft); padding:12px 16px; font-family:'JetBrains Mono',monospace; font-size:.85em}
+.js-foot .row{display:flex; justify-content:space-between; padding:2px 0}
+.js-foot .row.b{font-weight:700; border-top:1px solid var(--border); margin-top:4px; padding-top:5px}
+
+/* ASIENTO CONTABLE */
+.asiento{font-family:'JetBrains Mono',monospace; font-size:.84em; background:var(--code-bg); border:1px solid var(--border); border-radius:10px; padding:12px 14px; margin:.8em 0; overflow-x:auto}
+.asiento table{min-width:0; font-size:1em}
+.asiento td{border:none; padding:2px 10px 2px 0}
+.asiento .deb{padding-left:0}
+.asiento .cre{padding-left:24px; color:var(--ink-soft)}
+.asiento td.num{color:var(--ink)}
+.asiento .cap{display:block; color:var(--ink-faint); font-size:.92em; margin-top:6px; padding-top:6px; border-top:1px dashed var(--border)}
+
+/* DIAGRAMAS SVG */
+.fig{margin:1.4em 0; text-align:center}
+.fig svg{max-width:100%; height:auto}
+.fig figcaption{font-size:.8em; color:var(--ink-faint); margin-top:8px; font-style:italic}
+.svg-bg{fill:var(--surface)} .svg-bg2{fill:var(--surface-2)}
+.svg-stroke{stroke:var(--border)} .svg-ink{fill:var(--ink)}
+.svg-soft{fill:var(--ink-soft)} .svg-mono{font-family:'JetBrains Mono',monospace}
+
+/* CHART */
+.chart-card{background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:16px; margin:1.4em 0}
+.chart-card h4{margin:0 0 4px}
+.chart-card .cap{font-size:.78em; color:var(--ink-faint); margin-bottom:10px}
+.chart-box{position:relative; height:300px}
+
+/* AUTOEVALUACIÓN */
+.quiz{border:1px solid var(--border); border-radius:14px; margin:1em 0; overflow:hidden; background:var(--surface)}
+.quiz .q{padding:14px 16px; font-weight:600; cursor:pointer; display:flex; justify-content:space-between; gap:10px; align-items:flex-start}
+.quiz .q:hover{background:var(--surface-2)}
+.quiz .q .qn{font-family:'JetBrains Mono',monospace; color:var(--terracotta); font-weight:700; flex-shrink:0}
+.quiz .q .arr{margin-left:auto; transition:.2s; color:var(--ink-faint)}
+.quiz.open .q .arr{transform:rotate(180deg)}
+.quiz .a{max-height:0; overflow:hidden; transition:max-height .3s ease; background:color-mix(in srgb,var(--teal) 6%,var(--surface))}
+.quiz.open .a{max-height:900px}
+.quiz .a-inner{padding:0 16px 16px; font-size:.95em; border-top:1px solid var(--border)}
+.quiz .a-inner p:first-child{margin-top:12px}
+
+/* MAPA CONCEPTUAL responsive */
+.mapwrap{overflow-x:auto; margin:1.4em 0; padding:6px 0}
+
+/* DIVIDERS / MISC */
+hr.soft{border:none; border-top:1px solid var(--border); margin:2em 0}
+.pill-row{display:flex; flex-wrap:wrap; gap:8px; margin:1em 0}
+.pill{font-size:.78em; font-weight:600; padding:6px 13px; border-radius:30px; border:1px solid var(--border)}
+.pill.t{background:color-mix(in srgb,var(--teal) 12%,transparent); color:var(--teal); border-color:color-mix(in srgb,var(--teal) 35%,var(--border))}
+.pill.r{background:color-mix(in srgb,var(--terracotta) 12%,transparent); color:var(--terracotta); border-color:color-mix(in srgb,var(--terracotta) 35%,var(--border))}
+.footer{max-width:var(--maxw); margin:40px auto 0; padding-top:20px; border-top:1px solid var(--border); font-size:.82em; color:var(--ink-faint); text-align:center}
+
+@media(max-width:560px){
+  .hero h1{font-size:2.05em}
+  .js-cols{grid-template-columns:1fr}
+  .js-cols>div{border-right:none; border-bottom:1px solid var(--border)}
+  .js-meta{grid-template-columns:1fr}
+  main{padding:70px 14px 100px}
+}
+@media (prefers-reduced-motion: reduce){*{transition:none!important; scroll-behavior:auto!important}}
+
+/* --- añadidos: mono en tablas, footer --- */
+td.mono, .mono{font-family:'JetBrains Mono',monospace; font-size:.92em; color:var(--ink-soft)}
+.site-footer{max-width:var(--doc-w,820px); margin:3em auto 4em; padding:1.6em 1.4em 0; border-top:1px solid var(--border); text-align:center; font-size:.9em; color:var(--ink-soft)}
+.site-footer p{margin:.3em 0}
+.site-footer .muted{color:var(--ink-faint); font-size:.85em}
+
+</style>
+</head>
+<body>
+<!-- ===== BARRA SUPERIOR ===== -->
+<header class="topbar" id="topbar">
+  <button class="iconbtn pinhide" id="menuBtn" aria-label="Abrir índice">☰</button>
+  <div class="tb-title">Costeo por Órdenes<small>Contabilidad de Costos I · UDEP</small></div>
+  <div class="tb-spacer"></div>
+  <button class="iconbtn" id="topA11y" aria-label="Accesibilidad">⚙</button>
+</header>
+<div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+
+<!-- ===== SIDEBAR ===== -->
+<nav class="sidebar" id="sidebar" aria-label="Índice">
+  <div class="sb-head">
+    <h1>Costeo por Órdenes</h1>
+    <p>Teoría con maestría · Unidad 6</p>
+  </div>
+  <div class="sb-nav" id="sbNav">
+    <a href="#intro">Cómo leer esta guía</a>
+    <div class="grp">Parte I · El mapa</div>
+    <a href="#s1">1 · Dos formas de costear</a>
+    <a href="#s2">2 · ¿Cuándo por órdenes?</a>
+    <a href="#s3">3 · La hoja de costos</a>
+    <div class="grp">Parte II · Los tres elementos</div>
+    <a href="#s4">4 · Materia prima directa</a>
+    <a href="#s5">5 · Mano de obra directa</a>
+    <a href="#s6">6 · CIF: el problema del tiempo</a>
+    <a href="#s7" class="sub">6.1 Real vs. Normal</a>
+    <a href="#s8" class="sub">6.2 Tasa predeterminada</a>
+    <a href="#s9" class="sub">6.3 Sub / sobre-aplicación</a>
+    <div class="grp">Parte III · Cierre del ciclo</div>
+    <a href="#s10">7 · Flujo de costos y asientos</a>
+    <a href="#s11">8 · Costo unitario y utilidad</a>
+    <div class="grp">Parte IV · Casos especiales</div>
+    <a href="#s12">9 · Dañadas y defectuosas</a>
+    <a href="#s13">10 · Desecho y desperdicio</a>
+    <a href="#s14">11 · Operaciones y proyectos</a>
+    <div class="grp">Cierre</div>
+    <a href="#mapa">Mapa conceptual</a>
+    <a href="#sintesis">Síntesis de fórmulas</a>
+    <a href="#quiz">Autoevaluación</a>
+  </div>
+</nav>
+<div class="overlay" id="overlay"></div>
+
+<!-- ===== PANEL ACCESIBILIDAD ===== -->
+<button class="a11y-fab" id="a11yFab" aria-label="Opciones de lectura">✦</button>
+<div class="a11y-panel" id="a11yPanel" role="dialog" aria-label="Opciones de lectura">
+  <h3>Optimizar para tu pantalla</h3>
+  <div class="dev-row" id="devRow">
+    <button data-dev="phone" aria-pressed="false">📱 Teléfono</button>
+    <button data-dev="tablet" aria-pressed="false">📲 iPad</button>
+    <button data-dev="desktop" aria-pressed="false">💻 Escritorio</button>
+  </div>
+  <p class="dev-hint">Ajusta de un toque el ancho y el tamaño de letra ideales. Se detecta solo la primera vez; luego puedes afinar abajo.</p>
+  <h3>Tema de color</h3>
+  <div class="swatches" id="swatches">
+    <button class="sw" data-set="claro" title="Claro" aria-pressed="true"></button>
+    <button class="sw" data-set="sepia" title="Sepia" aria-pressed="false"></button>
+    <button class="sw" data-set="pizarra" title="Pizarra" aria-pressed="false"></button>
+    <button class="sw" data-set="oscuro" title="Oscuro" aria-pressed="false"></button>
+    <button class="sw" data-set="alto-contraste" title="Alto contraste" aria-pressed="false"></button>
+  </div>
+  <h3>Tamaño de letra</h3>
+  <div class="fs-row">
+    <button id="fsMinus" aria-label="Reducir letra">A−</button>
+    <span class="fs-ind" id="fsInd">130%</span>
+    <button id="fsPlus" aria-label="Aumentar letra">A+</button>
+    <button class="fs-reset" id="fsReset">reset</button>
+  </div>
+  <h3>Ancho de lectura</h3>
+  <div class="width-row" id="widthRow">
+    <button data-w="comodo" aria-pressed="true">Cómodo</button>
+    <button data-w="amplio" aria-pressed="false">Amplio</button>
+    <button data-w="completo" aria-pressed="false">Completo</button>
+  </div>
+</div>
+
+<main>
+<div class="doc">
+<!-- ===== HERO ===== -->
+<section class="hero" id="top">
+  <span class="eyebrow">Unidad 6 · Sistemas de acumulación de costos</span>
+  <h1>Costeo por Órdenes de Trabajo</h1>
+  <p class="sub">Cómo una empresa que fabrica <em>cosas distintas para cada cliente</em> sabe exactamente cuánto le cuesta cada pedido —y cuánto gana con él.</p>
+  <div class="hero-meta">
+    <span class="chip">Prof. Gino Vivanco · UDEP</span>
+    <span class="chip">Basado en PPT7 + Polimeni, cap. 5</span>
+    <span class="chip">Desde cero · máxima profundidad</span>
+  </div>
+</section>
+
+<!-- ===== INTRO ===== -->
+<section id="intro">
+  <h2>Cómo leer esta guía</h2>
+  <p class="lead">No vamos a memorizar fórmulas sueltas. Vamos a <strong>construir el sistema desde su lógica</strong>, de modo que cuando resuelvas un ejercicio sepas no solo <em>qué</em> hacer, sino <em>por qué</em> tiene que ser así.</p>
+  <p>Cada idea sigue siempre el mismo recorrido, y verás estos cuatro pasos una y otra vez:</p>
+  <div class="pill-row">
+    <span class="pill r">💡 Intuición primero</span>
+    <span class="pill t">📐 Definición y teoría</span>
+    <span class="pill r">🧠 Por qué importa</span>
+    <span class="pill t">🔢 Ejemplo resuelto</span>
+  </div>
+  <div class="callout c-tip">
+    <span class="tag">Cómo está armado</span>
+    Los recuadros tienen significado fijo: <strong>💡 intuición</strong> (la imagen mental), <strong>📐 fórmula</strong> (lo formal), <strong>🔑 clave</strong> (lo que no puede fallar en un examen), <strong>🧠 insight</strong> (la conexión profunda), <strong>⚠️ advertencia</strong> (el error típico) y <strong>❓ duda</strong> (lo que casi todos preguntan). Úsalos como anclas.
+  </div>
+  <div class="callout c-clave">
+    <span class="tag">La gran pregunta de toda la unidad</span>
+    Una imprenta hace hoy 2 000 volantes para una panadería y mañana un libro de tapa dura para una universidad. Son productos <em>completamente distintos</em>. <strong>¿Cómo calcula cuánto le costó cada trabajo por separado</strong>, si comparten el mismo local, las mismas máquinas y a veces los mismos operarios? Todo lo que sigue es la respuesta a esa pregunta.
+  </div>
+</section>
+
+<!-- ===== S1 · DOS FORMAS DE COSTEAR ===== -->
+<section id="s1">
+  <h2><span class="divnum">01</span> &nbsp;Dos formas de costear: por órdenes vs. por procesos</h2>
+
+  <div class="callout c-intuicion">
+    <span class="tag">Intuición</span>
+    Piensa en dos cocinas. En la primera, un <strong>restaurante de menú a la carta</strong>: cada cliente pide algo distinto, el chef prepara <em>ese</em> plato, lo cobra y sabe exactamente cuánto le costó. En la segunda, una <strong>fábrica de gaseosas</strong>: el mismo líquido fluye sin parar por las tuberías, botella tras botella idéntica; no tiene sentido preguntar "¿cuánto costó <em>esta</em> botella?", sino "¿cuánto costó la producción de hoy, dividida entre las botellas de hoy?".
+  </div>
+
+  <p>La primera cocina es <strong>costeo por órdenes</strong>. La segunda es <strong>costeo por procesos</strong>. La naturaleza del producto decide cuál usar: no es una preferencia, es una consecuencia de <em>cómo se fabrica</em>.</p>
+
+  <h3>El criterio que lo decide todo</h3>
+  <p>La pregunta clave es: <strong>¿los productos son distinguibles entre sí o son indistinguibles?</strong></p>
+  <div class="tbl-wrap">
+  <table class="cmp">
+    <thead><tr><th>Factor de comparación</th><th>Por órdenes (pedido)</th><th>Por procesos</th></tr></thead>
+    <tbody>
+      <tr><td>Proceso de fabricación</td><td>Bajo especificaciones del cliente, trabajos especiales</td><td>Producción masiva, continua, estandarizada</td></tr>
+      <tr><td>El producto es…</td><td>Diferenciado, heterogéneo (cada uno distinto)</td><td>Homogéneo, uniforme, en grandes volúmenes</td></tr>
+      <tr><td>¿Cómo se acumula el costo?</td><td>Por <strong>cada orden de trabajo</strong></td><td>Por <strong>cada proceso o centro de costo</strong></td></tr>
+      <tr><td>Costo unitario</td><td>Costo total de la orden ÷ unidades de la orden</td><td>Costo del periodo del depto. ÷ unidades del periodo</td></tr>
+      <tr><td>Ejemplos</td><td>Sastre a medida, imprenta, astillero, constructora, software a medida</td><td>Coca-Cola, Bimbo, Cemex, Repsol, Nestlé</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="callout c-insight">
+    <span class="tag">El insight que conecta ambos</span>
+    Los dos sistemas usan <strong>exactamente los mismos tres elementos del costo</strong>: materia prima directa, mano de obra directa y costos indirectos de fabricación (CIF). Lo único que cambia es <strong>el "recipiente" donde echas esos costos</strong>: en órdenes, el recipiente es la <em>orden</em>; en procesos, es el <em>departamento</em>. Dominar ese "a dónde va cada costo" es el 80% de la unidad.
+  </div>
+
+  <figure class="fig">
+    <svg viewBox="0 0 640 240" role="img" aria-label="Comparación de acumulación de costos">
+      <rect class="svg-bg" x="0" y="0" width="640" height="240" rx="12"/>
+      <!-- por órdenes -->
+      <text x="20" y="28" class="svg-ink" font-family="Fraunces,serif" font-weight="700" font-size="16">Por órdenes</text>
+      <g>
+        <rect x="20" y="44" width="120" height="46" rx="8" fill="#C04B2E" opacity="0.16" stroke="#C04B2E"/>
+        <text x="80" y="72" text-anchor="middle" class="svg-ink svg-mono" font-size="12">Orden 101</text>
+        <rect x="20" y="98" width="120" height="46" rx="8" fill="#2A6F6A" opacity="0.16" stroke="#2A6F6A"/>
+        <text x="80" y="126" text-anchor="middle" class="svg-ink svg-mono" font-size="12">Orden 102</text>
+        <rect x="20" y="152" width="120" height="46" rx="8" fill="#B8860B" opacity="0.16" stroke="#B8860B"/>
+        <text x="80" y="180" text-anchor="middle" class="svg-ink svg-mono" font-size="12">Orden 103</text>
+      </g>
+      <text x="80" y="222" text-anchor="middle" class="svg-soft" font-size="11">Costo propio de cada pedido</text>
+      <!-- flecha divisoria -->
+      <line x1="300" y1="30" x2="300" y2="210" class="svg-stroke" stroke-dasharray="4 4"/>
+      <!-- por procesos -->
+      <text x="340" y="28" class="svg-ink" font-family="Fraunces,serif" font-weight="700" font-size="16">Por procesos</text>
+      <g>
+        <rect x="340" y="60" width="90" height="120" rx="8" fill="#6E3A6E" opacity="0.14" stroke="#6E3A6E"/>
+        <text x="385" y="124" text-anchor="middle" class="svg-ink svg-mono" font-size="12">Mezcla</text>
+        <path d="M430 120 H470" class="svg-stroke" stroke-width="2" marker-end="url(#ar)"/>
+        <rect x="478" y="60" width="90" height="120" rx="8" fill="#5D7B5D" opacity="0.16" stroke="#5D7B5D"/>
+        <text x="523" y="124" text-anchor="middle" class="svg-ink svg-mono" font-size="12">Envasado</text>
+      </g>
+      <text x="455" y="210" text-anchor="middle" class="svg-soft" font-size="11">Flujo continuo · unidades idénticas</text>
+      <defs><marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#888"/></marker></defs>
+    </svg>
+    <figcaption>El mismo costo, distinto recipiente: la orden o el proceso.</figcaption>
+  </figure>
+
+  <div class="callout c-duda">
+    <span class="tag">Duda frecuente</span>
+    <strong>"¿Y si una empresa hace las dos cosas?"</strong> Existe, y tiene nombre: el <strong>costeo por operaciones</strong> (lo veremos al final). Es un híbrido: los materiales se rastrean por lote como en órdenes, pero la mano de obra y los CIF se aplican por estación como en procesos. Por ahora quédate con la regla limpia: producto a medida → órdenes; producto en serie → procesos.
+  </div>
+</section>
+<!-- ===== S2 · CUÁNDO POR ÓRDENES ===== -->
+<section id="s2">
+  <h2><span class="divnum">02</span> &nbsp;¿Cuándo se usa costeo por órdenes?</h2>
+
+  <div class="callout c-intuicion">
+    <span class="tag">Intuición</span>
+    Es el sistema del <strong>"hecho a tu medida"</strong>. Donde el cliente manda y el producto se adapta a él —una imprenta publicitaria, una sastrería, un taller de reparaciones, un estudio de auditores, una constructora— ahí vive el costeo por órdenes. El producto pasa por el taller siendo <em>muy distinto</em> de un pedido a otro.
+  </div>
+
+  <h3>Definición formal</h3>
+  <p>El <strong>sistema de costeo por órdenes</strong> es un método de <strong>acumulación y distribución de costos</strong> aplicable a empresas industriales y de servicios que realizan trabajos especiales o fabrican <strong>sobre pedido</strong>, donde es posible separar los costos de cada orden de fabricación distinta. Por cada orden, la empresa calcula sus costos y su beneficio.</p>
+
+  <p>Polimeni lo precisa así: es el más apropiado <strong>cuando los productos difieren en sus requerimientos de materiales y de conversión</strong> (conversión = mano de obra + CIF). Cada producto se fabrica según las especificaciones del cliente, y el precio cotizado se asocia estrechamente al costo estimado.</p>
+
+  <div class="callout c-formula">
+    <span class="tag">Las tres condiciones que hacen "funcionar" el sistema</span>
+    Para que el costeo por órdenes opere bien (Polimeni) se necesita:
+    <ol style="margin:.5em 0 0">
+      <li><strong>Identificar físicamente cada orden</strong> y separar sus costos.</li>
+      <li>Que materiales directos y MOD lleven <strong>el número de la orden</strong>.</li>
+      <li>Aplicar los CIF mediante una <strong>tasa predeterminada</strong> (la pieza que estudiaremos a fondo).</li>
+    </ol>
+  </div>
+
+  <h3>¿Por qué importa tanto separar el costo de cada orden?</h3>
+  <p>Porque en este modelo de negocio <strong>el precio se cotiza antes de producir</strong>. La empresa necesita saber el costo de cada trabajo para tres decisiones vitales:</p>
+  <ul>
+    <li><strong>Fijar precios</strong> con un margen sano (si no conoce el costo, cotiza a ciegas).</li>
+    <li><strong>Evaluar rentabilidad</strong> de cada pedido: ¿este cliente me deja ganancia o pérdida?</li>
+    <li><strong>Valorizar inventarios</strong> de trabajos en proceso y terminados.</li>
+  </ul>
+
+  <div class="bn-grid">
+    <div class="bn"><div class="v">MPD</div><div class="l">Materia prima directa<br>se rastrea por orden</div></div>
+    <div class="bn teal"><div class="v">MOD</div><div class="l">Mano de obra directa<br>se rastrea por orden</div></div>
+    <div class="bn gold"><div class="v">CIF</div><div class="l">Costos indirectos<br>se <em>aplican</em> por orden</div></div>
+  </div>
+
+  <div class="callout c-clave">
+    <span class="tag">La asimetría que define toda la unidad</span>
+    MPD y MOD se pueden <strong>identificar directamente</strong> con cada orden (la requisición y la boleta llevan el número de orden). Los CIF <strong>no</strong>: son compartidos por todas las órdenes (el alquiler, la supervisión, la energía). Por eso a los CIF hay que <strong>repartirlos con un criterio</strong>, y ese criterio es la <em>tasa predeterminada</em>. Guarda esta frase: <strong>"lo directo se rastrea, lo indirecto se aplica."</strong>
+  </div>
+</section>
+
+<!-- ===== S3 · LA HOJA DE COSTOS ===== -->
+<section id="s3">
+  <h2><span class="divnum">03</span> &nbsp;La hoja de costos: el corazón del sistema</h2>
+
+  <div class="callout c-intuicion">
+    <span class="tag">Intuición</span>
+    La hoja de costos es la <strong>"cuenta de la mesa"</strong> de cada pedido. Igual que un mozo va anotando en una comanda todo lo que pide tu mesa hasta que pides la cuenta, la empresa abre una hoja por cada orden y <strong>va anotando ahí cada costo conforme se va incurriendo</strong>: material, horas trabajadas, CIF. Cuando la orden termina, la hoja te dice el total exacto.
+  </div>
+
+  <h3>Definición</h3>
+  <p>Cada pedido se acompaña de una <strong>hoja de costos</strong> (u <em>hoja de pedido</em>), numerada con un código de serie. En ella se resumen los tres elementos —materiales directos, mano de obra directa y CIF aplicados— de esa orden específica. La información sale de documentos fuente que ya conoces de unidades anteriores:</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Elemento</th><th>Documento fuente</th><th>¿Qué controla?</th></tr></thead>
+    <tbody>
+      <tr><td>Materia prima directa</td><td><strong>Requisición de materiales</strong></td><td>La salida de material del almacén hacia la orden</td></tr>
+      <tr><td>Mano de obra directa</td><td><strong>Tarjeta de tiempo</strong> + <strong>boleta de trabajo</strong></td><td>Las horas y a qué orden se cargaron</td></tr>
+      <tr><td>CIF aplicados</td><td><strong>Hoja de CIF por departamento</strong> + tasa</td><td>El reparto del costo indirecto a la orden</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p>Así se ve una hoja de costos terminada (esta es la <strong>Orden 85</strong>, el ejemplo guía que usaremos en toda la guía —tomado de Polimeni y del PPT del curso):</p>
+
+  <div class="job-sheet">
+    <div class="js-head">
+      <div class="t">HOJA DE COSTOS POR ÓRDENES DE TRABAJO</div>
+      <div class="js-meta">
+        <div><span>Cliente:</span> <b>Maple Company</b></div>
+        <div><span>Orden N.°:</span> <b>85</b></div>
+        <div><span>Producto:</span> <b>Mesa de conferencia + sillas</b></div>
+        <div><span>Especificación:</span> <b>Caoba</b></div>
+      </div>
+    </div>
+    <div class="js-cols">
+      <div>
+        <h5>Materiales directos</h5>
+        <div class="row"><span>Req. 430 (caoba)</span><span>2 500</span></div>
+        <div class="row tot"><span>Total</span><span>2 500</span></div>
+      </div>
+      <div>
+        <h5>Mano de obra directa</h5>
+        <div class="row"><span>5 días × 700</span><span>3 500</span></div>
+        <div class="row tot"><span>Total</span><span>3 500</span></div>
+      </div>
+      <div>
+        <h5>CIF aplicados</h5>
+        <div class="row"><span>75% de MOD</span><span>2 625</span></div>
+        <div class="row tot"><span>Total</span><span>2 625</span></div>
+      </div>
+    </div>
+    <div class="js-foot">
+      <div class="row"><span>Precio de venta</span><span>12 000</span></div>
+      <div class="row"><span>(−) Costo de producción</span><span>(8 625)</span></div>
+      <div class="row b"><span>= Utilidad bruta</span><span>3 375</span></div>
+      <div class="row"><span>(−) Gastos de venta y adm. (5% s/ venta)</span><span>(600)</span></div>
+      <div class="row b"><span>= Utilidad estimada</span><span>2 775</span></div>
+    </div>
+  </div>
+
+  <div class="callout c-advertencia">
+    <span class="tag">Cuidado: una diferencia entre el PPT y el libro</span>
+    En el ejemplo del <strong>PPT del curso</strong>, la hoja anota los materiales directos como <strong>2 610</strong> (que incluye S/110 de materiales indirectos: tintura, pegamento, clavos), dando un costo de producción de <strong>8 735</strong>. El tratamiento <strong>riguroso de Polimeni</strong> separa esos S/110 al CIF, dejando materiales directos en <strong>2 500</strong> y costo de producción en <strong>8 625</strong>. <br><br>👉 <strong>El correcto es 2 500 / 8 625</strong>: los materiales <em>indirectos</em> nunca van como "directos" en la hoja, sino al CIF. Lo verás con detalle en la Sección 4. Si tu profe presenta el cuadro del PPT, sabe que la diferencia son exactamente esos S/110 mal clasificados.
+  </div>
+
+  <div class="callout c-tip">
+    <span class="tag">Lee la hoja de abajo hacia arriba para entender el negocio</span>
+    La hoja no es solo contable: es una <strong>herramienta de decisión</strong>. El bloque inferior (precio − costo = utilidad) le dice al gerente, <em>antes de cerrar el trato</em>, si el pedido conviene. Por eso muchos formatos incluyen el precio de venta y los gastos de venta: para leer la utilidad de un vistazo.
+  </div>
+</section>
+<!-- ===== S4 · MATERIA PRIMA DIRECTA ===== -->
+<section id="s4">
+  <h2><span class="divnum">04</span> &nbsp;Primer elemento: Materia prima directa</h2>
+
+  <div class="callout c-intuicion">
+    <span class="tag">Intuición</span>
+    Imagina el almacén como un banco: nadie saca material "porque sí". Para retirar algo hay que llenar un <strong>vale firmado</strong> que dice qué se llevó, cuánto y <em>para qué orden</em>. Ese vale es la <strong>requisición de materiales</strong>, y es lo que permite que cada gramo de caoba quede "marcado" con el número de su orden.
+  </div>
+
+  <h3>¿Qué cantidad y a qué costo?</h3>
+  <p><strong>Cantidad:</strong> se incluye <em>toda</em> la materia prima realmente usada para fabricar el pedido —incluso la que termina en unidades defectuosas que, estadísticamente, es inevitable producir.</p>
+  <p><strong>Costo (en unidades monetarias):</strong> es el costo histórico, pero su valor exacto depende del <strong>método de valuación de existencias</strong> que use la empresa.</p>
+
+  <div class="callout c-clave">
+    <span class="tag">Métodos de valuación: lo que tu curso permite</span>
+    Solo dos métodos son válidos: <strong>PEPS (FIFO)</strong> y <strong>Promedio</strong> (ponderado o móvil). <br><strong>UEPS/LIFO está prohibido</strong> por la NIC 2. Si un ejercicio te tienta con "últimas entradas primeras salidas", es un distractor: descártalo.
+  </div>
+
+  <h3>La requisición de materiales</h3>
+  <p>Es el documento fuente. Lo solicita producción al encargado de almacén, y registra: número de orden de trabajo, departamento, cantidades, descripción, costo unitario y costo total.</p>
+
+  <p>Veamos la requisición real de la Orden 85 y la lección que esconde:</p>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Cantidad</th><th>Descripción</th><th>N.° Orden</th><th class="num">C. unit.</th><th class="num">C. total</th></tr></thead>
+    <tbody>
+      <tr><td>5 láminas</td><td>Caoba (73A61)</td><td>85</td><td class="num">500</td><td class="num">2 500</td></tr>
+      <tr><td>10 galones</td><td>Tintura (27530)</td><td>—</td><td class="num">5</td><td class="num">50</td></tr>
+      <tr><td>1 caja</td><td>Pegamento (67G21)</td><td>—</td><td class="num">20</td><td class="num">20</td></tr>
+      <tr><td>1 caja</td><td>Clavos (13N13)</td><td>—</td><td class="num">40</td><td class="num">40</td></tr>
+      <tr class="total"><td colspan="4">Total requisición</td><td class="num">2 610</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="callout c-insight">
+    <span class="tag">El "truco" de la columna N.° de Orden</span>
+    Mira la columna del número de orden: <strong>solo la caoba lleva "85"</strong>. La tintura, el pegamento y los clavos llevan "—". <strong>Eso no es un descuido: es la frontera entre directo e indirecto.</strong> La caoba se puede atribuir a <em>esta</em> mesa (es directa). La tintura y los clavos se usan en cualquier mueble, en cantidades minúsculas que no vale la pena rastrear pedido por pedido (son <strong>indirectos</strong>). Por eso:
+  </div>
+
+  <div class="step">
+    <div class="step-reasoning">
+      <span class="lbl">Razonamiento — a dónde va cada cosa</span>
+      Los 5 láminas de caoba (S/2 500) son <strong>material directo</strong> → van a la orden. <br>
+      La tintura + pegamento + clavos (S/110) son <strong>material indirecto</strong> → NO van a la orden, van al <strong>Control de CIF</strong>.
+    </div>
+    <div class="calc-block">
+Requisición total ......... 2 610
+  → Material directo (orden 85) ... <span class="res">2 500</span>
+  → Material indirecto (a CIF) .....  <span class="res">110</span>
+<span class="cmt"># Por eso el costo de producción correcto usa 2 500, no 2 610</span>
+    </div>
+  </div>
+
+  <p>El asiento que registra el <strong>consumo</strong> de materiales para la Orden 85 deja esto clarísimo:</p>
+  <div class="asiento">
+  <table>
+    <tr><td class="deb">Inv. Trabajo en proceso · Orden 85</td><td class="num">2 500</td><td></td></tr>
+    <tr><td class="deb">Control de CIF · Dpto. producción</td><td class="num">110</td><td></td></tr>
+    <tr><td class="cre">Inventario de materiales</td><td></td><td class="num">2 610</td></tr>
+    <tr><td colspan="3" class="cap">El material directo entra a la orden; el indirecto entra al CIF.</td></tr>
+  </table>
+  </div>
+
+  <div class="callout c-advertencia">
+    <span class="tag">Error típico número 1</span>
+    Cargar el <strong>total de la requisición</strong> (2 610) como material directo de la orden. Es justo lo que hace el cuadro del PPT y por eso da 8 735 en vez de 8 625. <strong>Siempre separa</strong>: lo que lleva número de orden es directo; lo que no, es indirecto y se va al CIF.
+  </div>
+</section>
+
+<!-- ===== S5 · MANO DE OBRA DIRECTA ===== -->
+<section id="s5">
+  <h2><span class="divnum">05</span> &nbsp;Segundo elemento: Mano de obra directa</h2>
+
+  <div class="callout c-intuicion">
+    <span class="tag">Intuición</span>
+    Necesitas responder dos preguntas distintas sobre cada trabajador: <strong>(1) ¿cuántas horas vino esta semana?</strong> (para pagarle bien) y <strong>(2) ¿en qué órdenes gastó esas horas?</strong> (para cobrarle a cada cliente lo suyo). Son dos documentos diferentes porque responden preguntas diferentes.
+  </div>
+
+  <h3>Dos documentos fuente, dos propósitos</h3>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Documento</th><th>Responde</th><th>Sirve para</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Tarjeta de tiempo</strong> (reloj)</td><td>¿Cuántas horas trabajó en total?</td><td>Calcular y pagar la <strong>nómina</strong></td></tr>
+      <tr><td><strong>Boleta de trabajo</strong></td><td>¿En qué órdenes repartió esas horas?</td><td>Distribuir el costo a cada <strong>orden</strong></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="callout c-clave">
+    <span class="tag">La conciliación que siempre debe cuadrar</span>
+    La suma de horas de las <strong>boletas</strong> (lo que se cargó a las órdenes + lo indirecto) debe ser <strong>igual</strong> al total de horas de las <strong>tarjetas de tiempo</strong> (lo que se pagó). Si no cuadra, hay horas "perdidas" sin asignar. Esta conciliación es un control clásico de examen.
+  </div>
+
+  <h3>¿Qué incluye el costo de la mano de obra directa?</h3>
+  <p>No es solo el salario base. Incluye <strong>todo lo que esa hora le cuesta a la empresa</strong>: salario, horas extras, cargas sociales y aportes. Por eso, en la práctica, se calcula un <strong>costo promedio por hora útil</strong> = costo anual del trabajador ÷ horas útiles del año.</p>
+
+  <div class="callout c-tip">
+    <span class="tag">Puente con la Unidad 5</span>
+    Aquí reaparece todo lo que viste en mano de obra: la <strong>fórmula del curso para la CTS es R/12</strong> (no 7R/72), EsSalud (9%) sobre la remuneración mensual, etc. Cuando un ejercicio te pida el "costo total de la MOD", recuerda multiplicar por el factor laboral que ya dominas. En esta unidad ese costo simplemente <em>entra</em> a la orden.
+  </div>
+
+  <h3>Directa vs. indirecta: la misma frontera de siempre</h3>
+  <p>Lo que se identifica con una orden específica es <strong>mano de obra directa</strong> → entra a esa orden. Lo que no (supervisores, mantenimiento) es <strong>mano de obra indirecta</strong> → entra al Control de CIF.</p>
+
+  <p>En la Orden 85, la nómina total de la semana fue S/4 800 y se repartió así:</p>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Concepto</th><th class="num">Monto</th><th>Destino</th></tr></thead>
+    <tbody>
+      <tr><td>MOD orden 73</td><td class="num">300</td><td>→ Orden 73</td></tr>
+      <tr><td>MOD orden 85</td><td class="num">3 500</td><td>→ Orden 85</td></tr>
+      <tr><td>MO indirecta (supervisión, mantenim.)</td><td class="num">1 000</td><td>→ Control de CIF</td></tr>
+      <tr class="total"><td>Nómina total</td><td class="num">4 800</td><td></td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="asiento">
+  <table>
+    <tr><td class="deb">Inv. Trabajo en proceso · Orden 73</td><td class="num">300</td><td></td></tr>
+    <tr><td class="deb">Inv. Trabajo en proceso · Orden 85</td><td class="num">3 500</td><td></td></tr>
+    <tr><td class="deb">Control de CIF · Dpto. producción</td><td class="num">1 000</td><td></td></tr>
+    <tr><td class="cre">Nómina por pagar</td><td></td><td class="num">4 800</td></tr>
+    <tr><td colspan="3" class="cap">Directa a las órdenes; indirecta al CIF. Misma lógica que con materiales.</td></tr>
+  </table>
+  </div>
+
+  <div class="callout c-duda">
+    <span class="tag">Duda frecuente</span>
+    <strong>"¿Las horas extras y el tiempo ocioso son directos o indirectos?"</strong> Regla del curso (y del libro): el <strong>tiempo ocioso</strong> por ineficiencias ajenas al trabajador y el <strong>recargo de horas extra</strong> que no se atribuye a un pedido urgente específico suelen tratarse como <strong>CIF (indirecto)</strong>, no como MOD. El salario base de las horas trabajadas en la orden sí es directo. Lo verás en el ejercicio de Bill Hammond (4 horas ociosas → CIF).
+  </div>
+</section>
+<!-- ===== S6 · CIF EL PROBLEMA DEL TIEMPO ===== -->
+<section id="s6">
+  <h2><span class="divnum">06</span> &nbsp;Tercer elemento: CIF y el problema del tiempo</h2>
+
+  <div class="callout c-intuicion">
+    <span class="tag">Intuición</span>
+    Tu casero te cobra la luz <strong>a fin de mes</strong>, pero tú quieres saber cuánto te costó <strong>la cena de anoche</strong>. No puedes esperar al recibo para saberlo. Necesitas una <strong>estimación razonable</strong> ("la cena gasta más o menos X de luz") y ajustar después cuando llegue el recibo real. Ese es, exactamente, el problema de los CIF.
+  </div>
+
+  <h3>¿Por qué los CIF son un dolor de cabeza?</h3>
+  <p>Los materiales y la mano de obra son fáciles: ocurren, los registras, los cargas a la orden. Los CIF tienen <strong>dos propiedades incómodas</strong>:</p>
+  <ol>
+    <li><strong>Son indirectos</strong>: compartidos por todas las órdenes (supervisión, energía de planta, depreciación, mantenimiento, seguro de planta…). No "pertenecen" a un pedido.</li>
+    <li><strong>Fluctúan y se conocen tarde</strong>: muchos llegan como facturas a <strong>fin de periodo</strong>. El recibo de luz, la depreciación, el seguro… no los sabes el día que terminas una orden.</li>
+  </ol>
+
+  <div class="callout c-clave">
+    <span class="tag">El dilema central</span>
+    Si esperas a fin de año para conocer los CIF reales y recién ahí costear las órdenes, <strong>llegas tardísimo</strong>: no puedes cotizar precios ni evaluar rentabilidad a tiempo. Una espera tan larga es <em>impracticable</em>. <br><strong>Solución:</strong> no esperes. Usa una <strong>tasa predeterminada</strong> calculada a inicio de año con un presupuesto, aplica los CIF a cada orden con esa tasa, y ajusta la diferencia al final.
+  </div>
+
+  <p>¿Qué incluye típicamente la lista de CIF de tu curso (según el PPT2)? Supervisión, energía y agua de planta, depreciación de maquinaria y del edificio de planta, mantenimiento, control de calidad y seguro de planta. Recuerda:</p>
+  <div class="callout c-tip">
+    <span class="tag">Fijo vs. variable según depreciación</span>
+    El <strong>método de depreciación</strong> decide el comportamiento: <strong>línea recta → CIF fijo</strong> (igual cada periodo); <strong>unidades de producción → CIF variable</strong> (sube con el volumen). Útil cuando un ejercicio pide separar fijos de variables.
+  </div>
+</section>
+
+<!-- ===== S7 · REAL VS NORMAL ===== -->
+<section id="s7">
+  <h2><span class="divnum">06·1</span> &nbsp;Costeo real vs. costeo normal</h2>
+
+  <div class="callout c-intuicion">
+    <span class="tag">Intuición</span>
+    <strong>Costeo real</strong> = esperar el recibo de luz para saber el costo (exacto pero tarde). <strong>Costeo normal</strong> = estimar la luz con una tasa para no detener el negocio (oportuno, y luego se ajusta). El "normal" no significa "común": significa <em>normalizado</em> mediante una tasa.
+  </div>
+
+  <h3>La única diferencia entre ambos</h3>
+  <p>Los dos sistemas tratan <strong>igual</strong> los materiales directos y la mano de obra directa: a su costo <em>real</em>. La diferencia está <strong>solo en los CIF</strong>:</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Elemento del costo</th><th>Costeo REAL</th><th>Costeo NORMAL</th></tr></thead>
+    <tbody>
+      <tr><td>Materiales directos</td><td>Real</td><td>Real</td></tr>
+      <tr><td>Mano de obra directa</td><td>Real</td><td>Real</td></tr>
+      <tr><td><strong>CIF</strong></td><td><strong>Real</strong></td><td><strong>Aplicado</strong> (tasa predet. × nivel real)</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="callout c-formula">
+    <span class="tag">Definiciones formales</span>
+    <strong>Costeo real (histórico):</strong> los costos se calculan una vez terminada la producción, con los CIF realmente incurridos; se registran cuando se incurren. <br><br>
+    <strong>Costeo normal:</strong> MP y MOD se acumulan conforme se incurren, pero los CIF se aplican con una <strong>tasa predeterminada</strong> multiplicada por el <strong>nivel de actividad real</strong>.
+  </div>
+
+  <figure class="fig">
+    <svg viewBox="0 0 640 200" role="img" aria-label="Línea de tiempo costeo real vs normal">
+      <rect class="svg-bg" x="0" y="0" width="640" height="200" rx="12"/>
+      <line x1="40" y1="100" x2="600" y2="100" class="svg-stroke" stroke-width="2"/>
+      <circle cx="60" cy="100" r="6" fill="#2A6F6A"/><text x="60" y="80" text-anchor="middle" class="svg-soft" font-size="11">Inicio de año</text>
+      <text x="60" y="128" text-anchor="middle" class="svg-mono svg-ink" font-size="10">Presupuesto CIF</text>
+      <circle cx="330" cy="100" r="6" fill="#C04B2E"/><text x="330" y="80" text-anchor="middle" class="svg-soft" font-size="11">Durante el año</text>
+      <text x="330" y="128" text-anchor="middle" class="svg-mono svg-ink" font-size="10">Aplico CIF con la tasa</text>
+      <circle cx="580" cy="100" r="6" fill="#B8860B"/><text x="580" y="80" text-anchor="middle" class="svg-soft" font-size="11">Fin de año</text>
+      <text x="580" y="128" text-anchor="middle" class="svg-mono svg-ink" font-size="10">Comparo con CIF real</text>
+      <text x="320" y="170" text-anchor="middle" class="svg-soft" font-size="12" font-style="italic">El costeo normal "adelanta" la información sin esperar el recibo final.</text>
+    </svg>
+    <figcaption>El costeo normal resuelve el problema del tiempo: aplica primero, ajusta después.</figcaption>
+  </figure>
+
+  <div class="callout c-insight">
+    <span class="tag">Por qué el curso (y la práctica) usan costeo normal</span>
+    Porque equilibra <strong>oportunidad</strong> (tener el costo cuando lo necesitas para cotizar) con <strong>razonabilidad</strong> (la tasa se basa en un presupuesto serio). El precio de esta comodidad es una pequeña diferencia al final —la sub o sobre-aplicación— que se ajusta. Es un trato que vale la pena.
+  </div>
+</section>
+<!-- ===== S8 · TASA PREDETERMINADA ===== -->
+<section id="s8">
+  <h2><span class="divnum">06·2</span> &nbsp;La tasa predeterminada de CIF</h2>
+
+  <div class="callout c-intuicion">
+    <span class="tag">Intuición</span>
+    Es una <strong>"tarifa por unidad de esfuerzo"</strong>. Como cuando un taxi cobra S/2 por kilómetro: fija la tarifa por adelantado (S/2/km) y luego cobra según los km reales. La empresa fija "tantos soles de CIF por cada hora (o por cada sol de MOD, o por cada hora-máquina)" y luego aplica según la actividad real.
+  </div>
+
+  <h3>La fórmula madre</h3>
+  <div class="callout c-formula">
+    <span class="tag">Tasa predeterminada de aplicación de CIF</span>
+    \[ \text{Tasa predeterminada} = \dfrac{\text{CIF estimados totales (presupuestados)}}{\text{Base de reparto total estimada}} \]
+    Y luego, durante el año:
+    \[ \text{CIF aplicados} = \text{Tasa predeterminada} \times \text{Nivel de actividad REAL} \]
+  </div>
+
+  <div class="callout c-clave">
+    <span class="tag">El detalle que más se confunde</span>
+    El <strong>numerador y la base del denominador son ESTIMADOS</strong> (presupuesto de inicio de año). Pero al <strong>aplicar</strong>, multiplicas la tasa por el nivel de actividad <strong>REAL</strong>. <br>Frase para recordar: <strong>"Tasa con presupuesto, aplicación con realidad."</strong>
+  </div>
+
+  <h3>¿Qué puede ir en la "base de reparto"?</h3>
+  <p>La base debe ser algo que <em>cause</em> los CIF, es decir, que crezca cuando la actividad crece. El curso reconoce cuatro:</p>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Base</th><th>Tasa queda expresada como…</th><th>Buena cuando…</th></tr></thead>
+    <tbody>
+      <tr><td>Unidades de producción</td><td>S/ por unidad</td><td>todas las unidades son parecidas</td></tr>
+      <tr><td>Costo de MOD</td><td>% del costo de MOD</td><td>el proceso es intensivo en mano de obra</td></tr>
+      <tr><td>Horas de MOD</td><td>S/ por hora-hombre</td><td>las tarifas salariales varían mucho</td></tr>
+      <tr><td>Horas-máquina</td><td>S/ por hora-máquina</td><td>el proceso es automatizado</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="callout c-insight">
+    <span class="tag">Por qué se elige una u otra base</span>
+    La base ideal es la que <strong>mejor explica por qué suben los CIF</strong>. Si en tu planta los CIF (energía, depreciación de máquinas) crecen con el uso de las máquinas, la base lógica son las <strong>horas-máquina</strong>. Si en cambio casi todo el costo indirecto acompaña al trabajo humano, usa <strong>horas o costo de MOD</strong>. Distintos departamentos pueden usar <strong>bases distintas</strong> (un dpto. por horas-máquina, otro por costo de MOD).
+  </div>
+
+  <h3>Ejemplo limpio de cada base</h3>
+  <p>Una empresa presupuesta para el año:</p>
+  <div class="step">
+    <div class="step-reasoning">
+      <span class="lbl">Paso 1 — Calcular la tasa con el presupuesto</span>
+      Con CIF presupuestados y la base estimada, divide. Cada base da una "moneda" distinta para la tasa.
+    </div>
+    <div class="calc-block">
+<span class="cmt"># CIF presupuestados del año = S/ 200 000</span>
+Por unidades  : 200 000 / 50 000 unid.   = <span class="res">S/ 4 por unidad</span>
+Por costo MOD : 120 000 / 160 000 MOD    = <span class="res">75% del costo de MOD</span>
+Por horas MOD : 200 000 / 40 000 h-hombre= <span class="res">S/ 5 por hora-MOD</span>
+Por h-máquina : 300 000 / 25 000 h-máq.  = <span class="res">S/ 12 por hora-máquina</span>
+    </div>
+  </div>
+
+  <p>Tomemos la base <strong>costo de MOD = 75%</strong> (justo la que usa la Orden 85) y apliquémosla:</p>
+  <div class="step">
+    <div class="step-reasoning">
+      <span class="lbl">Paso 2 — Aplicar con la actividad real</span>
+      La Orden 85 incurrió en S/3 500 de MOD <em>real</em>. Aplico la tasa a esa realidad.
+    </div>
+    <div class="calc-block">
+CIF aplicados = Tasa × nivel real
+            = 75% × 3 500 (MOD real de la orden)
+            = <span class="res">S/ 2 625</span>
+<span class="cmt"># Este es el CIF que aparece en la hoja de costos de la orden 85</span>
+    </div>
+  </div>
+
+  <div class="chart-card">
+    <h4>Composición del costo de producción de la Orden 85</h4>
+    <div class="cap">Aplicada la tasa (75% × 3 500 = 2 625), los tres elementos de fabricación se suman: S/ 2 500 MD + S/ 3 500 MOD + S/ 2 625 CIF = <strong>S/ 8 625</strong>.</div>
+    <div class="chart-box"><canvas id="chartBases"></canvas></div>
+  </div>
+
+  <div class="callout c-advertencia">
+    <span class="tag">Error típico número 2</span>
+    Calcular la tasa con datos <strong>presupuestados</strong> y luego, al aplicar, <strong>volver a usar el presupuesto</strong> en vez de la actividad real. La aplicación SIEMPRE usa el nivel <strong>real</strong>. Otro error gemelo: usar la base equivocada (aplicar por horas cuando la tasa se definió por costo de MOD). La tasa y su base son un par inseparable.
+  </div>
+
+  <p>El asiento que registra la <strong>aplicación</strong> de CIF a la Orden 85:</p>
+  <div class="asiento">
+  <table>
+    <tr><td class="deb">Inv. Trabajo en proceso · Orden 85</td><td class="num">2 625</td><td></td></tr>
+    <tr><td class="cre">CIF aplicados · Dpto. producción</td><td></td><td class="num">2 625</td></tr>
+    <tr><td colspan="3" class="cap">Nota: se acredita "CIF aplicados", NO "Control de CIF". Son dos cuentas distintas (ver Sección 9).</td></tr>
+  </table>
+  </div>
+</section>
+<!-- ===== S9 · SUB / SOBRE-APLICACIÓN ===== -->
+<section id="s9">
+  <h2><span class="divnum">06·3</span> &nbsp;Sub-aplicación y sobre-aplicación de CIF</h2>
+
+  <div class="callout c-intuicion">
+    <span class="tag">Intuición</span>
+    Estimaste la luz de tu cena en S/10, pero el recibo real dijo S/13. <strong>Te quedaste corto en S/3</strong>: subestimaste. Si hubiera dicho S/8, <strong>te pasaste por S/2</strong>: sobreestimaste. Como trabajaste con una <em>estimación</em>, al final siempre hay una diferencia contra lo real. Eso es la sub o sobre-aplicación.
+  </div>
+
+  <h3>Dos cuentas que hay que distinguir</h3>
+  <p>El sistema lleva <strong>dos cuentas de CIF en paralelo</strong>, y compararlas es lo que revela la diferencia:</p>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Cuenta</th><th>Qué acumula</th><th>Naturaleza</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Control de CIF</strong></td><td>Los CIF <strong>reales</strong> que se van incurriendo (mat. indir., MO indir., depreciación, energía…)</td><td>Deudora</td></tr>
+      <tr><td><strong>CIF aplicados</strong></td><td>Los CIF que se cargaron a las órdenes con la <strong>tasa</strong></td><td>Acreedora</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="callout c-formula">
+    <span class="tag">Las tres situaciones posibles</span>
+    <ul style="margin:.4em 0 0">
+      <li><strong>CIF aplicados &gt; CIF reales</strong> → <strong>sobre-aplicación</strong> (sobre-absorción). Cargaste de más.</li>
+      <li><strong>CIF aplicados = CIF reales</strong> → absorbidos exactamente (caso ideal, raro).</li>
+      <li><strong>CIF aplicados &lt; CIF reales</strong> → <strong>sub-aplicación</strong> (sub-absorción). Cargaste de menos.</li>
+    </ul>
+  </div>
+
+  <div class="callout c-clave">
+    <span class="tag">Cuál cae más en examen</span>
+    La <strong>sub-aplicación</strong> (real &gt; aplicado) es el escenario más frecuente: en la práctica los CIF reales tienden a superar lo aplicado. Tenlo como tu "caso por defecto"; la sobre-aplicación se ajusta en sentido contrario.
+  </div>
+
+  <h3>Ejemplo con la Orden 85 (y su compañera, la 73)</h3>
+  <p>Cuidado: para medir sub/sobre-aplicación se comparan los CIF reales del <strong>departamento</strong> contra los CIF aplicados a <strong>todas</strong> las órdenes que pasaron por él (la 85 y la 73), no contra una sola orden.</p>
+  <div class="step">
+    <div class="step-reasoning">
+      <span class="lbl">Razonamiento — comparar totales del departamento</span>
+      CIF reales del depto. en la semana = mat. indir. + MO indir. + depreciaciones + servicios + varios. <br>
+      CIF aplicados = 75% × MOD de cada orden (85 y 73).
+    </div>
+    <div class="calc-block">
+CIF REALES del departamento:
+  Mat. indirectos ......  110
+  MO indirecta .........1 000
+  Deprec. maquinaria ...  220
+  Deprec. fábrica ......  290
+  Servicios grales. ....  490
+  Varios ...............1 000
+  ─────────────────────────
+  Total real ........... <span class="res">3 110</span>
+
+CIF APLICADOS (tasa 75% del costo MOD):
+  Orden 85: 75% × 3 500 = 2 625
+  Orden 73: 75% ×   300 =   225
+  ─────────────────────────
+  Total aplicado ....... <span class="res">2 850</span>
+
+Diferencia = Real − Aplicado = 3 110 − 2 850 = <span class="res">260</span>
+<span class="cmt"># Real (3 110) > Aplicado (2 850) ⇒ SUB-APLICACIÓN de S/260</span>
+    </div>
+  </div>
+
+  <div class="chart-card">
+    <h4>CIF reales vs. CIF aplicados (Orden 85 + 73)</h4>
+    <div class="cap">La barra real supera a la aplicada: la diferencia es la sub-aplicación.</div>
+    <div class="chart-box"><canvas id="chartSub"></canvas></div>
+  </div>
+
+  <h3>¿Cómo se ajusta la diferencia?</h3>
+  <p>Una vez conocida la sub o sobre-aplicación, se ajusta el costo de producción de las órdenes. <strong>Dónde</strong> se ajusta depende de en qué estado están las órdenes:</p>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Si la orden está…</th><th>El ajuste va a…</th></tr></thead>
+    <tbody>
+      <tr><td>Todavía en proceso</td><td>Inventario de trabajo en proceso (WIP)</td></tr>
+      <tr><td>Terminada en almacén</td><td>Inventario de artículos terminados</td></tr>
+      <tr><td>Ya vendida</td><td>Costo de ventas (CMV)</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="callout c-tip">
+    <span class="tag">Regla de oro del signo</span>
+    <strong>Sub-aplicación</strong> (faltó costo) → <strong>aumenta</strong> el costo (se carga/debita a la cuenta destino). <strong>Sobre-aplicación</strong> (sobró costo) → <strong>disminuye</strong> el costo (sentido contrario). Cuando el monto es pequeño e inmaterial, la práctica usual es llevarlo todo al <strong>costo de ventas</strong>.
+  </div>
+
+  <div class="callout c-duda">
+    <span class="tag">Duda frecuente</span>
+    <strong>"¿La sub-aplicación es una pérdida?"</strong> No exactamente. Es una <strong>corrección</strong>: significa que las órdenes quedaron costeadas "de menos" con la tasa, y el ajuste sincera ese costo contra lo realmente incurrido. Solo se vuelve resultado del periodo cuando se cierra contra el costo de ventas.
+  </div>
+</section>
+<!-- ===== S10 · FLUJO DE COSTOS Y ASIENTOS ===== -->
+<section id="s10">
+  <h2><span class="divnum">07</span> &nbsp;El flujo de costos y sus asientos</h2>
+
+  <div class="callout c-intuicion">
+    <span class="tag">Intuición</span>
+    Sigue el costo como si fuera <strong>agua que baja por una escalera</strong>: entra como material en el almacén, baja a <em>trabajo en proceso</em> cuando se usa, baja a <em>artículos terminados</em> cuando la orden se acaba, y finalmente sale como <em>costo de ventas</em> cuando se entrega al cliente. Cada escalón es un asiento.
+  </div>
+
+  <h3>El mapa de cuentas: tres inventarios en cascada</h3>
+  <figure class="fig">
+    <svg viewBox="0 0 640 300" role="img" aria-label="Flujo de costos por órdenes">
+      <rect class="svg-bg" x="0" y="0" width="640" height="300" rx="12"/>
+      <!-- inventario materiales -->
+      <rect x="20" y="40" width="150" height="56" rx="9" fill="#B8860B" opacity="0.15" stroke="#B8860B"/>
+      <text x="95" y="64" text-anchor="middle" class="svg-ink" font-size="12" font-weight="600">Inventario de</text>
+      <text x="95" y="80" text-anchor="middle" class="svg-ink" font-size="12" font-weight="600">materiales</text>
+      <!-- WIP -->
+      <rect x="245" y="40" width="150" height="56" rx="9" fill="#2A6F6A" opacity="0.16" stroke="#2A6F6A"/>
+      <text x="320" y="64" text-anchor="middle" class="svg-ink" font-size="12" font-weight="600">Trabajo en</text>
+      <text x="320" y="80" text-anchor="middle" class="svg-ink" font-size="12" font-weight="600">proceso (Orden 85)</text>
+      <!-- terminados -->
+      <rect x="245" y="150" width="150" height="56" rx="9" fill="#6E3A6E" opacity="0.16" stroke="#6E3A6E"/>
+      <text x="320" y="174" text-anchor="middle" class="svg-ink" font-size="12" font-weight="600">Artículos</text>
+      <text x="320" y="190" text-anchor="middle" class="svg-ink" font-size="12" font-weight="600">terminados</text>
+      <!-- CMV -->
+      <rect x="245" y="250" width="150" height="40" rx="9" fill="#C04B2E" opacity="0.16" stroke="#C04B2E"/>
+      <text x="320" y="275" text-anchor="middle" class="svg-ink" font-size="12" font-weight="600">Costo de ventas</text>
+      <!-- nomina y CIF aportan -->
+      <rect x="460" y="40" width="160" height="40" rx="9" fill="#5D7B5D" opacity="0.16" stroke="#5D7B5D"/>
+      <text x="540" y="65" text-anchor="middle" class="svg-ink" font-size="11" font-weight="600">Nómina por pagar</text>
+      <rect x="460" y="96" width="160" height="40" rx="9" fill="#C8742A" opacity="0.16" stroke="#C8742A"/>
+      <text x="540" y="121" text-anchor="middle" class="svg-ink" font-size="11" font-weight="600">CIF aplicados</text>
+      <!-- flechas -->
+      <defs><marker id="ar2" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="#777"/></marker></defs>
+      <path d="M170 68 H243" class="svg-stroke" stroke-width="2" marker-end="url(#ar2)"/>
+      <text x="206" y="58" text-anchor="middle" class="svg-soft" font-size="9">MD</text>
+      <path d="M458 60 H397" class="svg-stroke" stroke-width="2" marker-end="url(#ar2)"/>
+      <text x="427" y="50" text-anchor="middle" class="svg-soft" font-size="9">MOD</text>
+      <path d="M458 116 C 430 116, 410 96, 397 84" class="svg-stroke" stroke-width="2" marker-end="url(#ar2)"/>
+      <text x="430" y="112" text-anchor="middle" class="svg-soft" font-size="9">CIF</text>
+      <path d="M320 96 V148" class="svg-stroke" stroke-width="2" marker-end="url(#ar2)"/>
+      <text x="350" y="124" text-anchor="middle" class="svg-soft" font-size="9">terminada</text>
+      <path d="M320 206 V248" class="svg-stroke" stroke-width="2" marker-end="url(#ar2)"/>
+      <text x="350" y="230" text-anchor="middle" class="svg-soft" font-size="9">vendida</text>
+    </svg>
+    <figcaption>Materiales → Trabajo en proceso → Artículos terminados → Costo de ventas.</figcaption>
+  </figure>
+
+  <h3>Los 7 asientos de la Orden 85, en orden</h3>
+  <p>Este es el ciclo completo. Síguelo de arriba abajo y verás cómo el costo "baja la escalera".</p>
+
+  <h4>① Compra de materiales (a crédito)</h4>
+  <div class="asiento"><table>
+    <tr><td class="deb">Inventario de materiales</td><td class="num">11 000</td><td></td></tr>
+    <tr><td class="cre">Cuentas por pagar</td><td></td><td class="num">11 000</td></tr>
+  </table></div>
+
+  <h4>② Consumo de materiales (directo a la orden, indirecto a CIF)</h4>
+  <div class="asiento"><table>
+    <tr><td class="deb">Inv. Trabajo en proceso · Orden 85</td><td class="num">2 500</td><td></td></tr>
+    <tr><td class="deb">Control de CIF</td><td class="num">110</td><td></td></tr>
+    <tr><td class="cre">Inventario de materiales</td><td></td><td class="num">2 610</td></tr>
+  </table></div>
+
+  <h4>③ Mano de obra (directa a órdenes, indirecta a CIF)</h4>
+  <div class="asiento"><table>
+    <tr><td class="deb">Inv. Trabajo en proceso · Orden 73</td><td class="num">300</td><td></td></tr>
+    <tr><td class="deb">Inv. Trabajo en proceso · Orden 85</td><td class="num">3 500</td><td></td></tr>
+    <tr><td class="deb">Control de CIF</td><td class="num">1 000</td><td></td></tr>
+    <tr><td class="cre">Nómina por pagar</td><td></td><td class="num">4 800</td></tr>
+  </table></div>
+
+  <h4>④ CIF reales adicionales (depreciación, servicios, varios)</h4>
+  <div class="asiento"><table>
+    <tr><td class="deb">Control de CIF</td><td class="num">2 000</td><td></td></tr>
+    <tr><td class="cre">Deprec. acum. maquinaria</td><td></td><td class="num">220</td></tr>
+    <tr><td class="cre">Deprec. acum. fábrica</td><td></td><td class="num">290</td></tr>
+    <tr><td class="cre">Servicios generales por pagar</td><td></td><td class="num">490</td></tr>
+    <tr><td class="cre">Cuentas varias por pagar</td><td></td><td class="num">1 000</td></tr>
+  </table></div>
+
+  <h4>⑤ Aplicación de CIF (tasa 75% × MOD)</h4>
+  <div class="asiento"><table>
+    <tr><td class="deb">Inv. Trabajo en proceso · Orden 85</td><td class="num">2 625</td><td></td></tr>
+    <tr><td class="cre">CIF aplicados</td><td></td><td class="num">2 625</td></tr>
+  </table></div>
+
+  <h4>⑥ Terminación: pasa a artículos terminados</h4>
+  <div class="asiento"><table>
+    <tr><td class="deb">Inventario de artículos terminados</td><td class="num">8 625</td><td></td></tr>
+    <tr><td class="cre">Inv. Trabajo en proceso · Orden 85</td><td></td><td class="num">8 625</td></tr>
+    <tr><td colspan="3" class="cap">2 500 (MD) + 3 500 (MOD) + 2 625 (CIF) = 8 625</td></tr>
+  </table></div>
+
+  <h4>⑦ Venta y entrega (dos asientos simultáneos)</h4>
+  <div class="asiento"><table>
+    <tr><td class="deb">Cuentas por cobrar · Maple</td><td class="num">12 000</td><td></td></tr>
+    <tr><td class="cre">Ventas</td><td></td><td class="num">12 000</td></tr>
+    <tr><td class="deb">Costo de ventas</td><td class="num">8 625</td><td></td></tr>
+    <tr><td class="cre">Inventario de artículos terminados</td><td></td><td class="num">8 625</td></tr>
+    <tr><td colspan="3" class="cap">Uno reconoce el ingreso; el otro reconoce el costo de lo entregado.</td></tr>
+  </table></div>
+
+  <div class="callout c-clave">
+    <span class="tag">El patrón que se repite siempre</span>
+    Mira los asientos ② y ③: <strong>directo → Trabajo en proceso; indirecto → Control de CIF</strong>. Mira ⑤: el CIF entra a la orden vía <em>aplicación</em>. Mira ⑥ y ⑦: el costo "viaja" de WIP → terminados → costo de ventas. Si entiendes este patrón, puedes escribir los asientos de <em>cualquier</em> ejercicio de la unidad sin memorizarlos.
+  </div>
+
+  <div class="callout c-advertencia">
+    <span class="tag">No confundas Control de CIF con CIF aplicados</span>
+    <strong>Control de CIF</strong> (asientos ②③④) acumula lo <em>real</em>. <strong>CIF aplicados</strong> (asiento ⑤) acumula lo <em>cargado a órdenes</em>. Son cuentas separadas justamente para poder compararlas al final y hallar la sub/sobre-aplicación. Acreditar la cuenta equivocada en el asiento ⑤ es un error frecuente.
+  </div>
+</section>
+
+<!-- ===== S11 · COSTO UNITARIO Y UTILIDAD ===== -->
+<section id="s11">
+  <h2><span class="divnum">08</span> &nbsp;Costo unitario y utilidad de la orden</h2>
+
+  <div class="callout c-intuicion">
+    <span class="tag">Intuición</span>
+    Si gastaste S/8 625 en producir un juego de muebles y el "juego" son varias piezas pero se vende como <strong>1 pedido</strong>, el costo unitario del pedido es 8 625. Si la orden fueran 500 radios idénticos, divides entre 500. El costo unitario es simplemente <strong>el costo total de la orden repartido entre sus unidades</strong>.
+  </div>
+
+  <div class="callout c-formula">
+    <span class="tag">Fórmulas de cierre</span>
+    \[ \text{Costo unitario} = \dfrac{\text{Costo total de la orden}}{\text{Unidades de la orden}} \]
+    \[ \text{Utilidad bruta} = \text{Precio de venta} - \text{Costo de producción} \]
+    \[ \text{Utilidad estimada} = \text{Utilidad bruta} - \text{Gastos de venta y administrativos} \]
+  </div>
+
+  <p>Cerremos la Orden 85 con sus números verificados:</p>
+  <div class="step">
+    <div class="step-reasoning">
+      <span class="lbl">Razonamiento — del costo al resultado</span>
+      Sumo los tres elementos para el costo de producción; resto del precio para la utilidad bruta; resto los gastos de venta (5% del precio) para la utilidad estimada.
+    </div>
+    <div class="calc-block">
+Costo de producción = 2 500 + 3 500 + 2 625 = <span class="res">8 625</span>
+Utilidad bruta      = 12 000 − 8 625        = <span class="res">3 375</span>
+Gastos vta. y adm.  = 5% × 12 000           =     600
+Utilidad estimada   = 3 375 − 600           = <span class="res">2 775</span>
+<span class="cmt"># Si la orden fuera de N unidades: costo unitario = 8 625 / N</span>
+    </div>
+  </div>
+
+  <div class="bn-grid">
+    <div class="bn"><div class="v">8 625</div><div class="l">Costo de producción</div></div>
+    <div class="bn teal"><div class="v">3 375</div><div class="l">Utilidad bruta</div></div>
+    <div class="bn gold"><div class="v">2 775</div><div class="l">Utilidad estimada</div></div>
+  </div>
+
+  <div class="callout c-advertencia">
+    <span class="tag">Gastos de venta ≠ costo de producción</span>
+    Los gastos de venta y administrativos <strong>no entran al costo del producto</strong> (no van a la hoja como MD/MOD/CIF). Se restan <em>después</em> de la utilidad bruta, normalmente como un % del precio de venta. Mezclarlos con los CIF es un error conceptual grave.
+  </div>
+</section>
+<!-- ===== S12 · DAÑADAS Y DEFECTUOSAS ===== -->
+<section id="s12">
+  <h2><span class="divnum">09</span> &nbsp;Unidades dañadas y defectuosas</h2>
+
+  <div class="callout c-intuicion">
+    <span class="tag">Intuición</span>
+    En la cocina, una bandeja de pan que se quema <strong>no tiene arreglo</strong>: la sacas y la vendes barata o la tiras → es una <strong>unidad dañada</strong>. Pero un televisor que no da sonido <strong>se puede reparar</strong> y vender como bueno → es una <strong>unidad defectuosa</strong>. La diferencia es si <em>se puede recuperar trabajando más en ella</em> o no.
+  </div>
+
+  <h3>Cuatro términos que NO son sinónimos</h3>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Término</th><th>Qué es</th><th>Se puede…</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Unidad dañada</strong></td><td>No cumple estándar; se saca sin más trabajo</td><td>vender a valor residual o descartar</td></tr>
+      <tr><td><strong>Unidad defectuosa</strong></td><td>No cumple estándar pero se reelabora</td><td>reprocesar y vender como buena</td></tr>
+      <tr><td><strong>Material de desecho</strong></td><td>Sobrante con valor nominal (virutas, aserrín)</td><td>vender barato o reusar en otro proceso</td></tr>
+      <tr><td><strong>Material de desperdicio</strong></td><td>Sobrante sin uso ni valor; a veces cuesta eliminarlo</td><td>solo desecharse (puede costar dinero)</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <div class="callout c-clave">
+    <span class="tag">Las dos preguntas que ordenan todo</span>
+    Para cada caso de deterioro, pregúntate: <br>
+    <strong>(1) ¿Es normal o anormal?</strong> Normal = inevitable aun con buen proceso → es <em>costo del producto</em>. Anormal = exceso por ineficiencia → es <em>pérdida del periodo</em>. <br>
+    <strong>(2) ¿Se aplica a todas las órdenes o a una específica?</strong> Decide qué cuenta se afecta.
+  </div>
+
+  <h3>Deterioro NORMAL: dos métodos de contabilización</h3>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th></th><th>Método 1: a TODAS las órdenes</th><th>Método 2: a órdenes ESPECÍFICAS</th></tr></thead>
+    <tbody>
+      <tr><td>Cuándo</td><td>El deterioro es inherente a <em>todo</em> el proceso</td><td>Solo se espera en ciertas órdenes</td></tr>
+      <tr><td>En la tasa de CIF</td><td>Se <strong>incluye</strong> en la tasa predeterminada</td><td><strong>NO</strong> se incluye en la tasa</td></tr>
+      <tr><td>Al ocurrir, se deduce del WIP…</td><td>el <strong>costo total</strong> (queda en CIF)</td><td>solo el <strong>valor residual</strong> (el resto sube el costo unitario de esa orden)</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p><strong>Ejemplo (Orden B):</strong> 40 unidades dañadas, normales. Costo S/50 por unidad, valor residual S/10 por unidad.</p>
+  <div class="step">
+    <div class="step-reasoning">
+      <span class="lbl">Método 1 — a todas las órdenes</span>
+      Saco las 40 unidades del WIP por su costo total (40×50=2 000). Su valor residual (40×10=400) va a "Inv. unidades dañadas"; el resto (40×40=1 600) va al Control de CIF, porque la tasa ya lo previó.
+    </div>
+    <div class="calc-block">
+Inv. unidades dañadas (40×10) ....... <span class="res">400</span>  (débito)
+Control de CIF (40×40) ............. <span class="res">1 600</span>  (débito)
+   a Inv. Trabajo en proceso, Orden B ... 2 000 (crédito)
+    </div>
+  </div>
+  <div class="step">
+    <div class="step-reasoning">
+      <span class="lbl">Método 2 — a la orden específica</span>
+      Solo retiro el valor residual del WIP; el costo no residual <em>se queda</em> en la orden, subiendo su costo unitario.
+    </div>
+    <div class="calc-block">
+Inv. unidades dañadas (40×10) ....... <span class="res">400</span>  (débito)
+   a Inv. Trabajo en proceso, Orden B ...   400 (crédito)
+    </div>
+  </div>
+
+  <h3>Deterioro ANORMAL: siempre es pérdida del periodo</h3>
+  <p>El exceso sobre lo normal se considera controlable e ineficiente. <strong>Todo su costo</strong> (menos el valor residual) sale del WIP hacia una cuenta de <strong>Pérdida por deterioro anormal</strong>, que va al estado de resultados.</p>
+
+  <p><strong>Ejemplo (Orden 106):</strong> 5 000 unidades a S/20 000 (costo unitario S/4). Aparecen 20 unidades dañadas, valor residual S/0.50, <em>no</em> se previó deterioro → todas anormales.</p>
+  <div class="step">
+    <div class="step-reasoning">
+      <span class="lbl">Razonamiento — deduzco el costo total al ser anormal</span>
+      Valor residual al inventario de dañadas; la diferencia a pérdida; el costo total sale del WIP.
+    </div>
+    <div class="calc-block">
+Inv. unidades dañadas (20×0.50) ......... <span class="res">10</span>
+Pérdida por deterioro anormal (20×4 − 10)  <span class="res">70</span>
+   a Inv. Trabajo en proceso, Orden 106 (20×4) .. 80
+
+Nuevo costo unitario = 19 920 / 4 980 = <span class="res">S/ 4.00</span>
+<span class="cmt"># ¡El costo unitario de las buenas NO cambia! Esa es la idea del trato anormal.</span>
+    </div>
+  </div>
+
+  <div class="callout c-insight">
+    <span class="tag">Por qué el deterioro anormal "protege" el costo unitario</span>
+    Cuando el deterioro es <strong>anormal</strong>, su costo se aparta a una cuenta de pérdida: por eso <strong>el costo unitario de las unidades buenas no se contamina</strong>. En cambio, el deterioro <strong>normal</strong> sí se reparte entre las buenas (porque es inevitable producirlo), <strong>elevando su costo unitario</strong>. Esta es la diferencia conceptual más elegante del capítulo.
+  </div>
+
+  <h3>Caso mixto (normal + anormal): Orden 9</h3>
+  <p>10 000 unidades, costo total S/300 000 (unitario S/30). Deterioro normal estimado: 50 unidades. Resultaron 90 dañadas (valor residual S/5) → normal 50, anormal 40 (90−50). Asignación a orden específica.</p>
+  <div class="step">
+    <div class="step-reasoning">
+      <span class="lbl">Paso a paso — separo normal de anormal</span>
+      Normal (50): solo retiro valor residual. Anormal (40): retiro costo total, con su pérdida. Luego recalculo el costo unitario sobre las 9 910 buenas.
+    </div>
+    <div class="calc-block">
+Normal (50 u): Inv. dañadas (50×5)=250 → crédito WIP 250
+Anormal (40 u):
+   Inv. dañadas (40×5) .......... 200
+   Pérdida anormal (40×30 − 200) <span class="res">1 000</span>
+      a WIP Orden 9 (40×30) ........... 1 200
+
+Saldo WIP = 300 000 − 250 − 1 200 = <span class="res">298 550</span>
+Nuevo costo unitario = 298 550 / 9 910 = <span class="res">S/ 30.13</span>
+    </div>
+  </div>
+
+  <h3>Unidades defectuosas (se reelaboran)</h3>
+  <p>Aquí no se descarta: se gasta <strong>más</strong> material, mano de obra y CIF para repararlas. La lógica normal/anormal y todas/específicas es la misma:</p>
+  <ul>
+    <li><strong>Normal a todas las órdenes:</strong> el costo de reproceso se carga al <strong>Control de CIF</strong> (la tasa ya lo previó).</li>
+    <li><strong>Normal a orden específica:</strong> se carga al <strong>WIP de esa orden</strong>.</li>
+    <li><strong>Anormal:</strong> se carga a <strong>Pérdida por unidades defectuosas anormales</strong> (resultado del periodo).</li>
+  </ul>
+  <div class="callout c-tip">
+    <span class="tag">Atajo mental</span>
+    <strong>Dañada</strong> = se va (valor residual + descarte). <strong>Defectuosa</strong> = se queda y se arregla (sumo costo de reproceso). En ambas: <strong>normal</strong> → al producto o al CIF; <strong>anormal</strong> → a pérdida.
+  </div>
+</section>
+<!-- ===== S13 · DESECHO Y DESPERDICIO ===== -->
+<section id="s13">
+  <h2><span class="divnum">10</span> &nbsp;Material de desecho y de desperdicio</h2>
+
+  <div class="callout c-intuicion">
+    <span class="tag">Intuición</span>
+    Al cortar madera quedan <strong>virutas</strong>: no sirven para esta mesa, pero alguien las compra para hacer aglomerado → <strong>desecho</strong> (tiene algo de valor). En cambio, los <strong>químicos tóxicos</strong> que sobran no valen nada y encima <em>cuesta</em> deshacerse de ellos → <strong>desperdicio</strong> (te genera un gasto).
+  </div>
+
+  <h3>Material de desecho: tiene valor de venta</h3>
+  <p>Se vende y ese ingreso se contabiliza de dos maneras (misma dualidad de siempre):</p>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Método</th><th>Asiento al vender el desecho</th><th>Cuándo</th></tr></thead>
+    <tbody>
+      <tr><td>A todas las órdenes</td><td>Efectivo / <strong>Control de CIF</strong> (reduce el CIF)</td><td>el desecho es común a todo el proceso</td></tr>
+      <tr><td>A orden específica</td><td>Efectivo / <strong>WIP de la orden</strong></td><td>el desecho proviene de una orden concreta</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="asiento"><table>
+    <tr><td class="deb">Efectivo</td><td class="num">100</td><td></td></tr>
+    <tr><td class="cre">Control de CIF (o WIP de la orden)</td><td></td><td class="num">100</td></tr>
+    <tr><td colspan="3" class="cap">Vender desecho REDUCE el costo: por eso se acredita CIF o WIP, nunca se registra como ingreso ordinario.</td></tr>
+  </table></div>
+
+  <h3>Material de desperdicio: cuesta eliminarlo</h3>
+  <p>No tiene valor; al revés, su <strong>disposición genera un costo</strong>. Se carga al Control de CIF (todas) o al WIP de la orden (específica):</p>
+  <div class="asiento"><table>
+    <tr><td class="deb">Control de CIF (o WIP de la orden)</td><td class="num">40</td><td></td></tr>
+    <tr><td class="cre">Efectivo / Cuentas por pagar</td><td></td><td class="num">40</td></tr>
+  </table></div>
+
+  <div class="callout c-advertencia">
+    <span class="tag">No los confundas con IGV ni con materiales recuperables</span>
+    El desecho/desperdicio es un tema de <em>costo de producción</em>. No lo mezcles con el IGV o la percepción —que son <strong>recuperables</strong> y van a cuentas por cobrar, no al costo del inventario—. Son mundos distintos.
+  </div>
+
+  <div class="callout c-tip">
+    <span class="tag">Regla unificadora de la Parte IV</span>
+    Todos estos casos (dañadas, defectuosas, desecho, desperdicio) se reducen a la <strong>misma decisión de dos ejes</strong>: ① ¿normal o anormal? y ② ¿a todas las órdenes o a una específica? Dibuja mentalmente esa cuadrícula 2×2 y cualquier asiento sale solo.
+  </div>
+</section>
+
+<!-- ===== S14 · OPERACIONES Y PROYECTOS ===== -->
+<section id="s14">
+  <h2><span class="divnum">11</span> &nbsp;Variantes: costeo por operaciones y por proyectos</h2>
+
+  <div class="callout c-intuicion">
+    <span class="tag">Intuición</span>
+    El costeo por órdenes tiene "primos". El <strong>costeo por operaciones</strong> es para fábricas que arman <em>lotes</em> que pasan por estaciones (teñido, corte, costura, empaque). El <strong>costeo por proyectos</strong> es para trabajos enormes y largos (un puente, un túnel, un portaaviones) que toman <em>meses o años</em>.
+  </div>
+
+  <h3>Costeo por operaciones</h3>
+  <p>Es un <strong>híbrido</strong>: el material directo se rastrea por lote (como en órdenes), pero la mano de obra y el CIF —juntos, los <strong>costos de conversión</strong>— se aplican por estación con una tasa predeterminada (como en procesos).</p>
+  <div class="callout c-formula">
+    <span class="tag">Tasa de conversión por estación</span>
+    \[ \text{Tasa de conversión} = \dfrac{\text{Costo de conversión estimado}}{\text{Base estimada (h-máquina, unidades, etc.)}} \]
+    \[ \text{Conversión aplicada} = \text{Tasa} \times \text{actividad real en la estación} \]
+  </div>
+  <p><strong>Ejemplo (Lote 22, 4 000 televisores):</strong> material directo S/177 500 (en la estación 1) y conversión aplicada por estación:</p>
+  <div class="step">
+    <div class="step-reasoning">
+      <span class="lbl">Razonamiento — sumo material + conversión de cada estación</span>
+      Cada estación aporta su conversión (tarifa × horas-máquina). El total ÷ unidades da el costo unitario del lote.
+    </div>
+    <div class="calc-block">
+Conversión:  E1: 23×1 600 = 36 800
+             E3: 11×1 900 = 20 900
+             E6: 32×4 600 =147 200
+             E7: 18×3 200 = 57 600
+             ───────────────────────
+             Conversión total = 262 500
+Costo total = 177 500 + 262 500 = <span class="res">440 000</span>
+Costo unitario = 440 000 / 4 000 = <span class="res">S/ 110 por TV</span>
+    </div>
+  </div>
+
+  <h3>Costeo por proyectos</h3>
+  <p>Para construcciones largas se controla con dos variaciones clave. Definamos tres montos:</p>
+  <ul>
+    <li><strong>CRTR</strong> = Costo <em>Real</em> del Trabajo Realizado a la fecha.</li>
+    <li><strong>CPTR</strong> = Costo <em>Presupuestado</em> del Trabajo <em>Realizado</em> (presupuesto × % real de avance).</li>
+    <li><strong>CPTP</strong> = Costo <em>Presupuestado</em> del Trabajo <em>Programado</em> (presupuesto × % programado).</li>
+  </ul>
+  <div class="callout c-formula">
+    <span class="tag">Las dos variaciones</span>
+    \[ \text{Variación del costo} = \text{CRTR} - \text{CPTR} \]
+    <p class="fnote">¿Gasté más de lo presupuestado por lo que llevo realmente hecho?</p>
+    \[ \text{Variación del programa} = \text{CPTR} - \text{CPTP} \]
+    <p class="fnote">¿Avancé menos de lo que tenía programado?</p>
+    Si CRTR &gt; CPTR → <strong>sobrecosto (desfavorable)</strong>. Si % real &lt; % programado → <strong>atraso (desfavorable)</strong>.
+  </div>
+  <p><strong>Ejemplo (Puente Swaye):</strong> presupuesto S/5 000 000; avance real 60%; CRTR S/3 400 000; programado 70%.</p>
+  <div class="step">
+    <div class="step-reasoning">
+      <span class="lbl">Razonamiento — comparo real, presupuestado-realizado y presupuestado-programado</span>
+      Calculo CPTR y CPTP con los porcentajes sobre el presupuesto total, y luego las dos variaciones.
+    </div>
+    <div class="calc-block">
+CPTR = 5 000 000 × 60% = 3 000 000
+CPTP = 5 000 000 × 70% = 3 500 000
+
+Variación del costo    = 3 400 000 − 3 000 000 = <span class="res">+400 000  desfavorable</span>
+Variación del programa = 3 000 000 − 3 500 000 = <span class="res">−500 000  desfavorable</span>
+<span class="cmt"># Gastó de más Y avanzó menos de lo programado: doble mala noticia.</span>
+    </div>
+  </div>
+  <div class="callout c-insight">
+    <span class="tag">El paralelo profundo</span>
+    La <strong>variación del costo</strong> en proyectos es prima de la <strong>sub/sobre-aplicación</strong> en órdenes: ambas comparan lo <em>real</em> contra lo <em>presupuestado</em>. Y la <strong>variación del programa</strong> añade la dimensión del <em>tiempo</em>. Es el mismo ADN de control: planeo, ejecuto, comparo, corrijo.
+  </div>
+
+  <div class="callout c-duda">
+    <span class="tag">Duda frecuente</span>
+    <strong>"¿Órdenes y proyectos son lo mismo?"</strong> Casi: el proyecto es una <em>orden grande y larga</em>. La diferencia es la escala temporal —una imprenta hace un "trabajo" en días; un puente es un "proyecto" de años— y por eso el proyecto necesita el control de variaciones de costo y programa.
+  </div>
+</section>
+
+<!-- ===== MAPA CONCEPTUAL ===== -->
+<section id="mapa">
+  <span class="eyebrow">Cierre · Visión de conjunto</span>
+  <h2><span class="divnum">★</span> Mapa conceptual: cómo encaja todo</h2>
+  <p class="lead">Antes de la síntesis, una sola imagen que conecta los once temas. Léela siguiendo las flechas: el producto entra, los tres elementos se acumulan en la hoja de costos, el costo viaja por las cuentas y sale como utilidad. Lo demás son ajustes y variantes.</p>
+
+  <figure class="fig">
+    <svg viewBox="0 0 860 620" role="img" aria-label="Mapa conceptual del costeo por órdenes">
+      <defs>
+        <marker id="mc-ar" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+          <path d="M0 0 L9 4.5 L0 9 z" fill="#9aa3ad"/>
+        </marker>
+      </defs>
+
+      <!-- Disparador -->
+      <rect x="320" y="14" width="220" height="46" rx="10" fill="#C04B2E" opacity="0.14" stroke="#C04B2E"/>
+      <text x="430" y="35" text-anchor="middle" class="svg-ink" font-family="Fraunces,serif" font-weight="700" font-size="14">Producto a medida</text>
+      <text x="430" y="51" text-anchor="middle" class="svg-soft" font-size="11">(heterogéneo, por encargo)</text>
+      <path d="M430 60 V84" class="svg-stroke" stroke-width="2" marker-end="url(#mc-ar)"/>
+
+      <!-- Sistema -->
+      <rect x="300" y="86" width="260" height="44" rx="10" fill="#2A6F6A" opacity="0.14" stroke="#2A6F6A"/>
+      <text x="430" y="113" text-anchor="middle" class="svg-ink" font-family="Fraunces,serif" font-weight="700" font-size="15">Sistema de costeo por órdenes</text>
+
+      <!-- Hoja de costos -->
+      <path d="M430 130 V154" class="svg-stroke" stroke-width="2" marker-end="url(#mc-ar)"/>
+      <rect x="318" y="156" width="224" height="48" rx="10" fill="#B8860B" opacity="0.16" stroke="#B8860B"/>
+      <text x="430" y="178" text-anchor="middle" class="svg-ink" font-weight="800" font-size="13" font-family="Manrope">Hoja de costos</text>
+      <text x="430" y="195" text-anchor="middle" class="svg-soft" font-size="11">acumula los 3 elementos</text>
+
+      <!-- Tres elementos -->
+      <path d="M380 204 L210 244" class="svg-stroke" stroke-width="1.6" marker-end="url(#mc-ar)"/>
+      <path d="M430 204 V244" class="svg-stroke" stroke-width="1.6" marker-end="url(#mc-ar)"/>
+      <path d="M480 204 L650 244" class="svg-stroke" stroke-width="1.6" marker-end="url(#mc-ar)"/>
+
+      <rect x="92" y="246" width="200" height="74" rx="10" fill="#2A6F6A" opacity="0.12" stroke="#2A6F6A"/>
+      <text x="192" y="268" text-anchor="middle" class="svg-ink" font-weight="800" font-size="12.5" font-family="Manrope">Materia prima directa</text>
+      <text x="192" y="286" text-anchor="middle" class="svg-soft svg-mono" font-size="10.5">vía requisición</text>
+      <text x="192" y="303" text-anchor="middle" class="svg-soft" font-size="10.5">real · cargo directo a WIP</text>
+
+      <rect x="330" y="246" width="200" height="74" rx="10" fill="#6E3A6E" opacity="0.12" stroke="#6E3A6E"/>
+      <text x="430" y="268" text-anchor="middle" class="svg-ink" font-weight="800" font-size="12.5" font-family="Manrope">Mano de obra directa</text>
+      <text x="430" y="286" text-anchor="middle" class="svg-soft svg-mono" font-size="10.5">boleta de trabajo</text>
+      <text x="430" y="303" text-anchor="middle" class="svg-soft" font-size="10.5">real · cargo directo a WIP</text>
+
+      <rect x="568" y="246" width="200" height="74" rx="10" fill="#C04B2E" opacity="0.12" stroke="#C04B2E"/>
+      <text x="668" y="268" text-anchor="middle" class="svg-ink" font-weight="800" font-size="12.5" font-family="Manrope">CIF</text>
+      <text x="668" y="286" text-anchor="middle" class="svg-soft svg-mono" font-size="10.5">tasa predeterminada</text>
+      <text x="668" y="303" text-anchor="middle" class="svg-soft" font-size="10.5">aplicado = tasa × base real</text>
+
+      <!-- Convergen a WIP -->
+      <path d="M192 320 L400 358" class="svg-stroke" stroke-width="1.6" marker-end="url(#mc-ar)"/>
+      <path d="M430 320 V358" class="svg-stroke" stroke-width="1.6" marker-end="url(#mc-ar)"/>
+      <path d="M668 320 L460 358" class="svg-stroke" stroke-width="1.6" marker-end="url(#mc-ar)"/>
+
+      <!-- Flujo de cuentas -->
+      <rect x="338" y="360" width="184" height="40" rx="9" fill="#5D7B5D" opacity="0.16" stroke="#5D7B5D"/>
+      <text x="430" y="385" text-anchor="middle" class="svg-ink" font-weight="700" font-size="12.5" font-family="Manrope">Inventario WIP</text>
+
+      <path d="M430 400 V424" class="svg-stroke" stroke-width="2" marker-end="url(#mc-ar)"/>
+      <rect x="318" y="426" width="224" height="40" rx="9" fill="#B8860B" opacity="0.16" stroke="#B8860B"/>
+      <text x="430" y="451" text-anchor="middle" class="svg-ink" font-weight="700" font-size="12.5" font-family="Manrope">Artículos terminados</text>
+
+      <path d="M430 466 V490" class="svg-stroke" stroke-width="2" marker-end="url(#mc-ar)"/>
+      <rect x="318" y="492" width="224" height="40" rx="9" fill="#C04B2E" opacity="0.16" stroke="#C04B2E"/>
+      <text x="430" y="517" text-anchor="middle" class="svg-ink" font-weight="700" font-size="12.5" font-family="Manrope">Costo de ventas → Utilidad</text>
+
+      <!-- Ajuste CIF lateral derecho -->
+      <rect x="600" y="360" width="216" height="106" rx="10" fill="none" stroke="#C8742A" stroke-dasharray="5 4"/>
+      <text x="708" y="382" text-anchor="middle" class="svg-ink" font-weight="800" font-size="12" font-family="Manrope">Cierre del CIF</text>
+      <text x="708" y="402" text-anchor="middle" class="svg-soft" font-size="10.5">Real vs. Aplicado</text>
+      <text x="708" y="420" text-anchor="middle" class="svg-soft svg-mono" font-size="10">real &gt; aplicado → sub-aplicación</text>
+      <text x="708" y="436" text-anchor="middle" class="svg-soft svg-mono" font-size="10">real &lt; aplicado → sobre-aplicación</text>
+      <text x="708" y="456" text-anchor="middle" class="svg-soft" font-size="10.5">ajusta WIP / Term. / CMV</text>
+      <path d="M600 413 L545 405" class="svg-stroke" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#mc-ar)"/>
+
+      <!-- Casos especiales izquierda -->
+      <rect x="44" y="360" width="224" height="106" rx="10" fill="none" stroke="#6E3A6E" stroke-dasharray="5 4"/>
+      <text x="156" y="382" text-anchor="middle" class="svg-ink" font-weight="800" font-size="12" font-family="Manrope">Casos especiales</text>
+      <text x="156" y="401" text-anchor="middle" class="svg-soft" font-size="10.5">dañadas · defectuosas</text>
+      <text x="156" y="418" text-anchor="middle" class="svg-soft" font-size="10.5">desecho · desperdicio</text>
+      <text x="156" y="438" text-anchor="middle" class="svg-soft svg-mono" font-size="10">normal → al producto / CIF</text>
+      <text x="156" y="454" text-anchor="middle" class="svg-soft svg-mono" font-size="10">anormal → pérdida del período</text>
+      <path d="M268 405 L338 392" class="svg-stroke" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#mc-ar)"/>
+
+      <!-- Variantes abajo -->
+      <rect x="240" y="556" width="170" height="48" rx="10" fill="#2A6F6A" opacity="0.10" stroke="#2A6F6A"/>
+      <text x="325" y="577" text-anchor="middle" class="svg-ink" font-weight="700" font-size="12" font-family="Manrope">Costeo por operaciones</text>
+      <text x="325" y="593" text-anchor="middle" class="svg-soft" font-size="10">lotes · costo de conversión</text>
+
+      <rect x="450" y="556" width="170" height="48" rx="10" fill="#2A6F6A" opacity="0.10" stroke="#2A6F6A"/>
+      <text x="535" y="577" text-anchor="middle" class="svg-ink" font-weight="700" font-size="12" font-family="Manrope">Costeo por proyectos</text>
+      <text x="535" y="593" text-anchor="middle" class="svg-soft" font-size="10">variación costo · programa</text>
+
+      <path d="M360 532 L340 556" class="svg-stroke" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#mc-ar)"/>
+      <path d="M500 532 L520 556" class="svg-stroke" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#mc-ar)"/>
+    </svg>
+    <figcaption>Una orden nace de un producto a medida, acumula sus tres elementos en la hoja de costos, viaja por WIP → Terminados → Ventas, se ajusta el CIF al cierre, y admite variantes (operaciones, proyectos) y casos especiales.</figcaption>
+  </figure>
+
+  <div class="callout c-insight">
+    <span class="tag">La idea que une todo</span>
+    Un solo principio recorre los once temas: <strong>rastrear cada costo hasta la orden que lo causó</strong>. MD y MOD se rastrean directo porque son visibles; el CIF no se puede rastrear, así que se <em>reparte</em> con una tasa predeterminada y luego se <em>concilia</em> con lo real. Todo lo demás —dañadas, defectuosas, operaciones, proyectos— son refinamientos de ese mismo gesto: identificar, acumular, repartir, conciliar.
+  </div>
+</section>
+
+<!-- ===== SÍNTESIS DE FÓRMULAS ===== -->
+<section id="sintesis">
+  <span class="eyebrow">Cierre · Referencia rápida</span>
+  <h2><span class="divnum">∑</span> Síntesis de fórmulas y reglas</h2>
+  <p class="lead">Todo lo cuantitativo del capítulo, en un solo lugar. Si en el examen dudas de una fórmula, esta es tu hoja de rescate.</p>
+
+  <h3>1 · Tasa predeterminada de CIF</h3>
+  <div class="callout c-formula">
+    <span class="tag">Definición y aplicación</span>
+    \[ \text{Tasa predeterminada} = \frac{\text{CIF presupuestados}}{\text{Base presupuestada}} \]
+    \[ \text{CIF aplicados} = \text{Tasa predeterminada} \times \text{Nivel real de la base} \]
+    <p style="margin:.6em 0 0">Bases posibles: unidades, costo de MOD, <strong>horas</strong> de MOD, horas-máquina. La base se fija <em>al inicio del año</em>; los CIF aplicados usan el nivel <em>real</em> de esa base.</p>
+  </div>
+
+  <h3>2 · Sub-aplicación y sobre-aplicación</h3>
+  <div class="callout c-formula">
+    <span class="tag">Conciliación al cierre</span>
+    \[ \text{Diferencia} = \text{CIF reales} - \text{CIF aplicados} \]
+    <p style="margin:.6em 0 0">
+      <strong>Real &gt; Aplicado → sub-aplicación</strong> (apliqué de menos; falta costo → se <em>suma</em> al ajustar).<br>
+      <strong>Real &lt; Aplicado → sobre-aplicación</strong> (apliqué de más; sobra costo → se <em>resta</em>).
+    </p>
+    <p style="margin:.5em 0 0">El ajuste va a la cuenta donde está la orden: en proceso → <strong>WIP</strong>; terminada → <strong>Artículos terminados</strong>; vendida → <strong>Costo de ventas</strong>.</p>
+  </div>
+
+  <h3>3 · Hoja de costos y utilidad</h3>
+  <div class="callout c-formula">
+    <span class="tag">Cadena del costo a la utilidad</span>
+    \[ \text{Costo de producción} = \text{MD} + \text{MOD} + \text{CIF aplicados} \]
+    \[ \text{Utilidad bruta} = \text{Precio de venta} - \text{Costo de producción} \]
+    \[ \text{Utilidad estimada} = \text{Utilidad bruta} - \text{Gastos de venta y adm.} \]
+    <p style="margin:.6em 0 0">Los gastos de venta y administrativos suelen darse como <strong>% del precio de venta</strong> (en el caso canónico, 5%).</p>
+  </div>
+
+  <h3>4 · Costo unitario</h3>
+  <div class="callout c-formula">
+    <span class="tag">Sólo unidades buenas en el denominador</span>
+    \[ \text{Costo unitario} = \frac{\text{Costo total de la orden}}{\text{Unidades buenas}} \]
+    <p style="margin:.6em 0 0">El deterioro <strong>normal</strong> sube el costo unitario (mismo costo ÷ menos unidades buenas). El <strong>anormal</strong> no, porque su costo se saca a una cuenta de pérdida.</p>
+  </div>
+
+  <h3>5 · Deterioro: normal vs. anormal</h3>
+  <table>
+    <thead><tr><th>Concepto</th><th>Normal</th><th>Anormal</th></tr></thead>
+    <tbody>
+      <tr><td>Naturaleza</td><td>Inevitable, esperado</td><td>Evitable, por ineficiencia</td></tr>
+      <tr><td>Tratamiento</td><td>Costo del producto (o del CIF)</td><td>Pérdida del período</td></tr>
+      <tr><td>Crédito (sale de WIP)</td><td>Sólo valor residual <em>(a órdenes específicas)</em> o costo neto <em>(a todas)</em></td><td>Costo total de las unidades dañadas</td></tr>
+      <tr><td>Efecto en costo unitario</td><td>Lo <strong>aumenta</strong></td><td><strong>No</strong> lo afecta</td></tr>
+    </tbody>
+  </table>
+  <div class="callout c-clave">
+    <span class="tag">Asiento del deterioro anormal</span>
+    Inv. unidades dañadas (valor residual) <strong>+</strong> Pérdida por deterioro anormal (costo total − residual) <strong>=</strong> crédito a WIP por el costo total.
+  </div>
+
+  <h3>6 · Dañadas vs. defectuosas vs. desecho vs. desperdicio</h3>
+  <table>
+    <thead><tr><th>Término</th><th>Qué es</th><th>¿Se reelabora?</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Dañadas</strong></td><td>No cumplen estándar; se venden a valor residual o se descartan</td><td>No</td></tr>
+      <tr><td><strong>Defectuosas</strong></td><td>No cumplen estándar pero se pueden corregir</td><td>Sí (costo de reproceso)</td></tr>
+      <tr><td><strong>Desecho</strong> (scrap)</td><td>Sobrante con valor de venta menor</td><td>—</td></tr>
+      <tr><td><strong>Desperdicio</strong> (waste)</td><td>Sobrante sin valor; puede costar eliminarlo</td><td>—</td></tr>
+    </tbody>
+  </table>
+  <p>Regla común a los cuatro: si es <strong>normal y común a todo</strong> → va al <strong>CIF</strong> (a todas las órdenes). Si pertenece a una <strong>orden específica</strong> → ajusta directo el <strong>WIP</strong> de esa orden.</p>
+
+  <h3>7 · Costeo por operaciones</h3>
+  <div class="callout c-formula">
+    <span class="tag">Híbrido: lotes + conversión</span>
+    \[ \text{Tasa de conversión} = \frac{\text{Costo de conversión estimado}}{\text{Base estimada (h-máq, h-MOD…)}} \]
+    \[ \text{Conversión aplicada} = \sum_{\text{estaciones}} (\text{tasa}_i \times \text{base real}_i) \]
+    \[ \text{Costo del lote} = \text{MD} + \text{Conversión aplicada} \;;\quad \text{CU}=\frac{\text{Costo del lote}}{\text{unidades}} \]
+  </div>
+
+  <h3>8 · Costeo por proyectos</h3>
+  <div class="callout c-formula">
+    <span class="tag">Las dos variaciones de control</span>
+    \[ \text{CPTR} = \text{Presupuesto total} \times \%\text{ real de avance} \]
+    \[ \text{CPTP} = \text{Presupuesto total} \times \%\text{ programado} \]
+    \[ \text{Variación del costo} = \text{CRTR} - \text{CPTR} \]
+    \[ \text{Variación del programa} = \text{CPTR} - \text{CPTP} \]
+    <p style="margin:.6em 0 0">Costo positivo → <strong>sobrecosto</strong> (desfavorable). Programa negativo → <strong>atraso</strong> (desfavorable).</p>
+  </div>
+
+  <div class="callout c-tip">
+    <span class="tag">Reglas de oro para el examen</span>
+    <strong>(1)</strong> MD y MOD siempre <em>reales</em>; CIF siempre <em>aplicado</em> (costeo normal). <strong>(2)</strong> Materiales indirectos y MO indirecta nunca tocan WIP directo: pasan por Control de CIF. <strong>(3)</strong> Sólo unidades buenas en el denominador del costo unitario. <strong>(4)</strong> Anormal = pérdida; normal = producto. <strong>(5)</strong> Sub-aplicación (real &gt; aplicado) es el escenario más común; suma costo. <strong>(6)</strong> NIC 2: sólo PEPS y promedio para valorar materiales —UEPS prohibido.
+  </div>
+</section>
+
+<!-- ===== AUTOEVALUACIÓN ===== -->
+<section id="quiz">
+  <span class="eyebrow">Cierre · Ponte a prueba</span>
+  <h2><span class="divnum">?</span> Autoevaluación</h2>
+  <p class="lead">Toca cada pregunta para revelar la respuesta razonada. Responde primero mentalmente; el valor está en el intento, no en la lectura. Mezclo conceptuales y numéricas, de fácil a difícil.</p>
+
+  <div class="quiz">
+    <div class="q"><span class="qn">Q1</span><span>¿Cuándo conviene el costeo por órdenes en lugar de por procesos?</span><span class="arr">▾</span></div>
+    <div class="a"><div class="a-inner">
+      <p>Cuando los productos son <strong>heterogéneos y se fabrican a medida</strong>, según las especificaciones de cada cliente (imprenta, sastrería, astillero, construcción). Si en cambio el producto es homogéneo y se fabrica en masa de forma continua (bebidas, cemento, papel), conviene el costeo por procesos. La pregunta clave: <em>¿puedo separar e identificar el costo de cada pedido?</em> Si sí → órdenes.</p>
+    </div></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q"><span class="qn">Q2</span><span>¿Por qué el CIF se aplica con una tasa predeterminada y no con el costo real, como MD y MOD?</span><span class="arr">▾</span></div>
+    <div class="a"><div class="a-inner">
+      <p>Porque el CIF real no se conoce hasta el <strong>cierre del período</strong> (la factura de luz, la depreciación, el mantenimiento llegan después). Si esperáramos a conocerlo, no podríamos costear ni cotizar una orden que terminamos hoy. La tasa predeterminada —calculada al inicio del año con cifras presupuestadas— resuelve el <strong>problema del tiempo</strong>: permite costear la orden ahora y conciliar la diferencia después.</p>
+    </div></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q"><span class="qn">Q3</span><span>Los materiales indirectos (tintura, pegamento, clavos) de la Orden 85 fueron S/110. ¿Van al WIP de la orden?</span><span class="arr">▾</span></div>
+    <div class="a"><div class="a-inner">
+      <p><strong>No.</strong> Aunque físicamente se usaron en la orden, son <em>indirectos</em>: difíciles de rastrear unidad por unidad. Por convención se cargan a <strong>Control de CIF</strong> y llegan a las órdenes después, vía la tasa predeterminada. Por eso el material directo de la Orden 85 es S/2 500 (sólo la caoba), y los S/110 viven en el CIF. Esta es justo la diferencia entre el tratamiento riguroso (Polimeni) y el atajo del PPT, que los metía en "materiales directos".</p>
+    </div></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q"><span class="qn">Q4</span><span>La tasa de CIF es 75% del costo de MOD. La Orden 85 tuvo MOD de S/3 500. ¿Cuánto CIF se aplica?</span><span class="arr">▾</span></div>
+    <div class="a"><div class="a-inner">
+      <p>CIF aplicado = 75% × 3 500 = <strong>S/2 625</strong>. Y el costo de producción de la orden = MD 2 500 + MOD 3 500 + CIF 2 625 = <strong>S/8 625</strong>. Nota que la base aquí es el <em>costo</em> de MOD (no las horas): tasa × base real = 0,75 × 3 500.</p>
+    </div></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q"><span class="qn">Q5</span><span>En la semana, los CIF reales del departamento fueron S/3 110 y los aplicados S/2 850. ¿Sub o sobre-aplicación, y de cuánto?</span><span class="arr">▾</span></div>
+    <div class="a"><div class="a-inner">
+      <p>Reales (3 110) &gt; Aplicados (2 850) → <strong>sub-aplicación de S/260</strong>. Apliqué de menos: a las órdenes les falta absorber S/260 de costo real. Al cierre, ese faltante se <em>suma</em> al costo de las órdenes según dónde estén (en proceso, terminadas o vendidas). Los aplicados salen de Orden 85 (2 625) + Orden 73 (75% × 300 = 225) = 2 850.</p>
+    </div></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q"><span class="qn">Q6</span><span>¿Por qué el deterioro normal sube el costo unitario y el anormal no?</span><span class="arr">▾</span></div>
+    <div class="a"><div class="a-inner">
+      <p>El costo unitario sólo divide entre <strong>unidades buenas</strong>. En el deterioro <strong>normal</strong>, el costo de lo dañado se queda dentro del WIP (se considera inevitable, parte del producto), pero hay menos unidades buenas para repartirlo → cada buena carga más. En el <strong>anormal</strong>, el costo total de lo dañado se <em>saca</em> del WIP hacia una cuenta de pérdida del período, así que el costo restante y las unidades buenas bajan en proporción y el unitario no se mueve.</p>
+    </div></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q"><span class="qn">Q7</span><span>Orden 106: 5 000 unidades, costo S/20 000 (CU = S/4). Aparecen 20 dañadas anormales con residual de S/0,50 c/u. Haz el asiento y di el nuevo CU.</span><span class="arr">▾</span></div>
+    <div class="a"><div class="a-inner">
+      <p>Costo total de las 20 dañadas = 20 × 4 = S/80. Residual = 20 × 0,50 = S/10. Pérdida = 80 − 10 = S/70.</p>
+      <p><strong>Asiento:</strong> Inv. unidades dañadas 10 · Pérdida por deterioro anormal 70 · <em>(crédito)</em> WIP Orden 106 80.</p>
+      <p>Nuevo saldo WIP = 20 000 − 80 = 19 920; unidades buenas = 5 000 − 20 = 4 980. <strong>CU = 19 920 ÷ 4 980 = S/4,00</strong> (no cambia, como debe ser en el anormal).</p>
+    </div></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q"><span class="qn">Q8</span><span>Diferencia entre unidades <em>dañadas</em> y <em>defectuosas</em>, y entre <em>desecho</em> y <em>desperdicio</em>.</span><span class="arr">▾</span></div>
+    <div class="a"><div class="a-inner">
+      <p><strong>Dañadas:</strong> no cumplen estándar y <em>no</em> se reelaboran; se venden a valor residual o se descartan. <strong>Defectuosas:</strong> no cumplen estándar pero <em>sí</em> se corrigen con un costo de reproceso para venderlas como buenas.</p>
+      <p><strong>Desecho (scrap):</strong> sobrante de material con algún valor de reventa menor (virutas, recortes). <strong>Desperdicio (waste):</strong> sobrante <em>sin</em> valor; incluso puede costar eliminarlo (residuos tóxicos). El criterio contable común: normal y general → CIF; específico de una orden → WIP de esa orden.</p>
+    </div></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q"><span class="qn">Q9</span><span>Lote 22 (costeo por operaciones): MD S/177 500 y conversión aplicada S/262 500 para 4 000 televisores. ¿Costo unitario?</span><span class="arr">▾</span></div>
+    <div class="a"><div class="a-inner">
+      <p>Costo del lote = MD + conversión = 177 500 + 262 500 = <strong>S/440 000</strong>. CU = 440 000 ÷ 4 000 = <strong>S/110 por televisor</strong>. Observa el híbrido: el material se rastrea por lote (como órdenes), pero la conversión —MOD + CIF juntos— se aplica por estación con tasas predeterminadas (como procesos).</p>
+    </div></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q"><span class="qn">Q10</span><span>Puente Swaye: presupuesto S/5 000 000, avance real 60%, programado 70%, CRTR S/3 400 000. Calcula ambas variaciones e interprétalas.</span><span class="arr">▾</span></div>
+    <div class="a"><div class="a-inner">
+      <p>CPTR = 5 000 000 × 60% = 3 000 000. CPTP = 5 000 000 × 70% = 3 500 000.</p>
+      <p><strong>Variación del costo</strong> = CRTR − CPTR = 3 400 000 − 3 000 000 = <strong>+400 000 desfavorable</strong> (gastó más de lo presupuestado para lo que llevaba hecho).</p>
+      <p><strong>Variación del programa</strong> = CPTR − CPTP = 3 000 000 − 3 500 000 = <strong>−500 000 desfavorable</strong> (avanzó menos de lo programado). Doble mala noticia: sobrecosto y atraso.</p>
+    </div></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q"><span class="qn">Q11</span><span>¿Por qué NIC 2 prohíbe UEPS y qué métodos sí permite el curso para valorar materiales?</span><span class="arr">▾</span></div>
+    <div class="a"><div class="a-inner">
+      <p>UEPS (LIFO) puede distorsionar el inventario final y la utilidad en contextos inflacionarios, dejando en el balance costos antiguos poco representativos; por eso NIC 2 lo <strong>prohíbe</strong>. El curso valora materiales sólo con <strong>PEPS (FIFO)</strong> y <strong>promedio (ponderado o móvil)</strong>. El método elegido afecta el costo del MD que entra a la orden, así que importa para la hoja de costos.</p>
+    </div></div>
+  </div>
+
+  <div class="quiz">
+    <div class="q"><span class="qn">Q12</span><span>Síntesis: enuncia en una frase el principio que une los once temas.</span><span class="arr">▾</span></div>
+    <div class="a"><div class="a-inner">
+      <p><strong>Rastrear cada costo hasta la orden que lo causó.</strong> Lo directo (MD, MOD) se rastrea de frente; lo indirecto (CIF) se reparte con una tasa y se concilia con lo real; los casos especiales y las variantes son ajustes de ese mismo gesto: identificar, acumular, repartir, conciliar.</p>
+    </div></div>
+  </div>
+
+  <div class="callout c-tip">
+    <span class="tag">Cómo seguir</span>
+    Si respondiste con seguridad 10 de 12, dominas el capítulo. Si fallaste en las numéricas (Q5, Q7, Q10), vuelve a las secciones 6.3, 9 y 11 y rehaz los ejemplos tapando la solución. La maestría en costos se construye resolviendo, no releyendo.
+  </div>
+</section>
+
+</div><!-- /.doc -->
+
+<div class="footer">
+  <p><strong>Costeo por Órdenes de Trabajo</strong> · Unidad 6 · Contabilidad de Costos I (A1CC1) · Prof. Gino Vivanco Ruidías · UDEP — Campus Lima · 2026-1</p>
+  <p>Guía de estudio de máxima profundidad. Fuentes: PPT7 del curso y Polimeni, Fabozzi &amp; Adelberg, <em>Contabilidad de costos</em>, cap. 5. Todos los cálculos verificados numéricamente. El caso canónico (Orden 85) conserva las cifras del libro; los ejemplos propios usan soles (S/).</p>
+</div>
+</main>
+
+<script>
+(function(){
+  "use strict";
+  var root = document.documentElement, body = document.body;
+  var LS = {
+    get: function(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } },
+    set: function(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+  };
+
+  /* ---------- TEMA ---------- */
+  var swatches = document.getElementById('swatches');
+  function applyTheme(t){
+    root.setAttribute('data-theme', t);
+    if(swatches){
+      var btns = swatches.querySelectorAll('.sw');
+      for(var i=0;i<btns.length;i++){
+        btns[i].setAttribute('aria-pressed', btns[i].getAttribute('data-set')===t ? 'true':'false');
+      }
+    }
+    LS.set('u6t_theme', t);
+    if(window.__chartsReady) buildCharts();
+  }
+  if(swatches){
+    swatches.addEventListener('click', function(e){
+      var b = e.target.closest('.sw'); if(!b) return;
+      applyTheme(b.getAttribute('data-set'));
+    });
+  }
+
+  /* ---------- TAMAÑO DE LETRA ---------- */
+  var FS_MIN=0.6, FS_MAX=2.6, FS_STEP=0.1, FS_DEF=1.30;
+  var fsInd=document.getElementById('fsInd');
+  function clamp(v){ return Math.min(FS_MAX, Math.max(FS_MIN, v)); }
+  function applyFS(v){
+    v = clamp(Math.round(v*100)/100);
+    root.style.setProperty('--fs', v);
+    if(fsInd) fsInd.textContent = Math.round(v*100) + '%';
+    LS.set('u6t_fs', String(v));
+  }
+  function curFS(){
+    var s = getComputedStyle(root).getPropertyValue('--fs');
+    var n = parseFloat(s); return isNaN(n)?FS_DEF:n;
+  }
+  var fsMinus=document.getElementById('fsMinus'), fsPlus=document.getElementById('fsPlus'), fsReset=document.getElementById('fsReset');
+  if(fsMinus) fsMinus.addEventListener('click', function(){ applyFS(curFS()-FS_STEP); });
+  if(fsPlus)  fsPlus.addEventListener('click',  function(){ applyFS(curFS()+FS_STEP); });
+  if(fsReset) fsReset.addEventListener('click', function(){ applyFS(FS_DEF); });
+
+  /* ---------- ANCHO DE LECTURA ---------- */
+  var widthRow=document.getElementById('widthRow');
+  function applyWidth(w){
+    root.setAttribute('data-width', w);
+    if(widthRow){
+      var bs=widthRow.querySelectorAll('button');
+      for(var i=0;i<bs.length;i++){
+        bs[i].setAttribute('aria-pressed', bs[i].getAttribute('data-w')===w ? 'true':'false');
+      }
+    }
+    LS.set('u6t_width', w);
+  }
+  if(widthRow){
+    widthRow.addEventListener('click', function(e){
+      var b=e.target.closest('button'); if(!b) return;
+      applyWidth(b.getAttribute('data-w'));
+      clearDevice();
+    });
+  }
+
+  /* ---------- DISPOSITIVO (preset ancho + letra) ---------- */
+  var devRow=document.getElementById('devRow');
+  var DEV={ phone:{w:'completo',fs:1.20}, tablet:{w:'amplio',fs:1.35}, desktop:{w:'comodo',fs:1.35} };
+  function markDev(d){
+    if(!devRow) return;
+    var bs=devRow.querySelectorAll('button');
+    for(var i=0;i<bs.length;i++){
+      bs[i].setAttribute('aria-pressed', bs[i].getAttribute('data-dev')===d ? 'true':'false');
+    }
+  }
+  function applyDevice(d){
+    var p=DEV[d]; if(!p) return;
+    applyWidth(p.w); applyFS(p.fs);
+    markDev(d);
+    LS.set('u6t_device', d);
+  }
+  function clearDevice(){ LS.set('u6t_device',''); markDev(''); }
+  function detectDevice(){
+    var w=window.innerWidth || document.documentElement.clientWidth || 0;
+    return w<768 ? 'phone' : (w<1180 ? 'tablet' : 'desktop');
+  }
+  if(devRow){
+    devRow.addEventListener('click', function(e){
+      var b=e.target.closest('button'); if(b) applyDevice(b.getAttribute('data-dev'));
+    });
+  }
+  /* afinado manual de letra rompe el preset de dispositivo */
+  if(fsMinus) fsMinus.addEventListener('click', clearDevice);
+  if(fsPlus)  fsPlus.addEventListener('click', clearDevice);
+  if(fsReset) fsReset.addEventListener('click', clearDevice);
+
+  /* ---------- RESTAURAR PREFERENCIAS ---------- */
+  (function(){
+    var t=LS.get('u6t_theme'); if(t) applyTheme(t);
+    var d=LS.get('u6t_device');
+    if(d){ applyDevice(d); }
+    else {
+      var f=LS.get('u6t_fs'), w=LS.get('u6t_width');
+      if(f||w){ if(f) applyFS(parseFloat(f)); if(w) applyWidth(w); }
+      else { applyDevice(detectDevice()); }   /* primera visita: auto-optimiza por pantalla */
+    }
+  })();
+
+  /* ---------- SIDEBAR ---------- */
+  var sidebar=document.getElementById('sidebar'), overlay=document.getElementById('overlay'),
+      menuBtn=document.getElementById('menuBtn'), PIN_BP=1180;
+  function openSidebar(){ sidebar.classList.add('open'); if(overlay) overlay.classList.add('show'); }
+  function closeSidebar(){ sidebar.classList.remove('open'); if(overlay) overlay.classList.remove('show'); }
+  function isPinned(){ return body.classList.contains('pinned'); }
+  if(menuBtn) menuBtn.addEventListener('click', function(){
+    if(sidebar.classList.contains('open')) closeSidebar(); else openSidebar();
+  });
+  if(overlay) overlay.addEventListener('click', closeSidebar);
+  /* links: en móvil/no-pin cierran el sidebar al navegar */
+  if(sidebar){
+    var links=sidebar.querySelectorAll('a[href^="#"]');
+    for(var i=0;i<links.length;i++){
+      links[i].addEventListener('click', function(){ if(!isPinned()) closeSidebar(); });
+    }
+  }
+  /* auto-pin en escritorio ancho */
+  function syncPin(){
+    if(window.innerWidth>=PIN_BP){ body.classList.add('pinned'); closeSidebar(); }
+    else { body.classList.remove('pinned'); }
+  }
+  syncPin();
+  window.addEventListener('resize', syncPin);
+
+  /* ---------- PANEL ACCESIBILIDAD ---------- */
+  var a11yPanel=document.getElementById('a11yPanel'),
+      a11yFab=document.getElementById('a11yFab'),
+      topA11y=document.getElementById('topA11y');
+  function toggleA11y(){ if(a11yPanel) a11yPanel.classList.toggle('show'); }
+  if(a11yFab) a11yFab.addEventListener('click', toggleA11y);
+  if(topA11y) topA11y.addEventListener('click', toggleA11y);
+  document.addEventListener('click', function(e){
+    if(!a11yPanel || !a11yPanel.classList.contains('show')) return;
+    if(a11yPanel.contains(e.target) || (a11yFab&&a11yFab.contains(e.target)) || (topA11y&&topA11y.contains(e.target))) return;
+    a11yPanel.classList.remove('show');
+  });
+
+  /* ---------- TOPBAR HIDE-ON-SCROLL + PROGRESO ---------- */
+  var topbar=document.getElementById('topbar'), progressBar=document.getElementById('progressBar'),
+      lastY=window.pageYOffset, ticking=false;
+  function onScroll(){
+    var y=window.pageYOffset;
+    if(topbar){
+      if(y>lastY && y>120) topbar.classList.add('hide');
+      else topbar.classList.remove('hide');
+    }
+    if(progressBar){
+      var h=document.documentElement.scrollHeight - window.innerHeight;
+      progressBar.style.width = (h>0 ? (y/h*100):0) + '%';
+    }
+    lastY=y; ticking=false;
+  }
+  window.addEventListener('scroll', function(){
+    if(!ticking){ window.requestAnimationFrame(onScroll); ticking=true; }
+  }, {passive:true});
+
+  /* ---------- SCROLL-SPY ---------- */
+  var navLinks=Array.prototype.slice.call(document.querySelectorAll('.sb-nav a[href^="#"]'));
+  var sections=navLinks.map(function(a){ return document.getElementById(a.getAttribute('href').slice(1)); })
+                       .filter(Boolean);
+  if('IntersectionObserver' in window && sections.length){
+    var spy=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){
+          var id=en.target.id;
+          navLinks.forEach(function(a){
+            a.classList.toggle('active', a.getAttribute('href')==='#'+id);
+          });
+        }
+      });
+    }, {rootMargin:'-45% 0px -50% 0px', threshold:0});
+    sections.forEach(function(s){ spy.observe(s); });
+  }
+
+  /* ---------- QUIZ ---------- */
+  var quizzes=document.querySelectorAll('.quiz');
+  for(var qi=0; qi<quizzes.length; qi++){
+    (function(qz){
+      var head=qz.querySelector('.q');
+      if(head) head.addEventListener('click', function(){ qz.classList.toggle('open'); });
+    })(quizzes[qi]);
+  }
+
+  /* ---------- CHARTS ---------- */
+  var chartBases=null, chartSub=null;
+  function cssVar(name){ return getComputedStyle(root).getPropertyValue(name).trim(); }
+  function buildCharts(){
+    if(typeof Chart==='undefined') return;
+    var ink=cssVar('--ink'), inkSoft=cssVar('--ink-soft'), grid=cssVar('--border'),
+        teal=cssVar('--teal'), terr=cssVar('--terracotta'), gold=cssVar('--gold'), plum=cssVar('--plum');
+    Chart.defaults.font.family="Manrope, system-ui, sans-serif";
+    Chart.defaults.color=inkSoft;
+
+    var cb=document.getElementById('chartBases');
+    if(cb){
+      if(chartBases) chartBases.destroy();
+      chartBases=new Chart(cb.getContext('2d'), {
+        type:'bar',
+        data:{
+          labels:['Mat. prima directa','Mano de obra directa','CIF aplicado (75% MOD)'],
+          datasets:[{
+            label:'Soles (S/)',
+            data:[2500,3500,2625],
+            backgroundColor:[teal,gold,plum],
+            borderRadius:6, maxBarThickness:80
+          }]
+        },
+        options:{
+          responsive:true, maintainAspectRatio:false,
+          plugins:{
+            legend:{display:false},
+            title:{display:true, text:'Composición del costo de la Orden 85 (S/)', color:ink, font:{size:14, weight:'600'}},
+            tooltip:{callbacks:{label:function(c){ return 'S/ '+c.parsed.y.toLocaleString('es-PE'); }}}
+          },
+          scales:{
+            y:{beginAtZero:true, grid:{color:grid}, ticks:{callback:function(v){ return 'S/ '+v.toLocaleString('es-PE'); }}},
+            x:{grid:{display:false}}
+          }
+        }
+      });
+    }
+
+    var cs=document.getElementById('chartSub');
+    if(cs){
+      if(chartSub) chartSub.destroy();
+      chartSub=new Chart(cs.getContext('2d'), {
+        type:'bar',
+        data:{
+          labels:['CIF real (Control)','CIF aplicado'],
+          datasets:[{
+            label:'Soles (S/)',
+            data:[3110,2850],
+            backgroundColor:[terr,teal],
+            borderRadius:6, maxBarThickness:90
+          }]
+        },
+        options:{
+          responsive:true, maintainAspectRatio:false,
+          plugins:{
+            legend:{display:false},
+            title:{display:true, text:'CIF real vs. aplicado — subaplicación de S/ 260', color:ink, font:{size:14, weight:'600'}},
+            tooltip:{callbacks:{label:function(c){ return 'S/ '+c.parsed.y.toLocaleString('es-PE'); }}}
+          },
+          scales:{
+            y:{beginAtZero:true, grid:{color:grid}, ticks:{callback:function(v){ return 'S/ '+v.toLocaleString('es-PE'); }}},
+            x:{grid:{display:false}}
+          }
+        }
+      });
+    }
+    window.__chartsReady=true;
+  }
+  if(typeof Chart!=='undefined'){ buildCharts(); }
+  else { window.addEventListener('load', buildCharts); }
+
+  /* ---------- MATHJAX re-typeset tras carga ---------- */
+  window.addEventListener('load', function(){
+    if(window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise().catch(function(){});
+    }
+  });
+})();
+</script>
+</body>
+</html>
