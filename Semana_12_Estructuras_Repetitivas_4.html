@@ -1,0 +1,2535 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Semana 12 · Estructuras Repetitivas en Python · Pingüino</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<style>
+:root[data-theme="dark"]{--bg:#0a0e1a;--bg-elevated:#131829;--bg-card:#161c2f;--bg-card-hover:#1c2340;--bg-code:#0d1322;--bg-flow:#1a2138;--border:#2a3354;--border-strong:#3d4870;--text:#e8edf7;--text-muted:#98a4c2;--text-dim:#6b7793;--primary:#60a5fa;--primary-strong:#3b82f6;--primary-bg:rgba(96,165,250,.12);--accent:#34d399;--accent-bg:rgba(52,211,153,.12);--warning:#fbbf24;--warning-bg:rgba(251,191,36,.12);--danger:#f87171;--danger-bg:rgba(248,113,113,.12);--purple:#a78bfa;--purple-bg:rgba(167,139,250,.12);--pink:#f472b6;--pink-bg:rgba(244,114,182,.12);--shadow:0 4px 24px rgba(0,0,0,.4);--syn-kw:#c586c0;--syn-fn:#dcdcaa;--syn-tipo:#4ec9b0;--syn-op:#ff79c6;--syn-num:#b5cea8;--syn-str:#ce9178;--syn-var:#9cdcfe;--syn-cmt:#6a9955;--syn-bg:#0d1322;--cell-bg:#1a2138;--edge-text:#f1f5f9;--edge-bg:#1a2138}
+:root[data-theme="light"]{--bg:#f8fafc;--bg-elevated:#fff;--bg-card:#fff;--bg-card-hover:#f1f5f9;--bg-code:#f8fafc;--bg-flow:#fafbfd;--border:#e2e8f0;--border-strong:#cbd5e1;--text:#0f172a;--text-muted:#475569;--text-dim:#94a3b8;--primary:#2563eb;--primary-strong:#1d4ed8;--primary-bg:rgba(37,99,235,.08);--accent:#059669;--accent-bg:rgba(5,150,105,.08);--warning:#d97706;--warning-bg:rgba(217,119,6,.08);--danger:#dc2626;--danger-bg:rgba(220,38,38,.08);--purple:#7c3aed;--purple-bg:rgba(124,58,237,.08);--pink:#db2777;--pink-bg:rgba(219,39,119,.08);--shadow:0 2px 8px rgba(15,23,42,.06);--syn-kw:#af00db;--syn-fn:#795e26;--syn-tipo:#267f99;--syn-op:#d73a49;--syn-num:#098658;--syn-str:#a31515;--syn-var:#001080;--syn-cmt:#008000;--syn-bg:#f6f8fa;--cell-bg:#fafbfd;--edge-text:#0f172a;--edge-bg:#fafbfd}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:16px;transition:background .3s,color .3s;min-height:100vh}
+::selection{background:var(--primary);color:#fff}
+
+/* === HEADER COMPACTO === */
+.topbar{position:sticky;top:0;z-index:100;background:color-mix(in srgb,var(--bg-elevated) 90%,transparent);border-bottom:1px solid var(--border);padding:8px 20px;display:flex;align-items:center;gap:14px;backdrop-filter:blur(14px);min-height:48px}
+.sidebar-toggle{background:var(--bg-card);border:1px solid var(--border);color:var(--text);padding:6px 10px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.05rem;font-family:inherit;transition:all .15s;line-height:1;min-width:34px}
+.sidebar-toggle:hover{background:var(--bg-card-hover);border-color:var(--primary)}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:.92rem;color:var(--text);flex:1;min-width:0}
+.brand-icon{width:30px;height:30px;background:linear-gradient(135deg,var(--primary),var(--purple));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.05rem;color:#fff;flex-shrink:0}
+.brand-text{min-width:0;overflow:hidden}
+.brand-text strong{display:block;font-size:.92rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand-text small{display:block;font-size:.7rem;font-weight:500;color:var(--text-muted);margin-top:-1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.theme-toggle{background:var(--bg-card);border:1px solid var(--border);color:var(--text);padding:6px 12px;border-radius:999px;cursor:pointer;display:flex;align-items:center;gap:7px;font-size:.8rem;font-weight:500;font-family:inherit;transition:all .15s;white-space:nowrap;flex-shrink:0}
+.theme-toggle:hover{background:var(--bg-card-hover);border-color:var(--primary)}
+
+.layout{display:grid;grid-template-columns:260px 1fr;max-width:1700px;margin:0 auto;transition:grid-template-columns .25s ease}
+.layout.sidebar-hidden{grid-template-columns:0 1fr}
+.layout.sidebar-hidden .sidebar{transform:translateX(-100%);opacity:0;pointer-events:none}
+@media(max-width:1024px){.layout{grid-template-columns:1fr}.sidebar{position:fixed;top:48px;left:0;width:260px;z-index:90;box-shadow:4px 0 16px rgba(0,0,0,.3);transform:translateX(-100%)}.layout:not(.sidebar-hidden) .sidebar{transform:translateX(0)}.layout.sidebar-hidden .sidebar{transform:translateX(-100%)}}
+
+.sidebar{position:sticky;top:48px;height:calc(100vh - 48px);overflow-y:auto;padding:20px 14px 20px 24px;border-right:1px solid var(--border);background:var(--bg);transition:transform .25s ease,opacity .25s ease}
+.sidebar h3{font-size:.74rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text-dim);margin-bottom:10px;font-weight:700}
+.toc-list{list-style:none}
+.toc-list li{margin:1px 0}
+.toc-list a{display:block;padding:6px 12px;color:var(--text-muted);text-decoration:none;border-radius:7px;font-size:.86rem;border-left:3px solid transparent;transition:all .15s;line-height:1.45}
+.toc-list a:hover{background:var(--bg-card);color:var(--text)}
+.toc-list a.active{background:var(--primary-bg);color:var(--primary);border-left-color:var(--primary);font-weight:600}
+.toc-divider{height:1px;background:var(--border);margin:8px 0}
+
+main{padding:32px 48px 80px;max-width:100%;overflow-x:hidden;min-width:0}
+@media(max-width:768px){main{padding:20px 18px 60px}.topbar{padding:8px 12px}}
+
+.hero{padding:24px 0 36px;border-bottom:1px solid var(--border);margin-bottom:40px}
+.hero-badge{display:inline-block;padding:5px 12px;background:var(--primary-bg);color:var(--primary);border-radius:999px;font-size:.74rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;margin-bottom:14px}
+h1{font-size:clamp(1.8rem,4.4vw,2.7rem);font-weight:800;line-height:1.15;letter-spacing:-.02em;margin-bottom:14px;background:linear-gradient(135deg,var(--text) 0%,var(--primary) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:1.08rem;color:var(--text-muted);max-width:760px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
+.meta-pill{display:flex;align-items:center;gap:7px;padding:6px 12px;background:var(--bg-card);border:1px solid var(--border);border-radius:999px;font-size:.82rem;color:var(--text-muted)}
+.meta-pill strong{color:var(--text);font-weight:600}
+
+section.block{margin:56px 0;scroll-margin-top:64px}
+.block-header{display:flex;align-items:center;gap:14px;margin-bottom:24px}
+.block-num{width:44px;height:44px;background:linear-gradient(135deg,var(--primary),var(--purple));color:#fff;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:800;flex-shrink:0;box-shadow:0 5px 14px var(--primary-bg)}
+h2{font-size:clamp(1.5rem,2.8vw,2rem);font-weight:800;letter-spacing:-.01em;color:var(--text)}
+h3{font-size:1.28rem;font-weight:700;margin:32px 0 14px;color:var(--text)}
+h4{font-size:1.04rem;font-weight:700;margin:20px 0 10px;color:var(--text)}
+p{margin:11px 0;color:var(--text)}
+strong{color:var(--text);font-weight:600}
+em{color:var(--primary);font-style:normal;font-weight:500}
+ul,ol{margin:11px 0 11px 22px}
+li{margin:5px 0}
+a{color:var(--primary);text-decoration:none}
+a:hover{text-decoration:underline}
+
+.callout{margin:20px 0;padding:18px 22px;border-radius:13px;border-left:4px solid;background:var(--bg-card);position:relative}
+.callout-header{display:flex;align-items:center;gap:10px;font-weight:700;margin-bottom:7px;font-size:.93rem}
+.callout-icon{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.95rem}
+.callout p{margin:5px 0}
+.callout p:last-child{margin-bottom:0}
+.callout.intuition{border-color:var(--primary);background:var(--primary-bg)}.callout.intuition .callout-icon{background:var(--primary);color:#fff}.callout.intuition .callout-header{color:var(--primary)}
+.callout.theory{border-color:var(--purple);background:var(--purple-bg)}.callout.theory .callout-icon{background:var(--purple);color:#fff}.callout.theory .callout-header{color:var(--purple)}
+.callout.tip{border-color:var(--accent);background:var(--accent-bg)}.callout.tip .callout-icon{background:var(--accent);color:#fff}.callout.tip .callout-header{color:var(--accent)}
+.callout.warning{border-color:var(--warning);background:var(--warning-bg)}.callout.warning .callout-icon{background:var(--warning);color:#fff}.callout.warning .callout-header{color:var(--warning)}
+.callout.example{border-color:var(--pink);background:var(--pink-bg)}.callout.example .callout-icon{background:var(--pink);color:#fff}.callout.example .callout-header{color:var(--pink)}
+.callout.danger{border-color:var(--danger);background:var(--danger-bg)}.callout.danger .callout-icon{background:var(--danger);color:#fff}.callout.danger .callout-header{color:var(--danger)}
+.callout.story{border-color:var(--pink);background:var(--pink-bg)}.callout.story .callout-icon{background:var(--pink);color:#fff}.callout.story .callout-header{color:var(--pink)}
+.callout.fix{border-color:var(--pink);background:var(--pink-bg)}.callout.fix .callout-icon{background:var(--pink);color:#fff}.callout.fix .callout-header{color:var(--pink)}
+
+.def-card{background:var(--bg-card);border:1px solid var(--border);border-radius:13px;padding:20px 24px;margin:18px 0;position:relative;overflow:hidden}
+.def-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--primary),var(--purple))}
+.def-card .def-label{display:inline-block;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--primary);background:var(--primary-bg);padding:3px 9px;border-radius:5px;margin-bottom:7px}
+.def-card .def-term{font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:5px}
+.def-card .def-text{color:var(--text-muted)}
+
+.table-wrapper{overflow-x:auto;margin:18px 0;border-radius:11px;border:1px solid var(--border);background:var(--bg-card)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th,td{padding:11px 15px;text-align:left;border-bottom:1px solid var(--border)}
+th{background:var(--bg-elevated);color:var(--text);font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:.04em}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--bg-card-hover)}
+td.center,th.center{text-align:center}
+td.mono,th.mono{font-family:'JetBrains Mono',monospace;font-size:.94em}
+
+code{font-family:'JetBrains Mono',monospace;background:var(--bg-code);border:1px solid var(--border);padding:2px 7px;border-radius:5px;font-size:.87em;color:var(--accent)}
+pre.pseudo{background:var(--syn-bg);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:11px;padding:22px 24px 18px;overflow-x:auto;margin:14px 0;font-family:'JetBrains Mono','Courier New',monospace;font-size:.9rem;line-height:1.85;position:relative;color:var(--text)}
+pre.pseudo::before{content:'⌨ pseudocódigo';position:absolute;top:5px;right:13px;font-size:.65rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em;font-family:'Inter',sans-serif;font-weight:600}
+pre.pseudo.py::before{content:'🐍 python'}
+pre.pseudo code{background:none;border:none;padding:0;color:inherit;font-size:inherit}
+.kw{color:var(--syn-kw);font-weight:700}
+.fn{color:var(--syn-fn);font-weight:600}
+.tipo{color:var(--syn-tipo);font-weight:600}
+.op{color:var(--syn-op);font-weight:500}
+.num{color:var(--syn-num)}
+.str{color:var(--syn-str)}
+.var{color:var(--syn-var)}
+.cmt{color:var(--syn-cmt);font-style:italic}
+
+.flowchart-container{margin:26px 0 22px;padding:26px 0 4px;text-align:center;position:relative}
+.flowchart-container::before{content:'🔷 diagrama de flujo';position:absolute;top:0;left:0;font-size:.7rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em;font-weight:600;font-family:'Inter',sans-serif}
+.flowchart-container .mermaid{display:flex;justify-content:center;align-items:flex-start;width:100%;margin:0;padding:8px 0 6px}
+.flowchart-container .mermaid svg{max-width:100%;width:auto;height:auto;display:block;margin:0 auto;font-family:'Inter',sans-serif!important;overflow:visible!important}
+
+.flowchart-container .mermaid svg text,
+.flowchart-container .mermaid svg .nodeLabel,
+.flowchart-container .mermaid svg .label{
+  font-family:'Inter',sans-serif!important;
+  font-size:15px!important;
+  font-weight:600!important;
+  fill:#0a0e1a!important;
+  text-anchor:middle!important;
+  dominant-baseline:central!important;
+}
+
+.flowchart-container .mermaid svg .edgeLabel,
+.flowchart-container .mermaid svg .edgeLabel rect{
+  fill:var(--edge-bg)!important;
+  background-color:var(--edge-bg)!important;
+}
+.flowchart-container .mermaid svg .edgeLabel text,
+.flowchart-container .mermaid svg .edgeLabel tspan,
+.flowchart-container .mermaid svg .edgeLabel .label,
+.flowchart-container .mermaid svg .edgeLabel foreignObject,
+.flowchart-container .mermaid svg .edgeLabel foreignObject div,
+.flowchart-container .mermaid svg .edgeLabel foreignObject span{
+  fill:var(--edge-text)!important;
+  color:var(--edge-text)!important;
+  font-weight:800!important;
+  font-size:14px!important;
+  font-family:'Inter',sans-serif!important;
+  text-anchor:middle!important;
+}
+.flowchart-container .mermaid svg .labelBkg,
+.flowchart-container .mermaid svg .edgeLabel .labelBkg{
+  fill:var(--edge-bg)!important;
+  opacity:.95!important;
+}
+
+.flowchart-container .mermaid svg .flowchart-link,
+.flowchart-container .mermaid svg path.path{
+  stroke-width:1.6px!important;
+}
+
+.dual-view .flowchart-container .mermaid svg{max-width:100%!important}
+.flowchart-caption{margin-top:14px;font-size:.84rem;color:var(--text-muted);font-style:italic;line-height:1.5;padding:0 12px}
+
+.zoom-toolbar{position:sticky;top:6px;float:right;margin-right:0;margin-left:auto;z-index:10;display:inline-flex;align-items:center;gap:1px;background:color-mix(in srgb,var(--bg-card) 94%,transparent);border:1px solid var(--border);border-radius:8px;padding:3px;backdrop-filter:blur(8px);box-shadow:0 2px 8px rgba(0,0,0,.12);font-family:'Inter',sans-serif}
+.zoom-btn{background:transparent;border:none;color:var(--text);min-width:26px;height:24px;padding:0 6px;border-radius:5px;cursor:pointer;font-size:.95rem;font-weight:700;display:inline-flex;align-items:center;justify-content:center;transition:all .15s;line-height:1;font-family:inherit}
+.zoom-btn:hover{background:var(--primary-bg);color:var(--primary)}
+.zoom-btn:active{transform:scale(.92)}
+.zoom-label{font-size:.72rem;color:var(--text-muted);min-width:42px;text-align:center;font-weight:700;font-family:'JetBrains Mono',monospace;padding:0 4px;user-select:none;letter-spacing:-.02em}
+.flowchart-container.has-toolbar{padding-top:4px}
+.flowchart-container .zoom-toolbar+.mermaid{margin-top:6px}
+
+.flow-legend{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:12px;padding:9px 14px;background:var(--bg-card);border:1px dashed var(--border);border-radius:10px;font-size:.76rem}
+.flow-legend-item{display:flex;align-items:center;gap:6px;color:var(--text-muted)}
+.flow-legend-color{width:13px;height:13px;border-radius:3px;border:1px solid var(--border-strong)}
+
+.dual-view{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:18px 0;align-items:start}
+@media(max-width:900px){.dual-view{grid-template-columns:1fr}}
+.dual-view .flowchart-container{margin:0}
+.dual-view pre.pseudo{margin:0}
+
+.exercise{background:var(--bg-card);border:2px solid var(--border-strong);border-radius:15px;margin:28px 0;overflow:hidden}
+.exercise-header{background:linear-gradient(135deg,var(--primary),var(--purple));color:#fff;padding:14px 24px;display:flex;align-items:center;gap:11px;font-weight:700;font-size:1.02rem;flex-wrap:wrap}
+.exercise-num{background:rgba(255,255,255,.25);padding:3px 11px;border-radius:5px;font-size:.82rem}
+.exercise-tag{background:rgba(255,255,255,.18);padding:3px 10px;border-radius:5px;font-size:.75rem;font-weight:500;margin-left:auto}
+.exercise-body{padding:24px 28px}
+
+.statement-box{background:var(--warning-bg);border-left:4px solid var(--warning);padding:16px 20px;border-radius:8px;margin:14px 0 22px}
+.statement-box .statement-label{font-weight:700;color:var(--warning);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;display:block}
+
+.solution-block{margin-top:22px}
+.solution-block h4{display:flex;align-items:center;gap:8px;color:var(--accent);margin:24px 0 11px;font-size:1.03rem;padding-top:10px;border-top:1px dashed var(--border)}
+.solution-block h4:first-child{padding-top:0;border-top:none}
+
+.step-box{background:var(--bg-flow);border:1px solid var(--border);border-radius:10px;padding:15px 18px;margin:12px 0}
+.step-box .step-label{font-weight:700;color:var(--primary);font-size:.74rem;text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px}
+
+.final-answer{background:var(--accent-bg);border-left:4px solid var(--accent);border-radius:8px;padding:16px 20px;margin:20px 0}
+.final-answer-label{font-weight:700;color:var(--accent);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px}
+
+.trace-table{background:var(--bg-card);border-radius:10px;overflow:hidden;margin:12px 0;border:1px solid var(--border)}
+.trace-table table{font-size:.86rem}
+.trace-table th{background:var(--purple-bg);color:var(--purple)}
+
+.legend-box{background:var(--bg-card);border:1px solid var(--border-strong);border-left:4px solid var(--primary);border-radius:10px;padding:13px 17px;margin:13px 0;font-size:.9rem}
+.legend-box .legend-title{font-weight:700;color:var(--primary);margin-bottom:5px;font-size:.74rem;text-transform:uppercase;letter-spacing:.06em}
+
+.compare-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:18px 0}
+.compare-card{background:var(--bg-card);border:1px solid var(--border);border-radius:11px;padding:16px 18px}
+.compare-card h4{margin:0 0 9px;display:flex;align-items:center;gap:8px;font-size:.98rem;border:none;padding:0}
+
+.glossary-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:13px;margin:18px 0}
+.gloss-item{background:var(--bg-card);border:1px solid var(--border);border-radius:11px;padding:14px 16px;transition:all .2s}
+.gloss-item:hover{border-color:var(--primary);background:var(--bg-card-hover);transform:translateY(-2px)}
+.gloss-term{font-weight:700;color:var(--primary);font-size:.98rem;margin-bottom:4px}
+.gloss-def{font-size:.86rem;color:var(--text-muted)}
+
+.quiz-item{background:var(--bg-card);border:1px solid var(--border);border-radius:13px;padding:18px 22px;margin:16px 0}
+.quiz-q{font-weight:600;color:var(--text);margin-bottom:11px}
+details{margin-top:11px;border-top:1px dashed var(--border);padding-top:11px}
+summary{cursor:pointer;font-weight:600;color:var(--accent);font-size:.88rem;padding:5px 0;user-select:none}
+details[open] summary{margin-bottom:9px}
+.answer-content{font-size:.9rem;color:var(--text-muted);background:var(--accent-bg);border-radius:8px;padding:11px 15px;margin-top:7px}
+.answer-content strong{color:var(--accent)}
+
+footer{text-align:center;padding:36px 20px;border-top:1px solid var(--border);margin-top:72px;color:var(--text-muted);font-size:.85rem}
+footer .heart{color:var(--danger)}
+
+kbd{background:var(--bg-elevated);border:1px solid var(--border-strong);border-radius:4px;padding:1px 6px;font-family:'JetBrains Mono',monospace;font-size:.85em}
+
+.formula-box{background:var(--purple-bg);border:1px solid var(--purple);border-radius:10px;padding:15px 22px;margin:14px 0;text-align:center;font-family:'JetBrains Mono',monospace;font-size:.98rem;line-height:1.75}
+
+.why-box{background:linear-gradient(to right,var(--primary-bg),transparent);border-left:4px solid var(--primary);border-radius:0 10px 10px 0;padding:13px 17px;margin:11px 0;font-size:.92rem}
+.why-box .why-label{font-weight:700;color:var(--primary);font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;display:flex;align-items:center;gap:6px}
+
+.theory-recap{background:var(--purple-bg);border:1px dashed var(--purple);border-radius:10px;padding:13px 17px;margin:13px 0}
+.theory-recap .theory-label{font-weight:700;color:var(--purple);font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;display:flex;align-items:center;gap:6px}
+
+.vector-viz{display:flex;justify-content:center;flex-wrap:wrap;gap:0;margin:18px 0;font-family:'JetBrains Mono',monospace;align-items:flex-end}
+.vector-cell{min-width:50px;padding:9px 7px;border:1px solid var(--border-strong);background:var(--cell-bg);text-align:center;position:relative;font-size:.93rem;color:var(--text);margin-top:22px}
+.vector-cell:not(:last-child){border-right:none}
+.vector-cell:first-child{border-radius:6px 0 0 6px}
+.vector-cell:last-child{border-radius:0 6px 6px 0}
+.vector-cell .v-index{position:absolute;top:-20px;left:0;right:0;font-size:.68rem;color:var(--text-dim);font-weight:600}
+.vector-cell.highlight{background:var(--accent-bg);border-color:var(--accent);color:var(--accent);font-weight:700}
+.vector-cell.searching{background:var(--warning-bg);border-color:var(--warning);color:var(--warning);font-weight:700}
+.vector-label{display:flex;align-items:center;margin-right:8px;color:var(--text-muted);font-weight:600;font-family:'Inter',sans-serif;margin-top:22px}
+
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:9px}
+::-webkit-scrollbar-thumb:hover{background:var(--primary)}
+
+:root[data-theme="contrast"]{
+  --bg:#000000;--bg-elevated:#000000;--bg-card:#0a0a0a;--bg-card-hover:#161616;
+  --bg-code:#000000;--bg-flow:#0a0a0a;--border:#ffffff;--border-strong:#ffffff;
+  --text:#ffffff;--text-muted:#f2f2f2;--text-dim:#d0d0d0;
+  --primary:#66d9ff;--primary-strong:#9fe8ff;--primary-bg:rgba(102,217,255,.22);
+  --accent:#7CFF7C;--accent-bg:rgba(124,255,124,.2);
+  --warning:#FFD84D;--warning-bg:rgba(255,216,77,.22);
+  --danger:#FF8A8A;--danger-bg:rgba(255,138,138,.22);
+  --purple:#D9B3FF;--purple-bg:rgba(217,179,255,.2);
+  --pink:#FFB3D9;--pink-bg:rgba(255,179,217,.2);
+  --shadow:0 0 0 rgba(0,0,0,0);
+  --syn-kw:#66d9ff;--syn-fn:#FFD84D;--syn-tipo:#7CFF7C;--syn-op:#FFB3D9;--syn-num:#7CFF7C;
+  --syn-str:#FFD84D;--syn-var:#66d9ff;--syn-cmt:#d0d0d0;--syn-bg:#000000;
+  --cell-bg:#0a0a0a;--edge-text:#ffffff;--edge-bg:#000000;
+}
+html[data-theme="contrast"] *{text-shadow:none!important}
+html[data-theme="contrast"] .exercise,
+html[data-theme="contrast"] .callout,
+html[data-theme="contrast"] .def-card,
+html[data-theme="contrast"] .table-wrapper,
+html[data-theme="contrast"] .statement-box,
+html[data-theme="contrast"] .step-box,
+html[data-theme="contrast"] .why-box,
+html[data-theme="contrast"] .theory-recap,
+html[data-theme="contrast"] .legend-box,
+html[data-theme="contrast"] .final-answer,
+html[data-theme="contrast"] .trace-table,
+html[data-theme="contrast"] pre.pseudo,
+html[data-theme="contrast"] .flowchart-container,
+html[data-theme="contrast"] .compare-card{border-width:2px!important}
+html[data-theme="contrast"] h1{-webkit-text-fill-color:var(--text);background:none}
+html[data-theme="contrast"] a{text-decoration:underline}
+
+:root{--text-zoom:1}
+body{font-size:calc(16px * var(--text-zoom))}
+
+:root{--reading-width:100%}
+main{max-width:var(--reading-width);margin:0 auto}
+
+:root{--body-lh:1.7}
+body{line-height:var(--body-lh)}
+
+body{padding-top:48px}
+.topbar{position:fixed;top:0;left:0;right:0;width:100%;transform:translateY(0);transition:transform .3s cubic-bezier(.4,0,.2,1),background .3s,color .3s}
+.topbar.topbar-hidden{transform:translateY(-100%)}
+.sidebar{top:48px}
+@media(max-width:1024px){.sidebar{top:48px}}
+
+#readProgress{position:fixed;top:0;left:0;height:3px;width:0%;z-index:200;background:linear-gradient(90deg,var(--primary),var(--purple));transition:width .12s linear;pointer-events:none}
+
+#toTopBtn{position:fixed;right:22px;bottom:22px;z-index:95;width:46px;height:46px;border-radius:50%;border:1px solid var(--border-strong);background:var(--bg-card);color:var(--text);font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);opacity:0;pointer-events:none;transform:translateY(8px);transition:all .25s}
+#toTopBtn.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+#toTopBtn:hover{background:var(--bg-card-hover);border-color:var(--primary);color:var(--primary)}
+
+.a11y-toggle{background:var(--bg-card);border:1px solid var(--border);color:var(--text);padding:6px 10px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;font-family:inherit;transition:all .15s;line-height:1;min-width:34px}
+.a11y-toggle:hover{background:var(--bg-card-hover);border-color:var(--primary)}
+
+#a11yOverlay{position:fixed;inset:0;z-index:198;background:rgba(0,0,0,.45);opacity:0;pointer-events:none;transition:opacity .2s}
+#a11yOverlay.show{opacity:1;pointer-events:auto}
+#a11yPanel{position:fixed;z-index:199;top:58px;right:14px;width:320px;max-width:calc(100vw - 28px);background:var(--bg-elevated);border:1px solid var(--border-strong);border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,.45);padding:18px 18px 16px;transform:translateY(-10px) scale(.98);opacity:0;pointer-events:none;transition:all .2s}
+#a11yPanel.show{transform:none;opacity:1;pointer-events:auto}
+.a11y-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.a11y-head .ttl{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--primary);font-weight:800}
+.a11y-close{background:none;border:none;color:var(--text-muted);font-size:1.3rem;cursor:pointer;line-height:1;padding:2px 6px;border-radius:6px}
+.a11y-close:hover{background:var(--bg-card);color:var(--text)}
+.a11y-group{margin:14px 0}
+.a11y-group:first-of-type{margin-top:2px}
+.a11y-lab{font-size:.78rem;font-weight:700;color:var(--text);margin-bottom:8px;display:block}
+.a11y-row{display:flex;gap:8px;flex-wrap:wrap}
+.a11y-opt{flex:1;min-width:80px;display:flex;flex-direction:column;align-items:center;gap:6px;padding:9px 6px;border-radius:10px;border:1px solid var(--border);background:var(--bg-card);color:var(--text-muted);cursor:pointer;font-size:.72rem;font-family:inherit;transition:all .15s}
+.a11y-opt:hover{border-color:var(--primary)}
+.a11y-opt.active{border-color:var(--primary);background:var(--primary-bg);color:var(--primary);font-weight:700}
+.a11y-sw{width:22px;height:22px;border-radius:50%;border:1px solid var(--border-strong)}
+.sw-dark{background:linear-gradient(135deg,#0a0e1a,#3b82f6)}
+.sw-light{background:linear-gradient(135deg,#f8fafc,#2563eb)}
+.sw-contrast{background:linear-gradient(135deg,#000,#fff)}
+.a11y-stepper{display:flex;align-items:center;gap:10px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:6px 8px}
+.a11y-stepper button{width:30px;height:30px;border-radius:8px;border:1px solid var(--border);background:var(--bg-elevated);color:var(--text);font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit}
+.a11y-stepper button:hover{border-color:var(--primary);color:var(--primary)}
+.a11y-stepper span{flex:1;text-align:center;font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--text-muted)}
+.a11y-reset{width:100%;margin-top:6px;padding:9px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--text-muted);cursor:pointer;font-size:.8rem;font-family:inherit;transition:all .15s}
+.a11y-reset:hover{background:var(--bg-card);color:var(--text);border-color:var(--border-strong)}
+
+.bridge-table{width:100%}
+.bridge-table td.pseudo-cell{font-family:'JetBrains Mono',monospace;color:var(--accent)}
+.bridge-table td.py-cell{font-family:'JetBrains Mono',monospace;color:var(--primary)}
+
+@media print{
+  .topbar,.sidebar,#toTopBtn,#readProgress,#a11yPanel,#a11yOverlay,.zoom-toolbar{display:none!important}
+  body{padding-top:0}
+  main{max-width:100%!important}
+}
+</style>
+</head>
+<body>
+
+<div id="readProgress"></div>
+
+<header class="topbar" id="topbar">
+  <button class="sidebar-toggle" id="sidebarToggle" title="Mostrar/ocultar menú (S)" aria-label="Mostrar/ocultar menú lateral">☰</button>
+  <div class="brand">
+    <div class="brand-icon">🐧</div>
+    <div class="brand-text">
+      <strong>Pingüino · Fundamentos de Programación</strong>
+      <small>Guía de estudio · Semana 12 · Estructuras Repetitivas (Python)</small>
+    </div>
+  </div>
+  <button class="a11y-toggle" id="a11yToggle" title="Opciones de visualización y accesibilidad" aria-label="Opciones de accesibilidad" aria-haspopup="true" aria-expanded="false">♿</button>
+  <button class="theme-toggle" id="themeToggle" title="Alternar tema (T)"><span id="themeIcon">🌙</span><span id="themeLabel">Oscuro</span></button>
+</header>
+
+<div id="a11yOverlay"></div>
+<aside id="a11yPanel" role="dialog" aria-label="Opciones de accesibilidad">
+  <div class="a11y-head">
+    <span class="ttl">Vista y accesibilidad</span>
+    <button class="a11y-close" id="a11yClose" aria-label="Cerrar">&#215;</button>
+  </div>
+
+  <div class="a11y-group">
+    <span class="a11y-lab">Tema de color</span>
+    <div class="a11y-row">
+      <button class="a11y-opt" data-theme-opt="dark"><span class="a11y-sw sw-dark"></span>Oscuro</button>
+      <button class="a11y-opt" data-theme-opt="light"><span class="a11y-sw sw-light"></span>Claro</button>
+      <button class="a11y-opt" data-theme-opt="contrast"><span class="a11y-sw sw-contrast"></span>Alto contraste</button>
+    </div>
+  </div>
+
+  <div class="a11y-group">
+    <span class="a11y-lab">Tamaño del texto</span>
+    <div class="a11y-stepper">
+      <button id="fsMinus" aria-label="Reducir texto">&#8722;</button>
+      <span id="fsLabel">100%</span>
+      <button id="fsPlus" aria-label="Aumentar texto">+</button>
+    </div>
+  </div>
+
+  <div class="a11y-group">
+    <span class="a11y-lab">Ancho del contenido</span>
+    <div class="a11y-row">
+      <button class="a11y-opt" data-width-opt="normal">Amplio</button>
+      <button class="a11y-opt" data-width-opt="narrow">Cómodo</button>
+    </div>
+  </div>
+
+  <div class="a11y-group">
+    <span class="a11y-lab">Interlineado</span>
+    <div class="a11y-row">
+      <button class="a11y-opt" data-lh-opt="normal">Normal</button>
+      <button class="a11y-opt" data-lh-opt="relaxed">Relajado</button>
+    </div>
+  </div>
+
+  <button class="a11y-reset" id="a11yReset">Restablecer todo</button>
+</aside>
+
+<div class="layout" id="layout">
+  <aside class="sidebar" id="sidebar">
+    <h3>📑 Contenido</h3>
+    <ul class="toc-list">
+      <li><a href="#intro">🏁 Introducción</a></li>
+      <div class="toc-divider"></div>
+      <li><a href="#s12-random">🎲 Números aleatorios</a></li>
+      <li><a href="#ej1">&nbsp;&nbsp;Ej. 1 · Mensaje si sale 6</a></li>
+      <div class="toc-divider"></div>
+      <li><a href="#s12-ciclos">🔁 Estructuras de repetición</a></li>
+      <li><a href="#s12-mientras">&nbsp;&nbsp;a) MIENTRAS / while</a></li>
+      <li><a href="#ej2">&nbsp;&nbsp;Ej. 2 · Mostrar cada intento</a></li>
+      <li><a href="#ej3">&nbsp;&nbsp;Ej. 3 · Contar lanzamientos</a></li>
+      <li><a href="#ej4">&nbsp;&nbsp;Ej. 4 · Suma de cuadrados (WHILE)</a></li>
+      <li><a href="#s12-para">&nbsp;&nbsp;b) PARA / for</a></li>
+      <li><a href="#ej5">&nbsp;&nbsp;Ej. 5 · Cuadrados 1 al 5 (lista)</a></li>
+      <li><a href="#ej6">&nbsp;&nbsp;Ej. 6 · Cuadrados de una lista dada</a></li>
+      <li><a href="#s12-range">&nbsp;&nbsp;La función range()</a></li>
+      <li><a href="#ej7">&nbsp;&nbsp;Ej. 7 · Cuadrados 1 al 5 (range)</a></li>
+      <li><a href="#ej8">&nbsp;&nbsp;Ej. 8 · Suma de cuadrados (FOR)</a></li>
+      <li><a href="#ej9">&nbsp;&nbsp;Ej. 9 · Promedio de n datos</a></li>
+      <li><a href="#ej10">&nbsp;&nbsp;Ej. 10 · Encontrar el mayor</a></li>
+      <li><a href="#ej11">&nbsp;&nbsp;Ej. 11 · Divisores de un número</a></li>
+      <li><a href="#ej12">&nbsp;&nbsp;Ej. 12 · Contar divisores exactos</a></li>
+      <li><a href="#ej13">&nbsp;&nbsp;Ej. 13 · Juego de dados con reglas</a></li>
+      <div class="toc-divider"></div>
+      <li><a href="#s12-breakcontinue">⛔ BREAK y CONTINUE</a></li>
+      <li><a href="#ej14">&nbsp;&nbsp;Ej. 14 · Intentos hasta el 5 (BREAK)</a></li>
+      <li><a href="#ej15">&nbsp;&nbsp;Ej. 15 · BREAK vs CONTINUE</a></li>
+      <li><a href="#ej16">&nbsp;&nbsp;Ej. 16 · Suma sin negativos</a></li>
+      <div class="toc-divider"></div>
+      <li><a href="#puente">🌉 WHILE vs FOR vs BREAK vs CONTINUE</a></li>
+      <li><a href="#cierre">🎯 Cierre y checklist</a></li>
+    </ul>
+  </aside>
+
+  <main>
+
+    <!-- ============================================================ -->
+    <!-- INTRO -->
+    <!-- ============================================================ -->
+    <section class="hero" id="intro">
+      <div class="hero-badge">Semana 12 · Estructuras Repetitivas</div>
+      <h1>De repetir "a mano" a delegárselo a un ciclo: MIENTRAS, PARA, BREAK y CONTINUE</h1>
+      <p class="hero-sub">Esta semana cierra un círculo que empezaste en pseudocódigo: en la Semana 6 conociste <code>PARA</code>, en la Semana 7 tradujiste <code>MIENTRAS</code> y <code>REPETIR</code> a partir de saltos, y ahora, en Python, esas mismas ideas se convierten en <code>while</code> y <code>for</code> de verdad — código que puedes ejecutar. De regalo, el profesor introduce el módulo <strong>random</strong> (para que los ejemplos con dados dejen de ser hipotéticos) y las instrucciones <strong>break</strong> y <strong>continue</strong>, que te dan control fino sobre cuándo interrumpir o saltar una repetición.</p>
+      <div class="hero-meta">
+        <div class="meta-pill">⏱️ <span><strong>Lectura:</strong> ~100 min</span></div>
+        <div class="meta-pill">📚 <span><strong>Contenido:</strong> 4 bloques teóricos + 16 ejercicios resueltos</span></div>
+        <div class="meta-pill">🎲 <span><strong>Nuevo:</strong> módulo random</span></div>
+        <div class="meta-pill">🔁 <span><strong>Estructuras:</strong> while, for, break, continue</span></div>
+      </div>
+
+      <div class="callout intuition" style="margin-top:24px">
+        <div class="callout-header"><span class="callout-icon">📖</span> Cómo está organizada esta guía</div>
+        <p>Cada ejercicio sigue el mismo recorrido de siempre: <strong>(a)</strong> el enunciado tal como lo dio el profesor, <strong>(b)</strong> el paso a paso razonado —con el porqué de cada decisión y qué representa cada variable—, <strong>(c)</strong> un <strong>diagrama de flujo</strong> cuando hay una repetición o una decisión que vale la pena visualizar, <strong>(d)</strong> el código en <strong>Python</strong> completo, y <strong>(e)</strong> una tabla de traza con valores concretos.</p>
+        <p style="margin-top:8px"><strong>Un detalle importante sobre las trazas con números aleatorios:</strong> como <code>random()</code>, <code>randint()</code>, <code>choice()</code> y <code>shuffle()</code> no dan resultados predecibles, en las tablas de traza de esos ejercicios voy a <em>suponer</em> valores concretos ("supongamos que sale…") solo para poder mostrarte cómo se comporta el programa paso a paso — no son el resultado real de ninguna ejecución en particular.</p>
+        <p style="margin-top:8px">Marco con <span class="callout-icon" style="display:inline-flex;width:20px;height:20px;background:var(--pink);color:#fff;vertical-align:middle;font-size:.7rem">🧩</span> los ejercicios que la diapositiva del profesor dejó <strong>sin resolver</strong> (solo enunciado, o enunciado + variables sin código) — los resolví siguiendo exactamente el mismo estilo y las mismas variables que él ya venía usando en los ejercicios sí resueltos, para que la guía quede completa de principio a fin.</p>
+        <p style="margin-top:8px"><strong>Atajos:</strong> <kbd>T</kbd> alterna tema · <kbd>S</kbd> muestra/oculta el menú lateral. El botón <strong>♿</strong> de la barra superior ajusta tamaño de texto, ancho de columna, interlineado o activa alto contraste. Cada diagrama tiene sus propios controles <kbd>−</kbd>/<kbd>+</kbd> de zoom (el pellizco del trackpad y Ctrl/Cmd+rueda quedan libres para el zoom normal del navegador sobre toda la página).</p>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- NÚMEROS ALEATORIOS -->
+    <!-- ============================================================ -->
+    <section class="block" id="s12-random">
+      <div class="block-header"><div class="block-num">12A</div><h2>Números aleatorios</h2></div>
+
+      <h3>12.1. ¿Qué es un número aleatorio?</h3>
+
+      <div class="def-card">
+        <span class="def-label">Definición · S12</span>
+        <div class="def-term">Números aleatorios</div>
+        <div class="def-text">Son valores que están en un rango de posibles resultados, pero <strong>no se puede predecir</strong> cuál es el resultado que se obtendrá al tomar alguno.</div>
+      </div>
+
+      <div class="callout intuition">
+        <div class="callout-header"><span class="callout-icon">🎲</span> Intuición: el dado</div>
+        <p>Al lanzar un dado no podemos afirmar cuál número saldrá entre los seis números posibles (1 al 6) — sabemos el <strong>rango</strong> de resultados posibles, pero no el resultado exacto antes de lanzarlo. Esa es exactamente la idea que vamos a usar una y otra vez esta semana: los ejemplos de "simular lanzamientos de un dado" no son un capricho del profesor, son la forma más simple de generar un número dentro de un rango conocido pero impredecible, que es justo lo que necesitamos para poner a prueba nuestros ciclos.</p>
+      </div>
+
+      <p>Python no genera números aleatorios "de fábrica" en el lenguaje base — hay que <strong>cargar una librería</strong> que sepa hacerlo. Esa librería es el módulo <code>random</code>:</p>
+
+<pre class="pseudo py"><code><span class="kw">from</span> random <span class="kw">import</span> *</code></pre>
+
+      <div class="why-box">
+        <div class="why-label">🤔 ¿Qué hace exactamente esta línea?</div>
+        <p>Esto conecta directamente con la característica #8 de Python que ya viste (la mayoría de funciones viven en librerías que hay que cargar antes de usarlas). El asterisco <code>*</code> significa "importa <strong>todas</strong> las funciones del módulo random" — por eso, después de esta línea, puedes escribir <code>randint(1,6)</code> directamente, en vez de tener que escribir <code>random.randint(1,6)</code>.</p>
+      </div>
+
+      <h3>12.2. Las cuatro funciones básicas del módulo random</h3>
+
+      <div class="table-wrapper">
+        <table>
+          <thead><tr><th>Función</th><th>¿Qué genera?</th><th>Ejemplo</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">random()</td><td>Un número aleatorio <strong>real</strong> en el intervalo semiabierto <strong>[0, 1)</strong> (incluye el 0, nunca llega exactamente al 1)</td><td class="mono">x = random()</td></tr>
+            <tr><td class="mono">randint(a,b)</td><td>Un número aleatorio <strong>entero</strong> en el intervalo <strong>[a, b]</strong>, incluyendo <em>ambos</em> extremos</td><td class="mono">a = randint(1,6)</td></tr>
+            <tr><td class="mono">choice(s)</td><td>Elige, al azar, <strong>un elemento</strong> de la lista <code>s</code> (sin modificar la lista)</td><td class="mono">c = choice(b)</td></tr>
+            <tr><td class="mono">shuffle(s)</td><td><strong>Desordena</strong> los elementos de la lista <code>s</code> — los reordena "en el sitio" (no devuelve una lista nueva)</td><td class="mono">shuffle(b)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="why-box">
+        <div class="why-label">🤔 Un detalle que conviene fijar desde ya: randint() incluye AMBOS extremos</div>
+        <p>Guarda este dato porque más adelante, cuando veamos <code>range()</code> para los ciclos <code>PARA</code>, va a pasar <strong>justo lo contrario</strong>: <code>range()</code> excluye su extremo final. Es decir: <code>randint(1,6)</code> sí puede darte un 6, pero <code>range(1,6)</code> nunca te da un 6 (llega solo hasta el 5). Confundir estos dos comportamientos es una fuente de errores muy común — anticípalo ahora.</p>
+      </div>
+
+      <div class="why-box">
+        <div class="why-label">🤔 ¿En qué se diferencian choice(s) y shuffle(s)?</div>
+        <p><code>choice(s)</code> <strong>mira</strong> la lista y te devuelve uno de sus elementos al azar, pero la lista <code>s</code> queda exactamente igual que antes. <code>shuffle(s)</code>, en cambio, <strong>modifica</strong> la lista original reordenando sus elementos, y no te devuelve nada útil (su valor de retorno es <code>None</code>) — el resultado que te interesa está en la propia lista <code>s</code> después de llamarla, no en lo que "devuelve" la función.</p>
+      </div>
+
+      <h3>12.3. Ejemplo del profesor: probando las cuatro funciones</h3>
+
+      <p>El profesor mostró este bloque de código para ilustrar las cuatro funciones (dividido en celdas con <code>#%%</code>, típico de Spyder):</p>
+
+<pre class="pseudo py"><code><span class="kw">from</span> random <span class="kw">import</span> *
+<span class="var">x</span>=random()
+<span class="fn">print</span>(x)
+
+<span class="cmt">#%%</span>
+<span class="var">a</span>=randint(<span class="num">1</span>,<span class="num">6</span>)
+<span class="fn">print</span>(a)
+
+<span class="cmt">#%%</span>
+<span class="var">b</span>=[<span class="num">10</span>,<span class="num">20</span>,<span class="num">30</span>,<span class="num">40</span>,<span class="num">50</span>]
+shuffle(b)
+<span class="fn">print</span>(b)
+
+<span class="cmt">#%%</span>
+<span class="var">b</span>=[<span class="num">10</span>,<span class="num">20</span>,<span class="num">30</span>,<span class="num">40</span>,<span class="num">50</span>]
+<span class="var">c</span>=choice(b)
+<span class="fn">print</span>(c)</code></pre>
+
+      <div class="trace-table"><table>
+        <thead><tr><th>Instrucción</th><th>¿Qué podemos predecir?</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">x=random(); print(x)</td><td>Un decimal cualquiera entre 0 (incluido) y 1 (excluido). Por ejemplo, podría salir <span class="mono">0.7284...</span> — nunca sabremos cuál exactamente antes de ejecutar.</td></tr>
+          <tr><td class="mono">a=randint(1,6); print(a)</td><td>Un entero entre 1 y 6, ambos incluidos. Cualquiera de los 6 tiene la misma chance.</td></tr>
+          <tr><td class="mono">shuffle(b); print(b)</td><td>Los mismos 5 valores (10,20,30,40,50) pero en un orden distinto al original, por ejemplo <span class="mono">[30,10,50,20,40]</span>.</td></tr>
+          <tr><td class="mono">c=choice(b); print(c)</td><td>Uno solo de los 5 valores de <code>b</code> (10, 20, 30, 40 o 50), elegido al azar. La lista <code>b</code> no cambia.</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <div class="exercise" id="ej1">
+      <div class="exercise-header"><span class="exercise-num">EJ. 1</span><span>Simular lanzamiento de un dado con mensaje según el resultado</span><span class="exercise-tag">🟢 random + SI</span></div>
+      <div class="exercise-body">
+        <div class="statement-box"><span class="statement-label">📝 Enunciado (tal como lo dio el profesor)</span>
+          <p>Simule lanzamientos de un dado y si sale el número 6, debe mostrar el mensaje: <em>"Salió el número 6, ganaste!!"</em>; caso contrario el mensaje debe ser: <em>"Salió el número …, intente nuevamente"</em>.</p>
+        </div>
+
+        <div class="solution-block">
+
+          <h4>📋 Paso 1 — Identificar qué necesito generar y qué necesito decidir</h4>
+          <p>Este ejercicio combina dos cosas que ya conoces por separado: generar un número al azar (esta semana) y decidir con <code>SI/SINO</code> (semanas anteriores). Necesito una sola variable — llamémosla <code>n</code> — que reciba el resultado del lanzamiento, y luego una decisión simple: <code>¿n es igual a 6?</code></p>
+
+          <div class="why-box">
+            <div class="why-label">🤔 ¿Por qué randint(1,6) y no random()?</div>
+            <p>Un dado tiene resultados <strong>enteros</strong> del 1 al 6, ambos extremos posibles. <code>random()</code> me daría un decimal entre 0 y 1, que no representa una cara de un dado. <code>randint(1,6)</code> es exactamente el generador correcto: entero, con ambos extremos incluidos.</p>
+          </div>
+
+          <h4>📋 Paso 2 — Pseudocódigo</h4>
+<pre class="pseudo"><code><span class="kw">INICIO</span>
+    <span class="var">n</span> ← <span class="fn">randint</span>(<span class="num">1</span>, <span class="num">6</span>)
+    <span class="kw">SI</span> <span class="var">n</span> <span class="op">=</span> <span class="num">6</span>
+        <span class="fn">Mostrar</span> <span class="str">"Salió el número 6, ganaste!!"</span>
+    <span class="kw">SINO</span>
+        <span class="fn">Mostrar</span> <span class="str">"Salió el número"</span>, <span class="var">n</span>
+        <span class="fn">Mostrar</span> <span class="str">"Intente nuevamente"</span>
+    <span class="kw">FIN_SI</span>
+<span class="kw">FIN</span></code></pre>
+
+          <h4>📋 Paso 3 — Código en Python</h4>
+<pre class="pseudo py"><code><span class="cmt">#Mensaje si sale número 6</span>
+<span class="kw">from</span> random <span class="kw">import</span> *
+<span class="var">n</span>=randint(<span class="num">1</span>,<span class="num">6</span>)
+<span class="kw">if</span> n<span class="op">==</span><span class="num">6</span>:
+    <span class="fn">print</span>(<span class="str">"Salió el número 6, ganaste!!"</span>)
+<span class="kw">else</span>:
+    <span class="fn">print</span>(<span class="str">"Salió el número"</span>,n)
+    <span class="fn">print</span>(<span class="str">"Intente nuevamente"</span>)</code></pre>
+
+          <div class="why-box">
+            <div class="why-label">🤔 ¿Por qué n==6 y no n=6?</div>
+            <p>Esto conecta con algo que ya viste en la Semana 9 y que aquí vuelve a aparecer: en Python, <code>=</code> siempre <strong>asigna</strong> un valor, mientras que <code>==</code> <strong>compara</strong> si dos valores son iguales. Dentro de un <code>if</code> siempre necesitas <code>==</code> — usar <code>=</code> ahí produciría directamente un error de sintaxis.</p>
+          </div>
+
+          <h4>📋 Paso 4 — Prueba de escritorio (dos casos supuestos)</h4>
+          <div class="trace-table"><table>
+            <thead><tr><th class="center">Supongamos que sale (n)</th><th class="center">n==6</th><th>Salida</th></tr></thead>
+            <tbody>
+              <tr><td class="center mono">6</td><td class="center">V</td><td>Salió el número 6, ganaste!!</td></tr>
+              <tr><td class="center mono">4</td><td class="center">F</td><td>Salió el número 4 &nbsp;/&nbsp; Intente nuevamente</td></tr>
+            </tbody>
+          </table></div>
+
+          <div class="final-answer">
+            <div class="final-answer-label">✅ Resultado</div>
+            <p>El programa siempre imprime un mensaje distinto dependiendo de si el número generado fue exactamente 6 o cualquier otro valor entre 1 y 5. Como <code>n</code> se genera de nuevo <strong>cada vez</strong> que se ejecuta el programa, el mensaje cambiará de una corrida a otra — este comportamiento no determinista es, precisamente, lo que hace interesante trabajar con <code>random</code>.</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- ESTRUCTURAS DE REPETICIÓN: TEORÍA GENERAL -->
+    <!-- ============================================================ -->
+    <section class="block" id="s12-ciclos">
+      <div class="block-header"><div class="block-num">12B</div><h2>Estructuras de repetición o ciclos</h2></div>
+
+      <div class="def-card">
+        <span class="def-label">Definición · S12</span>
+        <div class="def-term">Estructuras de repetición (ciclos)</div>
+        <div class="def-text">Describen la <strong>ejecución repetida</strong> de un bloque de instrucciones. El objetivo es colocar el bloque de instrucciones dentro de un ciclo y agregar un elemento que permita <strong>salir</strong> del ciclo para que el algoritmo pueda continuar.</div>
+      </div>
+
+      <div class="callout theory">
+        <div class="callout-header"><span class="callout-icon">🎓</span> La pieza que nunca puede faltar: la condición de salida</div>
+        <p>Fíjate en la última frase de la definición: "agregar un elemento que permita salir del ciclo". Todo ciclo, sin excepción, necesita una forma de terminar — si no la tiene, el programa se queda repitiendo para siempre (un <strong>bucle infinito</strong>). Vas a ver que esta idea reaparece bajo distintas formas: una condición que se vuelve falsa (en <code>MIENTRAS</code>), una secuencia que se agota (en <code>PARA</code>), o una instrucción <code>break</code> explícita.</p>
+      </div>
+
+      <p>Existen <strong>dos formas</strong> de controlar cuántas veces se repite un bloque de instrucciones, y las vas a ver una detrás de otra en esta guía:</p>
+
+      <div class="compare-grid">
+        <div class="compare-card">
+          <h4>🔄 a) Controlada por una condición al inicio</h4>
+          <p style="font-size:.88rem;color:var(--text-muted)">Se revisa una condición <strong>antes</strong> de cada repetición. Mientras sea verdadera, se repite. No sabes de antemano cuántas veces se va a repetir — depende de cuándo la condición se vuelva falsa.</p>
+          <p style="font-size:.86rem;margin-top:8px">Pseudocódigo: <code>MIENTRAS</code> &nbsp;·&nbsp; Python: <code>while</code></p>
+        </div>
+        <div class="compare-card">
+          <h4>🔢 b) Controlada por una secuencia de valores</h4>
+          <p style="font-size:.88rem;color:var(--text-muted)">Una variable recorre, uno por uno, los valores de una secuencia ya conocida (una lista, o un rango de números). El ciclo termina solo cuando la secuencia se agota.</p>
+          <p style="font-size:.86rem;margin-top:8px">Pseudocódigo: <code>PARA</code> &nbsp;·&nbsp; Python: <code>for</code></p>
+        </div>
+      </div>
+
+      <div class="why-box">
+        <div class="why-label">🤔 ¿Cómo decido cuál usar? (la pregunta que te vas a hacer en cada ejercicio de esta semana)</div>
+        <p><strong>¿Sé de antemano, antes de empezar, exactamente cuántas veces se va a repetir</strong> (o tengo ya la lista completa de valores sobre la que quiero iterar)? → usa <code>PARA/for</code>. <strong>¿La repetición depende de algo que solo se puede saber mientras el programa corre</strong> (por ejemplo, "hasta que salga un 6 en el dado", donde nadie sabe cuántos lanzamientos hará falta)? → usa <code>MIENTRAS/while</code>. Esta pregunta va a resolver, sin dudar, cada uno de los ejercicios que siguen.</p>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- a) MIENTRAS / WHILE -->
+    <!-- ============================================================ -->
+    <section class="block" id="s12-mientras">
+      <div class="block-header"><div class="block-num">12C</div><h2>a) MIENTRAS: repetición controlada por una condición al inicio</h2></div>
+
+      <p>Muy usada para controlar la repetición de bloques de instrucciones cuando el criterio de parada es una <strong>condición lógica</strong>, no una cantidad fija de repeticiones.</p>
+
+      <div class="def-card">
+        <span class="def-label">Semántica</span>
+        <div class="def-term">MIENTRAS condición ... FIN</div>
+        <div class="def-text">Al entrar a esta estructura, se evalúa la condición. Si el resultado es <strong>verdadero (V)</strong> se ejecutarán las instrucciones dentro del bloque y regresará nuevamente a evaluar la condición. Mientras la condición mantenga el valor verdadero, el bloque se ejecutará de nuevo. Cuando es <strong>falso (F)</strong>, sale de la estructura y continúa la ejecución después del bloque.</div>
+      </div>
+
+      <div class="flowchart-container">
+        <div class="mermaid-container" data-original='flowchart TB
+    I(["Inicio"])
+    C{"Mientras condición ?"}
+    P["P (bloque de instrucciones)"]
+    F(["Fin"])
+    I --> C
+    C -->|"V"| P --> C
+    C -->|"F"| F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000'><div class="mermaid">
+flowchart TB
+    I(["Inicio"])
+    C{"Mientras condición ?"}
+    P["P (bloque de instrucciones)"]
+    F(["Fin"])
+    I --> C
+    C -->|"V"| P --> C
+    C -->|"F"| F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000
+        </div></div>
+        <div class="flowchart-caption">📊 La condición se revisa <em>antes</em> de cada repetición del bloque P — por eso es posible que P no se ejecute ni una sola vez, si la condición ya nace siendo falsa.</div>
+      </div>
+
+      <div class="table-wrapper">
+        <table>
+          <thead><tr><th>Pseudocódigo</th><th>Python</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">MIENTRAS condición<br/>&nbsp;&nbsp;&nbsp;&nbsp;P<br/>FIN</td><td class="mono">while condición:<br/>&nbsp;&nbsp;&nbsp;&nbsp;P</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="why-box">
+        <div class="why-label">🤔 ¿Qué pasa si nunca actualizo la variable de la condición dentro del bloque P?</div>
+        <p>Se queda repitiendo para siempre. La condición del <code>MIENTRAS</code> solo cambia si <strong>algo dentro de P la modifica</strong> — por ejemplo, si la condición es <code>x != 4</code>, necesitas que dentro de P haya una instrucción que eventualmente le dé a <code>x</code> el valor 4 (o lo que sea necesario para volver la condición falsa). Olvidar esa actualización es la causa número uno de programas que "se cuelgan".</p>
+      </div>
+    </section>
+
+    <div class="exercise" id="ej2">
+      <div class="exercise-header"><span class="exercise-num">EJ. 2</span><span>Simular lanzamientos de un dado hasta que salga el número 4</span><span class="exercise-tag">🟡 WHILE</span></div>
+      <div class="exercise-body">
+        <div class="statement-box"><span class="statement-label">📝 Enunciado (tal como lo dio el profesor)</span>
+          <p>Simule lanzamientos de un dado y muestre el resultado de cada intento. El programa finaliza cuando salga el número 4.</p>
+        </div>
+
+        <div class="solution-block">
+
+          <h4>📋 Paso 1 — Elegir el tipo de ciclo</h4>
+          <p>Aplico la pregunta clave de la sección anterior: ¿sé de antemano cuántos lanzamientos hará falta hasta que salga un 4? No — depende del azar, podría ser el primer lanzamiento o el vigésimo. Por lo tanto, este es un caso de <code>MIENTRAS/while</code>, no de <code>PARA/for</code>.</p>
+
+          <h4>📋 Paso 2 — Identificar la variable y la condición</h4>
+          <p>Necesito una variable — llamémosla <code>x</code> — que reciba el resultado de cada lanzamiento. La condición de repetición es "mientras <code>x</code> sea distinto de 4". Pero hay un problema de arranque: la primera vez que se evalúa la condición, <code>x</code> todavía no tiene ningún lanzamiento asignado. Por eso hay que <strong>inicializar</strong> <code>x</code> con cualquier valor que garantice que la condición nazca verdadera (por ejemplo, <code>x=0</code>, ya que 0 nunca puede salir en un dado, así que <code>x!=4</code> será verdadero al entrar por primera vez).</p>
+
+          <div class="why-box">
+            <div class="why-label">🤔 ¿Por qué inicializar x en 0 y no, por ejemplo, en 1?</div>
+            <p>Cualquier valor distinto de 4 funcionaría para arrancar el ciclo (incluso 1, 2, 3, 5 o 6). Se usa 0 por convención, precisamente porque <strong>no</strong> es un resultado posible de un dado — así queda claro, con solo mirar el código, que ese 0 es un valor "de arranque" y no un lanzamiento real.</p>
+          </div>
+
+          <h4>📋 Paso 3 — Diagrama de flujo</h4>
+          <div class="flowchart-container">
+            <div class="mermaid-container" data-original='flowchart TB
+    I(["Inicio"])
+    X0["x ← 0"]
+    C{"x ≠ 4 ?"}
+    RX["x ← randint(1,6)"]
+    MX[/"mostrar: El número que salió fue: x"/]
+    F(["Fin"])
+    I --> X0 --> C
+    C -->|"V"| RX --> MX --> C
+    C -->|"F"| F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style MX fill:#60a5fa,stroke:#1e40af,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000'><div class="mermaid">
+flowchart TB
+    I(["Inicio"])
+    X0["x ← 0"]
+    C{"x ≠ 4 ?"}
+    RX["x ← randint(1,6)"]
+    MX[/"mostrar: El número que salió fue: x"/]
+    F(["Fin"])
+    I --> X0 --> C
+    C -->|"V"| RX --> MX --> C
+    C -->|"F"| F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style MX fill:#60a5fa,stroke:#1e40af,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000
+            </div></div>
+            <div class="flowchart-caption">📊 Nota que "mostrar x" está DENTRO del ciclo (entre la flecha que sale de "x ← randint" y la que regresa a la condición) — eso es lo que hace que se imprima el resultado de <em>cada</em> intento, no solo el último.</div>
+          </div>
+
+          <h4>📋 Paso 4 — Código en Python</h4>
+<pre class="pseudo py"><code><span class="cmt">#SIMULADOR DE LANZAMIENTOS Y FINALIZA CUANDO SALGA EL NÚMERO 4</span>
+<span class="kw">from</span> random <span class="kw">import</span> *
+<span class="var">x</span>=<span class="num">0</span>
+<span class="kw">while</span> x<span class="op">!=</span><span class="num">4</span>:
+    <span class="var">x</span>=randint(<span class="num">1</span>,<span class="num">6</span>)
+    <span class="fn">print</span>(<span class="str">"El número que salió fue:"</span>,x)</code></pre>
+
+          <h4>📋 Paso 5 — Prueba de escritorio (secuencia supuesta de lanzamientos)</h4>
+          <p>Supongamos que los lanzamientos que van saliendo son, en orden: 2, 5, 4.</p>
+          <div class="trace-table"><table>
+            <thead><tr><th class="center">Iteración</th><th class="center">x antes</th><th class="center">¿x≠4?</th><th class="center">x=randint(1,6)</th><th>Se imprime</th></tr></thead>
+            <tbody>
+              <tr><td class="center mono">arranque</td><td class="center mono">—</td><td class="center">—</td><td class="center mono">x=0</td><td>—</td></tr>
+              <tr><td class="center mono">1</td><td class="center mono">0</td><td class="center">V</td><td class="center mono">2</td><td>El número que salió fue: 2</td></tr>
+              <tr><td class="center mono">2</td><td class="center mono">2</td><td class="center">V</td><td class="center mono">5</td><td>El número que salió fue: 5</td></tr>
+              <tr><td class="center mono">3</td><td class="center mono">5</td><td class="center">V</td><td class="center mono">4</td><td>El número que salió fue: 4</td></tr>
+              <tr><td class="center mono">revisión final</td><td class="center mono">4</td><td class="center">F</td><td class="center">— sale del ciclo —</td><td>(nada más)</td></tr>
+            </tbody>
+          </table></div>
+
+          <div class="final-answer">
+            <div class="final-answer-label">✅ Resultado</div>
+            <p>El programa muestra el resultado de <strong>cada</strong> lanzamiento, uno por línea, y se detiene apenas aparece un 4 (incluyendo ese 4 en lo mostrado, porque el <code>print</code> ocurre justo después de generarlo, todavía dentro del ciclo).</p>
+          </div>
+
+          <div class="callout warning" style="margin-top:20px">
+            <div class="callout-header"><span class="callout-icon">👀</span> Observación del profesor: ¿qué pasa si saco el print del ciclo?</div>
+            <p>Si el <code>print("El número que salió fue:", x)</code> se escribe con la <strong>misma indentación</strong> que el <code>while</code> (es decir, después del bloque, no dentro de él), deja de pertenecer al ciclo. En ese caso, el ciclo repite en silencio (sin mostrar nada) hasta que finalmente sale un 4, y <strong>solo entonces</strong> — una vez, al final — se ejecuta el <code>print</code>, mostrando únicamente el valor final de <code>x</code> (que siempre será 4).</p>
+          </div>
+
+<pre class="pseudo py"><code><span class="var">x</span>=<span class="num">0</span>
+<span class="kw">while</span> x<span class="op">!=</span><span class="num">4</span>:
+    <span class="var">x</span>=randint(<span class="num">1</span>,<span class="num">6</span>)
+<span class="fn">print</span>(<span class="str">"El número que salió fue:"</span>,x) <span class="cmt"># fuera del ciclo: solo se ejecuta 1 vez, al final</span></code></pre>
+
+          <div class="why-box">
+            <div class="why-label">🤔 ¿Por qué la indentación decide esto?</div>
+            <p>Esta es la misma idea que ya viste en la Semana 9: Python usa la <strong>indentación</strong> (los espacios al inicio de línea), no palabras como <code>FIN_MIENTRAS</code>, para saber qué pertenece al bloque del ciclo. Una línea que empieza más adentro que el <code>while</code> está <strong>dentro</strong> del ciclo (se repite); una línea con la misma indentación que el <code>while</code> está <strong>después</strong> de él (se ejecuta una sola vez, cuando el ciclo termina).</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="exercise" id="ej3">
+      <div class="exercise-header"><span class="exercise-num">EJ. 3</span><span>Contar cuántos lanzamientos hicieron falta hasta obtener el número 4</span><span class="exercise-tag">🟡 WHILE + contador</span></div>
+      <div class="exercise-body">
+        <div class="statement-box"><span class="statement-label">📝 Enunciado (tal como lo dio el profesor)</span>
+          <p>Simule lanzamientos de un dado y determine la cantidad de lanzamientos que se realizaron hasta que se obtuvo el número 4.</p>
+        </div>
+
+        <div class="solution-block">
+
+          <h4>📋 Paso 1 — Qué cambia respecto al Ejercicio 2</h4>
+          <p>El ciclo en sí (mientras <code>x!=4</code>, generar un lanzamiento) es <strong>exactamente el mismo</strong> que en el Ejercicio 2. Lo único nuevo es que ahora, además de mostrar cada resultado, necesito <strong>contar</strong> cuántas veces se ejecutó el ciclo.</p>
+
+          <div class="def-card">
+            <span class="def-label">Patrón general</span>
+            <div class="def-term">El patrón "contador"</div>
+            <div class="def-text">Cuando se quiere conocer el número de repeticiones realizadas, se debe incluir una variable adicional que funcione como <strong>contador</strong>: se inicializa en 0 <em>antes</em> del ciclo, y dentro del ciclo se le suma 1 en cada repetición (<code>c = c + 1</code>). Vas a usar este mismo patrón una y otra vez, no solo esta semana.</div>
+          </div>
+
+          <p>Necesito entonces <strong>dos</strong> variables: <code>x</code> (el resultado de cada lanzamiento, igual que antes) y <code>c</code> (el contador de lanzamientos).</p>
+
+          <h4>📋 Paso 2 — Código en Python</h4>
+<pre class="pseudo py"><code><span class="cmt">#CONTADOR DE LANZAMIENTOS HASTA QUE SALGA EL NÚMERO 4</span>
+<span class="kw">from</span> random <span class="kw">import</span> *
+<span class="var">c</span>=<span class="num">0</span>
+<span class="var">x</span>=<span class="num">0</span>
+<span class="kw">while</span> x<span class="op">!=</span><span class="num">4</span>:
+    <span class="var">x</span>=randint(<span class="num">1</span>,<span class="num">6</span>)
+    <span class="var">c</span>=c<span class="op">+</span><span class="num">1</span>
+    <span class="fn">print</span>(<span class="str">"El número que salió fue:"</span>,x)
+<span class="fn">print</span>(<span class="str">"Se realizaron"</span>,c,<span class="str">"lanzamientos hasta que salió el número 4"</span>)</code></pre>
+
+          <div class="why-box">
+            <div class="why-label">🤔 ¿Por qué "print(...c...)" del total va SIN indentar, mientras que el de cada intento SÍ va indentado?</div>
+            <p>Porque quiero cosas distintas en cada caso: el mensaje de "el número que salió fue…" debe imprimirse <strong>una vez por cada iteración</strong> (por eso va dentro del ciclo, indentado). El mensaje del total de lanzamientos solo tiene sentido <strong>una vez</strong>, cuando el ciclo ya terminó y <code>c</code> tiene su valor final — por eso va después del ciclo, sin indentar.</p>
+          </div>
+
+          <h4>📋 Paso 3 — Prueba de escritorio (misma secuencia supuesta: 2, 5, 4)</h4>
+          <div class="trace-table"><table>
+            <thead><tr><th class="center">Iteración</th><th class="center">x</th><th class="center">c</th><th>Se imprime (dentro del ciclo)</th></tr></thead>
+            <tbody>
+              <tr><td class="center mono">1</td><td class="center mono">2</td><td class="center mono">1</td><td>El número que salió fue: 2</td></tr>
+              <tr><td class="center mono">2</td><td class="center mono">5</td><td class="center mono">2</td><td>El número que salió fue: 5</td></tr>
+              <tr><td class="center mono">3</td><td class="center mono">4</td><td class="center mono">3</td><td>El número que salió fue: 4</td></tr>
+            </tbody>
+          </table></div>
+
+          <div class="final-answer">
+            <div class="final-answer-label">✅ Resultado</div>
+            <p>Después del ciclo, con esta secuencia supuesta, se imprimiría: <span class="mono">"Se realizaron 3 lanzamientos hasta que salió el número 4"</span>.</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="exercise" id="ej4">
+      <div class="exercise-header"><span class="exercise-num">EJ. 4</span><span>Suma de los cuadrados de los primeros n números naturales (con WHILE)</span><span class="exercise-tag">🟡 WHILE + acumulador 🧩</span></div>
+      <div class="exercise-body">
+        <div class="statement-box"><span class="statement-label">📝 Enunciado (tal como lo dio el profesor)</span>
+          <p>Elabore un programa que sume los cuadrados de los primeros "n" números naturales. Usted debe ingresar hasta el valor de "n".</p>
+        </div>
+
+        <div class="solution-block">
+
+          <h4>📋 Paso 1 — Elegir el tipo de ciclo (y notar algo interesante)</h4>
+          <p>Aquí <em>sí</em> sé de antemano cuántas veces se repite: exactamente <code>n</code> veces (una por cada número natural del 1 al <code>n</code>). Por la regla de la sección 12B, esto en principio pediría un <code>PARA/for</code> — y de hecho más adelante, en el Ejercicio 8, vas a resolver este mismo problema con <code>for</code>. Pero el profesor decidió resolverlo aquí con <code>while</code> para que veas que <strong>también es posible</strong> (todo lo que puede hacer un <code>for</code> se puede hacer con un <code>while</code>, manejando tú mismo el contador — lo contrario no siempre es tan directo).</p>
+
+          <div class="def-card">
+            <span class="def-label">Variables</span>
+            <div class="def-term">n, s, i</div>
+            <div class="def-text"><code>n</code> = número final al que se desea llegar (lo ingresa el usuario) &nbsp;·&nbsp; <code>s</code> = suma acumulada de los cuadrados &nbsp;·&nbsp; <code>i</code> = cada número natural, del 1 hasta n (el "contador" que aquí además es el propio valor que se eleva al cuadrado)</div>
+          </div>
+
+          <div class="why-box">
+            <div class="why-label">🤔 ¿Por qué s y n necesitan un valor inicial de 0 / de la lectura, pero i necesita empezar en 1 y no en 0?</div>
+            <p><code>s</code> es un <strong>acumulador</strong>: antes de sumar nada, la suma acumulada es 0 — si no la inicializaras, Python ni siquiera sabría qué es <code>s</code> la primera vez que aparece <code>s=s+c</code>. <code>i</code> representa "cada número natural" empezando por el primero, y el primer número natural que queremos elevar al cuadrado es el 1 (no el 0) — por eso <code>i</code> arranca en 1.</p>
+          </div>
+
+          <h4>📋 Paso 2 — Código en Python (versión del profesor)</h4>
+<pre class="pseudo py"><code><span class="cmt"># SUMA DE LOS CUADRADOS DE LOS PRIMEROS N NUMEROS NATURALES</span>
+<span class="var">n</span>=<span class="fn">int</span>(<span class="fn">input</span>(<span class="str">"Ingrese hasta qué número desea conocer su cuadrado: "</span>))
+<span class="var">s</span>=<span class="num">0</span>
+<span class="var">i</span>=<span class="num">1</span>
+<span class="kw">while</span> i<span class="op">&lt;=</span>n:
+    <span class="var">c</span>=i<span class="op">**</span><span class="num">2</span>
+    <span class="var">s</span>=s<span class="op">+</span>c
+    <span class="var">i</span>=i<span class="op">+</span><span class="num">1</span>
+<span class="fn">print</span>(<span class="str">"La suma de los cuadrados de los"</span>,n,<span class="str">"números es"</span>,s)</code></pre>
+
+          <div class="why-box">
+            <div class="why-label">🤔 ¿Por qué i=i+1 va AL FINAL del bloque, y no al principio?</div>
+            <p>El orden importa: primero se usa el valor <strong>actual</strong> de <code>i</code> para calcular su cuadrado y sumarlo (<code>c=i**2</code>, <code>s=s+c</code>), y <strong>recién después</strong> se avanza al siguiente número (<code>i=i+1</code>). Si incrementaras <code>i</code> antes de calcular el cuadrado, te saltarías siempre el primer número natural (el 1) y terminarías sumando un cuadrado de más al final.</p>
+          </div>
+
+          <h4>📋 Paso 3 — Prueba de escritorio (n=3)</h4>
+          <div class="trace-table"><table>
+            <thead><tr><th class="center">i</th><th class="center">¿i≤n?</th><th class="center">c=i²</th><th class="center">s=s+c</th></tr></thead>
+            <tbody>
+              <tr><td class="center mono">1</td><td class="center">V</td><td class="center mono">1</td><td class="center mono">0+1=1</td></tr>
+              <tr><td class="center mono">2</td><td class="center">V</td><td class="center mono">4</td><td class="center mono">1+4=5</td></tr>
+              <tr><td class="center mono">3</td><td class="center">V</td><td class="center mono">9</td><td class="center mono">5+9=14</td></tr>
+              <tr><td class="center mono">4</td><td class="center">F</td><td class="center">— sale del ciclo —</td><td class="center mono">s final = 14</td></tr>
+            </tbody>
+          </table></div>
+
+          <div class="final-answer">
+            <div class="final-answer-label">✅ Resultado</div>
+            <p>Para <code>n=3</code>: <span class="mono">"La suma de los cuadrados de los 3 números es 14"</span> (1²+2²+3² = 1+4+9 = 14).</p>
+          </div>
+
+          <div class="callout example" style="margin-top:20px">
+            <div class="callout-header"><span class="callout-icon">🧩</span> Pregunta del profesor sin resolver en la diapositiva: ¿qué variante imprime también el cuadrado de cada número?</div>
+            <p>La diapositiva original termina preguntando: "¿Qué variante le hacemos al programa para que imprima los cuadrados de cada número?, por ejemplo, el cuadrado de 1, el cuadrado de 2 y así sucesivamente hasta llegar al número 'n'" — sin dar el código. La resuelvo aquí, con el mismo estilo del profesor.</p>
+          </div>
+
+          <h4>📋 Paso 4 — Resolviendo la variante propuesta</h4>
+          <p>Necesito imprimir, dentro del ciclo, el cuadrado de <strong>cada</strong> <code>i</code> a medida que se calcula — es decir, agregar un <code>print</code> más, indentado igual que las otras instrucciones del bloque, usando <code>i</code> (el número actual) y <code>c</code> (su cuadrado, ya calculado un renglón antes):</p>
+
+<pre class="pseudo py"><code><span class="cmt"># SUMA DE LOS CUADRADOS DE LOS PRIMEROS N NUMEROS NATURALES (con el detalle de cada cuadrado)</span>
+<span class="var">n</span>=<span class="fn">int</span>(<span class="fn">input</span>(<span class="str">"Ingrese hasta qué número desea conocer su cuadrado: "</span>))
+<span class="var">s</span>=<span class="num">0</span>
+<span class="var">i</span>=<span class="num">1</span>
+<span class="kw">while</span> i<span class="op">&lt;=</span>n:
+    <span class="var">c</span>=i<span class="op">**</span><span class="num">2</span>
+    <span class="var">s</span>=s<span class="op">+</span>c
+    <span class="fn">print</span>(<span class="str">"El cuadrado de"</span>,i,<span class="str">"es"</span>,c)
+    <span class="var">i</span>=i<span class="op">+</span><span class="num">1</span>
+<span class="fn">print</span>(<span class="str">"La suma de los cuadrados de los"</span>,n,<span class="str">"números es"</span>,s)</code></pre>
+
+          <div class="why-box">
+            <div class="why-label">🤔 ¿Por qué el print nuevo usa "i" (y no "n") para anunciar de quién es el cuadrado?</div>
+            <p>Porque quiero que el mensaje cambie en <strong>cada</strong> repetición, mostrando el cuadrado de 1, luego el de 2, luego el de 3… hasta <code>n</code>. La variable que va cambiando iteración a iteración es <code>i</code>; en cambio <code>n</code> es un valor fijo (el que ingresó el usuario al inicio) y se mantiene igual durante todo el ciclo — usarlo aquí repetiría siempre el mismo número. Vuelve a aparecer esta misma decisión (y esta vez sí es un error real de la diapositiva del profesor) en el Ejercicio 8 — ahí lo verás con más detalle.</p>
+          </div>
+
+          <div class="final-answer">
+            <div class="final-answer-label">✅ Resultado (con n=3)</div>
+            <p class="mono">El cuadrado de 1 es 1<br/>El cuadrado de 2 es 4<br/>El cuadrado de 3 es 9<br/>La suma de los cuadrados de los 3 números es 14</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- b) PARA / FOR -->
+    <!-- ============================================================ -->
+    <section class="block" id="s12-para">
+      <div class="block-header"><div class="block-num">12D</div><h2>b) PARA: ejecución repetida mediante una secuencia de valores</h2></div>
+
+      <p>Muy utilizada para controlar la repetición de bloques de instrucciones cuando el control del ciclo se puede expresar como una <strong>secuencia de valores</strong> ya conocida.</p>
+
+      <div class="def-card">
+        <span class="def-label">Semántica</span>
+        <div class="def-term">PARA v ← secuencia ... FIN</div>
+        <div class="def-text">Al entrar a esta estructura, se inicia la variable de control <code>v</code> con el primer valor de la secuencia. Si esta variable no excede al valor final, se ejecuta el bloque y regresa nuevamente al inicio del ciclo, y la variable toma el siguiente valor de la secuencia. Cuando la secuencia se agota, el ciclo finaliza y la ejecución continúa después del bloque.</div>
+      </div>
+
+      <div class="flowchart-container">
+        <div class="mermaid-container" data-original='flowchart TB
+    I(["Inicio"])
+    C{"Para v ← secuencia"}
+    P["P (bloque de instrucciones)"]
+    F(["Fin"])
+    I --> C
+    C -->|"V"| P --> C
+    C -->|"F"| F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000'><div class="mermaid">
+flowchart TB
+    I(["Inicio"])
+    C{"Para v ← secuencia"}
+    P["P (bloque de instrucciones)"]
+    F(["Fin"])
+    I --> C
+    C -->|"V"| P --> C
+    C -->|"F"| F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000
+        </div></div>
+        <div class="flowchart-caption">📊 Compara esta figura con la del <code>MIENTRAS</code> de la sección anterior: es <strong>exactamente la misma forma</strong>. Lo único que cambia es qué decide el "V/F" — aquí no es una condición lógica cualquiera, es "¿quedan valores en la secuencia por recorrer?".</div>
+      </div>
+
+      <div class="table-wrapper">
+        <table>
+          <thead><tr><th>Pseudocódigo</th><th>Python</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">PARA v ← secuencia<br/>&nbsp;&nbsp;&nbsp;&nbsp;P<br/>FIN</td><td class="mono">for v in secuencia:<br/>&nbsp;&nbsp;&nbsp;&nbsp;P</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>12.4. Primera forma: secuencia definida mediante una lista</h3>
+
+      <p>Se puede especificar una secuencia mediante una lista de valores escritos entre corchetes <code>[ ]</code> o entre paréntesis <code>( )</code>:</p>
+
+<pre class="pseudo py"><code><span class="kw">for</span> v <span class="kw">in</span> secuencia:
+    instrucción_en_el_bloque_P
+    instrucción_en_el_bloque_P
+    ...
+    instrucción_en_el_bloque_P</code></pre>
+
+      <p>Donde <code>v</code> es la variable que <strong>recorre</strong> la secuencia (toma, uno tras otro, cada uno de sus valores) y <code>P</code> es el bloque de instrucciones que se desea repetir.</p>
+    </section>
+
+    <div class="exercise" id="ej5">
+      <div class="exercise-header"><span class="exercise-num">EJ. 5</span><span>Mostrar los enteros del 1 al 5 con sus cuadrados</span><span class="exercise-tag">🟢 FOR + lista</span></div>
+      <div class="exercise-body">
+        <div class="statement-box"><span class="statement-label">📝 Enunciado (tal como lo dio el profesor)</span>
+          <p>Elabore un programa que muestre los enteros del 1 al 5 con sus respectivos cuadrados.</p>
+        </div>
+
+        <div class="solution-block">
+
+          <h4>📋 Paso 1 — Elegir el ciclo y las variables</h4>
+          <p>Aquí sí sé, de antemano, exactamente qué valores quiero recorrer: 1, 2, 3, 4 y 5. Es el caso perfecto para <code>PARA/for</code> con una secuencia dada como lista. Necesito dos variables: <code>n</code> (cada número entre 1 y 5) y <code>c</code> (su cuadrado).</p>
+
+          <h4>📋 Paso 2 — Código en Python</h4>
+<pre class="pseudo py"><code><span class="cmt">#MUESTRE LOS ENTEROS DEL 1 AL 5 CON SUS RESPECTIVOS CUADRADOS (Usar FOR)</span>
+<span class="kw">for</span> n <span class="kw">in</span> [<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>, <span class="num">4</span>, <span class="num">5</span>]:
+    <span class="var">c</span>=n<span class="op">**</span><span class="num">2</span>
+    <span class="fn">print</span>(<span class="str">'El cuadrado de'</span>,n,<span class="str">'es'</span>,c)</code></pre>
+
+          <div class="why-box">
+            <div class="why-label">🤔 ¿Dónde quedó el "i=i+1" que sí necesitaba el WHILE del Ejercicio 4?</div>
+            <p>Ya no hace falta escribirlo: en un <code>for</code>, Python se encarga <strong>automáticamente</strong> de tomar el siguiente valor de la lista en cada vuelta — eso es justamente lo que gana el <code>PARA/for</code> frente al <code>MIENTRAS/while</code> cuando ya conoces la secuencia completa de antemano: te ahorra manejar tú mismo el avance de la variable de control.</p>
+          </div>
+
+          <h4>📋 Paso 3 — Prueba de escritorio</h4>
+          <div class="trace-table"><table>
+            <thead><tr><th class="center">n</th><th class="center">c=n²</th><th>Se imprime</th></tr></thead>
+            <tbody>
+              <tr><td class="center mono">1</td><td class="center mono">1</td><td>El cuadrado de 1 es 1</td></tr>
+              <tr><td class="center mono">2</td><td class="center mono">4</td><td>El cuadrado de 2 es 4</td></tr>
+              <tr><td class="center mono">3</td><td class="center mono">9</td><td>El cuadrado de 3 es 9</td></tr>
+              <tr><td class="center mono">4</td><td class="center mono">16</td><td>El cuadrado de 4 es 16</td></tr>
+              <tr><td class="center mono">5</td><td class="center mono">25</td><td>El cuadrado de 5 es 25</td></tr>
+            </tbody>
+          </table></div>
+
+          <div class="final-answer">
+            <div class="final-answer-label">✅ Resultado</div>
+            <p class="mono">El cuadrado de 1 es 1<br/>El cuadrado de 2 es 4<br/>El cuadrado de 3 es 9<br/>El cuadrado de 4 es 16<br/>El cuadrado de 5 es 25</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="exercise" id="ej6">
+      <div class="exercise-header"><span class="exercise-num">EJ. 6</span><span>Mostrar los cuadrados de una lista de números dada</span><span class="exercise-tag">🟢 FOR + lista</span></div>
+      <div class="exercise-body">
+        <div class="statement-box"><span class="statement-label">📝 Enunciado (tal como lo dio el profesor)</span>
+          <p>Elabore un programa que muestre los cuadrados de los siguientes números [3, 5, 8, 2, 3].</p>
+        </div>
+
+        <div class="solution-block">
+
+          <h4>📋 Paso 1 — Es el mismo patrón que el Ejercicio 5, con un matiz</h4>
+          <p>La estructura es idéntica al ejercicio anterior — lo único que cambia es la lista sobre la que itero. Aquí vale la pena notar que la lista <strong>no está ordenada</strong> y tiene un valor repetido (el 3 aparece dos veces): eso no le importa a <code>for</code> en absoluto, simplemente recorre la lista en el orden en que fue escrita, elemento por elemento, sin importar si se repiten o no.</p>
+
+          <h4>📋 Paso 2 — Código en Python</h4>
+<pre class="pseudo py"><code><span class="kw">for</span> n <span class="kw">in</span> [<span class="num">3</span>, <span class="num">5</span>, <span class="num">8</span>, <span class="num">2</span>, <span class="num">3</span>]:
+    <span class="var">c</span>=n<span class="op">**</span><span class="num">2</span>
+    <span class="fn">print</span>(<span class="str">'el cuadrado de '</span>,n,<span class="str">'es'</span>,c)</code></pre>
+
+          <h4>📋 Paso 3 — Prueba de escritorio</h4>
+          <div class="trace-table"><table>
+            <thead><tr><th class="center">n</th><th class="center">c=n²</th></tr></thead>
+            <tbody>
+              <tr><td class="center mono">3</td><td class="center mono">9</td></tr>
+              <tr><td class="center mono">5</td><td class="center mono">25</td></tr>
+              <tr><td class="center mono">8</td><td class="center mono">64</td></tr>
+              <tr><td class="center mono">2</td><td class="center mono">4</td></tr>
+              <tr><td class="center mono">3</td><td class="center mono">9</td></tr>
+            </tbody>
+          </table></div>
+
+          <div class="final-answer">
+            <div class="final-answer-label">✅ Resultado (idéntico al que muestra la diapositiva)</div>
+            <p class="mono">el cuadrado de 3 es 9<br/>el cuadrado de 5 es 25<br/>el cuadrado de 8 es 64<br/>el cuadrado de 2 es 4<br/>el cuadrado de 3 es 9</p>
+          </div>
+
+          <div class="why-box">
+            <div class="why-label">🤔 ¿Por qué el 3 aparece dos veces en el resultado, con el mismo cuadrado?</div>
+            <p><code>for</code> no elimina duplicados ni los trata de forma especial: simplemente ejecuta el bloque P una vez <strong>por cada elemento de la lista</strong>, en el orden dado. Como el 3 aparece dos veces en la lista original, el bloque se ejecuta con <code>n=3</code> dos veces, y como el cálculo es el mismo, el resultado también se repite.</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- LA FUNCIÓN range() -->
+    <!-- ============================================================ -->
+    <section class="block" id="s12-range">
+      <div class="block-header"><div class="block-num">12E</div><h2>Segunda forma: secuencia definida mediante un rango</h2></div>
+
+      <p>La forma más utilizada para especificar secuencias de control para la estructura <code>for</code> se define con la función <code>range</code>, con la cual se define un rango de valores:</p>
+
+<pre class="pseudo py"><code><span class="kw">for</span> v <span class="kw">in</span> <span class="fn">range</span>(especificación):
+    instrucción_en_el_bloque_P
+    instrucción_en_el_bloque_P
+    ...
+    instrucción_en_el_bloque_P</code></pre>
+
+      <p>Donde <code>v</code> es la variable que tomará cada valor del rango especificado y <code>P</code> es el bloque de instrucciones que se desea repetir.</p>
+
+      <div class="callout warning">
+        <div class="callout-header"><span class="callout-icon">⚠️</span> Restricción importante</div>
+        <p>El rango se debe especificar únicamente con <strong>números enteros</strong> — no se pueden usar decimales ni caracteres.</p>
+      </div>
+
+      <h3>12.5. Las tres formas de escribir range()</h3>
+
+      <div class="table-wrapper">
+        <table>
+          <thead><tr><th class="mono">Forma</th><th>Valores que genera</th><th>Repeticiones</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">range(10)</td><td class="mono">0, 1, 2, 3, 4, 5, 6, 7, 8, 9</td><td class="center">10</td></tr>
+            <tr><td class="mono">range(2,10)</td><td class="mono">2, 3, 4, 5, 6, 7, 8, 9</td><td class="center">8</td></tr>
+            <tr><td class="mono">range(4,1)</td><td>El valor inicial excede al valor final del rango. No se pueden generar valores.</td><td class="center">0 (el ciclo no se realiza ni una vez)</td></tr>
+            <tr><td class="mono">range(1,15,2)</td><td class="mono">1, 3, 5, 7, 9, 11, 13</td><td class="center">7</td></tr>
+            <tr><td class="mono">range(8,1,-1)</td><td class="mono">8, 7, 6, 5, 4, 3, 2</td><td class="center">7</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="legend-box">
+        <div class="legend-title">📌 Regla que hay que memorizar</div>
+        <p>La secuencia generada con <code>range</code> <strong>no incluye</strong> el extremo final del rango. <code>range(2,10)</code> llega hasta el 9, nunca toca el 10.</p>
+      </div>
+
+      <div class="why-box">
+        <div class="why-label">🤔 range(a,b,paso): ¿cómo leo la tercera forma?</div>
+        <p>El primer número es dónde <strong>empieza</strong>, el segundo es el límite que <strong>nunca se incluye</strong>, y el tercero es de cuánto en cuánto <strong>avanza</strong> (el "paso" o incremento). Si el paso es negativo (como en <code>range(8,1,-1)</code>), la secuencia va <strong>hacia abajo</strong> — por eso ahí el primer número (8) debe ser mayor que el segundo (1), al revés de lo habitual.</p>
+      </div>
+
+      <div class="theory-recap">
+        <div class="theory-label"><span>📌</span> Conexión con randint() — no los confundas</div>
+        <p>En la sección de números aleatorios ya te adelanté esto: <code>randint(a,b)</code> incluye <strong>ambos</strong> extremos, pero <code>range(a,b)</code> excluye el extremo final. Por ejemplo, <code>randint(1,6)</code> sí puede darte un 6, pero <code>range(1,6)</code> nunca llega al 6 (se detiene en el 5). Cuando quieras que un <code>range</code> sí incluya cierto número tope <code>n</code>, la forma habitual es escribir <code>range(1, n+1)</code> — vas a ver esto explícitamente en el Ejercicio 8.</p>
+      </div>
+    </section>
+
+    <div class="exercise" id="ej7">
+      <div class="exercise-header"><span class="exercise-num">EJ. 7</span><span>Mostrar los enteros del 1 al 5 con sus cuadrados, usando range()</span><span class="exercise-tag">🟢 FOR + range</span></div>
+      <div class="exercise-body">
+        <div class="statement-box"><span class="statement-label">📝 Enunciado (tal como lo dio el profesor)</span>
+          <p>Elabore un programa que muestre los enteros del 1 al 5 con sus respectivos cuadrados. (Igual que el Ejercicio 5, pero usando <code>range</code> en vez de escribir la lista a mano.)</p>
+        </div>
+
+        <div class="solution-block">
+
+          <h4>📋 Paso 1 — Traducir "del 1 al 5" a un range()</h4>
+          <p>Quiero exactamente los valores 1, 2, 3, 4, 5. Como <code>range</code> excluye su extremo final, para que la secuencia <strong>llegue hasta 5 incluido</strong> tengo que pedir <code>range(1,6)</code> — el 6 nunca aparece, pero es justo lo que empuja al 5 a formar parte de la secuencia.</p>
+
+          <h4>📋 Paso 2 — Código en Python</h4>
+<pre class="pseudo py"><code><span class="kw">for</span> n <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>,<span class="num">6</span>):
+    <span class="var">c</span>=n<span class="op">**</span><span class="num">2</span>
+    <span class="fn">print</span>(<span class="str">"El cuadrado de"</span>,n,<span class="str">"es"</span>,c)</code></pre>
+
+          <div class="final-answer">
+            <div class="final-answer-label">✅ Resultado (idéntico al del Ejercicio 5, con menos código)</div>
+            <p class="mono">El cuadrado de 1 es 1<br/>El cuadrado de 2 es 4<br/>El cuadrado de 3 es 9<br/>El cuadrado de 4 es 16<br/>El cuadrado de 5 es 25</p>
+          </div>
+
+          <div class="why-box">
+            <div class="why-label">🤔 ¿Cuándo conviene usar una lista escrita a mano (Ej. 5) y cuándo range() (Ej. 7)?</div>
+            <p>Si los valores son pocos y "sueltos" (sin ningún patrón, como <code>[3, 5, 8, 2, 3]</code> del Ejercicio 6), tienes que escribirlos como lista — no hay forma de generarlos con una fórmula. Si los valores siguen un patrón regular (consecutivos, o con un salto fijo, como "del 1 al 5" o "del 1 al n"), <code>range()</code> es mucho más corto y, además, se adapta solo si cambia <code>n</code> — no tienes que reescribir la lista a mano.</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="exercise" id="ej8">
+      <div class="exercise-header"><span class="exercise-num">EJ. 8</span><span>Suma de los cuadrados de los primeros n números naturales (con FOR)</span><span class="exercise-tag">🟡 FOR + acumulador</span></div>
+      <div class="exercise-body">
+        <div class="statement-box"><span class="statement-label">📝 Enunciado (tal como lo dio el profesor)</span>
+          <p>Elabore un programa que sume los cuadrados de los primeros n números naturales.</p>
+        </div>
+
+        <div class="solution-block">
+
+          <h4>📋 Paso 1 — Es el Ejercicio 4, pero ahora con la herramienta correcta</h4>
+          <p>Ya resolviste este mismo problema con <code>while</code> en el Ejercicio 4. Ahora que sabes que <code>range(1, n+1)</code> genera exactamente 1, 2, 3, …, n, este problema encaja perfecto en <code>PARA/for</code>: de antemano sé que se repite exactamente <code>n</code> veces.</p>
+
+          <div class="def-card">
+            <span class="def-label">Variables</span>
+            <div class="def-term">n, s, i</div>
+            <div class="def-text"><code>n</code> = número final al que se desea llegar &nbsp;·&nbsp; <code>s</code> = suma de cuadrados (acumulador) &nbsp;·&nbsp; <code>i</code> = cada número natural (variable de control del <code>for</code>, generada por <code>range</code>)</div>
+          </div>
+
+          <h4>📋 Paso 2 — Código en Python</h4>
+<pre class="pseudo py"><code><span class="cmt"># SUMA DE LOS CUADRADOS DE "n" NÚMEROS - utilizando RANGE</span>
+<span class="var">n</span>=<span class="fn">int</span>(<span class="fn">input</span>(<span class="str">"Ingrese hasta qué número desea conocer su cuadrado: "</span>))
+<span class="var">s</span>=<span class="num">0</span>
+<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>,n<span class="op">+</span><span class="num">1</span>):
+    <span class="var">c</span>=i<span class="op">**</span><span class="num">2</span>
+    <span class="var">s</span>=s<span class="op">+</span>c
+<span class="fn">print</span>(<span class="str">"La suma de los cuadrados de los"</span>,n,<span class="str">"números es"</span>,s)</code></pre>
+
+          <div class="why-box">
+            <div class="why-label">🤔 ¿Por qué range(1, n+1) y no range(1, n)?</div>
+            <p>Justo la regla que acabas de fijar en la sección 12E: <code>range</code> excluye su extremo final. Si el usuario ingresa <code>n=6</code> y quiero que el ciclo llegue <em>hasta</em> 6 inclusive, necesito que el límite del <code>range</code> sea 7 — es decir, <code>n+1</code>. Escribir <code>range(1,n)</code> aquí sería un error que te dejaría <strong>sin sumar el último número</strong> (con n=6, sumarías solo 1 a 5).</p>
+          </div>
+
+          <h4>📋 Paso 3 — Prueba de escritorio (n=11, para comparar con la diapositiva)</h4>
+          <p>El profesor mostró como resultado, para <code>n=11</code>: <span class="mono">"La suma de los cuadrados de los primeros 11 números es: 506"</span>. Verifiquemos: 1²+2²+…+11² = 1+4+9+16+25+36+49+64+81+100+121 = 506. ✅ Coincide.</p>
+
+          <h4>📋 Paso 4 — La variante propuesta por el profesor: imprimir también cada cuadrado</h4>
+          <p>La diapositiva agrega: "Luego realice una variante al programa para que aparezca no solamente la suma de los cuadrados sino también los cuadrados de los n números ingresados". Esta vez el profesor sí dio un código para esta variante — pero al revisarlo con cuidado (y comparar la salida que él mismo muestra) aparece algo que vale la pena detenerse a mirar.</p>
+
+<pre class="pseudo py"><code><span class="cmt">#SUMA DE LOS PRIMEROS N NUMEROS (utilizando RANGE)</span>
+
+<span class="var">n</span>=<span class="fn">int</span>(<span class="fn">input</span>(<span class="str">'Ingrese hasta qué número desea conocer su cuadrado: '</span>))
+<span class="var">s</span>=<span class="num">0</span>
+<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>,n<span class="op">+</span><span class="num">1</span>):
+    <span class="var">c</span>=i<span class="op">**</span><span class="num">2</span>
+    <span class="var">s</span>=s<span class="op">+</span>c
+    <span class="fn">print</span>(<span class="str">'El cuadrado de'</span>,n,<span class="str">'es'</span>,c)
+<span class="fn">print</span>(<span class="str">'La suma de los cuadrados de los primeros'</span>,n,<span class="str">'números es:'</span>,s)</code></pre>
+
+          <div class="callout fix">
+            <div class="callout-header"><span class="callout-icon">🔍</span> Nota de verificación: la diapositiva original tiene un error de transcripción (usa "n" donde debería decir "i")</div>
+            <p>Fíjate en la línea <code>print('El cuadrado de',n,'es',c)</code>: está anunciando el cuadrado con <code>n</code> (el número tope, fijo durante todo el ciclo), en vez de con <code>i</code> (el número que realmente cambia en cada vuelta). El resultado que la propia diapositiva muestra para <code>n=6</code> confirma que este es exactamente el error que se ejecutó:</p>
+            <p style="font-family:'JetBrains Mono',monospace;margin-top:8px;line-height:1.9;font-size:.86rem">
+              Ingrese hasta qué número desea conocer su cuadrado: 6<br/>
+              El cuadrado de <strong>6</strong> es 1<br/>
+              El cuadrado de <strong>6</strong> es 4<br/>
+              El cuadrado de <strong>6</strong> es 9<br/>
+              El cuadrado de <strong>6</strong> es 16<br/>
+              El cuadrado de <strong>6</strong> es 25<br/>
+              El cuadrado de <strong>6</strong> es 36<br/>
+              La suma de los cuadrados de los primeros 6 números es: 91
+            </p>
+            <p style="margin-top:6px">Todas las líneas dicen "El cuadrado de <strong>6</strong>", cuando en realidad los números que se están elevando al cuadrado son 1, 2, 3, 4, 5 y 6 (uno distinto por línea). La suma final (91) sí está correctamente calculada — el error es únicamente de <strong>impresión</strong> (usa la variable equivocada en el mensaje), no de cálculo, porque <code>s=s+c</code> sigue usando <code>c=i**2</code> correctamente en cada vuelta.</p>
+            <p style="margin-top:6px">La versión corregida — reemplazando ese <code>n</code> por <code>i</code> en el <code>print</code> — es exactamente la que ya escribimos como variante del Ejercicio 4 (con <code>while</code>). Aquí está su equivalente con <code>for</code>:</p>
+          </div>
+
+<pre class="pseudo py"><code><span class="cmt"># SUMA DE LOS CUADRADOS DE "n" NÚMEROS, mostrando cada cuadrado (versión corregida)</span>
+<span class="var">n</span>=<span class="fn">int</span>(<span class="fn">input</span>(<span class="str">'Ingrese hasta qué número desea conocer su cuadrado: '</span>))
+<span class="var">s</span>=<span class="num">0</span>
+<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>,n<span class="op">+</span><span class="num">1</span>):
+    <span class="var">c</span>=i<span class="op">**</span><span class="num">2</span>
+    <span class="var">s</span>=s<span class="op">+</span>c
+    <span class="fn">print</span>(<span class="str">'El cuadrado de'</span>,i,<span class="str">'es'</span>,c)
+<span class="fn">print</span>(<span class="str">'La suma de los cuadrados de los primeros'</span>,n,<span class="str">'números es:'</span>,s)</code></pre>
+
+          <div class="final-answer">
+            <div class="final-answer-label">✅ Resultado corregido (para n=6)</div>
+            <p class="mono">El cuadrado de 1 es 1<br/>El cuadrado de 2 es 4<br/>El cuadrado de 3 es 9<br/>El cuadrado de 4 es 16<br/>El cuadrado de 5 es 25<br/>El cuadrado de 6 es 36<br/>La suma de los cuadrados de los primeros 6 números es: 91</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="exercise" id="ej9">
+      <div class="exercise-header"><span class="exercise-num">EJ. 9</span><span>Promedio de una cantidad de datos ingresados desde teclado</span><span class="exercise-tag">🟡 FOR + acumulador</span></div>
+      <div class="exercise-body">
+        <div class="statement-box"><span class="statement-label">📝 Enunciado (tal como lo dio el profesor)</span>
+          <p>Elabore un programa que calcule y muestre el promedio de una cantidad de datos numéricos ingresados desde teclado.</p>
+        </div>
+
+        <div class="solution-block">
+
+          <h4>📋 Paso 1 — Identificar todas las variables que hacen falta</h4>
+          <div class="def-card">
+            <span class="def-label">Variables</span>
+            <div class="def-term">n, x, i, s, p</div>
+            <div class="def-text"><code>n</code> = cantidad de datos a ingresar &nbsp;·&nbsp; <code>x</code> = cada dato ingresado desde teclado &nbsp;·&nbsp; <code>i</code> = contador (variable de control del <code>for</code>) &nbsp;·&nbsp; <code>s</code> = suma de los datos (acumulador) &nbsp;·&nbsp; <code>p</code> = promedio</div>
+          </div>
+
+          <div class="why-box">
+            <div class="why-label">🤔 ¿Por qué esta vez uso range(n) y no range(1,n+1) como en el Ejercicio 8?</div>
+            <p>Ambas formas repiten exactamente <code>n</code> veces — la diferencia es solo qué valores concretos toma la variable de control. En el Ejercicio 8 necesitaba que <code>i</code> <em>fuera</em> cada número natural (1,2,3…), porque lo usaba dentro del cálculo (<code>i**2</code>). Aquí, en cambio, no me interesa el valor de <code>i</code> en sí — solo lo uso para <strong>contar</strong> cuántas veces pedir un dato nuevo por teclado. Cuando la variable de control no se usa dentro del cálculo, alcanza con <code>range(n)</code> (que da 0,1,2,…,n-1: son igualmente n valores, aunque empiecen en 0).</p>
+          </div>
+
+          <h4>📋 Paso 2 — Código en Python</h4>
+<pre class="pseudo py"><code><span class="cmt"># PROMEDIO DE UNA CANTIDAD "n" DE NÚMEROS</span>
+<span class="var">n</span>=<span class="fn">int</span>(<span class="fn">input</span>(<span class="str">'Indique la cantidad de números para promediar: '</span>))
+<span class="var">s</span>=<span class="num">0</span>
+<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(n):
+    <span class="var">x</span>=<span class="fn">float</span>(<span class="fn">input</span>(<span class="str">'Ingrese el número: '</span>))
+    <span class="var">s</span>=s<span class="op">+</span>x
+<span class="var">p</span>=s<span class="op">/</span>n
+<span class="fn">print</span>(<span class="str">'El promedio de los'</span>,n, <span class="str">'números ingresados es: '</span>,p)</code></pre>
+
+          <div class="why-box">
+            <div class="why-label">🤔 ¿Por qué x se convierte con float() y no con int()?</div>
+            <p>Un promedio tiene sentido con datos que pueden incluir decimales (por ejemplo, notas o precios), y además el propio resultado de <code>s/n</code> casi nunca es un entero exacto. Usar <code>float()</code> en vez de <code>int()</code> permite que el usuario ingrese valores como 8.5 sin que Python los rechace o los trunque.</p>
+          </div>
+
+          <h4>📋 Paso 3 — Prueba de escritorio (n=3, datos: 4, 7, 10)</h4>
+          <div class="trace-table"><table>
+            <thead><tr><th class="center">i</th><th class="center">x ingresado</th><th class="center">s=s+x</th></tr></thead>
+            <tbody>
+              <tr><td class="center mono">0</td><td class="center mono">4</td><td class="center mono">0+4=4</td></tr>
+              <tr><td class="center mono">1</td><td class="center mono">7</td><td class="center mono">4+7=11</td></tr>
+              <tr><td class="center mono">2</td><td class="center mono">10</td><td class="center mono">11+10=21</td></tr>
+            </tbody>
+          </table></div>
+
+          <div class="final-answer">
+            <div class="final-answer-label">✅ Resultado</div>
+            <p><code>p = 21/3 = 7.0</code> → <span class="mono">"El promedio de los 3 números ingresados es: 7.0"</span></p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="exercise" id="ej10">
+      <div class="exercise-header"><span class="exercise-num">EJ. 10</span><span>Leer n datos desde teclado y encontrar el mayor</span><span class="exercise-tag">🟠 FOR + decisión anidada</span></div>
+      <div class="exercise-body">
+        <div class="statement-box"><span class="statement-label">📝 Enunciado (tal como lo dio el profesor)</span>
+          <p>Elabore un programa que lea un grupo n de datos ingresados desde el teclado, luego encuentre y muestre el mayor.</p>
+        </div>
+
+        <div class="solution-block">
+
+          <h4>📋 Paso 1 — El patrón "máximo acumulado"</h4>
+          <div class="def-card">
+            <span class="def-label">Variables</span>
+            <div class="def-term">n, x, i, m</div>
+            <div class="def-text"><code>n</code> = cantidad de datos &nbsp;·&nbsp; <code>x</code> = cada dato ingresado desde teclado &nbsp;·&nbsp; <code>i</code> = secuencia de repeticiones &nbsp;·&nbsp; <code>m</code> = el dato mayor encontrado hasta el momento</div>
+          </div>
+
+          <p>La idea es llevar, en <code>m</code>, "el mayor que he visto hasta ahora". Cada vez que leo un dato nuevo <code>x</code>, comparo: si <code>x</code> es mayor que lo que tenía guardado en <code>m</code>, actualizo <code>m</code> con ese nuevo valor. Al terminar el ciclo, <code>m</code> contiene el mayor de todos.</p>
+
+          <h4>📋 Paso 2 — Diagrama de flujo</h4>
+          <div class="flowchart-container">
+            <div class="mermaid-container" data-original='flowchart TB
+    I(["Inicio"])
+    RN[/"leer n"/]
+    M0["m ← 0"]
+    C1{"Para i ← 1,2,...,n"}
+    RX[/"leer x"/]
+    C2{"x &gt; m ?"}
+    UM["m ← x"]
+    MOUT[/"mostrar m"/]
+    F(["Fin"])
+    I --> RN --> M0 --> C1
+    C1 -->|"V"| RX --> C2
+    C2 -->|"Si"| UM --> C1
+    C2 -->|"No"| C1
+    C1 -->|"F"| MOUT --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style RN fill:#60a5fa,stroke:#1e40af,color:#000
+    style RX fill:#60a5fa,stroke:#1e40af,color:#000
+    style MOUT fill:#60a5fa,stroke:#1e40af,color:#000
+    style C1 fill:#fbbf24,stroke:#d97706,color:#000
+    style C2 fill:#fbbf24,stroke:#d97706,color:#000'><div class="mermaid">
+flowchart TB
+    I(["Inicio"])
+    RN[/"leer n"/]
+    M0["m ← 0"]
+    C1{"Para i ← 1,2,...,n"}
+    RX[/"leer x"/]
+    C2{"x &gt; m ?"}
+    UM["m ← x"]
+    MOUT[/"mostrar m"/]
+    F(["Fin"])
+    I --> RN --> M0 --> C1
+    C1 -->|"V"| RX --> C2
+    C2 -->|"Si"| UM --> C1
+    C2 -->|"No"| C1
+    C1 -->|"F"| MOUT --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style RN fill:#60a5fa,stroke:#1e40af,color:#000
+    style RX fill:#60a5fa,stroke:#1e40af,color:#000
+    style MOUT fill:#60a5fa,stroke:#1e40af,color:#000
+    style C1 fill:#fbbf24,stroke:#d97706,color:#000
+    style C2 fill:#fbbf24,stroke:#d97706,color:#000
+            </div></div>
+            <div class="flowchart-caption">📊 Nota que hay una decisión (<code>C2</code>) <em>dentro</em> del ciclo <code>PARA</code> (<code>C1</code>) — es la primera vez esta semana que anidamos una decisión dentro de una repetición.</div>
+          </div>
+
+          <h4>📋 Paso 3 — Código en Python</h4>
+<pre class="pseudo py"><code><span class="cmt">#%% Lea "n" números y muestre el mayor</span>
+
+<span class="cmt">#n= la cantidad de números que voy a ingresar</span>
+<span class="cmt">#m= número mayor</span>
+<span class="cmt">#i=secuencia de repeticiones</span>
+<span class="cmt">#x=el valor de cada número ingresado</span>
+
+<span class="var">n</span>=<span class="fn">int</span>(<span class="fn">input</span>(<span class="str">'Ingrese la cantidad de números: '</span>))
+<span class="var">m</span>=<span class="num">0</span>
+<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>,n<span class="op">+</span><span class="num">1</span>):
+    <span class="var">x</span>=<span class="fn">int</span>(<span class="fn">input</span>(<span class="str">'Ingrese el número: '</span>))
+    <span class="kw">if</span> x<span class="op">&gt;</span>m:
+        <span class="var">m</span>=x
+<span class="fn">print</span>(<span class="str">'El número mayor es'</span>,m)</code></pre>
+
+          <h4>📋 Paso 4 — Prueba de escritorio (n=4, datos: 3, 9, 2, 7)</h4>
+          <div class="trace-table"><table>
+            <thead><tr><th class="center">i</th><th class="center">x</th><th class="center">¿x&gt;m?</th><th class="center">m</th></tr></thead>
+            <tbody>
+              <tr><td class="center mono">—</td><td class="center">—</td><td class="center">—</td><td class="center mono">0 (inicial)</td></tr>
+              <tr><td class="center mono">1</td><td class="center mono">3</td><td class="center">V (3&gt;0)</td><td class="center mono">3</td></tr>
+              <tr><td class="center mono">2</td><td class="center mono">9</td><td class="center">V (9&gt;3)</td><td class="center mono">9</td></tr>
+              <tr><td class="center mono">3</td><td class="center mono">2</td><td class="center">F (2&gt;9 no)</td><td class="center mono">9</td></tr>
+              <tr><td class="center mono">4</td><td class="center mono">7</td><td class="center">F (7&gt;9 no)</td><td class="center mono">9</td></tr>
+            </tbody>
+          </table></div>
+
+          <div class="final-answer">
+            <div class="final-answer-label">✅ Resultado</div>
+            <p><span class="mono">"El número mayor es 9"</span></p>
+          </div>
+
+          <div class="callout warning" style="margin-top:20px">
+            <div class="callout-header"><span class="callout-icon">⚠️</span> Un límite silencioso de este algoritmo: solo funciona bien con datos positivos</div>
+            <p>Este programa inicializa <code>m=0</code> antes de leer ningún dato. Eso funciona sin problema mientras al menos uno de los datos ingresados sea positivo (porque tarde o temprano algún <code>x</code> superará a 0). Pero <strong>si todos los datos ingresados fueran negativos</strong> — por ejemplo, -5, -2, -8 — el mayor real sería -2, y sin embargo el programa respondería <code>m=0</code>, porque ningún <code>x</code> negativo logra ser mayor que el 0 con el que arrancó <code>m</code>. El 0 nunca se reemplaza, aunque no sea un dato real.</p>
+            <p style="margin-top:6px"><strong>¿Cómo se arregla?</strong> Inicializando <code>m</code> con el <strong>primer</strong> dato que se ingresa (no con 0), y comparando desde el segundo dato en adelante. Es un ajuste que no pide el enunciado, pero conviene tenerlo en mente para cuando trabajes con datos que sí puedan ser negativos.</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="exercise" id="ej11">
+      <div class="exercise-header"><span class="exercise-num">EJ. 11</span><span>Encontrar todos los divisores enteros positivos de un número</span><span class="exercise-tag">🟠 FOR + MOD 🧩</span></div>
+      <div class="exercise-body">
+        <div class="statement-box"><span class="statement-label">📝 Enunciado (tal como lo dio el profesor)</span>
+          <p>Elabore un programa que solicite un número entero positivo y encuentre todos sus divisores enteros positivos.</p>
+        </div>
+
+        <div class="callout example">
+          <div class="callout-header"><span class="callout-icon">🧩</span> Ejercicio sin código en la diapositiva</div>
+          <p>El profesor solo dejó planteadas las variables (<code>n</code> = número entero positivo, <code>d</code> = número entero entre 1 y n, posible divisor de n), sin escribir el programa. Lo resuelvo a continuación con esas mismas variables.</p>
+        </div>
+
+        <div class="solution-block">
+
+          <h4>📋 Paso 1 — Traducir "divisor" a una condición que Python entienda</h4>
+          <p>Un número <code>d</code> es divisor de <code>n</code> cuando <code>n</code> se puede dividir entre <code>d</code> sin dejar residuo — es decir, cuando el <strong>resto</strong> de esa división es 0. En pseudocódigo esa operación es <code>MOD</code> (que ya usaste en la Semana 5); en Python es el operador <code>%</code>. Entonces la condición "d es divisor de n" se escribe: <code>n % d == 0</code>.</p>
+
+          <div class="why-box">
+            <div class="why-label">🤔 ¿Por qué recorro d desde 1 hasta n, y no desde 2?</div>
+            <p>Porque el enunciado pide <strong>todos</strong> los divisores enteros positivos, y tanto el 1 como el propio <code>n</code> siempre son divisores de <code>n</code> (cualquier número es divisible entre 1 y entre sí mismo) — así que ambos deben aparecer en la lista de salida. Por eso el rango debe ser <code>range(1, n+1)</code>, para incluir a <code>n</code>.</p>
+          </div>
+
+          <h4>📋 Paso 2 — Diagrama de flujo</h4>
+          <div class="flowchart-container">
+            <div class="mermaid-container" data-original='flowchart TB
+    I(["Inicio"])
+    RN[/"leer n"/]
+    C1{"Para d ← 1,2,...,n"}
+    C2{"n MOD d = 0 ?"}
+    MD[/"mostrar d"/]
+    F(["Fin"])
+    I --> RN --> C1
+    C1 -->|"V"| C2
+    C2 -->|"Si"| MD --> C1
+    C2 -->|"No"| C1
+    C1 -->|"F"| F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style RN fill:#60a5fa,stroke:#1e40af,color:#000
+    style MD fill:#60a5fa,stroke:#1e40af,color:#000
+    style C1 fill:#fbbf24,stroke:#d97706,color:#000
+    style C2 fill:#fbbf24,stroke:#d97706,color:#000'><div class="mermaid">
+flowchart TB
+    I(["Inicio"])
+    RN[/"leer n"/]
+    C1{"Para d ← 1,2,...,n"}
+    C2{"n MOD d = 0 ?"}
+    MD[/"mostrar d"/]
+    F(["Fin"])
+    I --> RN --> C1
+    C1 -->|"V"| C2
+    C2 -->|"Si"| MD --> C1
+    C2 -->|"No"| C1
+    C1 -->|"F"| F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style RN fill:#60a5fa,stroke:#1e40af,color:#000
+    style MD fill:#60a5fa,stroke:#1e40af,color:#000
+    style C1 fill:#fbbf24,stroke:#d97706,color:#000
+    style C2 fill:#fbbf24,stroke:#d97706,color:#000
+            </div></div>
+            <div class="flowchart-caption">📊 Este diagrama tiene la misma "forma" que el del Ejercicio 10 (una decisión anidada dentro del ciclo): lo único que cambió es qué se pregunta y qué se hace en cada rama.</div>
+          </div>
+
+          <h4>📋 Paso 3 — Código en Python</h4>
+<pre class="pseudo py"><code><span class="cmt"># DIVISORES ENTEROS POSITIVOS DE "n"</span>
+<span class="var">n</span>=<span class="fn">int</span>(<span class="fn">input</span>(<span class="str">'Ingrese un número entero positivo: '</span>))
+<span class="kw">for</span> d <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>,n<span class="op">+</span><span class="num">1</span>):
+    <span class="kw">if</span> n<span class="op">%</span>d<span class="op">==</span><span class="num">0</span>:
+        <span class="fn">print</span>(d,<span class="str">'es divisor de'</span>,n)</code></pre>
+
+          <h4>📋 Paso 4 — Prueba de escritorio (n=12)</h4>
+          <div class="trace-table"><table>
+            <thead><tr><th class="center">d</th><th class="center">n % d</th><th class="center">¿=0?</th><th>¿Se imprime?</th></tr></thead>
+            <tbody>
+              <tr><td class="center mono">1</td><td class="center mono">0</td><td class="center">Sí</td><td>1 es divisor de 12</td></tr>
+              <tr><td class="center mono">2</td><td class="center mono">0</td><td class="center">Sí</td><td>2 es divisor de 12</td></tr>
+              <tr><td class="center mono">3</td><td class="center mono">0</td><td class="center">Sí</td><td>3 es divisor de 12</td></tr>
+              <tr><td class="center mono">4</td><td class="center mono">0</td><td class="center">Sí</td><td>4 es divisor de 12</td></tr>
+              <tr><td class="center mono">5</td><td class="center mono">2</td><td class="center">No</td><td>—</td></tr>
+              <tr><td class="center mono">6</td><td class="center mono">0</td><td class="center">Sí</td><td>6 es divisor de 12</td></tr>
+              <tr><td class="center mono">7,8,9,10,11</td><td class="center mono">≠0</td><td class="center">No</td><td>—</td></tr>
+              <tr><td class="center mono">12</td><td class="center mono">0</td><td class="center">Sí</td><td>12 es divisor de 12</td></tr>
+            </tbody>
+          </table></div>
+
+          <div class="final-answer">
+            <div class="final-answer-label">✅ Resultado (n=12)</div>
+            <p>Los divisores de 12 son: <span class="mono">1, 2, 3, 4, 6, 12</span> (cada uno impreso en su propia línea, con el mensaje "… es divisor de 12").</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="exercise" id="ej12">
+      <div class="exercise-header"><span class="exercise-num">EJ. 12</span><span>Contar los divisores enteros exactos de un número</span><span class="exercise-tag">🟠 FOR + contador 🧩</span></div>
+      <div class="exercise-body">
+        <div class="statement-box"><span class="statement-label">📝 Enunciado (tal como lo dio el profesor)</span>
+          <p>Dado un número entero positivo, elabore un programa que cuente sus divisores enteros exactos.</p>
+        </div>
+
+        <div class="callout example">
+          <div class="callout-header"><span class="callout-icon">🧩</span> Ejercicio sin código en la diapositiva</div>
+          <p>El profesor solo dejó las variables (<code>n</code>, <code>d</code>, y ahora además <code>c</code> = contador de divisores exactos), sin código. Lo resuelvo a partir del ejercicio anterior.</p>
+        </div>
+
+        <div class="solution-block">
+
+          <h4>📋 Paso 1 — Reconocer que es el Ejercicio 11 + el patrón "contador"</h4>
+          <p>La lógica para <strong>detectar</strong> si <code>d</code> es divisor de <code>n</code> es idéntica a la del ejercicio anterior (<code>n % d == 0</code>). Lo único que cambia es qué hago cuando la condición es verdadera: en vez de mostrar <code>d</code>, ahora quiero <strong>contar</strong> cuántas veces ocurre eso. Ya conoces este patrón desde el Ejercicio 3: una variable <code>c</code> que arranca en 0 y se incrementa en 1 cada vez que se cumple la condición.</p>
+
+          <h4>📋 Paso 2 — Código en Python</h4>
+<pre class="pseudo py"><code><span class="cmt"># CONTAR LOS DIVISORES ENTEROS EXACTOS DE "n"</span>
+<span class="var">n</span>=<span class="fn">int</span>(<span class="fn">input</span>(<span class="str">'Ingrese un número entero positivo: '</span>))
+<span class="var">c</span>=<span class="num">0</span>
+<span class="kw">for</span> d <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>,n<span class="op">+</span><span class="num">1</span>):
+    <span class="kw">if</span> n<span class="op">%</span>d<span class="op">==</span><span class="num">0</span>:
+        <span class="var">c</span>=c<span class="op">+</span><span class="num">1</span>
+<span class="fn">print</span>(<span class="str">'El número'</span>,n,<span class="str">'tiene'</span>,c,<span class="str">'divisores exactos'</span>)</code></pre>
+
+          <div class="why-box">
+            <div class="why-label">🤔 ¿Por qué aquí NO hace falta un print() dentro del ciclo?</div>
+            <p>Porque el enunciado ya no pide ver <em>cuáles</em> son los divisores (eso era el Ejercicio 11) — solo pide saber <strong>cuántos</strong> son. Por eso dentro del ciclo solo actualizamos el contador en silencio, y el único <code>print</code> del programa va al final, fuera del ciclo, mostrando el total acumulado en <code>c</code>.</p>
+          </div>
+
+          <h4>📋 Paso 3 — Prueba de escritorio (n=12, reutilizando la traza del Ejercicio 11)</h4>
+          <div class="trace-table"><table>
+            <thead><tr><th class="center">d</th><th class="center">¿n%d==0?</th><th class="center">c</th></tr></thead>
+            <tbody>
+              <tr><td class="center mono">1</td><td class="center">Sí</td><td class="center mono">1</td></tr>
+              <tr><td class="center mono">2</td><td class="center">Sí</td><td class="center mono">2</td></tr>
+              <tr><td class="center mono">3</td><td class="center">Sí</td><td class="center mono">3</td></tr>
+              <tr><td class="center mono">4</td><td class="center">Sí</td><td class="center mono">4</td></tr>
+              <tr><td class="center mono">5</td><td class="center">No</td><td class="center mono">4</td></tr>
+              <tr><td class="center mono">6</td><td class="center">Sí</td><td class="center mono">5</td></tr>
+              <tr><td class="center mono">7–11</td><td class="center">No</td><td class="center mono">5</td></tr>
+              <tr><td class="center mono">12</td><td class="center">Sí</td><td class="center mono">6</td></tr>
+            </tbody>
+          </table></div>
+
+          <div class="final-answer">
+            <div class="final-answer-label">✅ Resultado (n=12)</div>
+            <p><span class="mono">"El número 12 tiene 6 divisores exactos"</span> (1, 2, 3, 4, 6 y 12 — coincide con lo que listamos uno por uno en el Ejercicio 11).</p>
+          </div>
+
+          <div class="theory-recap">
+            <div class="theory-label"><span>📌</span> Este par de ejercicios resume una idea muy general</div>
+            <p>Cuando un problema pide "encontrar/listar los elementos que cumplen algo", la estructura es: <code>PARA cada candidato: SI cumple la condición: mostrarlo</code>. Cuando el problema pide "contar cuántos cumplen algo", la estructura es idéntica, cambiando solo "mostrarlo" por "incrementar un contador". Vas a reconocer esta dualidad mostrar/contar en muchísimos problemas futuros con ciclos.</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="exercise" id="ej13">
+      <div class="exercise-header"><span class="exercise-num">EJ. 13</span><span>Juego de dados: n lanzamientos con reglas de ganancia y pérdida</span><span class="exercise-tag">🔴 FOR + random + multi-decisión 🧩</span></div>
+      <div class="exercise-body">
+        <div class="statement-box"><span class="statement-label">📝 Enunciado (tal como lo dio el profesor)</span>
+          <p>Elabore un programa que simule "n" lanzamientos de un dado y se apliquen las siguientes reglas: si sale 6, gana 5 soles; si sale 3, gana 1 sol; si sale 1, sigue jugando; si sale 2, 4 ó 5, pierde 2 soles. El programa debe mostrar los números que salieron al lanzar las "n" veces.</p>
+        </div>
+
+        <div class="callout example">
+          <div class="callout-header"><span class="callout-icon">🧩</span> Ejercicio sin código en la diapositiva</div>
+          <p>El profesor dejó planteadas las variables (<code>n</code>, <code>i</code>, <code>x</code>, <code>s</code>) pero sin escribir el programa. Es el ejercicio más completo de la semana porque combina <strong>todo</strong> lo visto hasta ahora: <code>random</code>, <code>for</code>, y una decisión con <strong>más de dos</strong> caminos posibles.</p>
+        </div>
+
+        <div class="solution-block">
+
+          <h4>📋 Paso 1 — Traducir las reglas de dinero a una tabla de casos</h4>
+          <div class="def-card">
+            <span class="def-label">Variables</span>
+            <div class="def-term">n, i, x, s</div>
+            <div class="def-text"><code>n</code> = cantidad de lanzamientos &nbsp;·&nbsp; <code>i</code> = conteo de lanzamientos (variable de control del <code>for</code>) &nbsp;·&nbsp; <code>x</code> = número aleatorio entre 1 y 6 &nbsp;·&nbsp; <code>s</code> = cantidad acumulada de dinero</div>
+          </div>
+
+          <div class="table-wrapper">
+            <table>
+              <thead><tr><th class="center">Si sale (x)</th><th>Efecto sobre s</th></tr></thead>
+              <tbody>
+                <tr><td class="center mono">6</td><td>gana 5 soles → <code>s = s + 5</code></td></tr>
+                <tr><td class="center mono">3</td><td>gana 1 sol → <code>s = s + 1</code></td></tr>
+                <tr><td class="center mono">1</td><td>sigue jugando (no cambia el dinero) → <code>s</code> se queda igual</td></tr>
+                <tr><td class="center mono">2, 4 ó 5</td><td>pierde 2 soles → <code>s = s - 2</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="why-box">
+            <div class="why-label">🤔 ¿Cómo decido el orden de las comparaciones en el if/elif?</div>
+            <p>Las cuatro reglas cubren <strong>todos</strong> los resultados posibles del dado (6, 3, 1, y "2 ó 4 ó 5") sin solaparse — cada cara del dado cae en exactamente una regla. Eso significa que puedo comparar una condición a la vez con <code>elif</code>, en cualquier orden, y terminar con un <code>else</code> que agrupe automáticamente "todo lo que no fue 6, ni 3, ni 1" — que son justamente 2, 4 y 5. Así me ahorro escribir <code>x==2 or x==4 or x==5</code> explícitamente.</p>
+          </div>
+
+          <h4>📋 Paso 2 — Diagrama de flujo</h4>
+          <div class="flowchart-container">
+            <div class="mermaid-container" data-original='flowchart TB
+    I(["Inicio"])
+    RN[/"leer n"/]
+    S0["s ← 0"]
+    C1{"Para i ← 1,2,...,n"}
+    RX["x ← randint(1,6)"]
+    MX[/"mostrar x"/]
+    D6{"x = 6 ?"}
+    D3{"x = 3 ?"}
+    D1{"x = 1 ?"}
+    G5["s ← s+5"]
+    G1["s ← s+1"]
+    G0["s sin cambio"]
+    P2["s ← s-2"]
+    MOUT[/"mostrar s"/]
+    F(["Fin"])
+    I --> RN --> S0 --> C1
+    C1 -->|"V"| RX --> MX --> D6
+    D6 -->|"Si"| G5 --> C1
+    D6 -->|"No"| D3
+    D3 -->|"Si"| G1 --> C1
+    D3 -->|"No"| D1
+    D1 -->|"Si"| G0 --> C1
+    D1 -->|"No"| P2 --> C1
+    C1 -->|"F"| MOUT --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style RN fill:#60a5fa,stroke:#1e40af,color:#000
+    style MX fill:#60a5fa,stroke:#1e40af,color:#000
+    style MOUT fill:#60a5fa,stroke:#1e40af,color:#000
+    style C1 fill:#fbbf24,stroke:#d97706,color:#000
+    style D6 fill:#fbbf24,stroke:#d97706,color:#000
+    style D3 fill:#fbbf24,stroke:#d97706,color:#000
+    style D1 fill:#fbbf24,stroke:#d97706,color:#000'><div class="mermaid">
+flowchart TB
+    I(["Inicio"])
+    RN[/"leer n"/]
+    S0["s ← 0"]
+    C1{"Para i ← 1,2,...,n"}
+    RX["x ← randint(1,6)"]
+    MX[/"mostrar x"/]
+    D6{"x = 6 ?"}
+    D3{"x = 3 ?"}
+    D1{"x = 1 ?"}
+    G5["s ← s+5"]
+    G1["s ← s+1"]
+    G0["s sin cambio"]
+    P2["s ← s-2"]
+    MOUT[/"mostrar s"/]
+    F(["Fin"])
+    I --> RN --> S0 --> C1
+    C1 -->|"V"| RX --> MX --> D6
+    D6 -->|"Si"| G5 --> C1
+    D6 -->|"No"| D3
+    D3 -->|"Si"| G1 --> C1
+    D3 -->|"No"| D1
+    D1 -->|"Si"| G0 --> C1
+    D1 -->|"No"| P2 --> C1
+    C1 -->|"F"| MOUT --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style RN fill:#60a5fa,stroke:#1e40af,color:#000
+    style MX fill:#60a5fa,stroke:#1e40af,color:#000
+    style MOUT fill:#60a5fa,stroke:#1e40af,color:#000
+    style C1 fill:#fbbf24,stroke:#d97706,color:#000
+    style D6 fill:#fbbf24,stroke:#d97706,color:#000
+    style D3 fill:#fbbf24,stroke:#d97706,color:#000
+    style D1 fill:#fbbf24,stroke:#d97706,color:#000
+            </div></div>
+            <div class="flowchart-caption">📊 Las tres decisiones (D6, D3, D1) forman una cadena: si la primera es falsa se pasa a la segunda, si esa también es falsa se pasa a la tercera — exactamente lo que hace un <code>if / elif / elif / else</code> en Python.</div>
+          </div>
+
+          <h4>📋 Paso 3 — Código en Python</h4>
+<pre class="pseudo py"><code><span class="cmt"># JUEGO DE DADOS: n lanzamientos con reglas de ganancia/pérdida</span>
+<span class="kw">from</span> random <span class="kw">import</span> *
+<span class="var">n</span>=<span class="fn">int</span>(<span class="fn">input</span>(<span class="str">'Ingrese la cantidad de lanzamientos: '</span>))
+<span class="var">s</span>=<span class="num">0</span>
+<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>,n<span class="op">+</span><span class="num">1</span>):
+    <span class="var">x</span>=randint(<span class="num">1</span>,<span class="num">6</span>)
+    <span class="fn">print</span>(<span class="str">'Lanzamiento'</span>,i,<span class="str">': salió'</span>,x)
+    <span class="kw">if</span> x<span class="op">==</span><span class="num">6</span>:
+        <span class="var">s</span>=s<span class="op">+</span><span class="num">5</span>
+    <span class="kw">elif</span> x<span class="op">==</span><span class="num">3</span>:
+        <span class="var">s</span>=s<span class="op">+</span><span class="num">1</span>
+    <span class="kw">elif</span> x<span class="op">==</span><span class="num">1</span>:
+        <span class="kw">pass</span> <span class="cmt"># sigue jugando: no se modifica s</span>
+    <span class="kw">else</span>: <span class="cmt"># x es 2, 4 ó 5</span>
+        <span class="var">s</span>=s<span class="op">-</span><span class="num">2</span>
+<span class="fn">print</span>(<span class="str">'El dinero acumulado es:'</span>,s,<span class="str">'soles'</span>)</code></pre>
+
+          <div class="why-box">
+            <div class="why-label">🤔 ¿Qué hace la instrucción "pass" y por qué hacía falta aquí?</div>
+            <p>En Python, un bloque <code>if</code>/<code>elif</code>/<code>else</code> nunca puede quedar vacío — Python exige que haya <strong>al menos una instrucción</strong> dentro de cada rama, o marca un error de sintaxis. Como la regla "si sale 1, sigue jugando" literalmente no le hace nada a <code>s</code>, necesito una instrucción que "no haga nada" para llenar ese hueco: esa es exactamente la función de <code>pass</code>. (Una alternativa igual de válida sería no escribir la rama <code>elif x==1</code> en absoluto, y dejar que el <code>else</code> se encargue solo de "2, 4 ó 5" comprobando esas tres condiciones explícitamente — pero con <code>pass</code> queda más clara la conexión 1 a 1 con las cuatro reglas del enunciado.)</p>
+          </div>
+
+          <h4>📋 Paso 4 — Prueba de escritorio (n=5, supongamos que salen: 6, 2, 3, 1, 4)</h4>
+          <div class="trace-table"><table>
+            <thead><tr><th class="center">i</th><th class="center">x</th><th>Regla aplicada</th><th class="center">s</th></tr></thead>
+            <tbody>
+              <tr><td class="center mono">—</td><td class="center">—</td><td>—</td><td class="center mono">0 (inicial)</td></tr>
+              <tr><td class="center mono">1</td><td class="center mono">6</td><td>gana 5 → s=0+5</td><td class="center mono">5</td></tr>
+              <tr><td class="center mono">2</td><td class="center mono">2</td><td>pierde 2 → s=5-2</td><td class="center mono">3</td></tr>
+              <tr><td class="center mono">3</td><td class="center mono">3</td><td>gana 1 → s=3+1</td><td class="center mono">4</td></tr>
+              <tr><td class="center mono">4</td><td class="center mono">1</td><td>sigue jugando → s sin cambio</td><td class="center mono">4</td></tr>
+              <tr><td class="center mono">5</td><td class="center mono">4</td><td>pierde 2 → s=4-2</td><td class="center mono">2</td></tr>
+            </tbody>
+          </table></div>
+
+          <div class="final-answer">
+            <div class="final-answer-label">✅ Resultado (con la secuencia supuesta 6, 2, 3, 1, 4)</div>
+            <p class="mono">Lanzamiento 1: salió 6<br/>Lanzamiento 2: salió 2<br/>Lanzamiento 3: salió 3<br/>Lanzamiento 4: salió 1<br/>Lanzamiento 5: salió 4<br/>El dinero acumulado es: 2 soles</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- BREAK Y CONTINUE -->
+    <!-- ============================================================ -->
+    <section class="block" id="s12-breakcontinue">
+      <div class="block-header"><div class="block-num">12F</div><h2>Instrucciones BREAK y CONTINUE</h2></div>
+
+      <p>Hasta ahora, todo ciclo que resolviste terminaba de una sola forma: la condición del <code>while</code> se volvía falsa, o el <code>for</code> agotaba su secuencia. <code>break</code> y <code>continue</code> te dan una forma <strong>adicional</strong> de alterar ese flujo desde <em>dentro</em> del cuerpo del ciclo, normalmente disparada por una condición <code>if</code>.</p>
+
+      <div class="compare-grid">
+        <div class="compare-card">
+          <h4>⛔ break</h4>
+          <p style="font-size:.88rem;color:var(--text-muted)">Se utiliza para <strong>interrumpir</strong> las repeticiones de un ciclo y salir sin completar la cantidad de iteraciones que estaba prevista. El ciclo termina <strong>inmediatamente</strong>, y la ejecución continúa en la primera instrucción después del ciclo.</p>
+        </div>
+        <div class="compare-card">
+          <h4>⏭️ continue</h4>
+          <p style="font-size:.88rem;color:var(--text-muted)">Se usa para <strong>regresar al comienzo del ciclo</strong>, ignorando todas las instrucciones restantes de la iteración actual. La iteración actual se interrumpe, pero el ciclo <strong>sigue vivo</strong> — no termina, solo se salta el resto de esa vuelta.</p>
+        </div>
+      </div>
+
+      <p>Ambas instrucciones se colocan dentro del bloque del ciclo, generalmente después de una instrucción <code>if</code> condicional.</p>
+
+      <h3>12.6. Ejemplo comparado, con explicación completa</h3>
+
+      <p>El profesor usa este programa base para mostrar la diferencia:</p>
+
+<pre class="pseudo py"><code><span class="cmt"># utilización de instrucciones BREAK - CONTINUE</span>
+<span class="var">num</span>=<span class="num">0</span>
+<span class="kw">for</span> num <span class="kw">in</span> <span class="fn">range</span>(<span class="num">10</span>):
+    <span class="kw">if</span> num<span class="op">==</span><span class="num">5</span>:
+        <span class="kw">break</span>
+    <span class="fn">print</span>(<span class="str">"el número es:"</span>,num)
+<span class="fn">print</span>(<span class="str">"fin del bucle"</span>)</code></pre>
+
+      <div class="why-box">
+        <div class="why-label">🤔 Leyendo el programa línea por línea (con BREAK)</div>
+        <p>La variable <code>num</code> arranca en 0; el <code>for</code> la va llevando por 0,1,2,…,9. En cada vuelta, el <code>if</code> pregunta si <code>num</code> ya llegó a 5. Mientras la respuesta sea "no", el <code>print("el número es:", num)</code> se ejecuta con normalidad. En el momento exacto en que <code>num</code> vale 5, el <code>if</code> se cumple y se ejecuta <code>break</code> — eso saca al programa <strong>del ciclo por completo</strong>, saltándose incluso el <code>print</code> de esa vuelta (nunca se llega a imprimir "el número es: 5"). Como el <code>print("fin del bucle")</code> está <strong>fuera</strong> del <code>for</code> (misma indentación que la palabra <code>for</code>), se ejecuta una sola vez, apenas se sale del ciclo.</p>
+      </div>
+
+      <div class="final-answer">
+        <div class="final-answer-label">✅ Resultado (con BREAK)</div>
+        <p class="mono">el número es: 0<br/>el número es: 1<br/>el número es: 2<br/>el número es: 3<br/>el número es: 4<br/>fin del bucle</p>
+      </div>
+
+      <p>Ahora, el mismo programa, cambiando únicamente <code>break</code> por <code>continue</code>:</p>
+
+<pre class="pseudo py"><code><span class="var">num</span>=<span class="num">0</span>
+<span class="kw">for</span> num <span class="kw">in</span> <span class="fn">range</span>(<span class="num">10</span>):
+    <span class="kw">if</span> num<span class="op">==</span><span class="num">5</span>:
+        <span class="kw">continue</span>
+    <span class="fn">print</span>(<span class="str">"el número es:"</span>,num)
+<span class="fn">print</span>(<span class="str">"fin del bucle"</span>)</code></pre>
+
+      <div class="why-box">
+        <div class="why-label">🤔 ¿Qué cambia ahora?</div>
+        <p>Otra vez, cuando <code>num</code> vale 5, el <code>if</code> se cumple — pero esta vez la instrucción es <code>continue</code>, que solo salta el resto de <strong>esa</strong> iteración (por eso tampoco se imprime "el número es: 5") y regresa al <code>for</code>, que sigue entregando los valores que le quedaban: 6, 7, 8, 9. El ciclo <strong>no termina</strong> antes de tiempo — solo se saltea una vuelta puntual.</p>
+      </div>
+
+      <div class="final-answer">
+        <div class="final-answer-label">✅ Resultado (con CONTINUE)</div>
+        <p class="mono">el número es: 0<br/>el número es: 1<br/>el número es: 2<br/>el número es: 3<br/>el número es: 4<br/>el número es: 6<br/>el número es: 7<br/>el número es: 8<br/>el número es: 9<br/>fin del bucle</p>
+      </div>
+
+      <div class="theory-recap">
+        <div class="theory-label"><span>📌</span> La diferencia en una frase</div>
+        <p><code>break</code> le dice al ciclo "ya basta, termina del todo". <code>continue</code> le dice "esta vuelta ya no me interesa, pero seguimos con la próxima". Confundirlos es un error conceptual, no de sintaxis — Python no te va a avisar si usaste el que no correspondía; el programa simplemente hará algo distinto de lo que querías.</p>
+      </div>
+    </section>
+
+    <div class="exercise" id="ej14">
+      <div class="exercise-header"><span class="exercise-num">EJ. 14</span><span>Contar los intentos necesarios hasta que salga el número 5 (usando BREAK)</span><span class="exercise-tag">🟠 BREAK 🧩</span></div>
+      <div class="exercise-body">
+        <div class="statement-box"><span class="statement-label">📝 Enunciado (tal como lo dio el profesor)</span>
+          <p>Elabore un programa que simule "n" lanzamientos de un dado y determine la cantidad de intentos realizados hasta que salió el número 5. (Utilizar BREAK.)</p>
+        </div>
+
+        <div class="callout example">
+          <div class="callout-header"><span class="callout-icon">🧩</span> Ejercicio propuesto sin resolver</div>
+          <p>Es el primero de tres ejercicios de práctica que la diapositiva deja planteados, sin código ni solución. Los resuelvo los tres, en orden, porque el segundo depende directamente de este.</p>
+        </div>
+
+        <div class="solution-block">
+
+          <h4>📋 Paso 1 — Por qué este problema pide BREAK explícitamente</h4>
+          <p>Fíjate en el parecido con el Ejercicio 3 ("determine la cantidad de lanzamientos hasta que se obtuvo el número 4"): ahí resolvimos exactamente este tipo de problema con un <code>while x!=4:</code>. Aquí el enunciado pide, en cambio, usar <code>break</code> — es decir, quiere que expreses la <strong>misma idea</strong> ("repetir hasta cierta condición") con una herramienta distinta: un ciclo que en principio se repetiría <strong>para siempre</strong> (<code>while True</code>), del cual solo se sale mediante un <code>break</code> explícito cuando se cumple la condición de parada. Esto es intencional: el profesor quiere que veas que <code>break</code> puede reemplazar a la condición de un <code>while</code>.</p>
+
+          <div class="why-box">
+            <div class="why-label">🤔 ¿Por qué while True y no while x!=5, si hacen "lo mismo"?</div>
+            <p>Ambas formas terminan logrando el mismo resultado, pero la diferencia está en <strong>dónde</strong> vive la decisión de parar. Con <code>while x!=5</code>, la condición de salida está en el encabezado del ciclo, evaluada <em>antes</em> de generar el número. Con <code>while True</code> + <code>break</code>, el ciclo en sí no tiene ninguna condición de parada propia (<code>True</code> siempre es verdadero) — la decisión de salir vive <em>dentro</em> del cuerpo, justo después de generar el número, envuelta en un <code>if</code>. Esto es exactamente lo que este ejercicio quiere que practiques: mover el criterio de parada de la cabecera del ciclo hacia una instrucción explícita en su interior.</p>
+          </div>
+
+          <h4>📋 Paso 2 — Código en Python</h4>
+<pre class="pseudo py"><code><span class="cmt"># CONTADOR DE INTENTOS HASTA QUE SALGA EL NÚMERO 5 (usando BREAK)</span>
+<span class="kw">from</span> random <span class="kw">import</span> *
+<span class="var">c</span>=<span class="num">0</span>
+<span class="kw">while</span> <span class="kw">True</span>:
+    <span class="var">x</span>=randint(<span class="num">1</span>,<span class="num">6</span>)
+    <span class="var">c</span>=c<span class="op">+</span><span class="num">1</span>
+    <span class="fn">print</span>(<span class="str">'Intento'</span>,c,<span class="str">': salió'</span>,x)
+    <span class="kw">if</span> x<span class="op">==</span><span class="num">5</span>:
+        <span class="kw">break</span>
+<span class="fn">print</span>(<span class="str">'Se necesitaron'</span>,c,<span class="str">'intentos para obtener el número 5'</span>)</code></pre>
+
+          <h4>📋 Paso 3 — Diagrama de flujo</h4>
+          <div class="flowchart-container">
+            <div class="mermaid-container" data-original='flowchart TB
+    I(["Inicio"])
+    C0["c ← 0"]
+    RX["x ← randint(1,6)"]
+    INC["c ← c+1"]
+    MX[/"mostrar intento c, x"/]
+    D5{"x = 5 ?"}
+    MOUT[/"mostrar c"/]
+    F(["Fin"])
+    I --> C0 --> RX
+    RX --> INC --> MX --> D5
+    D5 -->|"No"| RX
+    D5 -->|"Si &#40;BREAK&#41;"| MOUT --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style MX fill:#60a5fa,stroke:#1e40af,color:#000
+    style MOUT fill:#60a5fa,stroke:#1e40af,color:#000
+    style D5 fill:#fbbf24,stroke:#d97706,color:#000'><div class="mermaid">
+flowchart TB
+    I(["Inicio"])
+    C0["c ← 0"]
+    RX["x ← randint(1,6)"]
+    INC["c ← c+1"]
+    MX[/"mostrar intento c, x"/]
+    D5{"x = 5 ?"}
+    MOUT[/"mostrar c"/]
+    F(["Fin"])
+    I --> C0 --> RX
+    RX --> INC --> MX --> D5
+    D5 -->|"No"| RX
+    D5 -->|"Si &#40;BREAK&#41;"| MOUT --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style MX fill:#60a5fa,stroke:#1e40af,color:#000
+    style MOUT fill:#60a5fa,stroke:#1e40af,color:#000
+    style D5 fill:#fbbf24,stroke:#d97706,color:#000
+            </div></div>
+            <div class="flowchart-caption">📊 Nota que no hay ninguna flecha que salga directamente de "Inicio" hacia una condición de ciclo: el flujo entra al cuerpo del ciclo sin preguntar nada primero, y la única salida posible es a través del <code>break</code> dentro de la decisión D5.</div>
+          </div>
+
+          <h4>📋 Paso 4 — Prueba de escritorio (supongamos que salen: 2, 6, 3, 5)</h4>
+          <div class="trace-table"><table>
+            <thead><tr><th class="center">c</th><th class="center">x</th><th class="center">¿x=5?</th><th>Acción</th></tr></thead>
+            <tbody>
+              <tr><td class="center mono">1</td><td class="center mono">2</td><td class="center">No</td><td>continúa el ciclo</td></tr>
+              <tr><td class="center mono">2</td><td class="center mono">6</td><td class="center">No</td><td>continúa el ciclo</td></tr>
+              <tr><td class="center mono">3</td><td class="center mono">3</td><td class="center">No</td><td>continúa el ciclo</td></tr>
+              <tr><td class="center mono">4</td><td class="center mono">5</td><td class="center">Sí</td><td><strong>break</strong> — sale del ciclo</td></tr>
+            </tbody>
+          </table></div>
+
+          <div class="final-answer">
+            <div class="final-answer-label">✅ Resultado (con la secuencia supuesta)</div>
+            <p class="mono">Intento 1: salió 2<br/>Intento 2: salió 6<br/>Intento 3: salió 3<br/>Intento 4: salió 5<br/>Se necesitaron 4 intentos para obtener el número 5</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="exercise" id="ej15">
+      <div class="exercise-header"><span class="exercise-num">EJ. 15</span><span>Reemplazar BREAK por CONTINUE en el programa anterior y observar las diferencias</span><span class="exercise-tag">🔴 BREAK vs CONTINUE 🧩</span></div>
+      <div class="exercise-body">
+        <div class="statement-box"><span class="statement-label">📝 Enunciado (tal como lo dio el profesor)</span>
+          <p>En el programa anterior, reemplace la instrucción BREAK por CONTINUE y observe las diferencias.</p>
+        </div>
+
+        <div class="callout example">
+          <div class="callout-header"><span class="callout-icon">🧩</span> Este ejercicio es, a propósito, una trampa conceptual</div>
+          <p>No pide "arreglar" el programa para que funcione con <code>continue</code> — pide literalmente <strong>reemplazar</strong> la palabra y observar qué pasa. Vale la pena resolverlo exactamente así, porque el resultado es la lección más importante de toda esta sección.</p>
+        </div>
+
+        <div class="solution-block">
+
+          <h4>📋 Paso 1 — El reemplazo literal</h4>
+<pre class="pseudo py"><code><span class="kw">from</span> random <span class="kw">import</span> *
+<span class="var">c</span>=<span class="num">0</span>
+<span class="kw">while</span> <span class="kw">True</span>:
+    <span class="var">x</span>=randint(<span class="num">1</span>,<span class="num">6</span>)
+    <span class="var">c</span>=c<span class="op">+</span><span class="num">1</span>
+    <span class="fn">print</span>(<span class="str">'Intento'</span>,c,<span class="str">': salió'</span>,x)
+    <span class="kw">if</span> x<span class="op">==</span><span class="num">5</span>:
+        <span class="kw">continue</span> <span class="cmt"># antes decía: break</span>
+<span class="fn">print</span>(<span class="str">'Se necesitaron'</span>,c,<span class="str">'intentos para obtener el número 5'</span>) <span class="cmt"># esta línea nunca se alcanza</span></code></pre>
+
+          <div class="callout danger">
+            <div class="callout-header"><span class="callout-icon">🛑</span> Este programa NUNCA termina — no lo ejecutes esperando un resultado</div>
+            <p>Recuerda la definición exacta de <code>continue</code>: salta el resto de la iteración <strong>actual</strong> y regresa al inicio del ciclo — pero <strong>no lo termina</strong>. El ciclo aquí es <code>while True</code>, cuya única condición de parada posible era el <code>break</code> que acabamos de quitar. Al reemplazarlo por <code>continue</code>, cuando <code>x</code> vale 5 el programa simplemente vuelve a generar otro número y sigue — <strong>sin que quede ninguna forma de salir</strong>. El resultado es un <strong>bucle infinito</strong>: el programa imprimiría "Intento 1: salió …", "Intento 2: salió …" indefinidamente, sin parar nunca, y la última línea (<code>print('Se necesitaron'…)</code>) jamás se ejecutaría.</p>
+          </div>
+
+          <h4>📋 Paso 2 — Diagrama de flujo (mostrando la salida inalcanzable)</h4>
+          <div class="flowchart-container">
+            <div class="mermaid-container" data-original='flowchart TB
+    I(["Inicio"])
+    C0["c ← 0"]
+    RX["x ← randint(1,6)"]
+    INC["c ← c+1"]
+    MX[/"mostrar intento c, x"/]
+    D5{"x = 5 ?"}
+    MOUT[/"mostrar c &#40;INALCANZABLE&#41;"/]
+    F(["Fin &#40;INALCANZABLE&#41;"])
+    I --> C0 --> RX
+    RX --> INC --> MX --> D5
+    D5 -->|"No"| RX
+    D5 -->|"Si &#40;CONTINUE&#41;"| RX
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style MX fill:#60a5fa,stroke:#1e40af,color:#000
+    style MOUT fill:#f87171,stroke:#dc2626,color:#000
+    style D5 fill:#fbbf24,stroke:#d97706,color:#000'><div class="mermaid">
+flowchart TB
+    I(["Inicio"])
+    C0["c ← 0"]
+    RX["x ← randint(1,6)"]
+    INC["c ← c+1"]
+    MX[/"mostrar intento c, x"/]
+    D5{"x = 5 ?"}
+    MOUT[/"mostrar c &#40;INALCANZABLE&#41;"/]
+    F(["Fin &#40;INALCANZABLE&#41;"])
+    I --> C0 --> RX
+    RX --> INC --> MX --> D5
+    D5 -->|"No"| RX
+    D5 -->|"Si &#40;CONTINUE&#41;"| RX
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style MX fill:#60a5fa,stroke:#1e40af,color:#000
+    style MOUT fill:#f87171,stroke:#dc2626,color:#000
+    style D5 fill:#fbbf24,stroke:#d97706,color:#000
+            </div></div>
+            <div class="flowchart-caption">📊 Compáralo con el diagrama del Ejercicio 14: ahí la rama "Sí" de D5 escapaba del ciclo. Aquí, <strong>ambas</strong> ramas de D5 (Sí y No) regresan a "x ← randint(1,6)" — no existe ningún camino que lleve a "mostrar c" ni a "Fin". Por eso los dibujé en rojo: son código que nunca se ejecuta.</div>
+          </div>
+
+          <h4>📋 Paso 3 — La diferencia observada (justo lo que pide el enunciado)</h4>
+          <div class="table-wrapper">
+            <table>
+              <thead><tr><th>Con BREAK (Ej. 14)</th><th>Con CONTINUE (este ejercicio)</th></tr></thead>
+              <tbody>
+                <tr><td>Al salir 5, el programa <strong>sale del ciclo</strong> y muestra el total de intentos.</td><td>Al salir 5, el programa <strong>ignora esa vuelta y sigue lanzando</strong> — nunca deja de generar números.</td></tr>
+                <tr><td>El programa termina en una cantidad finita (aunque variable) de pasos.</td><td>El programa <strong>no termina nunca</strong>: es un bucle infinito.</td></tr>
+                <tr><td>El mensaje final ("Se necesitaron … intentos") sí se imprime.</td><td>El mensaje final <strong>nunca</strong> se imprime.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="theory-recap">
+            <div class="theory-label"><span>📌</span> La lección que este ejercicio quiere dejarte</div>
+            <p><code>break</code> y <code>continue</code> <strong>no son intercambiables</strong>, aunque ambas "interrumpan" algo dentro de un ciclo. Cuando un ciclo <code>while True</code> depende <em>exclusivamente</em> de un <code>break</code> para terminar (porque su condición de cabecera es siempre verdadera), reemplazar ese <code>break</code> por <code>continue</code> elimina la única puerta de salida que tenía el programa. La regla práctica: usa <code>break</code> cuando la intención sea "ya terminé, salgo del ciclo"; usa <code>continue</code> solo cuando la intención sea "esta vuelta no me sirve, pero el ciclo debe seguir su curso normal" (como en el Ejercicio 16, a continuación, donde el <code>for</code> tiene su propia condición de fin independiente del <code>continue</code>).</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="exercise" id="ej16">
+      <div class="exercise-header"><span class="exercise-num">EJ. 16</span><span>Sumar una lista de números sin considerar los negativos</span><span class="exercise-tag">🟢 CONTINUE 🧩</span></div>
+      <div class="exercise-body">
+        <div class="statement-box"><span class="statement-label">📝 Enunciado (tal como lo dio el profesor)</span>
+          <p>Se tiene la siguiente lista de números: 34, 54, 66, -12, 8, -20, 14, 51. Elabore un programa que sume los números sin considerar los negativos.</p>
+        </div>
+
+        <div class="callout example">
+          <div class="callout-header"><span class="callout-icon">🧩</span> Ejercicio propuesto sin resolver</div>
+          <p>El tercero y último de los ejercicios de práctica de esta sección. A diferencia de los dos anteriores, este es el ejemplo perfecto de un <code>continue</code> usado <strong>como corresponde</strong>: dentro de un <code>for</code> que ya tiene, por sí mismo, un final garantizado (la lista es finita), así que "saltarse" un elemento con <code>continue</code> no pone en riesgo la terminación del ciclo.</p>
+        </div>
+
+        <div class="solution-block">
+
+          <h4>📋 Paso 1 — Traducir "sin considerar los negativos" a una condición</h4>
+          <p>Necesito recorrer la lista dada con un <code>for</code>, y por cada número decidir: si es negativo, <strong>lo ignoro</strong> (no lo sumo) y paso directamente al siguiente; si no es negativo, lo sumo al acumulador. "Ignorar este elemento y pasar al siguiente" es, literalmente, la definición de <code>continue</code>.</p>
+
+          <div class="why-box">
+            <div class="why-label">🤔 ¿Por qué esto NO corre el riesgo de volverse infinito, como en el Ejercicio 15?</div>
+            <p>Porque aquí el ciclo es un <code>for</code> sobre una <strong>lista fija y finita</strong> de 8 elementos — su condición de fin ("¿ya recorrí toda la lista?") es completamente independiente del <code>if</code> que dispara el <code>continue</code>. El <code>for</code> va a seguir avanzando por la lista, elemento a elemento, use yo <code>continue</code> o no; lo único que decide <code>continue</code> aquí es si ese elemento en particular contribuye o no a la suma.</p>
+          </div>
+
+          <h4>📋 Paso 2 — Código en Python</h4>
+<pre class="pseudo py"><code><span class="cmt"># SUMA DE UNA LISTA SIN CONSIDERAR LOS NEGATIVOS</span>
+<span class="var">lista</span>=[<span class="num">34</span>,<span class="num">54</span>,<span class="num">66</span>,<span class="op">-</span><span class="num">12</span>,<span class="num">8</span>,<span class="op">-</span><span class="num">20</span>,<span class="num">14</span>,<span class="num">51</span>]
+<span class="var">s</span>=<span class="num">0</span>
+<span class="kw">for</span> x <span class="kw">in</span> lista:
+    <span class="kw">if</span> x<span class="op">&lt;</span><span class="num">0</span>:
+        <span class="kw">continue</span>
+    <span class="var">s</span>=s<span class="op">+</span>x
+<span class="fn">print</span>(<span class="str">'La suma sin considerar los negativos es:'</span>,s)</code></pre>
+
+          <h4>📋 Paso 3 — Prueba de escritorio</h4>
+          <div class="trace-table"><table>
+            <thead><tr><th class="center">x</th><th class="center">¿x&lt;0?</th><th>Acción</th><th class="center">s</th></tr></thead>
+            <tbody>
+              <tr><td class="center mono">34</td><td class="center">No</td><td>se suma</td><td class="center mono">34</td></tr>
+              <tr><td class="center mono">54</td><td class="center">No</td><td>se suma</td><td class="center mono">88</td></tr>
+              <tr><td class="center mono">66</td><td class="center">No</td><td>se suma</td><td class="center mono">154</td></tr>
+              <tr><td class="center mono">-12</td><td class="center">Sí</td><td><strong>continue</strong> — se ignora</td><td class="center mono">154</td></tr>
+              <tr><td class="center mono">8</td><td class="center">No</td><td>se suma</td><td class="center mono">162</td></tr>
+              <tr><td class="center mono">-20</td><td class="center">Sí</td><td><strong>continue</strong> — se ignora</td><td class="center mono">162</td></tr>
+              <tr><td class="center mono">14</td><td class="center">No</td><td>se suma</td><td class="center mono">176</td></tr>
+              <tr><td class="center mono">51</td><td class="center">No</td><td>se suma</td><td class="center mono">227</td></tr>
+            </tbody>
+          </table></div>
+
+          <div class="final-answer">
+            <div class="final-answer-label">✅ Resultado</div>
+            <p><span class="mono">"La suma sin considerar los negativos es: 227"</span> (34+54+66+8+14+51 = 227; se descartaron -12 y -20).</p>
+          </div>
+
+          <div class="why-box">
+            <div class="why-label">🤔 ¿Se podría resolver esto sin usar continue?</div>
+            <p>Sí — con un <code>if x&gt;=0: s=s+x</code> (sumar solo cuando el número NO es negativo) se llega exactamente al mismo resultado, sin necesitar <code>continue</code> en absoluto. Esto es intencional: <code>continue</code> casi nunca es la <em>única</em> forma de resolver un problema, es una forma de expresar la lógica que a veces resulta más clara de leer ("si no me interesa, salto") — sobre todo cuando, como en problemas más grandes, hay varias condiciones de descarte seguidas y anidar todas esas comprobaciones dentro de un solo <code>if</code> haría el código más difícil de leer.</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- PUENTE / RESUMEN -->
+    <!-- ============================================================ -->
+    <section class="block" id="puente">
+      <div class="block-header"><div class="block-num">🌉</div><h2>Resumen: WHILE vs FOR vs BREAK vs CONTINUE</h2></div>
+
+      <p>Esta tabla junta las cuatro herramientas de la semana y, para cada una, el criterio concreto que usaste en los 16 ejercicios para decidir cuándo aplicarla:</p>
+
+      <div class="table-wrapper">
+        <table class="bridge-table">
+          <thead><tr><th>Herramienta</th><th>¿Cuándo se usa?</th><th>Ejercicios de esta guía</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">while condición:</td><td>Cuando <strong>no</strong> sabes de antemano cuántas veces se repetirá — depende de una condición que solo se conoce en tiempo de ejecución.</td><td>Ej. 2, 3, 4</td></tr>
+            <tr><td class="mono">for v in lista:</td><td>Cuando ya tienes la <strong>lista completa</strong> de valores concretos sobre los que quieres repetir.</td><td>Ej. 1 (dado), 5, 6</td></tr>
+            <tr><td class="mono">for v in range(...):</td><td>Cuando sabes de antemano <strong>cuántas veces</strong> se repetirá (o el patrón numérico exacto: consecutivos, con salto, etc.).</td><td>Ej. 7, 8, 9, 10, 11, 12, 13</td></tr>
+            <tr><td class="mono">break</td><td>Para <strong>terminar el ciclo por completo</strong> desde adentro, apenas se cumple una condición — muy común junto a <code>while True</code> cuando el criterio de parada conviene expresarlo en el cuerpo y no en la cabecera.</td><td>Ej. 14</td></tr>
+            <tr><td class="mono">continue</td><td>Para <strong>saltar solo la vuelta actual</strong> sin arriesgar la terminación del ciclo — típicamente para descartar/ignorar ciertos elementos dentro de una repetición que de todas formas va a terminar por sí sola.</td><td>Ej. 16</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="why-box">
+        <div class="why-label">🤔 El peligro que conecta al Ejercicio 15 con la idea de "condición de salida" de la sección 12B</div>
+        <p>Vuelve a leer la definición con la que abrió esta guía: "agregar un elemento que permita salir del ciclo". Un <code>while True</code> nace <strong>sin</strong> ese elemento — se lo tienes que dar tú, casi siempre con un <code>break</code>. El Ejercicio 15 fue precisamente la demostración de qué ocurre cuando ese único elemento de salida se retira (al cambiarlo por <code>continue</code>): el ciclo deja de tener cualquier forma de terminar. Cada vez que escribas <code>while True</code>, pregúntate de inmediato: "¿dónde está el <code>break</code> que lo va a detener?"</p>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header"><span class="callout-icon">🎯</span> El patrón que se repitió en casi todos los ejercicios de esta guía</div>
+        <p>Casi todos los problemas de ciclos que resolviste esta semana se arman combinando un puñado de piezas fijas: <strong>una variable de entrada</strong> (leída con <code>input()</code> o generada con <code>randint()</code>), <strong>una variable "memoria"</strong> que se inicializa antes del ciclo y se actualiza dentro de él (un acumulador como <code>s</code>, un contador como <code>c</code>, o un mejor-valor-visto como <code>m</code>), y <strong>una decisión opcional</strong> dentro del ciclo (<code>if</code>) que decide si esa actualización ocurre o no. Cuando te enfrentes a un problema nuevo con ciclos, identificar estas tres piezas por separado es, en la práctica, haber resuelto ya la mitad del problema.</p>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- CIERRE -->
+    <!-- ============================================================ -->
+    <section class="block" id="cierre">
+      <div class="block-header"><div class="block-num">🎯</div><h2>Cierre y checklist de autoevaluación</h2></div>
+
+      <p>Antes de pasar a la siguiente semana, revisa honestamente si puedes marcar cada uno de estos puntos:</p>
+
+      <div class="quiz-item">
+        <div class="quiz-q">Números aleatorios</div>
+        <ul style="margin:0 0 0 22px;line-height:2.1">
+          <li>☐ Sé que necesito <code>from random import *</code> antes de usar <code>random()</code>, <code>randint()</code>, <code>choice()</code> o <code>shuffle()</code>.</li>
+          <li>☐ Distingo <code>random()</code> (real, [0,1)) de <code>randint(a,b)</code> (entero, [a,b] con ambos extremos incluidos).</li>
+          <li>☐ Sé que <code>choice(s)</code> no modifica la lista, pero <code>shuffle(s)</code> sí (y no devuelve nada útil).</li>
+        </ul>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">MIENTRAS / while</div>
+        <ul style="margin:0 0 0 22px;line-height:2.1">
+          <li>☐ Sé reconocer cuándo un problema pide <code>while</code> (no conozco de antemano cuántas repeticiones harán falta).</li>
+          <li>☐ Nunca olvido inicializar la variable de la condición ANTES del ciclo, con un valor que la haga nacer verdadera.</li>
+          <li>☐ Entiendo por qué la indentación decide si una instrucción se repite (dentro del ciclo) o se ejecuta una sola vez (después de él).</li>
+          <li>☐ Sé aplicar el patrón "contador" (<code>c=0</code> antes, <code>c=c+1</code> dentro) y el patrón "acumulador" (<code>s=0</code> antes, <code>s=s+algo</code> dentro).</li>
+        </ul>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">PARA / for</div>
+        <ul style="margin:0 0 0 22px;line-height:2.1">
+          <li>☐ Sé reconocer cuándo un problema pide <code>for</code> (conozco de antemano la cantidad de repeticiones, o la lista completa de valores).</li>
+          <li>☐ Sé escribir una secuencia como lista <code>[a,b,c,...]</code> o como <code>range(...)</code>, y elegir cuál conviene en cada caso.</li>
+          <li>☐ Recuerdo que <code>range()</code> excluye su extremo final, y que para incluir hasta <code>n</code> necesito <code>range(1,n+1)</code>.</li>
+          <li>☐ Sé anidar una decisión <code>if</code> dentro de un <code>for</code> (patrón "máximo", patrón "contar los que cumplen una condición").</li>
+        </ul>
+      </div>
+
+      <div class="quiz-item">
+        <div class="quiz-q">BREAK y CONTINUE</div>
+        <ul style="margin:0 0 0 22px;line-height:2.1">
+          <li>☐ Sé que <code>break</code> termina el ciclo por completo; <code>continue</code> solo salta el resto de la iteración actual.</li>
+          <li>☐ Entiendo por qué un <code>while True</code> sin <code>break</code> (o con un <code>continue</code> en el lugar equivocado) provoca un bucle infinito.</li>
+          <li>☐ Puedo decidir, frente a un problema nuevo, si me conviene resolverlo con la condición en la cabecera del <code>while</code> o con <code>while True</code> + <code>break</code>.</li>
+        </ul>
+      </div>
+
+      <div class="callout intuition">
+        <div class="callout-header"><span class="callout-icon">🐧</span> El hilo que conecta toda la guía</div>
+        <p>Si algo debe quedarte de esta semana es que <code>while</code> y <code>for</code> no son dos herramientas competidoras, sino la misma idea (repetir un bloque P hasta que algo lo detenga) vista desde dos ángulos: en <code>while</code> tú manejas explícitamente cuándo parar; en <code>for</code>, Python lo maneja por ti a partir de una secuencia. <code>break</code> y <code>continue</code> son, a su vez, formas de intervenir ese flujo desde adentro cuando la condición de la cabecera no alcanza para expresar lo que necesitas. Con estas cuatro piezas —más los patrones de acumulador, contador y máximo que fuiste viendo en cada ejercicio— ya tienes todo lo necesario para construir programas que antes solo podías imaginar en pseudocódigo.</p>
+      </div>
+    </section>
+
+    <footer>
+      <p>🐧 Guía de estudio · Fundamentos de Programación · Universidad de Piura</p>
+      <p style="margin-top:6px">Semana 12 · Estructuras Repetitivas · Hecha con <span class="heart">♥</span> para estudiar con calma</p>
+    </footer>
+
+  </main>
+</div>
+
+<button id="toTopBtn" aria-label="Subir al inicio">↑</button>
+
+<script>
+/* ============================================================
+   Configuración de Mermaid
+   ============================================================ */
+function getMermaidConfig(theme) {
+  const isDark = theme !== 'light';
+  return {
+    startOnLoad: false,
+    theme: 'base',
+    securityLevel: 'loose',
+    themeVariables: {
+      fontFamily: "'Inter', sans-serif",
+      fontSize: '15px',
+      primaryColor: '#a78bfa',
+      primaryTextColor: '#0a0e1a',
+      primaryBorderColor: '#6d28d9',
+      lineColor: isDark ? '#cbd5e1' : '#475569',
+      secondaryColor: '#60a5fa',
+      tertiaryColor: '#fbbf24',
+      background: isDark ? '#1a2138' : '#fafbfd',
+      mainBkg: '#a78bfa',
+      edgeLabelBackground: isDark ? '#1a2138' : '#fafbfd',
+      labelTextColor: isDark ? '#f1f5f9' : '#0f172a',
+      tertiaryTextColor: isDark ? '#f1f5f9' : '#0f172a',
+      noteTextColor: isDark ? '#f1f5f9' : '#0f172a',
+      clusterBkg: isDark ? '#161c2f' : '#fff',
+      clusterBorder: isDark ? '#2a3354' : '#e2e8f0',
+      titleColor: isDark ? '#e8edf7' : '#0f172a'
+    },
+    flowchart: {
+      curve: 'basis',
+      padding: 12,
+      useMaxWidth: false,
+      htmlLabels: false,
+      nodeSpacing: 34,
+      rankSpacing: 26,
+      defaultRenderer: 'dagre-wrapper',
+      wrappingWidth: 190
+    }
+  };
+}
+
+async function renderMermaid() {
+  const containers = document.querySelectorAll('.mermaid-container');
+  const theme = document.documentElement.getAttribute('data-theme');
+  const isDark = theme !== 'light';
+  const edgeColor = isDark ? '#f1f5f9' : '#0f172a';
+  const edgeBg = isDark ? '#1a2138' : '#fafbfd';
+
+  for (let i = 0; i < containers.length; i++) {
+    const container = containers[i];
+    const original = container.getAttribute('data-original');
+    if (!original) continue;
+    const mermaidDiv = container.querySelector('.mermaid');
+    if (!mermaidDiv) continue;
+    mermaidDiv.removeAttribute('data-processed');
+    mermaidDiv.innerHTML = original;
+    try {
+      const { svg } = await mermaid.render('mermaid-svg-' + i + '-' + Date.now(), original);
+      mermaidDiv.innerHTML = svg;
+
+      const renderedSvg = mermaidDiv.querySelector('svg');
+      if (renderedSvg) {
+        renderedSvg.querySelectorAll('.edgeLabel text, .edgeLabel tspan').forEach(el => {
+          el.style.fill = edgeColor;
+          el.setAttribute('fill', edgeColor);
+        });
+        renderedSvg.querySelectorAll('.edgeLabel rect, .labelBkg').forEach(el => {
+          el.style.fill = edgeBg;
+          el.setAttribute('fill', edgeBg);
+          el.style.opacity = '0.95';
+        });
+        renderedSvg.querySelectorAll('.edgeLabel foreignObject span, .edgeLabel foreignObject div').forEach(el => {
+          el.style.color = edgeColor;
+          el.style.backgroundColor = edgeBg;
+        });
+      }
+    } catch (err) {
+      console.error('Error renderizando diagrama', i, err);
+      mermaidDiv.innerHTML = '<pre style="text-align:left;color:#f87171;font-size:.8rem">Error: ' + err.message + '</pre>';
+    }
+  }
+
+  setTimeout(() => {
+    document.querySelectorAll('.flowchart-container').forEach(setupDiagramZoom);
+  }, 80);
+}
+
+function setupDiagramZoom(container) {
+  container.querySelectorAll('.zoom-toolbar').forEach(t => t.remove());
+  container.classList.remove('has-toolbar');
+
+  const svg = container.querySelector('.mermaid svg');
+  if (!svg) return;
+
+  const rect = svg.getBoundingClientRect();
+  const baseW = rect.width;
+  const baseH = rect.height;
+  if (baseW < 10) return;
+
+  let scale = 1;
+  const minScale = 0.6;
+  const maxScale = 2.5;
+  const stepBtn = 0.2;
+
+  const toolbar = document.createElement('div');
+  toolbar.className = 'zoom-toolbar';
+  toolbar.innerHTML = `
+    <button class="zoom-btn" data-zoom="out" title="Alejar" aria-label="Alejar">−</button>
+    <span class="zoom-label">100%</span>
+    <button class="zoom-btn" data-zoom="in" title="Acercar" aria-label="Acercar">+</button>
+  `;
+  container.insertBefore(toolbar, container.firstChild);
+  container.classList.add('has-toolbar');
+
+  const label = toolbar.querySelector('.zoom-label');
+
+  function apply() {
+    scale = Math.min(maxScale, Math.max(minScale, scale));
+    svg.style.width = (baseW * scale) + 'px';
+    svg.style.height = (baseH * scale) + 'px';
+    svg.style.maxWidth = 'none';
+    svg.style.maxHeight = 'none';
+    label.textContent = Math.round(scale * 100) + '%';
+    if (Math.abs(scale - 1) < 0.01) {
+      container.classList.remove('zooming');
+    } else {
+      container.classList.add('zooming');
+    }
+  }
+
+  toolbar.addEventListener('click', e => {
+    const btn = e.target.closest('[data-zoom]');
+    if (!btn) return;
+    const action = btn.dataset.zoom;
+    if (action === 'in') scale += stepBtn;
+    else if (action === 'out') scale -= stepBtn;
+    apply();
+  });
+
+  /* Deliberadamente SIN listeners de wheel/gesture/dblclick:
+     el zoom del trackpad y de Ctrl+rueda quedan libres para el
+     zoom nativo del navegador sobre toda la página, no sobre el diagrama. */
+}
+
+/* === Tema (oscuro / claro / alto contraste) === */
+const themeToggle = document.getElementById('themeToggle');
+const themeIcon = document.getElementById('themeIcon');
+const themeLabel = document.getElementById('themeLabel');
+const THEME_KEY = 'fpstudy-theme';
+
+function updateThemeUI(theme) {
+  if (theme === 'light') {
+    themeIcon.textContent = '☀️';
+    themeLabel.textContent = 'Claro';
+  } else if (theme === 'contrast') {
+    themeIcon.textContent = '⬛';
+    themeLabel.textContent = 'Contraste';
+  } else {
+    themeIcon.textContent = '🌙';
+    themeLabel.textContent = 'Oscuro';
+  }
+  document.querySelectorAll('.a11y-opt[data-theme-opt]').forEach(b => {
+    b.classList.toggle('active', b.dataset.themeOpt === theme);
+  });
+}
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  updateThemeUI(theme);
+  localStorage.setItem(THEME_KEY, theme);
+  mermaid.initialize(getMermaidConfig(theme));
+  renderMermaid();
+}
+
+themeToggle.addEventListener('click', () => {
+  const current = document.documentElement.getAttribute('data-theme');
+  const order = ['dark', 'light', 'contrast'];
+  const next = order[(order.indexOf(current) + 1) % order.length];
+  applyTheme(next);
+});
+
+document.querySelectorAll('.a11y-opt[data-theme-opt]').forEach(btn => {
+  btn.addEventListener('click', () => applyTheme(btn.dataset.themeOpt));
+});
+
+/* === Sidebar toggle === */
+const sidebarToggle = document.getElementById('sidebarToggle');
+const layout = document.getElementById('layout');
+const SIDEBAR_KEY = 'fpstudy-sidebar-hidden';
+
+function applySidebarState(hidden) {
+  if (hidden) {
+    layout.classList.add('sidebar-hidden');
+    sidebarToggle.textContent = '☰';
+    sidebarToggle.title = 'Mostrar menú (S)';
+  } else {
+    layout.classList.remove('sidebar-hidden');
+    sidebarToggle.textContent = '✕';
+    sidebarToggle.title = 'Ocultar menú (S)';
+  }
+  localStorage.setItem(SIDEBAR_KEY, hidden ? '1' : '0');
+}
+
+sidebarToggle.addEventListener('click', () => {
+  const isHidden = layout.classList.contains('sidebar-hidden');
+  applySidebarState(!isHidden);
+});
+
+/* === Atajos de teclado === */
+document.addEventListener('keydown', (e) => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  if (e.key === 't' || e.key === 'T') {
+    themeToggle.click();
+  } else if (e.key === 's' || e.key === 'S') {
+    sidebarToggle.click();
+  } else if (e.key === 'Escape') {
+    closeA11y();
+  }
+});
+
+/* === Sidebar: link activo === */
+const sections = document.querySelectorAll('section.block, section.hero');
+const tocLinks = document.querySelectorAll('.toc-list a');
+
+function updateActiveSection() {
+  let current = '';
+  const scrollPos = window.scrollY + 90;
+  sections.forEach(sec => {
+    if (sec.offsetTop <= scrollPos) {
+      current = sec.id;
+    }
+  });
+  tocLinks.forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('href') === '#' + current) {
+      link.classList.add('active');
+    }
+  });
+}
+
+/* ============================================================
+   Topbar auto-oculta, barra de progreso, botón subir
+   ============================================================ */
+const topbarEl = document.getElementById('topbar');
+const readProgressEl = document.getElementById('readProgress');
+const toTopBtn = document.getElementById('toTopBtn');
+let lastScrollY = window.scrollY;
+
+function handleScrollUI() {
+  const y = window.scrollY;
+  const doc = document.documentElement;
+  const scrollable = doc.scrollHeight - doc.clientHeight;
+  const pct = scrollable > 0 ? (y / scrollable) * 100 : 0;
+  readProgressEl.style.width = pct + '%';
+
+  if (y > 140 && y > lastScrollY) {
+    topbarEl.classList.add('topbar-hidden');
+  } else if (y < lastScrollY || y < 140) {
+    topbarEl.classList.remove('topbar-hidden');
+  }
+  lastScrollY = y;
+
+  if (y > 480) {
+    toTopBtn.classList.add('show');
+  } else {
+    toTopBtn.classList.remove('show');
+  }
+
+  updateActiveSection();
+}
+
+window.addEventListener('scroll', handleScrollUI, { passive: true });
+
+toTopBtn.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+/* ============================================================
+   Panel de accesibilidad
+   ============================================================ */
+const a11yToggle = document.getElementById('a11yToggle');
+const a11yPanel = document.getElementById('a11yPanel');
+const a11yOverlay = document.getElementById('a11yOverlay');
+const a11yClose = document.getElementById('a11yClose');
+const a11yReset = document.getElementById('a11yReset');
+const fsMinus = document.getElementById('fsMinus');
+const fsPlus = document.getElementById('fsPlus');
+const fsLabel = document.getElementById('fsLabel');
+
+const FS_KEY = 'fpstudy-fontzoom';
+const WIDTH_KEY = 'fpstudy-width';
+const LH_KEY = 'fpstudy-lineheight';
+const FS_STEPS = [0.85, 0.9, 1, 1.1, 1.2, 1.3, 1.45];
+let fsIndex = 2;
+
+function openA11y() {
+  a11yPanel.classList.add('show');
+  a11yOverlay.classList.add('show');
+  a11yToggle.setAttribute('aria-expanded', 'true');
+}
+function closeA11y() {
+  a11yPanel.classList.remove('show');
+  a11yOverlay.classList.remove('show');
+  a11yToggle.setAttribute('aria-expanded', 'false');
+}
+a11yToggle.addEventListener('click', () => {
+  if (a11yPanel.classList.contains('show')) closeA11y(); else openA11y();
+});
+a11yClose.addEventListener('click', closeA11y);
+a11yOverlay.addEventListener('click', closeA11y);
+
+function applyFontZoom(index) {
+  fsIndex = Math.min(FS_STEPS.length - 1, Math.max(0, index));
+  const val = FS_STEPS[fsIndex];
+  document.documentElement.style.setProperty('--text-zoom', val);
+  fsLabel.textContent = Math.round(val * 100) + '%';
+  localStorage.setItem(FS_KEY, fsIndex);
+}
+fsMinus.addEventListener('click', () => applyFontZoom(fsIndex - 1));
+fsPlus.addEventListener('click', () => applyFontZoom(fsIndex + 1));
+
+function applyWidth(opt) {
+  document.documentElement.style.setProperty('--reading-width', opt === 'narrow' ? '900px' : '100%');
+  document.querySelectorAll('.a11y-opt[data-width-opt]').forEach(b => {
+    b.classList.toggle('active', b.dataset.widthOpt === opt);
+  });
+  localStorage.setItem(WIDTH_KEY, opt);
+}
+document.querySelectorAll('.a11y-opt[data-width-opt]').forEach(btn => {
+  btn.addEventListener('click', () => applyWidth(btn.dataset.widthOpt));
+});
+
+function applyLineHeight(opt) {
+  document.documentElement.style.setProperty('--body-lh', opt === 'relaxed' ? '1.95' : '1.7');
+  document.querySelectorAll('.a11y-opt[data-lh-opt]').forEach(b => {
+    b.classList.toggle('active', b.dataset.lhOpt === opt);
+  });
+  localStorage.setItem(LH_KEY, opt);
+}
+document.querySelectorAll('.a11y-opt[data-lh-opt]').forEach(btn => {
+  btn.addEventListener('click', () => applyLineHeight(btn.dataset.lhOpt));
+});
+
+a11yReset.addEventListener('click', () => {
+  applyTheme('dark');
+  applyFontZoom(2);
+  applyWidth('normal');
+  applyLineHeight('normal');
+});
+
+/* === Inicio === */
+window.addEventListener('DOMContentLoaded', () => {
+  const savedTheme = localStorage.getItem(THEME_KEY) || 'dark';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeUI(savedTheme);
+
+  const savedSidebarHidden = localStorage.getItem(SIDEBAR_KEY);
+  const isMobile = window.innerWidth <= 1024;
+  const hidden = savedSidebarHidden !== null ? (savedSidebarHidden === '1') : isMobile;
+  applySidebarState(hidden);
+
+  const savedFs = localStorage.getItem(FS_KEY);
+  applyFontZoom(savedFs !== null ? parseInt(savedFs, 10) : 2);
+
+  const savedWidth = localStorage.getItem(WIDTH_KEY) || 'normal';
+  applyWidth(savedWidth);
+
+  const savedLh = localStorage.getItem(LH_KEY) || 'normal';
+  applyLineHeight(savedLh);
+
+  mermaid.initialize(getMermaidConfig(savedTheme));
+  setTimeout(() => {
+    renderMermaid();
+    updateActiveSection();
+  }, 100);
+});
+</script>
+
+</body>
+</html>

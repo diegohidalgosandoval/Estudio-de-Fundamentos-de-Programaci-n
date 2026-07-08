@@ -1,0 +1,2977 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Semanas 13 y 14 · BREAK/CONTINUE, Menús y Decisión Múltiple · Pingüino</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+<style>
+:root[data-theme="dark"]{--bg:#0a0e1a;--bg-elevated:#131829;--bg-card:#161c2f;--bg-card-hover:#1c2340;--bg-code:#0d1322;--bg-flow:#1a2138;--border:#2a3354;--border-strong:#3d4870;--text:#e8edf7;--text-muted:#98a4c2;--text-dim:#6b7793;--primary:#60a5fa;--primary-strong:#3b82f6;--primary-bg:rgba(96,165,250,.12);--accent:#34d399;--accent-bg:rgba(52,211,153,.12);--warning:#fbbf24;--warning-bg:rgba(251,191,36,.12);--danger:#f87171;--danger-bg:rgba(248,113,113,.12);--purple:#a78bfa;--purple-bg:rgba(167,139,250,.12);--pink:#f472b6;--pink-bg:rgba(244,114,182,.12);--shadow:0 4px 24px rgba(0,0,0,.4);--syn-kw:#c586c0;--syn-fn:#dcdcaa;--syn-tipo:#4ec9b0;--syn-op:#ff79c6;--syn-num:#b5cea8;--syn-str:#ce9178;--syn-var:#9cdcfe;--syn-cmt:#6a9955;--syn-bg:#0d1322;--cell-bg:#1a2138;--edge-text:#f1f5f9;--edge-bg:#1a2138}
+:root[data-theme="light"]{--bg:#f8fafc;--bg-elevated:#fff;--bg-card:#fff;--bg-card-hover:#f1f5f9;--bg-code:#f8fafc;--bg-flow:#fafbfd;--border:#e2e8f0;--border-strong:#cbd5e1;--text:#0f172a;--text-muted:#475569;--text-dim:#94a3b8;--primary:#2563eb;--primary-strong:#1d4ed8;--primary-bg:rgba(37,99,235,.08);--accent:#059669;--accent-bg:rgba(5,150,105,.08);--warning:#d97706;--warning-bg:rgba(217,119,6,.08);--danger:#dc2626;--danger-bg:rgba(220,38,38,.08);--purple:#7c3aed;--purple-bg:rgba(124,58,237,.08);--pink:#db2777;--pink-bg:rgba(219,39,119,.08);--shadow:0 2px 8px rgba(15,23,42,.06);--syn-kw:#af00db;--syn-fn:#795e26;--syn-tipo:#267f99;--syn-op:#d73a49;--syn-num:#098658;--syn-str:#a31515;--syn-var:#001080;--syn-cmt:#008000;--syn-bg:#f6f8fa;--cell-bg:#fafbfd;--edge-text:#0f172a;--edge-bg:#fafbfd}
+:root[data-theme="sepia"]{--bg:#f4ecd8;--bg-elevated:#faf3e3;--bg-card:#faf3e3;--bg-card-hover:#f0e6cc;--bg-code:#efe5cc;--bg-flow:#f7f0de;--border:#dccfa8;--border-strong:#c9b98a;--text:#3b2f1e;--text-muted:#6b5a3d;--text-dim:#9c8a66;--primary:#8b5e34;--primary-strong:#6f4a28;--primary-bg:rgba(139,94,52,.12);--accent:#4f7942;--accent-bg:rgba(79,121,66,.12);--warning:#b8860b;--warning-bg:rgba(184,134,11,.14);--danger:#a83232;--danger-bg:rgba(168,50,50,.12);--purple:#7c5295;--purple-bg:rgba(124,82,149,.12);--pink:#a05070;--pink-bg:rgba(160,80,112,.12);--shadow:0 2px 8px rgba(59,47,30,.15);--syn-kw:#8b5e34;--syn-fn:#6f4a28;--syn-tipo:#4f7942;--syn-op:#a05070;--syn-num:#4f7942;--syn-str:#b8860b;--syn-var:#3b2f1e;--syn-cmt:#9c8a66;--syn-bg:#efe5cc;--cell-bg:#f7f0de;--edge-text:#3b2f1e;--edge-bg:#f7f0de}
+:root[data-theme="dim"]{--bg:#181512;--bg-elevated:#221e19;--bg-card:#241f1a;--bg-card-hover:#2c261f;--bg-code:#1c1815;--bg-flow:#241f1a;--border:#3a332a;--border-strong:#4d4436;--text:#e8dfd0;--text-muted:#b3a58e;--text-dim:#8a7c65;--primary:#e0a458;--primary-strong:#cf8f3f;--primary-bg:rgba(224,164,88,.14);--accent:#9bc47c;--accent-bg:rgba(155,196,124,.12);--warning:#e0c458;--warning-bg:rgba(224,196,88,.14);--danger:#e08a6f;--danger-bg:rgba(224,138,111,.14);--purple:#c69bd8;--purple-bg:rgba(198,155,216,.14);--pink:#e097b2;--pink-bg:rgba(224,151,178,.14);--shadow:0 4px 20px rgba(0,0,0,.5);--syn-kw:#c69bd8;--syn-fn:#e0c458;--syn-tipo:#9bc47c;--syn-op:#e097b2;--syn-num:#9bc47c;--syn-str:#e0a458;--syn-var:#e8dfd0;--syn-cmt:#8a7c65;--syn-bg:#1c1815;--cell-bg:#241f1a;--edge-text:#e8dfd0;--edge-bg:#241f1a}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:16px;transition:background .3s,color .3s;min-height:100vh}
+::selection{background:var(--primary);color:#fff}
+
+.topbar{position:sticky;top:0;z-index:100;background:color-mix(in srgb,var(--bg-elevated) 90%,transparent);border-bottom:1px solid var(--border);padding:8px 20px;display:flex;align-items:center;gap:14px;backdrop-filter:blur(14px);min-height:48px}
+.sidebar-toggle{background:var(--bg-card);border:1px solid var(--border);color:var(--text);padding:6px 10px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.05rem;font-family:inherit;transition:all .15s;line-height:1;min-width:34px}
+.sidebar-toggle:hover{background:var(--bg-card-hover);border-color:var(--primary)}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:.92rem;color:var(--text);flex:1;min-width:0}
+.brand-icon{width:30px;height:30px;background:linear-gradient(135deg,var(--primary),var(--purple));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.05rem;color:#fff;flex-shrink:0}
+.brand-text{min-width:0;overflow:hidden}
+.brand-text strong{display:block;font-size:.92rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand-text small{display:block;font-size:.7rem;font-weight:500;color:var(--text-muted);margin-top:-1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.theme-toggle{background:var(--bg-card);border:1px solid var(--border);color:var(--text);padding:6px 12px;border-radius:999px;cursor:pointer;display:flex;align-items:center;gap:7px;font-size:.8rem;font-weight:500;font-family:inherit;transition:all .15s;white-space:nowrap;flex-shrink:0}
+.theme-toggle:hover{background:var(--bg-card-hover);border-color:var(--primary)}
+
+.layout{display:grid;grid-template-columns:270px 1fr;max-width:1700px;margin:0 auto;transition:grid-template-columns .25s ease}
+.layout.sidebar-hidden{grid-template-columns:0 1fr}
+.layout.sidebar-hidden .sidebar{transform:translateX(-100%);opacity:0;pointer-events:none}
+@media(max-width:1024px){.layout{grid-template-columns:1fr}.sidebar{position:fixed;top:48px;left:0;width:270px;z-index:90;box-shadow:4px 0 16px rgba(0,0,0,.3);transform:translateX(-100%)}.layout:not(.sidebar-hidden) .sidebar{transform:translateX(0)}.layout.sidebar-hidden .sidebar{transform:translateX(-100%)}}
+
+.sidebar{position:sticky;top:48px;height:calc(100vh - 48px);overflow-y:auto;padding:20px 14px 20px 24px;border-right:1px solid var(--border);background:var(--bg);transition:transform .25s ease,opacity .25s ease}
+.sidebar h3{font-size:.74rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text-dim);margin-bottom:10px;font-weight:700}
+.toc-list{list-style:none}
+.toc-list li{margin:1px 0}
+.toc-list a{display:block;padding:6px 12px;color:var(--text-muted);text-decoration:none;border-radius:7px;font-size:.85rem;border-left:3px solid transparent;transition:all .15s;line-height:1.45}
+.toc-list a:hover{background:var(--bg-card);color:var(--text)}
+.toc-list a.active{background:var(--primary-bg);color:var(--primary);border-left-color:var(--primary);font-weight:600}
+.toc-divider{height:1px;background:var(--border);margin:8px 0}
+
+main{padding:32px 48px 80px;max-width:100%;overflow-x:hidden;min-width:0}
+@media(max-width:768px){main{padding:20px 18px 60px}.topbar{padding:8px 12px}}
+
+.hero{padding:24px 0 36px;border-bottom:1px solid var(--border);margin-bottom:40px}
+.hero-badge{display:inline-block;padding:5px 12px;background:var(--primary-bg);color:var(--primary);border-radius:999px;font-size:.74rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;margin-bottom:14px}
+h1{font-size:clamp(1.8rem,4.4vw,2.7rem);font-weight:800;line-height:1.15;letter-spacing:-.02em;margin-bottom:14px;background:linear-gradient(135deg,var(--text) 0%,var(--primary) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:1.08rem;color:var(--text-muted);max-width:780px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
+.meta-pill{display:flex;align-items:center;gap:7px;padding:6px 12px;background:var(--bg-card);border:1px solid var(--border);border-radius:999px;font-size:.82rem;color:var(--text-muted)}
+.meta-pill strong{color:var(--text);font-weight:600}
+
+section.block{margin:56px 0;scroll-margin-top:64px}
+.block-header{display:flex;align-items:center;gap:14px;margin-bottom:24px}
+.block-num{width:44px;height:44px;background:linear-gradient(135deg,var(--primary),var(--purple));color:#fff;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:800;flex-shrink:0;box-shadow:0 5px 14px var(--primary-bg)}
+h2{font-size:clamp(1.5rem,2.8vw,2rem);font-weight:800;letter-spacing:-.01em;color:var(--text)}
+h3{font-size:1.28rem;font-weight:700;margin:32px 0 14px;color:var(--text)}
+h4{font-size:1.04rem;font-weight:700;margin:20px 0 10px;color:var(--text)}
+p{margin:11px 0;color:var(--text)}
+strong{color:var(--text);font-weight:600}
+em{color:var(--primary);font-style:normal;font-weight:500}
+ul,ol{margin:11px 0 11px 22px}
+li{margin:5px 0}
+a{color:var(--primary);text-decoration:none}
+a:hover{text-decoration:underline}
+
+.callout{margin:20px 0;padding:18px 22px;border-radius:13px;border-left:4px solid;background:var(--bg-card);position:relative}
+.callout-header{display:flex;align-items:center;gap:10px;font-weight:700;margin-bottom:7px;font-size:.93rem}
+.callout-icon{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.95rem}
+.callout p{margin:5px 0}
+.callout p:last-child{margin-bottom:0}
+.callout.intuition{border-color:var(--primary);background:var(--primary-bg)}.callout.intuition .callout-icon{background:var(--primary);color:#fff}.callout.intuition .callout-header{color:var(--primary)}
+.callout.theory{border-color:var(--purple);background:var(--purple-bg)}.callout.theory .callout-icon{background:var(--purple);color:#fff}.callout.theory .callout-header{color:var(--purple)}
+.callout.tip{border-color:var(--accent);background:var(--accent-bg)}.callout.tip .callout-icon{background:var(--accent);color:#fff}.callout.tip .callout-header{color:var(--accent)}
+.callout.warning{border-color:var(--warning);background:var(--warning-bg)}.callout.warning .callout-icon{background:var(--warning);color:#fff}.callout.warning .callout-header{color:var(--warning)}
+.callout.example{border-color:var(--pink);background:var(--pink-bg)}.callout.example .callout-icon{background:var(--pink);color:#fff}.callout.example .callout-header{color:var(--pink)}
+.callout.danger{border-color:var(--danger);background:var(--danger-bg)}.callout.danger .callout-icon{background:var(--danger);color:#fff}.callout.danger .callout-header{color:var(--danger)}
+.callout.bonus{border-color:var(--accent);background:var(--accent-bg)}.callout.bonus .callout-icon{background:var(--accent);color:#fff}.callout.bonus .callout-header{color:var(--accent)}
+
+.def-card{background:var(--bg-card);border:1px solid var(--border);border-radius:13px;padding:20px 24px;margin:18px 0;position:relative;overflow:hidden}
+.def-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--primary),var(--purple))}
+.def-card .def-label{display:inline-block;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--primary);background:var(--primary-bg);padding:3px 9px;border-radius:5px;margin-bottom:7px}
+.def-card .def-term{font-size:1.1rem;font-weight:700;color:var(--text);margin-bottom:5px}
+.def-card .def-text{color:var(--text-muted)}
+
+.table-wrapper{overflow-x:auto;margin:18px 0;border-radius:11px;border:1px solid var(--border);background:var(--bg-card)}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th,td{padding:11px 15px;text-align:left;border-bottom:1px solid var(--border)}
+th{background:var(--bg-elevated);color:var(--text);font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:.04em}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--bg-card-hover)}
+td.center,th.center{text-align:center}
+td.mono,th.mono{font-family:'JetBrains Mono',monospace;font-size:.94em}
+
+code,pre.pseudo,pre.python,pre.pseudo *,pre.python *{font-variant-ligatures:none!important;-webkit-font-feature-settings:"liga" 0,"calt" 0!important;font-feature-settings:"liga" 0,"calt" 0!important}
+code{font-family:'JetBrains Mono',monospace;background:var(--bg-code);border:1px solid var(--border);padding:2px 7px;border-radius:5px;font-size:.87em;color:var(--accent)}
+pre.pseudo{background:var(--syn-bg);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:11px;padding:22px 24px 18px;overflow-x:auto;margin:14px 0;font-family:'JetBrains Mono','Courier New',monospace;font-size:.9rem;line-height:1.85;position:relative;color:var(--text)}
+pre.python{background:var(--syn-bg);border:1px solid var(--border);border-left:4px solid var(--primary);border-radius:11px;padding:22px 24px 18px;overflow-x:auto;margin:14px 0;font-family:'JetBrains Mono','Courier New',monospace;font-size:.9rem;line-height:1.85;position:relative;color:var(--text)}
+pre.pseudo::before{content:'⌨ pseudocódigo';position:absolute;top:5px;right:13px;font-size:.65rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em;font-family:'Inter',sans-serif;font-weight:600}
+pre.python::before{content:'🐍 python';position:absolute;top:5px;right:13px;font-size:.65rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em;font-family:'Inter',sans-serif;font-weight:600}
+pre.pseudo code,pre.python code{background:none;border:none;padding:0;color:inherit;font-size:inherit}
+.kw{color:var(--syn-kw);font-weight:700}
+.fn{color:var(--syn-fn);font-weight:600}
+.tipo{color:var(--syn-tipo);font-weight:600}
+.op{color:var(--syn-op);font-weight:500}
+.num{color:var(--syn-num)}
+.str{color:var(--syn-str)}
+.var{color:var(--syn-var)}
+.cmt{color:var(--syn-cmt);font-style:italic}
+
+/* ============================================================
+   DIAGRAMAS DE FLUJO — versión reforzada para máxima visibilidad
+   (más anchos, más contraste, bordes más gruesos, texto más grande)
+   ============================================================ */
+.flowchart-container{background:var(--bg-flow);border:1.5px solid var(--border-strong);border-radius:12px;padding:34px 16px 16px;margin:22px 0;text-align:center;overflow:auto;position:relative}
+.flowchart-container::before{content:'🔷 diagrama de flujo';position:absolute;top:8px;left:16px;font-size:.72rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:.08em;font-weight:700;font-family:'Inter',sans-serif}
+.flowchart-container .mermaid{display:flex;justify-content:center;align-items:flex-start;width:100%;margin:0;padding:10px 0 6px}
+.flowchart-container .mermaid svg{max-width:480px!important;min-width:260px;height:auto!important;width:100%!important;display:block;margin:0 auto;font-family:'Inter',sans-serif!important;overflow:visible!important}
+
+.flowchart-container .mermaid svg text,
+.flowchart-container .mermaid svg .nodeLabel,
+.flowchart-container .mermaid svg .label{
+  font-family:'Inter',sans-serif!important;
+  font-size:12.5px!important;
+  font-weight:600!important;
+  fill:#0a0e1a!important;
+  text-anchor:middle!important;
+  dominant-baseline:central!important;
+}
+
+.flowchart-container .mermaid svg .edgeLabel,
+.flowchart-container .mermaid svg .edgeLabel rect{
+  fill:var(--edge-bg)!important;
+  background-color:var(--edge-bg)!important;
+}
+.flowchart-container .mermaid svg .edgeLabel text,
+.flowchart-container .mermaid svg .edgeLabel tspan,
+.flowchart-container .mermaid svg .edgeLabel .label,
+.flowchart-container .mermaid svg .edgeLabel foreignObject,
+.flowchart-container .mermaid svg .edgeLabel foreignObject div,
+.flowchart-container .mermaid svg .edgeLabel foreignObject span{
+  fill:var(--edge-text)!important;
+  color:var(--edge-text)!important;
+  font-weight:800!important;
+  font-size:12px!important;
+  font-family:'Inter',sans-serif!important;
+  text-anchor:middle!important;
+}
+.flowchart-container .mermaid svg .labelBkg,
+.flowchart-container .mermaid svg .edgeLabel .labelBkg{
+  fill:var(--edge-bg)!important;
+  opacity:.97!important;
+}
+
+.flowchart-container .mermaid svg .flowchart-link,
+.flowchart-container .mermaid svg path.path{
+  stroke-width:2px!important;
+}
+.flowchart-container .mermaid svg .node rect,
+.flowchart-container .mermaid svg .node polygon,
+.flowchart-container .mermaid svg .node circle{
+  stroke-width:2.2px!important;
+}
+
+.dual-view .flowchart-container .mermaid svg{max-width:100%!important}
+.flowchart-caption{margin-top:14px;font-size:.85rem;color:var(--text-muted);font-style:italic;line-height:1.55;padding:0 12px}
+
+.zoom-toolbar{position:sticky;top:6px;float:right;margin-right:0;margin-left:auto;z-index:10;display:inline-flex;align-items:center;gap:1px;background:color-mix(in srgb,var(--bg-card) 94%,transparent);border:1px solid var(--border);border-radius:8px;padding:3px;backdrop-filter:blur(8px);box-shadow:0 2px 8px rgba(0,0,0,.12);font-family:'Inter',sans-serif}
+.zoom-btn{background:transparent;border:none;color:var(--text);min-width:26px;height:24px;padding:0 6px;border-radius:5px;cursor:pointer;font-size:.95rem;font-weight:700;display:inline-flex;align-items:center;justify-content:center;transition:all .15s;line-height:1;font-family:inherit}
+.zoom-btn:hover{background:var(--primary-bg);color:var(--primary)}
+.zoom-btn:active{transform:scale(.92)}
+.zoom-label{font-size:.72rem;color:var(--text-muted);min-width:42px;text-align:center;font-weight:700;font-family:'JetBrains Mono',monospace;padding:0 4px;user-select:none;letter-spacing:-.02em}
+.flowchart-container.has-toolbar{padding-top:8px}
+.flowchart-container .zoom-toolbar+.mermaid{margin-top:6px}
+.flowchart-container.zooming{cursor:grab}
+.flowchart-container.zooming:active{cursor:grabbing}
+
+.flow-legend{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:12px;padding:9px 14px;background:var(--bg-card);border:1px dashed var(--border);border-radius:10px;font-size:.76rem}
+.flow-legend-item{display:flex;align-items:center;gap:6px;color:var(--text-muted)}
+.flow-legend-color{width:13px;height:13px;border-radius:3px;border:1px solid var(--border-strong)}
+
+.dual-view{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:18px 0;align-items:start}
+@media(max-width:900px){.dual-view{grid-template-columns:1fr}}
+.dual-view .flowchart-container{margin:0}
+.dual-view pre.pseudo,.dual-view pre.python{margin:0}
+
+.exercise{background:var(--bg-card);border:2px solid var(--border-strong);border-radius:15px;margin:28px 0;overflow:hidden}
+.exercise-header{background:linear-gradient(135deg,var(--primary),var(--purple));color:#fff;padding:14px 24px;display:flex;align-items:center;gap:11px;font-weight:700;font-size:1.02rem;flex-wrap:wrap}
+.exercise-num{background:rgba(255,255,255,.25);padding:3px 11px;border-radius:5px;font-size:.82rem}
+.exercise-tag{background:rgba(255,255,255,.18);padding:3px 10px;border-radius:5px;font-size:.75rem;font-weight:500;margin-left:auto}
+.exercise-body{padding:24px 28px}
+
+.statement-box{background:var(--warning-bg);border-left:4px solid var(--warning);padding:16px 20px;border-radius:8px;margin:14px 0 22px}
+.statement-box .statement-label{font-weight:700;color:var(--warning);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;display:block}
+
+.solution-block{margin-top:22px}
+.solution-block h4{display:flex;align-items:center;gap:8px;color:var(--accent);margin:24px 0 11px;font-size:1.03rem;padding-top:10px;border-top:1px dashed var(--border)}
+.solution-block h4:first-child{padding-top:0;border-top:none}
+
+.step-box{background:var(--bg-flow);border:1px solid var(--border);border-radius:10px;padding:15px 18px;margin:12px 0}
+.step-box .step-label{font-weight:700;color:var(--primary);font-size:.74rem;text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px}
+
+.final-answer{background:var(--accent-bg);border-left:4px solid var(--accent);border-radius:8px;padding:16px 20px;margin:20px 0}
+.final-answer-label{font-weight:700;color:var(--accent);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px}
+
+.trace-table{background:var(--bg-card);border-radius:10px;overflow:hidden;margin:12px 0;border:1px solid var(--border)}
+.trace-table table{font-size:.86rem}
+.trace-table th{background:var(--purple-bg);color:var(--purple)}
+
+.legend-box{background:var(--bg-card);border:1px solid var(--border-strong);border-left:4px solid var(--primary);border-radius:10px;padding:13px 17px;margin:13px 0;font-size:.9rem}
+.legend-box .legend-title{font-weight:700;color:var(--primary);margin-bottom:5px;font-size:.74rem;text-transform:uppercase;letter-spacing:.06em}
+
+.compare-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:18px 0}
+.compare-card{background:var(--bg-card);border:1px solid var(--border);border-radius:11px;padding:16px 18px}
+.compare-card h4{margin:0 0 9px;display:flex;align-items:center;gap:8px;font-size:.98rem;border:none;padding:0}
+
+.glossary-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:13px;margin:18px 0}
+.gloss-item{background:var(--bg-card);border:1px solid var(--border);border-radius:11px;padding:14px 16px;transition:all .2s}
+.gloss-item:hover{border-color:var(--primary);background:var(--bg-card-hover);transform:translateY(-2px)}
+.gloss-term{font-weight:700;color:var(--primary);font-size:.98rem;margin-bottom:4px}
+.gloss-def{font-size:.86rem;color:var(--text-muted)}
+
+.quiz-item{background:var(--bg-card);border:1px solid var(--border);border-radius:13px;padding:18px 22px;margin:16px 0}
+.quiz-q{font-weight:600;color:var(--text);margin-bottom:11px}
+details{margin-top:11px;border-top:1px dashed var(--border);padding-top:11px}
+summary{cursor:pointer;font-weight:600;color:var(--accent);font-size:.88rem;padding:5px 0;user-select:none}
+details[open] summary{margin-bottom:9px}
+.answer-content{font-size:.9rem;color:var(--text-muted);background:var(--accent-bg);border-radius:8px;padding:11px 15px;margin-top:7px}
+.answer-content strong{color:var(--accent)}
+
+footer{text-align:center;padding:36px 20px;border-top:1px solid var(--border);margin-top:72px;color:var(--text-muted);font-size:.85rem}
+footer .heart{color:var(--danger)}
+
+kbd{background:var(--bg-elevated);border:1px solid var(--border-strong);border-radius:4px;padding:1px 6px;font-family:'JetBrains Mono',monospace;font-size:.85em}
+
+.formula-box{background:var(--purple-bg);border:1px solid var(--purple);border-radius:10px;padding:15px 22px;margin:14px 0;text-align:center;font-family:'JetBrains Mono',monospace;font-size:.98rem;line-height:1.75}
+
+.why-box{background:linear-gradient(to right,var(--primary-bg),transparent);border-left:4px solid var(--primary);border-radius:0 10px 10px 0;padding:13px 17px;margin:11px 0;font-size:.92rem}
+.why-box .why-label{font-weight:700;color:var(--primary);font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;display:flex;align-items:center;gap:6px}
+
+.theory-recap{background:var(--purple-bg);border:1px dashed var(--purple);border-radius:10px;padding:13px 17px;margin:13px 0}
+.theory-recap .theory-label{font-weight:700;color:var(--purple);font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;display:flex;align-items:center;gap:6px}
+
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:9px}
+::-webkit-scrollbar-thumb:hover{background:var(--primary)}
+
+:root[data-theme="contrast"]{
+  --bg:#000000;--bg-elevated:#000000;--bg-card:#0a0a0a;--bg-card-hover:#161616;
+  --bg-code:#000000;--bg-flow:#0a0a0a;--border:#ffffff;--border-strong:#ffffff;
+  --text:#ffffff;--text-muted:#f2f2f2;--text-dim:#d0d0d0;
+  --primary:#66d9ff;--primary-strong:#9fe8ff;--primary-bg:rgba(102,217,255,.22);
+  --accent:#7CFF7C;--accent-bg:rgba(124,255,124,.2);
+  --warning:#FFD84D;--warning-bg:rgba(255,216,77,.22);
+  --danger:#FF8A8A;--danger-bg:rgba(255,138,138,.22);
+  --purple:#D9B3FF;--purple-bg:rgba(217,179,255,.2);
+  --pink:#FFB3D9;--pink-bg:rgba(255,179,217,.2);
+  --shadow:0 0 0 rgba(0,0,0,0);
+  --syn-kw:#66d9ff;--syn-fn:#FFD84D;--syn-tipo:#7CFF7C;--syn-op:#FFB3D9;--syn-num:#7CFF7C;
+  --syn-str:#FFD84D;--syn-var:#66d9ff;--syn-cmt:#d0d0d0;--syn-bg:#000000;
+  --cell-bg:#0a0a0a;--edge-text:#ffffff;--edge-bg:#000000;
+}
+html[data-theme="contrast"] *{text-shadow:none!important}
+html[data-theme="contrast"] .exercise,
+html[data-theme="contrast"] .callout,
+html[data-theme="contrast"] .def-card,
+html[data-theme="contrast"] .table-wrapper,
+html[data-theme="contrast"] .statement-box,
+html[data-theme="contrast"] .step-box,
+html[data-theme="contrast"] .why-box,
+html[data-theme="contrast"] .theory-recap,
+html[data-theme="contrast"] .legend-box,
+html[data-theme="contrast"] .final-answer,
+html[data-theme="contrast"] .trace-table,
+html[data-theme="contrast"] pre.pseudo,
+html[data-theme="contrast"] pre.python,
+html[data-theme="contrast"] .flowchart-container,
+html[data-theme="contrast"] .compare-card{border-width:2px!important}
+html[data-theme="contrast"] h1{-webkit-text-fill-color:var(--text);background:none}
+html[data-theme="contrast"] a{text-decoration:underline}
+
+:root{--text-zoom:1}
+body{font-size:calc(16px * var(--text-zoom))}
+
+:root{--reading-width:100%}
+main{max-width:var(--reading-width);margin:0 auto}
+
+:root{--body-lh:1.7}
+body{line-height:var(--body-lh)}
+
+:root{--letter-spacing:normal}
+body,p,li,td,th,.callout,.def-card,.step-box,.why-box,.theory-recap{letter-spacing:var(--letter-spacing)}
+
+html.underline-links a{text-decoration:underline!important}
+
+html.reduce-motion *{transition-duration:.001ms!important;animation-duration:.001ms!important;scroll-behavior:auto!important}
+
+body{padding-top:48px}
+.topbar{position:fixed;top:0;left:0;right:0;width:100%;transform:translateY(0);transition:transform .3s cubic-bezier(.4,0,.2,1),background .3s,color .3s}
+.topbar.topbar-hidden{transform:translateY(-100%)}
+.sidebar{top:48px}
+@media(max-width:1024px){.sidebar{top:48px}}
+
+#readProgress{position:fixed;top:0;left:0;height:3px;width:0%;z-index:200;background:linear-gradient(90deg,var(--primary),var(--purple));transition:width .12s linear;pointer-events:none}
+
+#toTopBtn{position:fixed;right:22px;bottom:22px;z-index:95;width:46px;height:46px;border-radius:50%;border:1px solid var(--border-strong);background:var(--bg-card);color:var(--text);font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);opacity:0;pointer-events:none;transform:translateY(8px);transition:all .25s}
+#toTopBtn.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+#toTopBtn:hover{background:var(--bg-card-hover);border-color:var(--primary);color:var(--primary)}
+
+#backBtn{position:fixed;right:22px;bottom:76px;z-index:95;width:46px;height:46px;border-radius:50%;border:1px solid var(--border-strong);background:var(--bg-card);color:var(--text);font-size:1.15rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);opacity:0;pointer-events:none;transform:translateY(8px);transition:all .25s}
+#backBtn.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+#backBtn:hover{background:var(--bg-card-hover);border-color:var(--primary);color:var(--primary)}
+
+.a11y-toggle{background:var(--bg-card);border:1px solid var(--border);color:var(--text);padding:6px 10px;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;font-family:inherit;transition:all .15s;line-height:1;min-width:34px}
+.a11y-toggle:hover{background:var(--bg-card-hover);border-color:var(--primary)}
+
+#a11yOverlay{position:fixed;inset:0;z-index:198;background:rgba(0,0,0,.45);opacity:0;pointer-events:none;transition:opacity .2s}
+#a11yOverlay.show{opacity:1;pointer-events:auto}
+#a11yPanel{position:fixed;z-index:199;top:58px;right:14px;width:320px;max-width:calc(100vw - 28px);background:var(--bg-elevated);border:1px solid var(--border-strong);border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,.45);padding:18px 18px 16px;transform:translateY(-10px) scale(.98);opacity:0;pointer-events:none;transition:all .2s}
+#a11yPanel.show{transform:none;opacity:1;pointer-events:auto}
+.a11y-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.a11y-head .ttl{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--primary);font-weight:800}
+.a11y-close{background:none;border:none;color:var(--text-muted);font-size:1.3rem;cursor:pointer;line-height:1;padding:2px 6px;border-radius:6px}
+.a11y-close:hover{background:var(--bg-card);color:var(--text)}
+.a11y-group{margin:14px 0}
+.a11y-group:first-of-type{margin-top:2px}
+.a11y-lab{font-size:.78rem;font-weight:700;color:var(--text);margin-bottom:8px;display:block}
+.a11y-row{display:flex;gap:8px;flex-wrap:wrap}
+.a11y-opt{flex:1;min-width:80px;display:flex;flex-direction:column;align-items:center;gap:6px;padding:9px 6px;border-radius:10px;border:1px solid var(--border);background:var(--bg-card);color:var(--text-muted);cursor:pointer;font-size:.72rem;font-family:inherit;transition:all .15s}
+.a11y-opt:hover{border-color:var(--primary)}
+.a11y-opt.active{border-color:var(--primary);background:var(--primary-bg);color:var(--primary);font-weight:700}
+.a11y-sw{width:22px;height:22px;border-radius:50%;border:1px solid var(--border-strong)}
+.sw-dark{background:linear-gradient(135deg,#0a0e1a,#3b82f6)}
+.sw-light{background:linear-gradient(135deg,#f8fafc,#2563eb)}
+.sw-contrast{background:linear-gradient(135deg,#000,#fff)}
+.sw-dim{background:linear-gradient(135deg,#181512,#e0a458)}
+.sw-sepia{background:linear-gradient(135deg,#f4ecd8,#8b5e34)}
+.a11y-row-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.a11y-row-grid .a11y-opt{min-width:0}
+.a11y-stepper{display:flex;align-items:center;gap:10px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:6px 8px}
+.a11y-stepper button{width:30px;height:30px;border-radius:8px;border:1px solid var(--border);background:var(--bg-elevated);color:var(--text);font-size:1rem;font-weight:700;cursor:pointer;font-family:inherit}
+.a11y-stepper button:hover{border-color:var(--primary);color:var(--primary)}
+.a11y-stepper span{flex:1;text-align:center;font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--text-muted)}
+.a11y-reset{width:100%;margin-top:6px;padding:9px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--text-muted);cursor:pointer;font-size:.8rem;font-family:inherit;transition:all .15s}
+.a11y-reset:hover{background:var(--bg-card);color:var(--text);border-color:var(--border-strong)}
+
+.callout.fix{border-color:var(--pink);background:var(--pink-bg)}
+.callout.fix .callout-icon{background:var(--pink);color:#fff}
+.callout.fix .callout-header{color:var(--pink)}
+
+.bridge-table{width:100%}
+.bridge-table td.pseudo-cell{font-family:'JetBrains Mono',monospace;color:var(--accent)}
+.bridge-table td.py-cell{font-family:'JetBrains Mono',monospace;color:var(--primary)}
+
+@media print{
+  .topbar,.sidebar,#toTopBtn,#readProgress,#a11yPanel,#a11yOverlay,.zoom-toolbar{display:none!important}
+  body{padding-top:0}
+  main{max-width:100%!important}
+}
+</style>
+</head>
+<body>
+
+<div id="readProgress"></div>
+
+<header class="topbar" id="topbar">
+  <button class="sidebar-toggle" id="sidebarToggle" title="Mostrar/ocultar menú (S)" aria-label="Mostrar/ocultar menú lateral">☰</button>
+  <div class="brand">
+    <div class="brand-icon">🐧</div>
+    <div class="brand-text">
+      <strong>Pingüino · Fundamentos de Programación</strong>
+      <small>Guía de estudio · Semanas 13 y 14</small>
+    </div>
+  </div>
+  <button class="a11y-toggle" id="a11yToggle" title="Opciones de visualización y accesibilidad" aria-label="Opciones de accesibilidad" aria-haspopup="true" aria-expanded="false">♿</button>
+  <button class="theme-toggle" id="themeToggle" title="Alternar tema (T)"><span id="themeIcon">🌙</span><span id="themeLabel">Oscuro</span></button>
+</header>
+
+<div id="a11yOverlay"></div>
+<aside id="a11yPanel" role="dialog" aria-label="Opciones de accesibilidad">
+  <div class="a11y-head">
+    <span class="ttl">Vista y accesibilidad</span>
+    <button class="a11y-close" id="a11yClose" aria-label="Cerrar">&#215;</button>
+  </div>
+
+  <div class="a11y-group">
+    <span class="a11y-lab">Tema de color</span>
+    <div class="a11y-row a11y-row-grid">
+      <button class="a11y-opt" data-theme-opt="dark"><span class="a11y-sw sw-dark"></span>Oscuro</button>
+      <button class="a11y-opt" data-theme-opt="light"><span class="a11y-sw sw-light"></span>Claro</button>
+      <button class="a11y-opt" data-theme-opt="dim"><span class="a11y-sw sw-dim"></span>Nocturno</button>
+      <button class="a11y-opt" data-theme-opt="sepia"><span class="a11y-sw sw-sepia"></span>Sepia</button>
+      <button class="a11y-opt" data-theme-opt="contrast"><span class="a11y-sw sw-contrast"></span>Alto contraste</button>
+    </div>
+  </div>
+
+  <div class="a11y-group">
+    <span class="a11y-lab">Tamaño del texto</span>
+    <div class="a11y-stepper">
+      <button id="fsMinus" aria-label="Reducir texto">&#8722;</button>
+      <span id="fsLabel">100%</span>
+      <button id="fsPlus" aria-label="Aumentar texto">+</button>
+    </div>
+  </div>
+
+  <div class="a11y-group">
+    <span class="a11y-lab">Espaciado entre letras</span>
+    <div class="a11y-row">
+      <button class="a11y-opt" data-ls-opt="normal">Normal</button>
+      <button class="a11y-opt" data-ls-opt="wide">Amplio</button>
+    </div>
+  </div>
+
+  <div class="a11y-group">
+    <span class="a11y-lab">Interlineado</span>
+    <div class="a11y-row">
+      <button class="a11y-opt" data-lh-opt="normal">Normal</button>
+      <button class="a11y-opt" data-lh-opt="relaxed">Relajado</button>
+    </div>
+  </div>
+
+  <div class="a11y-group">
+    <span class="a11y-lab">Ancho del contenido</span>
+    <div class="a11y-row">
+      <button class="a11y-opt" data-width-opt="normal">Amplio</button>
+      <button class="a11y-opt" data-width-opt="narrow">Cómodo</button>
+      <button class="a11y-opt" data-width-opt="focus">Enfocado</button>
+    </div>
+  </div>
+
+  <div class="a11y-group">
+    <span class="a11y-lab">Visibilidad de enlaces</span>
+    <div class="a11y-row">
+      <button class="a11y-opt" data-underline-opt="off">Normal</button>
+      <button class="a11y-opt" data-underline-opt="on">Siempre subrayados</button>
+    </div>
+  </div>
+
+  <div class="a11y-group">
+    <span class="a11y-lab">Animaciones</span>
+    <div class="a11y-row">
+      <button class="a11y-opt" data-motion-opt="on">Normal</button>
+      <button class="a11y-opt" data-motion-opt="off">Reducidas</button>
+    </div>
+  </div>
+
+  <button class="a11y-reset" id="a11yReset">Restablecer todo</button>
+</aside>
+
+<div class="layout" id="layout">
+  <aside class="sidebar" id="sidebar">
+    <h3>📑 Contenido</h3>
+    <ul class="toc-list">
+      <li><a href="#intro">🏁 Introducción</a></li>
+      <div class="toc-divider"></div>
+      <li><a href="#s13-teoria">🔁 Semana 13 · BREAK y CONTINUE</a></li>
+      <li><a href="#ej13-1">&nbsp;&nbsp;Ej. 1 · Dado hasta el 5 (BREAK)</a></li>
+      <li><a href="#ej13-2">&nbsp;&nbsp;Ej. 2 · Mismo dado (CONTINUE)</a></li>
+      <li><a href="#ej13-3">&nbsp;&nbsp;Ej. 3 · Suma sin negativos</a></li>
+      <li><a href="#s13-menus">🧭 Menús de usuario en Python</a></li>
+      <li><a href="#ej13-desc">&nbsp;&nbsp;Menú de descuento (del profesor)</a></li>
+      <li><a href="#ej13-descrep">&nbsp;&nbsp;Menú de descuento repetido</a></li>
+      <li><a href="#ej13-temp">&nbsp;&nbsp;Conversión °F ⇄ °C con menú</a></li>
+      <li><a href="#s13-ejemplos">📦 6 ejemplos integradores</a></li>
+      <li><a href="#ej13-votos">&nbsp;&nbsp;1. Conteo de votos</a></li>
+      <li><a href="#ej13-descaleat">&nbsp;&nbsp;2. Descuento aleatorio</a></li>
+      <li><a href="#ej13-dadopunt">&nbsp;&nbsp;3. Dado con puntaje</a></li>
+      <li><a href="#ej13-forwhile">&nbsp;&nbsp;4. FOR → WHILE equivalente</a></li>
+      <li><a href="#ej13-magico">&nbsp;&nbsp;5. Número mágico</a></li>
+      <li><a href="#ej13-pizza">&nbsp;&nbsp;6. Menú de pizzas</a></li>
+      <div class="toc-divider"></div>
+      <li><a href="#s14-teoria">🔀 Semana 14 · Decisión múltiple</a></li>
+      <li><a href="#ej14-dia">&nbsp;&nbsp;Día de la semana (del profesor)</a></li>
+      <li><a href="#ej14-parimpar">&nbsp;&nbsp;Par o impar con .get()</a></li>
+      <li><a href="#s14-puente">&nbsp;&nbsp;SEGÚN-CASO vs diccionario vs if-elif</a></li>
+      <div class="toc-divider"></div>
+      <li><a href="#cierre">🎯 Cierre y autoevaluación</a></li>
+    </ul>
+  </aside>
+
+  <main>
+
+    <!-- ============================================================ -->
+    <!-- INTRO -->
+    <!-- ============================================================ -->
+    <section class="hero" id="intro">
+      <div class="hero-badge">Semana 13 y Semana 14</div>
+      <h1>De romper y saltar bucles, a menús que conversan contigo, a decidir entre muchas opciones</h1>
+      <p class="hero-sub">Esta guía une dos semanas cortas pero muy prácticas. En la <strong>Semana 13</strong> retomamos <code>random</code>, <code>while</code> y <code>for</code> (ya vistos en la Semana 12) para agregarles dos herramientas nuevas de control fino — <code>break</code> y <code>continue</code> — y las usamos para construir algo que vas a programar constantemente: <strong>menús interactivos</strong> que le dan opciones reales al usuario. En la <strong>Semana 14</strong> damos un paso conceptual: qué hacer cuando una variable puede tomar <em>muchos</em> valores distintos y cada uno dispara una acción diferente — la <strong>decisión múltiple</strong>, resuelta en Python con el patrón <code>diccionario.get()</code>.</p>
+      <div class="hero-meta">
+        <div class="meta-pill">⏱️ <span><strong>Lectura:</strong> ~95 min</span></div>
+        <div class="meta-pill">📚 <span><strong>Contenido:</strong> 2 semanas + 14 ejercicios resueltos</span></div>
+        <div class="meta-pill">🔁 <span><strong>Semana 13:</strong> break, continue, menús con bucles</span></div>
+        <div class="meta-pill">🔀 <span><strong>Semana 14:</strong> selector múltiple con diccionario.get()</span></div>
+      </div>
+
+      <div class="callout intuition" style="margin-top:24px">
+        <div class="callout-header"><span class="callout-icon">📖</span> Cómo está organizada esta guía</div>
+        <p>Cada ejercicio sigue siempre el mismo recorrido: <strong>(a)</strong> el enunciado tal como lo dio el profesor, <strong>(b)</strong> el paso a paso razonado —con el porqué de cada decisión—, <strong>(c)</strong> el <strong>diagrama de flujo</strong> (siempre, aunque el ejercicio no lo pida, porque visualizar el flujo antes de escribir el código ayuda muchísimo a entenderlo), <strong>(d)</strong> el pseudocódigo, <strong>(e)</strong> una prueba de escritorio con valores concretos, y <strong>(f)</strong> el código Python completo y ejecutable.</p>
+        <p style="margin-top:8px"><strong>Atajos:</strong> <kbd>T</kbd> alterna tema · <kbd>S</kbd> muestra/oculta el menú lateral. Usa el botón <strong>♿</strong> de la barra superior para ajustar tamaño de texto, ancho de columna, interlineado o activar alto contraste. En cada diagrama hay controles <kbd>−</kbd>/<kbd>+</kbd>/<kbd>⟳</kbd> de zoom — úsalos sin miedo si un diagrama se ve pequeño en tu pantalla; también puedes hacer <strong>pinch</strong> en el trackpad o <strong>doble click</strong> sobre el diagrama para resetear el zoom.</p>
+      </div>
+
+      <div class="callout tip">
+        <div class="callout-header"><span class="callout-icon">🔗</span> Conexión con la Semana 12</div>
+        <p>Ya conoces <code>random</code>, <code>while</code>, <code>for</code>, y de hecho la Semana 13 <strong>repite</strong> la teoría de <code>break</code>/<code>continue</code> con el mismo ejemplo (<code>num==5</code>). No te voy a re-explicar esa base desde cero — te la resumo rápido a modo de repaso y ancla, y me concentro en la parte genuinamente nueva: usar estas herramientas dentro de <strong>menús interactivos que se repiten</strong>, que es el verdadero salto de esta semana.</p>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SEMANA 13 — TEORÍA BREAK / CONTINUE -->
+    <!-- ============================================================ -->
+    <section class="block" id="s13-teoria">
+      <div class="block-header"><div class="block-num">13</div><h2>BREAK y CONTINUE — control fino dentro de un bucle</h2></div>
+
+      <h3>13.1. El problema que resuelven</h3>
+      <p>Hasta ahora, un bucle <code>while</code> corre mientras su condición sea verdadera, y un <code>for</code> corre exactamente el número de veces que indica su rango o su lista — sin excepciones, sin atajos. Pero en la práctica aparecen dos necesidades muy comunes que esa rigidez no cubre:</p>
+      <ul>
+        <li><strong>Quiero salir del bucle antes de tiempo</strong>, en cuanto ocurra algo (por ejemplo, en cuanto el usuario adivine un número, ya no tiene sentido seguir preguntando).</li>
+        <li><strong>Quiero saltarme el resto del cuerpo del bucle solo en esta vuelta</strong>, sin cortar el bucle completo (por ejemplo, si el dato de esta iteración es inválido, lo ignoro y sigo con el siguiente).</li>
+      </ul>
+      <p>Para eso existen <code>break</code> y <code>continue</code>: dos instrucciones que alteran el flujo normal de un bucle desde adentro.</p>
+
+      <div class="def-card">
+        <span class="def-label">Definición</span>
+        <div class="def-term"><code>break</code> — romper el bucle</div>
+        <div class="def-text">Corta inmediatamente el bucle que lo contiene (el más cercano) y el programa continúa en la primera instrucción <em>después</em> de ese bucle. No importa cuántas iteraciones faltaban: se acabó.</div>
+      </div>
+      <div class="def-card">
+        <span class="def-label">Definición</span>
+        <div class="def-term"><code>continue</code> — saltar a la siguiente vuelta</div>
+        <div class="def-text">Ignora todo lo que queda del cuerpo del bucle <em>en esta iteración</em> y salta directamente a evaluar la siguiente vuelta (siguiente valor del <code>for</code>, o nueva evaluación de la condición del <code>while</code>). El bucle sigue vivo.</div>
+      </div>
+
+      <div class="callout theory">
+        <div class="callout-header"><span class="callout-icon">📌</span> Por qué esto no rompe la programación estructurada (a diferencia del GOTO de la Semana 7)</div>
+        <p>En la Semana 7 viste por qué el <code>GOTO</code> libre es problemático: puede saltar a <em>cualquier</em> línea del programa, lo que vuelve casi imposible predecir el flujo con solo leer el código. <code>break</code> y <code>continue</code> también son "saltos" en el sentido estricto — alteran el orden normal de ejecución — pero son <strong>saltos disciplinados</strong>: <code>break</code> solo puede saltar a un único destino posible (justo después del bucle que lo contiene) y <code>continue</code> solo puede saltar a otro único destino posible (el inicio de la siguiente iteración de ese mismo bucle). Nunca pueden saltar a una línea arbitraria en otra parte del programa. Por eso Python (y prácticamente todo lenguaje moderno) los incluye sin contradecir la idea de programación estructurada: es un salto <em>acotado</em>, no un salto libre.</p>
+      </div>
+
+      <h3>13.2. Sintaxis y ejemplo base (repaso del ejemplo del profesor)</h3>
+      <p>Fíjate en la posición de <code>break</code>/<code>continue</code>: siempre van <strong>dentro</strong> del cuerpo del bucle, casi siempre <strong>después de un <code>if</code></strong> que decide cuándo activarlos — nunca se ejecutan "solos" sin una condición que los dispare, porque si no, el bucle se rompería o saltaría en la primera vuelta siempre.</p>
+
+      <div class="dual-view">
+        <div>
+          <h4 style="border:none;padding:0;margin-top:0">Con BREAK</h4>
+<pre class="python"><code><span class="var">num</span> = <span class="num">0</span>
+<span class="kw">for</span> num <span class="kw">in</span> <span class="fn">range</span>(<span class="num">10</span>):
+    <span class="kw">if</span> num == <span class="num">5</span>:
+        <span class="kw">break</span>
+    <span class="fn">print</span>(<span class="str">"el número es:"</span>, num)
+<span class="fn">print</span>(<span class="str">"fin del bucle"</span>)</code></pre>
+        </div>
+        <div>
+          <h4 style="border:none;padding:0;margin-top:0">Con CONTINUE</h4>
+<pre class="python"><code><span class="var">num</span> = <span class="num">0</span>
+<span class="kw">for</span> num <span class="kw">in</span> <span class="fn">range</span>(<span class="num">10</span>):
+    <span class="kw">if</span> num == <span class="num">5</span>:
+        <span class="kw">continue</span>
+    <span class="fn">print</span>(<span class="str">"el número es:"</span>, num)
+<span class="fn">print</span>(<span class="str">"fin del bucle"</span>)</code></pre>
+        </div>
+      </div>
+
+      <div class="why-box">
+        <div class="why-label">🤔 ¿Por qué con BREAK solo se imprime del 0 al 4?</div>
+        <p>En la iteración donde <code>num==5</code>, Python evalúa el <code>if</code>, lo encuentra verdadero, ejecuta <code>break</code> y <strong>abandona el <code>for</code> en ese mismo instante</strong> — nunca llega al <code>print</code> de esa vuelta, y tampoco vuelve a entrar al bucle para 6, 7, 8, 9. Por eso la salida es 0,1,2,3,4 y luego directo "fin del bucle".</p>
+      </div>
+      <div class="why-box">
+        <div class="why-label">🤔 ¿Por qué con CONTINUE aparece del 0 al 9 pero sin el 5?</div>
+        <p>Cuando <code>num==5</code>, <code>continue</code> hace que Python <strong>se salte solo el <code>print</code> de esa vuelta</strong> y pase de inmediato a la siguiente iteración (num=6). El bucle nunca se corta — simplemente "calla" una sola vuelta. Por eso ves todos los números excepto el 5, hasta terminar las 10 iteraciones completas.</p>
+      </div>
+
+      <div class="theory-recap">
+        <div class="theory-label"><span>📌</span> La intuición que debes quedarte</div>
+        <p><code>break</code> = "ya terminé, me voy del bucle entero". <code>continue</code> = "esta vuelta no me interesa, pero sigo en el bucle". Son herramientas para problemas distintos: usa <code>break</code> cuando el objetivo es <em>detener la repetición al cumplirse algo</em>; usa <code>continue</code> cuando el objetivo es <em>filtrar o ignorar casos puntuales sin afectar el resto del recorrido</em>.</p>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- EJERCICIO 13-1: dado hasta el 5, con BREAK -->
+    <!-- ============================================================ -->
+    <div class="exercise" id="ej13-1">
+      <div class="exercise-header"><span class="exercise-num">EJ. 1</span><span>Simular lanzamientos de un dado hasta obtener un 5</span><span class="exercise-tag">🔴 BREAK</span></div>
+      <div class="exercise-body">
+        <div class="statement-box"><span class="statement-label">📝 Enunciado (tal como lo dio el profesor)</span>
+          <p>Elabore un programa que simule "n" lanzamientos de un dado y determine la cantidad de intentos realizados hasta que salió el número 5. (utilizar BREAK)</p>
+        </div>
+
+        <div class="solution-block">
+          <h4>📋 Paso 1 — Entender qué representa "n" aquí</h4>
+          <p>El enunciado dice "simule n lanzamientos" — es decir, <strong>el usuario ingresa n de antemano</strong> como el número <em>máximo</em> de intentos que el programa puede llegar a hacer. La pregunta real del ejercicio es: de esos n intentos disponibles, ¿cuántos hicieron falta hasta que apareció el 5? Por eso <code>n</code> es un <strong>tope</strong>, no el resultado — el resultado es la cantidad de intentos realmente usados.</p>
+
+          <h4>📋 Paso 2 — Diseñar el bucle</h4>
+          <p>Necesito recorrer los intentos del 1 al n usando un <code>for</code> con <code>range</code>, generar un dado aleatorio en cada vuelta, y en cuanto salga 5, cortar el bucle con <code>break</code> — porque ya no tiene sentido seguir lanzando el dado si ya conseguí lo que buscaba.</p>
+
+          <div class="step-box">
+            <div class="step-label">Por qué BREAK y no una bandera con IF</div>
+            <p>Una alternativa "más larga" sería usar una variable booleana (<code>encontrado = False</code>) y revisarla en la condición del <code>for</code> — pero un <code>for</code> en Python no permite modificar su condición de corte a mitad de camino tan naturalmente como un <code>while</code>. <code>break</code> es exactamente la herramienta pensada para "salir apenas se cumpla algo dentro de un <code>for</code>", así que es la solución más directa y limpia.</p>
+          </div>
+
+          <h4>📋 Paso 3 — Diagrama de flujo</h4>
+          <div class="flowchart-container">
+            <div class="mermaid-container" data-original='flowchart TB
+    I([Inicio])
+    LN[/"leer n"/]
+    D1{"intentos &lt;= n ?"}
+    TIRA["dado ← aleatorio&#40;1,6&#41;"]
+    D2{"dado == 5 ?"}
+    MOSTRAR[/"mostrar intentos"/]
+    F([Fin])
+    I --> LN --> D1
+    D1 -->|Si| TIRA --> D2
+    D2 -->|Si| MOSTRAR
+    D2 -->|No| D1
+    D1 -->|No| MOSTRAR
+    MOSTRAR --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style LN fill:#60a5fa,stroke:#1e40af,color:#000
+    style MOSTRAR fill:#60a5fa,stroke:#1e40af,color:#000
+    style TIRA fill:#a78bfa,stroke:#6d28d9,color:#000
+    style D1 fill:#fbbf24,stroke:#d97706,color:#000
+    style D2 fill:#fbbf24,stroke:#d97706,color:#000'><div class="mermaid">
+flowchart TB
+    I([Inicio])
+    LN[/"leer n"/]
+    D1{"intentos &lt;= n ?"}
+    TIRA["dado ← aleatorio&#40;1,6&#41;"]
+    D2{"dado == 5 ?"}
+    MOSTRAR[/"mostrar intentos"/]
+    F([Fin])
+    I --> LN --> D1
+    D1 -->|Si| TIRA --> D2
+    D2 -->|Si| MOSTRAR
+    D2 -->|No| D1
+    D1 -->|No| MOSTRAR
+    MOSTRAR --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style LN fill:#60a5fa,stroke:#1e40af,color:#000
+    style MOSTRAR fill:#60a5fa,stroke:#1e40af,color:#000
+    style TIRA fill:#a78bfa,stroke:#6d28d9,color:#000
+    style D1 fill:#fbbf24,stroke:#d97706,color:#000
+    style D2 fill:#fbbf24,stroke:#d97706,color:#000
+            </div></div>
+            <div class="flowchart-caption">📊 Nótese la rama "Si" de D2 (dado==5) que salta directo a "mostrar" sin volver a D1 — eso es exactamente lo que hace el <code>break</code>: cortar el ciclo desde adentro.</div>
+          </div>
+
+          <h4>📋 Paso 4 — Pseudocódigo</h4>
+<pre class="pseudo"><code><span class="kw">INICIO</span>
+    <span class="fn">Leer</span> <span class="var">n</span>
+    <span class="kw">PARA</span> <span class="var">intentos</span> <span class="kw">DESDE</span> <span class="num">1</span> <span class="kw">HASTA</span> <span class="var">n</span>
+        <span class="var">dado</span> <span class="op">←</span> <span class="fn">aleatorio</span>(<span class="num">1</span>,<span class="num">6</span>)
+        <span class="kw">SI</span> <span class="var">dado</span> == <span class="num">5</span>
+            <span class="cmt">// romper el bucle: ya se encontró el 5</span>
+            <span class="kw">SALIR_DEL_PARA</span>
+        <span class="kw">FIN_SI</span>
+    <span class="kw">FIN_PARA</span>
+    <span class="fn">Mostrar</span> <span class="var">intentos</span>
+<span class="kw">FIN</span></code></pre>
+          <div class="callout tip">
+            <div class="callout-header"><span class="callout-icon">💡</span> Nota sobre la pseudo-instrucción SALIR_DEL_PARA</div>
+            <p>El pseudocódigo estructurado clásico (Böhm-Jacopini, el que usaste en la Semana 7) no incluye una instrucción formal para "romper" un bucle — por eso uso <code>SALIR_DEL_PARA</code> como convención informal solo para representar la idea de <code>break</code> en papel. En Python, esa idea se escribe simplemente como la palabra reservada <code>break</code>.</p>
+          </div>
+
+          <h4>📋 Paso 5 — Python</h4>
+<pre class="python"><code><span class="kw">import</span> random
+
+<span class="var">n</span> = <span class="fn">int</span>(<span class="fn">input</span>(<span class="str">"Ingrese el número máximo de lanzamientos: "</span>))
+
+<span class="kw">for</span> intentos <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>, n + <span class="num">1</span>):
+    dado = random.randint(<span class="num">1</span>, <span class="num">6</span>)
+    <span class="fn">print</span>(<span class="str">f"Intento {intentos}: salió {dado}"</span>)
+    <span class="kw">if</span> dado == <span class="num">5</span>:
+        <span class="kw">break</span>
+
+<span class="fn">print</span>(<span class="str">"Se necesitaron"</span>, intentos, <span class="str">"intentos para obtener un 5"</span>)</code></pre>
+
+          <h4>📋 Paso 6 — Prueba de escritorio (con n=10, secuencia simulada de dados: 3, 6, 2, 5)</h4>
+          <div class="trace-table"><table>
+            <thead><tr><th class="center">intentos</th><th class="center">dado</th><th>¿dado==5?</th><th>Acción</th></tr></thead>
+            <tbody>
+              <tr><td class="center mono">1</td><td class="center mono">3</td><td class="center">F</td><td>se imprime, sigue el bucle</td></tr>
+              <tr><td class="center mono">2</td><td class="center mono">6</td><td class="center">F</td><td>se imprime, sigue el bucle</td></tr>
+              <tr><td class="center mono">3</td><td class="center mono">2</td><td class="center">F</td><td>se imprime, sigue el bucle</td></tr>
+              <tr><td class="center mono">4</td><td class="center mono">5</td><td class="center"><strong>V</strong></td><td><code>break</code> → se sale del <code>for</code></td></tr>
+            </tbody>
+          </table></div>
+
+          <div class="why-box">
+            <div class="why-label">🤔 ¿Qué pasa si el 5 nunca sale dentro de los n intentos?</div>
+            <p>El <code>for</code> simplemente termina su recorrido normal (llega a <code>intentos = n</code> sin haber ejecutado <code>break</code>). El programa igual imprime "se necesitaron n intentos", pero ese resultado sería <strong>engañoso</strong> porque en realidad nunca salió el 5 — se agotaron los intentos disponibles. Es un buen ejercicio adicional (para ir más allá) agregar una bandera <code>encontrado = False</code> que se vuelva <code>True</code> justo antes del <code>break</code>, y así poder distinguir "se encontró en la vuelta X" de "se agotaron los n intentos sin éxito".</p>
+          </div>
+
+          <div class="final-answer">
+            <div class="final-answer-label">✅ Resultado</div>
+            <p>El programa lanza el dado repetidamente (máximo n veces) y usa <code>break</code> para detener el bucle apenas sale un 5, dejando en la variable <code>intentos</code> la cantidad exacta de lanzamientos que hicieron falta.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- EJERCICIO 13-2: mismo dado, con CONTINUE -->
+    <!-- ============================================================ -->
+    <div class="exercise" id="ej13-2">
+      <div class="exercise-header"><span class="exercise-num">EJ. 2</span><span>El mismo programa, reemplazando BREAK por CONTINUE</span><span class="exercise-tag">🟡 CONTINUE</span></div>
+      <div class="exercise-body">
+        <div class="statement-box"><span class="statement-label">📝 Enunciado (tal como lo dio el profesor)</span>
+          <p>En el programa anterior, reemplace la instrucción BREAK por CONTINUE y observe las diferencias.</p>
+        </div>
+
+        <div class="solution-block">
+          <h4>📋 Paso 1 — Hacer el cambio "mecánico" primero</h4>
+          <p>Tomo el código del Ejercicio 1 y cambio literalmente la palabra <code>break</code> por <code>continue</code> en el mismo lugar:</p>
+<pre class="python"><code><span class="kw">import</span> random
+
+<span class="var">n</span> = <span class="fn">int</span>(<span class="fn">input</span>(<span class="str">"Ingrese el número máximo de lanzamientos: "</span>))
+
+<span class="kw">for</span> intentos <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>, n + <span class="num">1</span>):
+    dado = random.randint(<span class="num">1</span>, <span class="num">6</span>)
+    <span class="kw">if</span> dado == <span class="num">5</span>:
+        <span class="kw">continue</span>
+    <span class="fn">print</span>(<span class="str">f"Intento {intentos}: salió {dado}"</span>)
+
+<span class="fn">print</span>(<span class="str">"El bucle terminó sus"</span>, n, <span class="str">"iteraciones completas"</span>)</code></pre>
+          <p>Nota que también moví el <code>print</code> de "salió el dado" <strong>después</strong> del <code>if</code>, porque ahora queremos que <code>continue</code> se salte justamente esa impresión cuando el dado sea 5 (si el <code>print</code> estuviera antes del <code>if</code>, siempre se ejecutaría y <code>continue</code> no tendría nada que "esconder").</p>
+
+          <h4>📋 Paso 2 — Diagrama de flujo</h4>
+          <div class="flowchart-container">
+            <div class="mermaid-container" data-original='flowchart TB
+    I([Inicio])
+    LN[/"leer n"/]
+    D1{"intentos &lt;= n ?"}
+    TIRA["dado ← aleatorio&#40;1,6&#41;"]
+    D2{"dado == 5 ?"}
+    IMP[/"mostrar intento y dado"/]
+    SIG["siguiente intento"]
+    MOSTRAR[/"mostrar fin de las n vueltas"/]
+    F([Fin])
+    I --> LN --> D1
+    D1 -->|Si| TIRA --> D2
+    D2 -->|Si| SIG
+    D2 -->|No| IMP --> SIG
+    SIG --> D1
+    D1 -->|No| MOSTRAR --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style LN fill:#60a5fa,stroke:#1e40af,color:#000
+    style IMP fill:#60a5fa,stroke:#1e40af,color:#000
+    style MOSTRAR fill:#60a5fa,stroke:#1e40af,color:#000
+    style TIRA fill:#a78bfa,stroke:#6d28d9,color:#000
+    style SIG fill:#a78bfa,stroke:#6d28d9,color:#000
+    style D1 fill:#fbbf24,stroke:#d97706,color:#000
+    style D2 fill:#fbbf24,stroke:#d97706,color:#000'><div class="mermaid">
+flowchart TB
+    I([Inicio])
+    LN[/"leer n"/]
+    D1{"intentos &lt;= n ?"}
+    TIRA["dado ← aleatorio&#40;1,6&#41;"]
+    D2{"dado == 5 ?"}
+    IMP[/"mostrar intento y dado"/]
+    SIG["siguiente intento"]
+    MOSTRAR[/"mostrar fin de las n vueltas"/]
+    F([Fin])
+    I --> LN --> D1
+    D1 -->|Si| TIRA --> D2
+    D2 -->|Si| SIG
+    D2 -->|No| IMP --> SIG
+    SIG --> D1
+    D1 -->|No| MOSTRAR --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style LN fill:#60a5fa,stroke:#1e40af,color:#000
+    style IMP fill:#60a5fa,stroke:#1e40af,color:#000
+    style MOSTRAR fill:#60a5fa,stroke:#1e40af,color:#000
+    style TIRA fill:#a78bfa,stroke:#6d28d9,color:#000
+    style SIG fill:#a78bfa,stroke:#6d28d9,color:#000
+    style D1 fill:#fbbf24,stroke:#d97706,color:#000
+    style D2 fill:#fbbf24,stroke:#d97706,color:#000
+            </div></div>
+            <div class="flowchart-caption">📊 Compáralo con el diagrama del Ejercicio 1: aquí la rama "Si" de D2 <strong>vuelve a D1</strong> en vez de saltar a "mostrar" — el bucle jamás se corta antes de tiempo.</div>
+          </div>
+
+          <h4>📋 Paso 3 — Prueba de escritorio (con n=6, misma secuencia simulada: 3, 6, 2, 5, 4, 1)</h4>
+          <div class="trace-table"><table>
+            <thead><tr><th class="center">intentos</th><th class="center">dado</th><th>¿dado==5?</th><th>Acción</th></tr></thead>
+            <tbody>
+              <tr><td class="center mono">1</td><td class="center mono">3</td><td class="center">F</td><td>se imprime</td></tr>
+              <tr><td class="center mono">2</td><td class="center mono">6</td><td class="center">F</td><td>se imprime</td></tr>
+              <tr><td class="center mono">3</td><td class="center mono">2</td><td class="center">F</td><td>se imprime</td></tr>
+              <tr><td class="center mono">4</td><td class="center mono">5</td><td class="center"><strong>V</strong></td><td><code>continue</code> → no se imprime, pero el <code>for</code> sigue</td></tr>
+              <tr><td class="center mono">5</td><td class="center mono">4</td><td class="center">F</td><td>se imprime</td></tr>
+              <tr><td class="center mono">6</td><td class="center mono">1</td><td class="center">F</td><td>se imprime; el <code>for</code> termina (llegó a n)</td></tr>
+            </tbody>
+          </table></div>
+
+          <div class="theory-recap">
+            <div class="theory-label"><span>📌</span> La diferencia real que este ejercicio quiere que descubras</div>
+            <p>Este es el punto central del ejercicio: <strong><code>continue</code> no es un sustituto de <code>break</code> para este objetivo</strong>. El propósito original era "contar cuántos intentos hicieron falta hasta que salió el 5" — y eso <em>solo tiene sentido si el bucle se detiene</em> en cuanto ocurre. Con <code>continue</code>, el bucle jamás se detiene: corre las n iteraciones completas sin importar cuántas veces haya salido el 5 en el camino, así que la variable <code>intentos</code> al final del bucle simplemente vale <code>n</code> siempre — perdió todo su significado como "cantidad de intentos necesarios". <code>break</code> y <code>continue</code> resuelven objetivos distintos: usa <code>break</code> cuando el bucle debe <em>terminar</em> al cumplirse algo; usa <code>continue</code> cuando solo quieres <em>ignorar</em> casos puntuales sin alterar cuántas vueltas da el bucle.</p>
+          </div>
+
+          <div class="final-answer">
+            <div class="final-answer-label">✅ Resultado</div>
+            <p>Con <code>continue</code>, el programa imprime todos los lanzamientos excepto los que dieron 5, pero siempre completa las n vueltas — a diferencia de <code>break</code>, que detiene el bucle apenas aparece el primer 5.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- EJERCICIO 13-3: suma sin negativos -->
+    <!-- ============================================================ -->
+    <div class="exercise" id="ej13-3">
+      <div class="exercise-header"><span class="exercise-num">EJ. 3</span><span>Sumar una lista de números ignorando los negativos</span><span class="exercise-tag">🟡 CONTINUE</span></div>
+      <div class="exercise-body">
+        <div class="statement-box"><span class="statement-label">📝 Enunciado (tal como lo dio el profesor)</span>
+          <p>Se tiene la siguiente lista de números: 34, 54, 66, -12, 8, -20, 14, 51. Elabore un programa que sume los números sin considerar los negativos.</p>
+        </div>
+
+        <div class="solution-block">
+          <h4>📋 Paso 1 — Reconocer el patrón "filtrar y sumar"</h4>
+          <p>Necesito recorrer cada número de la lista con un <code>for</code>, y en cada vuelta decidir si lo sumo o lo ignoro. Ignorar un elemento puntual sin afectar el resto del recorrido es <em>exactamente</em> el trabajo de <code>continue</code>: en cuanto detecto un número negativo, salto directo a la siguiente vuelta sin ejecutar la suma.</p>
+
+          <div class="why-box">
+            <div class="why-label">🤔 ¿Por qué no simplemente un IF que solo sume cuando sea positivo, sin CONTINUE?</div>
+            <p>Podrías escribirlo perfectamente con <code>if numero &gt;= 0: suma += numero</code> sin <code>continue</code>, y el resultado sería idéntico — de hecho para este ejercicio tan simple esa versión es incluso más corta. Pero como el objetivo pedagógico de esta sección es <strong>practicar CONTINUE</strong>, lo resuelvo con la lógica invertida: "si es negativo, sáltatelo", que es la forma natural de pensar cuando lo que quieres expresar es una <em>excepción</em> a procesar (los negativos) dentro de un procesamiento general (sumar todo).</p>
+          </div>
+
+          <h4>📋 Paso 2 — Diagrama de flujo</h4>
+          <div class="flowchart-container">
+            <div class="mermaid-container" data-original='flowchart TB
+    I([Inicio])
+    INIC["suma ← 0"]
+    D0{"¿quedan números?"}
+    LEER["tomar siguiente número"]
+    D1{"número &lt; 0 ?"}
+    SUMAR["suma ← suma + número"]
+    MOSTRAR[/"mostrar suma"/]
+    F([Fin])
+    I --> INIC --> D0
+    D0 -->|Si| LEER --> D1
+    D1 -->|Si| D0
+    D1 -->|No| SUMAR --> D0
+    D0 -->|No| MOSTRAR --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style INIC fill:#a78bfa,stroke:#6d28d9,color:#000
+    style LEER fill:#60a5fa,stroke:#1e40af,color:#000
+    style SUMAR fill:#a78bfa,stroke:#6d28d9,color:#000
+    style MOSTRAR fill:#60a5fa,stroke:#1e40af,color:#000
+    style D0 fill:#fbbf24,stroke:#d97706,color:#000
+    style D1 fill:#fbbf24,stroke:#d97706,color:#000'><div class="mermaid">
+flowchart TB
+    I([Inicio])
+    INIC["suma ← 0"]
+    D0{"¿quedan números?"}
+    LEER["tomar siguiente número"]
+    D1{"número &lt; 0 ?"}
+    SUMAR["suma ← suma + número"]
+    MOSTRAR[/"mostrar suma"/]
+    F([Fin])
+    I --> INIC --> D0
+    D0 -->|Si| LEER --> D1
+    D1 -->|Si| D0
+    D1 -->|No| SUMAR --> D0
+    D0 -->|No| MOSTRAR --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style INIC fill:#a78bfa,stroke:#6d28d9,color:#000
+    style LEER fill:#60a5fa,stroke:#1e40af,color:#000
+    style SUMAR fill:#a78bfa,stroke:#6d28d9,color:#000
+    style MOSTRAR fill:#60a5fa,stroke:#1e40af,color:#000
+    style D0 fill:#fbbf24,stroke:#d97706,color:#000
+    style D1 fill:#fbbf24,stroke:#d97706,color:#000
+            </div></div>
+            <div class="flowchart-caption">📊 La rama "Si" de D1 (número negativo) vuelve directo a D0 sin pasar por "sumar" — eso es <code>continue</code>.</div>
+          </div>
+
+          <h4>📋 Paso 3 — Pseudocódigo</h4>
+<pre class="pseudo"><code><span class="kw">INICIO</span>
+    <span class="var">lista</span> <span class="op">←</span> [<span class="num">34</span>, <span class="num">54</span>, <span class="num">66</span>, <span class="num">-12</span>, <span class="num">8</span>, <span class="num">-20</span>, <span class="num">14</span>, <span class="num">51</span>]
+    <span class="var">suma</span> <span class="op">←</span> <span class="num">0</span>
+    <span class="kw">PARA</span> <span class="var">numero</span> <span class="kw">EN</span> <span class="var">lista</span>
+        <span class="kw">SI</span> <span class="var">numero</span> <span class="op">&lt;</span> <span class="num">0</span>
+            <span class="kw">SIGUIENTE_VUELTA</span>
+        <span class="kw">FIN_SI</span>
+        <span class="var">suma</span> <span class="op">←</span> <span class="var">suma</span> <span class="op">+</span> <span class="var">numero</span>
+    <span class="kw">FIN_PARA</span>
+    <span class="fn">Mostrar</span> <span class="var">suma</span>
+<span class="kw">FIN</span></code></pre>
+
+          <h4>📋 Paso 4 — Python</h4>
+<pre class="python"><code><span class="var">lista</span> = [<span class="num">34</span>, <span class="num">54</span>, <span class="num">66</span>, -<span class="num">12</span>, <span class="num">8</span>, -<span class="num">20</span>, <span class="num">14</span>, <span class="num">51</span>]
+<span class="var">suma</span> = <span class="num">0</span>
+
+<span class="kw">for</span> numero <span class="kw">in</span> lista:
+    <span class="kw">if</span> numero &lt; <span class="num">0</span>:
+        <span class="kw">continue</span>
+    suma = suma + numero
+
+<span class="fn">print</span>(<span class="str">"La suma sin negativos es:"</span>, suma)</code></pre>
+
+          <h4>📋 Paso 5 — Prueba de escritorio</h4>
+          <div class="trace-table"><table>
+            <thead><tr><th class="center">número</th><th>¿negativo?</th><th>Acción</th><th class="center">suma acumulada</th></tr></thead>
+            <tbody>
+              <tr><td class="center mono">34</td><td class="center">F</td><td>suma</td><td class="center mono">34</td></tr>
+              <tr><td class="center mono">54</td><td class="center">F</td><td>suma</td><td class="center mono">88</td></tr>
+              <tr><td class="center mono">66</td><td class="center">F</td><td>suma</td><td class="center mono">154</td></tr>
+              <tr><td class="center mono">-12</td><td class="center"><strong>V</strong></td><td><code>continue</code>, se ignora</td><td class="center mono">154</td></tr>
+              <tr><td class="center mono">8</td><td class="center">F</td><td>suma</td><td class="center mono">162</td></tr>
+              <tr><td class="center mono">-20</td><td class="center"><strong>V</strong></td><td><code>continue</code>, se ignora</td><td class="center mono">162</td></tr>
+              <tr><td class="center mono">14</td><td class="center">F</td><td>suma</td><td class="center mono">176</td></tr>
+              <tr><td class="center mono">51</td><td class="center">F</td><td>suma</td><td class="center mono"><strong>227</strong></td></tr>
+            </tbody>
+          </table></div>
+
+          <div class="final-answer">
+            <div class="final-answer-label">✅ Resultado</div>
+            <p>La suma de los números sin considerar los negativos es <strong>227</strong> (34+54+66+8+14+51).</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- SEMANA 13 — TEORÍA MENÚS -->
+    <!-- ============================================================ -->
+    <section class="block" id="s13-menus">
+      <div class="block-header"><div class="block-num">13B</div><h2>Programas que interactúan con un menú</h2></div>
+
+      <h3>13.3. La estructura básica</h3>
+      <p>Cuando un programa necesita interactuar con el usuario dándole opciones, se usa un <strong>menú</strong>: una lista de opciones numeradas que el usuario elige, y para cada opción el computador ejecuta una acción distinta. La estructura básica tiene tres pasos:</p>
+      <ol>
+        <li>El programa muestra un menú con las opciones disponibles.</li>
+        <li>El usuario elige una opción (normalmente ingresando un número).</li>
+        <li>El programa ejecuta la acción correspondiente a esa opción.</li>
+      </ol>
+
+      <div class="callout intuition">
+        <div class="callout-header"><span class="callout-icon">💡</span> Menú de "una sola vez" vs. menú "que se repite"</div>
+        <p>Hay dos sabores de este patrón, y los vas a ver ambos en esta guía: un menú puede mostrarse <strong>una sola vez</strong> (el programa pregunta, actúa, y termina), o puede <strong>repetirse indefinidamente</strong> hasta que el usuario elija explícitamente "salir". El segundo caso es mucho más realista — piensa en cualquier app que usas: nunca se cierra sola después de una sola acción — y se logra envolviendo todo el menú dentro de un <code>while True:</code>, con un <code>break</code> disparado por la opción de salida. Este es el punto exacto donde la teoría de la sección anterior (break/continue) se une con los menús.</p>
+      </div>
+
+      <h3>13.4. El módulo <code>time</code> para mejorar la presentación</h3>
+      <p>El profesor menciona usar el módulo <code>time</code> para "mejorar la presentación" de un programa. La función más usada para esto es <code>time.sleep(segundos)</code>, que pausa la ejecución del programa durante los segundos indicados — útil para dar sensación de "procesamiento" antes de mostrar un resultado, en vez de que todo aparezca de golpe.</p>
+<pre class="python"><code><span class="kw">import</span> time
+
+<span class="fn">print</span>(<span class="str">"Procesando su pago..."</span>)
+time.sleep(<span class="num">1.5</span>)  <span class="cmt"># pausa de 1.5 segundos antes de continuar</span>
+<span class="fn">print</span>(<span class="str">"¡Listo!"</span>)</code></pre>
+      <div class="callout tip">
+        <div class="callout-header"><span class="callout-icon">💡</span> Elección de diseño en esta guía</div>
+        <p>El PDF no muestra el código exacto de esta mejora, así que en los ejercicios siguientes voy a usar <code>time.sleep()</code> para simular una breve pausa de "procesando" justo antes de mostrar el resultado final — es el uso más común y razonable de <code>time</code> para este propósito. Si en tu clase se usó otra función del módulo, el patrón de dónde insertarla es el mismo.</p>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- EJERCICIO: menú de descuento (del profesor) -->
+    <!-- ============================================================ -->
+    <div class="exercise" id="ej13-desc">
+      <div class="exercise-header"><span class="exercise-num">EJ. RESUELTO</span><span>Menú de descuento según modo de pago</span><span class="exercise-tag">🧭 Menú simple</span></div>
+      <div class="exercise-body">
+        <div class="statement-box"><span class="statement-label">📝 Enunciado (tal como lo dio el profesor)</span>
+          <p>Elabore un programa que descuente 10% del total de la compra si paga al contado y 5% si paga con cualquier tarjeta. Utilice menú de opciones para el modo de pago.</p>
+        </div>
+
+        <div class="solution-block">
+          <h4>📋 Paso 1 — Traducir el enunciado a un menú de dos opciones</h4>
+          <p>El profesor solo dio las capturas de la salida esperada, no el código — así que lo reconstruyo desde el resultado. Necesito: mostrar el menú, leer la opción, leer el monto de la compra, decidir el porcentaje de descuento según la opción, calcular el pago final, y mostrarlo.</p>
+
+          <div class="why-box">
+            <div class="why-label">🤔 ¿En qué orden pido el monto: antes o después de leer la opción?</div>
+            <p>Mirando la captura de pantalla, el orden es: se muestra el menú → se elige la opción → <em>después</em> se pide el monto. Tiene sentido pedirlo después, porque no necesito el monto para decidir el descuento, solo para el cálculo final — así el flujo de preguntas al usuario se siente más natural (primero "cómo vas a pagar", luego "cuánto es").</p>
+          </div>
+
+          <h4>📋 Paso 2 — Diagrama de flujo</h4>
+          <div class="flowchart-container">
+            <div class="mermaid-container" data-original='flowchart TB
+    I([Inicio])
+    M[/"mostrar menú de pago"/]
+    LO[/"leer opción"/]
+    LM[/"leer monto"/]
+    D1{"opción == 1 ?"}
+    D2{"opción == 2 ?"}
+    DC1["descuento ← 0.10"]
+    DC2["descuento ← 0.05"]
+    CALC["pago_final ← monto - monto*descuento"]
+    MOSTRAR[/"mostrar pago_final"/]
+    F([Fin])
+    I --> M --> LO --> LM --> D1
+    D1 -->|Si| DC1 --> CALC
+    D1 -->|No| D2
+    D2 -->|Si| DC2 --> CALC
+    D2 -->|No| CALC
+    CALC --> MOSTRAR --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style LO fill:#60a5fa,stroke:#1e40af,color:#000
+    style LM fill:#60a5fa,stroke:#1e40af,color:#000
+    style MOSTRAR fill:#60a5fa,stroke:#1e40af,color:#000
+    style DC1 fill:#a78bfa,stroke:#6d28d9,color:#000
+    style DC2 fill:#a78bfa,stroke:#6d28d9,color:#000
+    style CALC fill:#a78bfa,stroke:#6d28d9,color:#000
+    style D1 fill:#fbbf24,stroke:#d97706,color:#000
+    style D2 fill:#fbbf24,stroke:#d97706,color:#000'><div class="mermaid">
+flowchart TB
+    I([Inicio])
+    M[/"mostrar menú de pago"/]
+    LO[/"leer opción"/]
+    LM[/"leer monto"/]
+    D1{"opción == 1 ?"}
+    D2{"opción == 2 ?"}
+    DC1["descuento ← 0.10"]
+    DC2["descuento ← 0.05"]
+    CALC["pago_final ← monto - monto*descuento"]
+    MOSTRAR[/"mostrar pago_final"/]
+    F([Fin])
+    I --> M --> LO --> LM --> D1
+    D1 -->|Si| DC1 --> CALC
+    D1 -->|No| D2
+    D2 -->|Si| DC2 --> CALC
+    D2 -->|No| CALC
+    CALC --> MOSTRAR --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style LO fill:#60a5fa,stroke:#1e40af,color:#000
+    style LM fill:#60a5fa,stroke:#1e40af,color:#000
+    style MOSTRAR fill:#60a5fa,stroke:#1e40af,color:#000
+    style DC1 fill:#a78bfa,stroke:#6d28d9,color:#000
+    style DC2 fill:#a78bfa,stroke:#6d28d9,color:#000
+    style CALC fill:#a78bfa,stroke:#6d28d9,color:#000
+    style D1 fill:#fbbf24,stroke:#d97706,color:#000
+    style D2 fill:#fbbf24,stroke:#d97706,color:#000
+            </div></div>
+            <div class="flowchart-caption">📊 Fíjate en la rama "No" de D2: llega a CALC sin haber definido <code>descuento</code>. Esa es una debilidad real de esta primera versión — la resolvemos en el siguiente ejercicio.</div>
+          </div>
+
+          <div class="callout warning">
+            <div class="callout-header"><span class="callout-icon">⚠️</span> Un defecto que el propio diagrama deja ver</div>
+            <p>Si el usuario ingresa una opción distinta de 1 o 2 (por ejemplo, escribe "3" por error), el programa llegaría al cálculo sin que la variable <code>descuento</code> haya sido asignada nunca, y Python lanzaría un <code>NameError</code>. El profesor no pidió manejar ese caso aquí, pero lo vamos a corregir en el siguiente ejercicio (el menú que se repite), donde sí conviene validar la opción.</p>
+          </div>
+
+          <h4>📋 Paso 3 — Python (versión base, reproduce las capturas del profesor)</h4>
+<pre class="python"><code><span class="fn">print</span>(<span class="str">"*"</span> * <span class="num">22</span>)
+<span class="fn">print</span>(<span class="str">"Menú del modo de pago"</span>)
+<span class="fn">print</span>(<span class="str">"*"</span> * <span class="num">22</span>)
+<span class="fn">print</span>(<span class="str">"Opción 1 --- si paga al contado"</span>)
+<span class="fn">print</span>(<span class="str">"Opción 2 --- si paga con tarjeta"</span>)
+<span class="fn">print</span>()
+
+opcion = <span class="fn">int</span>(<span class="fn">input</span>(<span class="str">"Elija una opción: "</span>))
+monto = <span class="fn">float</span>(<span class="fn">input</span>(<span class="str">"Ingrese el monto de su compra: "</span>))
+
+<span class="kw">if</span> opcion == <span class="num">1</span>:
+    descuento = <span class="num">0.10</span>
+    <span class="fn">print</span>(<span class="str">"Usted tiene un descuento de 10%"</span>)
+<span class="kw">elif</span> opcion == <span class="num">2</span>:
+    descuento = <span class="num">0.05</span>
+    <span class="fn">print</span>(<span class="str">"Usted tiene un descuento de 5%"</span>)
+
+pago_final = monto - monto * descuento
+
+<span class="fn">print</span>(<span class="str">"="</span> * <span class="num">33</span>)
+<span class="fn">print</span>(<span class="str">"Su pago final es: "</span>, pago_final, <span class="str">"soles"</span>)
+<span class="fn">print</span>(<span class="str">"="</span> * <span class="num">33</span>)</code></pre>
+
+          <h4>📋 Paso 4 — Prueba de escritorio (reproduce exactamente las dos capturas del profesor)</h4>
+          <div class="trace-table"><table>
+            <thead><tr><th class="center">opción</th><th class="center">monto</th><th class="center">descuento</th><th>pago_final</th></tr></thead>
+            <tbody>
+              <tr><td class="center mono">1</td><td class="center mono">1000</td><td class="center mono">10%</td><td class="mono">900.0 soles ✅ coincide con la 1ª captura</td></tr>
+              <tr><td class="center mono">2</td><td class="center mono">1000</td><td class="center mono">5%</td><td class="mono">950.0 soles ✅ coincide con la 2ª captura</td></tr>
+            </tbody>
+          </table></div>
+
+          <h4>📋 Paso 5 — Agregando el módulo <code>time</code> para "mejorar la presentación"</h4>
+          <p>La segunda captura del profesor muestra el mismo programa pero menciona el uso de <code>time</code>. Inserto una pausa breve justo antes de mostrar el resultado, simulando que el sistema está "procesando" el descuento:</p>
+<pre class="python"><code><span class="kw">import</span> time
+
+<span class="fn">print</span>(<span class="str">"*"</span> * <span class="num">22</span>)
+<span class="fn">print</span>(<span class="str">"Menú del modo de pago"</span>)
+<span class="fn">print</span>(<span class="str">"*"</span> * <span class="num">22</span>)
+<span class="fn">print</span>(<span class="str">"Opción 1 --- si paga al contado"</span>)
+<span class="fn">print</span>(<span class="str">"Opción 2 --- si paga con tarjeta"</span>)
+<span class="fn">print</span>()
+
+opcion = <span class="fn">int</span>(<span class="fn">input</span>(<span class="str">"Elija una opción: "</span>))
+monto = <span class="fn">float</span>(<span class="fn">input</span>(<span class="str">"Ingrese el monto de su compra: "</span>))
+
+<span class="kw">if</span> opcion == <span class="num">1</span>:
+    descuento = <span class="num">0.10</span>
+    <span class="fn">print</span>(<span class="str">"Usted tiene un descuento de 10%"</span>)
+<span class="kw">elif</span> opcion == <span class="num">2</span>:
+    descuento = <span class="num">0.05</span>
+    <span class="fn">print</span>(<span class="str">"Usted tiene un descuento de 5%"</span>)
+
+<span class="fn">print</span>(<span class="str">"Procesando..."</span>)
+time.sleep(<span class="num">1</span>)
+
+pago_final = monto - monto * descuento
+
+<span class="fn">print</span>(<span class="str">"="</span> * <span class="num">33</span>)
+<span class="fn">print</span>(<span class="str">"Su pago final es: "</span>, pago_final, <span class="str">"soles"</span>)
+<span class="fn">print</span>(<span class="str">"="</span> * <span class="num">33</span>)</code></pre>
+
+          <div class="final-answer">
+            <div class="final-answer-label">✅ Resultado</div>
+            <p>El programa muestra un menú, calcula 10% o 5% de descuento según la opción elegida, y el pago final coincide exactamente con las dos capturas del profesor (900.0 soles y 950.0 soles).</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- EJERCICIO: menú de descuento repetido -->
+    <!-- ============================================================ -->
+    <div class="exercise" id="ej13-descrep">
+      <div class="exercise-header"><span class="exercise-num">EJ. VARIANTE</span><span>El mismo menú, pero que se repite hasta elegir "salir"</span><span class="exercise-tag">🔴 while True + break</span></div>
+      <div class="exercise-body">
+        <div class="statement-box"><span class="statement-label">📝 Enunciado (tal como lo dio el profesor)</span>
+          <p>Elabore un programa que descuente 10% del total de la compra si paga al contado y 5% si paga con cualquier tarjeta. Utilice menú de opciones para el modo de pago. El programa debe solicitar repetidamente el ingreso de la opción y solamente finalizará cuando se presione el número 3.</p>
+        </div>
+
+        <div class="solution-block">
+          <h4>📋 Paso 1 — Reconocer que esto es un <code>while True</code> con <code>break</code></h4>
+          <p>"Repetir indefinidamente hasta que ocurra algo" es la firma de un bucle sin condición de corte explícita al inicio — en Python eso se escribe como <code>while True:</code> (una condición que nunca es falsa por sí sola), y el corte real ocurre <em>dentro</em> del cuerpo, cuando detectamos la condición de salida (opción 3) y ejecutamos <code>break</code>.</p>
+
+          <div class="why-box">
+            <div class="why-label">🤔 ¿Por qué no usar <code>while opcion != 3:</code> directamente?</div>
+            <p>Podría parecer más "limpio" a primera vista, pero tiene un problema: la variable <code>opcion</code> todavía no existe la primera vez que Python evalúa esa condición (antes de la primera vuelta nadie ha leído nada). Tendría que inventar un valor inicial ficticio para <code>opcion</code> solo para que la condición no falle, lo cual es más artificial que simplemente usar <code>while True</code> y decidir la salida con un <code>if opcion == 3: break</code> ya dentro del bucle, donde sí conozco el valor real que acaba de ingresar el usuario.</p>
+          </div>
+
+          <h4>📋 Paso 2 — Corregir el defecto detectado en el ejercicio anterior</h4>
+          <p>Ahora sí valido la opción con un <code>else</code>: si el usuario no eligió 1, 2 ni 3, muestro un aviso y uso <code>continue</code> para volver a mostrar el menú sin intentar calcular nada (evitando el <code>NameError</code> que detectamos antes).</p>
+
+          <h4>📋 Paso 3 — Diagrama de flujo</h4>
+          <div class="flowchart-container">
+            <div class="mermaid-container" data-original='flowchart TB
+    I([Inicio])
+    M[/"mostrar menú"/]
+    LO[/"leer opción"/]
+    D3{"opción == 3 ?"}
+    DVAL{"opción == 1 o opción == 2 ?"}
+    LM[/"leer monto"/]
+    D1{"opción == 1 ?"}
+    DC1["descuento ← 0.10"]
+    DC2["descuento ← 0.05"]
+    CALC["pago_final ← monto - monto*descuento"]
+    MOSTRAR[/"mostrar pago_final"/]
+    INV[/"mostrar opción no válida"/]
+    F([Fin])
+    I --> M --> LO --> D3
+    D3 -->|Si| F
+    D3 -->|No| DVAL
+    DVAL -->|No| INV --> M
+    DVAL -->|Si| LM --> D1
+    D1 -->|Si| DC1 --> CALC
+    D1 -->|No| DC2 --> CALC
+    CALC --> MOSTRAR --> M
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style LO fill:#60a5fa,stroke:#1e40af,color:#000
+    style LM fill:#60a5fa,stroke:#1e40af,color:#000
+    style MOSTRAR fill:#60a5fa,stroke:#1e40af,color:#000
+    style INV fill:#60a5fa,stroke:#1e40af,color:#000
+    style DC1 fill:#a78bfa,stroke:#6d28d9,color:#000
+    style DC2 fill:#a78bfa,stroke:#6d28d9,color:#000
+    style CALC fill:#a78bfa,stroke:#6d28d9,color:#000
+    style D3 fill:#fbbf24,stroke:#d97706,color:#000
+    style DVAL fill:#fbbf24,stroke:#d97706,color:#000
+    style D1 fill:#fbbf24,stroke:#d97706,color:#000'><div class="mermaid">
+flowchart TB
+    I([Inicio])
+    M[/"mostrar menú"/]
+    LO[/"leer opción"/]
+    D3{"opción == 3 ?"}
+    DVAL{"opción == 1 o opción == 2 ?"}
+    LM[/"leer monto"/]
+    D1{"opción == 1 ?"}
+    DC1["descuento ← 0.10"]
+    DC2["descuento ← 0.05"]
+    CALC["pago_final ← monto - monto*descuento"]
+    MOSTRAR[/"mostrar pago_final"/]
+    INV[/"mostrar opción no válida"/]
+    F([Fin])
+    I --> M --> LO --> D3
+    D3 -->|Si| F
+    D3 -->|No| DVAL
+    DVAL -->|No| INV --> M
+    DVAL -->|Si| LM --> D1
+    D1 -->|Si| DC1 --> CALC
+    D1 -->|No| DC2 --> CALC
+    CALC --> MOSTRAR --> M
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style LO fill:#60a5fa,stroke:#1e40af,color:#000
+    style LM fill:#60a5fa,stroke:#1e40af,color:#000
+    style MOSTRAR fill:#60a5fa,stroke:#1e40af,color:#000
+    style INV fill:#60a5fa,stroke:#1e40af,color:#000
+    style DC1 fill:#a78bfa,stroke:#6d28d9,color:#000
+    style DC2 fill:#a78bfa,stroke:#6d28d9,color:#000
+    style CALC fill:#a78bfa,stroke:#6d28d9,color:#000
+    style D3 fill:#fbbf24,stroke:#d97706,color:#000
+    style DVAL fill:#fbbf24,stroke:#d97706,color:#000
+    style D1 fill:#fbbf24,stroke:#d97706,color:#000
+            </div></div>
+            <div class="flowchart-caption">📊 Nótese que "mostrar pago_final" y "mostrar opción no válida" vuelven ambos a "mostrar menú" — así se logra la repetición. Solo la rama "Si" de D3 (opción 3) llega al Fin real.</div>
+          </div>
+
+          <h4>📋 Paso 4 — Python (coincide con la captura: menú con Opción 3 visible)</h4>
+<pre class="python"><code><span class="kw">import</span> time
+
+<span class="kw">while</span> <span class="kw">True</span>:
+    <span class="fn">print</span>(<span class="str">"*"</span> * <span class="num">22</span>)
+    <span class="fn">print</span>(<span class="str">"Menú del modo de pago"</span>)
+    <span class="fn">print</span>(<span class="str">"*"</span> * <span class="num">22</span>)
+    <span class="fn">print</span>(<span class="str">"Opción 1 --- si paga al contado"</span>)
+    <span class="fn">print</span>(<span class="str">"Opción 2 --- si paga con tarjeta"</span>)
+    <span class="fn">print</span>(<span class="str">"Opción 3 --- Fin del programa"</span>)
+    <span class="fn">print</span>()
+
+    opcion = <span class="fn">int</span>(<span class="fn">input</span>(<span class="str">"Elija una opción: "</span>))
+
+    <span class="kw">if</span> opcion == <span class="num">3</span>:
+        <span class="fn">print</span>(<span class="str">"Fin del programa"</span>)
+        <span class="kw">break</span>
+
+    <span class="kw">if</span> opcion != <span class="num">1</span> <span class="kw">and</span> opcion != <span class="num">2</span>:
+        <span class="fn">print</span>(<span class="str">"Opción no válida, intente de nuevo"</span>)
+        <span class="kw">continue</span>
+
+    monto = <span class="fn">float</span>(<span class="fn">input</span>(<span class="str">"Ingrese el monto de su compra: "</span>))
+
+    <span class="kw">if</span> opcion == <span class="num">1</span>:
+        descuento = <span class="num">0.10</span>
+    <span class="kw">else</span>:
+        descuento = <span class="num">0.05</span>
+
+    <span class="fn">print</span>(<span class="str">"Procesando..."</span>)
+    time.sleep(<span class="num">1</span>)
+
+    pago_final = monto - monto * descuento
+    <span class="fn">print</span>(<span class="str">"="</span> * <span class="num">33</span>)
+    <span class="fn">print</span>(<span class="str">"Su pago final es:"</span>, pago_final, <span class="str">"soles"</span>)
+    <span class="fn">print</span>(<span class="str">"="</span> * <span class="num">33</span>)</code></pre>
+
+          <div class="theory-recap">
+            <div class="theory-label"><span>📌</span> Por qué este ejercicio junta TODO lo de la Semana 13</div>
+            <p>Este programa usa <code>while True</code> (repetición indefinida), <code>break</code> (salir al elegir 3), <code>continue</code> (saltar la iteración si la opción no es válida) y el módulo <code>time</code> — es el punto de encuentro natural de todo lo aprendido hasta aquí, y el patrón que vas a reutilizar en casi cualquier programa interactivo real que hagas de ahora en adelante.</p>
+          </div>
+
+          <div class="final-answer">
+            <div class="final-answer-label">✅ Resultado</div>
+            <p>El menú se vuelve a mostrar automáticamente después de cada compra, y el programa solo termina cuando el usuario elige la opción 3 — reproduciendo exactamente el comportamiento de la captura del profesor.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- EJERCICIO: conversión F/C con menú repetido -->
+    <!-- ============================================================ -->
+    <div class="exercise" id="ej13-temp">
+      <div class="exercise-header"><span class="exercise-num">EJ. RESUELTO</span><span>Conversión de temperatura entre °F y °C con menú repetido</span><span class="exercise-tag">🔴 while True + break</span></div>
+      <div class="exercise-body">
+        <div class="statement-box"><span class="statement-label">📝 Enunciado (tal como lo dio el profesor)</span>
+          <p>Elabore un programa que convierta un valor de temperatura entre °F y °C. La fórmula es: C=5/9(F-32). Variables a utilizar: c: temperatura en °C, f: temperatura en °F, x: opción deseada. El programa debe solicitar ingreso de opciones en forma repetida y solamente finalizará cuando se ingrese el número 3.</p>
+        </div>
+
+        <div class="solution-block">
+          <h4>📋 Paso 1 — El profesor da una sola fórmula, pero pide "convertir entre °F y °C" (en ambos sentidos)</h4>
+          <p>La fórmula dada, <code>C = 5/9 (F-32)</code>, solo convierte de Fahrenheit a Celsius. Pero el enunciado dice "convierta... entre °F y °C" y define tanto <code>c</code> como <code>f</code> como variables — lo que sugiere un menú con <strong>ambas direcciones</strong> de conversión, más la opción 3 para salir. Despejando la fórmula original para el sentido contrario: si <code>C = 5/9(F-32)</code>, entonces <code>F = 9/5·C + 32</code>.</p>
+
+          <div class="why-box">
+            <div class="why-label">🤔 ¿Por qué agregar la fórmula inversa si el profesor solo dio una?</div>
+            <p>Porque sin ella el menú de "opción 1 / opción 2 / opción 3" no tendría sentido — solo podrías convertir en un sentido, y la variable <code>c</code> (que el profesor pide usar) jamás se usaría como dato de <em>entrada</em>. Despejar la fórmula es aplicar exactamente el mismo tipo de razonamiento algebraico que ya usaste en las Semanas anteriores para traducir fórmulas matemáticas a Python.</p>
+          </div>
+
+          <h4>📋 Paso 2 — Diagrama de flujo</h4>
+          <div class="flowchart-container">
+            <div class="mermaid-container" data-original='flowchart TB
+    I([Inicio])
+    M[/"mostrar menú"/]
+    LX[/"leer x"/]
+    D3{"x == 3 ?"}
+    D1{"x == 1 ?"}
+    D2{"x == 2 ?"}
+    LF[/"leer f"/]
+    CALC1["c ← 5/9 * &#40;f - 32&#41;"]
+    MF[/"mostrar c"/]
+    LC[/"leer c"/]
+    CALC2["f ← 9/5 * c + 32"]
+    MFF[/"mostrar f"/]
+    INV[/"mostrar opción no válida"/]
+    F([Fin])
+    I --> M --> LX --> D3
+    D3 -->|Si| F
+    D3 -->|No| D1
+    D1 -->|Si| LF --> CALC1 --> MF --> M
+    D1 -->|No| D2
+    D2 -->|Si| LC --> CALC2 --> MFF --> M
+    D2 -->|No| INV --> M
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style LX fill:#60a5fa,stroke:#1e40af,color:#000
+    style LF fill:#60a5fa,stroke:#1e40af,color:#000
+    style LC fill:#60a5fa,stroke:#1e40af,color:#000
+    style MF fill:#60a5fa,stroke:#1e40af,color:#000
+    style MFF fill:#60a5fa,stroke:#1e40af,color:#000
+    style INV fill:#60a5fa,stroke:#1e40af,color:#000
+    style CALC1 fill:#a78bfa,stroke:#6d28d9,color:#000
+    style CALC2 fill:#a78bfa,stroke:#6d28d9,color:#000
+    style D3 fill:#fbbf24,stroke:#d97706,color:#000
+    style D1 fill:#fbbf24,stroke:#d97706,color:#000
+    style D2 fill:#fbbf24,stroke:#d97706,color:#000'><div class="mermaid">
+flowchart TB
+    I([Inicio])
+    M[/"mostrar menú"/]
+    LX[/"leer x"/]
+    D3{"x == 3 ?"}
+    D1{"x == 1 ?"}
+    D2{"x == 2 ?"}
+    LF[/"leer f"/]
+    CALC1["c ← 5/9 * &#40;f - 32&#41;"]
+    MF[/"mostrar c"/]
+    LC[/"leer c"/]
+    CALC2["f ← 9/5 * c + 32"]
+    MFF[/"mostrar f"/]
+    INV[/"mostrar opción no válida"/]
+    F([Fin])
+    I --> M --> LX --> D3
+    D3 -->|Si| F
+    D3 -->|No| D1
+    D1 -->|Si| LF --> CALC1 --> MF --> M
+    D1 -->|No| D2
+    D2 -->|Si| LC --> CALC2 --> MFF --> M
+    D2 -->|No| INV --> M
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style LX fill:#60a5fa,stroke:#1e40af,color:#000
+    style LF fill:#60a5fa,stroke:#1e40af,color:#000
+    style LC fill:#60a5fa,stroke:#1e40af,color:#000
+    style MF fill:#60a5fa,stroke:#1e40af,color:#000
+    style MFF fill:#60a5fa,stroke:#1e40af,color:#000
+    style INV fill:#60a5fa,stroke:#1e40af,color:#000
+    style CALC1 fill:#a78bfa,stroke:#6d28d9,color:#000
+    style CALC2 fill:#a78bfa,stroke:#6d28d9,color:#000
+    style D3 fill:#fbbf24,stroke:#d97706,color:#000
+    style D1 fill:#fbbf24,stroke:#d97706,color:#000
+    style D2 fill:#fbbf24,stroke:#d97706,color:#000
+            </div></div>
+            <div class="flowchart-caption">📊 Misma "forma" que el menú de descuento: todas las salidas de acción vuelven a "mostrar menú", y solo la opción de salir llega al Fin.</div>
+          </div>
+
+          <h4>📋 Paso 3 — Pseudocódigo</h4>
+<pre class="pseudo"><code><span class="kw">INICIO</span>
+    <span class="kw">MIENTRAS</span> <span class="kw">VERDADERO</span>
+        <span class="fn">Mostrar</span> <span class="str">"1) °F a °C   2) °C a °F   3) Salir"</span>
+        <span class="fn">Leer</span> <span class="var">x</span>
+        <span class="kw">SI</span> <span class="var">x</span> == <span class="num">3</span>
+            <span class="kw">SALIR_DEL_MIENTRAS</span>
+        <span class="kw">SINO SI</span> <span class="var">x</span> == <span class="num">1</span>
+            <span class="fn">Leer</span> <span class="var">f</span>
+            <span class="var">c</span> <span class="op">←</span> (<span class="num">5</span><span class="op">/</span><span class="num">9</span>) <span class="op">*</span> (<span class="var">f</span> <span class="op">-</span> <span class="num">32</span>)
+            <span class="fn">Mostrar</span> <span class="var">c</span>
+        <span class="kw">SINO SI</span> <span class="var">x</span> == <span class="num">2</span>
+            <span class="fn">Leer</span> <span class="var">c</span>
+            <span class="var">f</span> <span class="op">←</span> (<span class="num">9</span><span class="op">/</span><span class="num">5</span>) <span class="op">*</span> <span class="var">c</span> <span class="op">+</span> <span class="num">32</span>
+            <span class="fn">Mostrar</span> <span class="var">f</span>
+        <span class="kw">SINO</span>
+            <span class="fn">Mostrar</span> <span class="str">"Opción no válida"</span>
+        <span class="kw">FIN_SI</span>
+    <span class="kw">FIN_MIENTRAS</span>
+<span class="kw">FIN</span></code></pre>
+
+          <h4>📋 Paso 4 — Python</h4>
+<pre class="python"><code><span class="kw">while</span> <span class="kw">True</span>:
+    <span class="fn">print</span>(<span class="str">"Menú de conversión de temperatura"</span>)
+    <span class="fn">print</span>(<span class="str">"1) Convertir de °F a °C"</span>)
+    <span class="fn">print</span>(<span class="str">"2) Convertir de °C a °F"</span>)
+    <span class="fn">print</span>(<span class="str">"3) Salir"</span>)
+
+    x = <span class="fn">int</span>(<span class="fn">input</span>(<span class="str">"Elija una opción: "</span>))
+
+    <span class="kw">if</span> x == <span class="num">3</span>:
+        <span class="fn">print</span>(<span class="str">"Fin del programa"</span>)
+        <span class="kw">break</span>
+    <span class="kw">elif</span> x == <span class="num">1</span>:
+        f = <span class="fn">float</span>(<span class="fn">input</span>(<span class="str">"Ingrese la temperatura en °F: "</span>))
+        c = (<span class="num">5</span> / <span class="num">9</span>) * (f - <span class="num">32</span>)
+        <span class="fn">print</span>(<span class="str">f"{f} °F equivalen a {c:.2f} °C"</span>)
+    <span class="kw">elif</span> x == <span class="num">2</span>:
+        c = <span class="fn">float</span>(<span class="fn">input</span>(<span class="str">"Ingrese la temperatura en °C: "</span>))
+        f = (<span class="num">9</span> / <span class="num">5</span>) * c + <span class="num">32</span>
+        <span class="fn">print</span>(<span class="str">f"{c} °C equivalen a {f:.2f} °F"</span>)
+    <span class="kw">else</span>:
+        <span class="fn">print</span>(<span class="str">"Opción no válida"</span>)</code></pre>
+
+          <h4>📋 Paso 5 — Prueba de escritorio</h4>
+          <div class="trace-table"><table>
+            <thead><tr><th class="center">x</th><th class="center">entrada</th><th>cálculo</th><th>salida</th></tr></thead>
+            <tbody>
+              <tr><td class="center mono">1</td><td class="center mono">f=100</td><td class="mono">5/9*(100-32) = 37.78</td><td>100 °F equivalen a 37.78 °C</td></tr>
+              <tr><td class="center mono">2</td><td class="center mono">c=0</td><td class="mono">9/5*0+32 = 32</td><td>0 °C equivalen a 32.00 °F</td></tr>
+              <tr><td class="center mono">3</td><td class="center mono">—</td><td>—</td><td>Fin del programa (<code>break</code>)</td></tr>
+            </tbody>
+          </table></div>
+
+          <div class="final-answer">
+            <div class="final-answer-label">✅ Resultado</div>
+            <p>El menú se repite después de cada conversión y solo termina cuando <code>x == 3</code>, cumpliendo exactamente lo pedido en el enunciado.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- SEMANA 13 — 6 EJEMPLOS INTEGRADORES -->
+    <!-- ============================================================ -->
+    <section class="block" id="s13-ejemplos">
+      <div class="block-header"><div class="block-num">13C</div><h2>6 ejemplos integradores</h2></div>
+      <p>Estos seis ejemplos del profesor combinan todo lo visto hasta ahora — <code>random</code>, bucles, condicionales y ahora menús — en problemas más cercanos a la vida real. Los resuelvo con el mismo nivel de detalle, aunque de forma un poco más compacta al ser más cortos en el enunciado original.</p>
+    </section>
+
+    <div class="exercise" id="ej13-votos">
+      <div class="exercise-header"><span class="exercise-num">EJEMPLO 1</span><span>Conteo de votos con votos en blanco y nulos</span><span class="exercise-tag">🔵 for + contadores</span></div>
+      <div class="exercise-body">
+        <div class="statement-box"><span class="statement-label">📝 Enunciado</span>
+          <p>Lea los votos de n personas. Cada voto es un número 1, 2, o 3 correspondiente a tres candidatos. Si el dato es 0 es un voto en blanco. Si es otro número es un voto nulo. Determine el total de votos de cada candidato y el total de votos blancos y nulos.</p>
+        </div>
+        <div class="solution-block">
+          <h4>📋 Paso 1 — Identificar las cinco categorías y sus contadores</h4>
+          <p>Hay cinco resultados posibles por voto: candidato 1, candidato 2, candidato 3, blanco (0) o nulo (cualquier otro valor). Necesito un contador independiente para cada categoría, todos inicializados en 0 antes de empezar a leer.</p>
+          <div class="why-box">
+            <div class="why-label">🤔 ¿Por qué "nulo" va en un ELSE final y no en una condición explícita?</div>
+            <p>"Nulo" no tiene un valor fijo que buscar — es <em>todo lo que no encaja</em> en las otras cuatro categorías (1, 2, 3 o 0). Por eso la forma correcta de expresarlo es como el <code>else</code> final de la cadena de <code>if/elif</code>: "si no fue ninguna de las anteriores, es nulo".</p>
+          </div>
+          <h4>📋 Paso 2 — Diagrama de flujo</h4>
+          <div class="flowchart-container">
+            <div class="mermaid-container" data-original='flowchart TB
+    I([Inicio])
+    LN[/"leer n"/]
+    INIC["c1←0, c2←0, c3←0, blancos←0, nulos←0"]
+    D0{"¿quedan votos por leer?"}
+    LV[/"leer voto"/]
+    D1{"voto == 1 ?"}
+    D2{"voto == 2 ?"}
+    D3{"voto == 3 ?"}
+    D4{"voto == 0 ?"}
+    INC1["c1 ← c1 + 1"]
+    INC2["c2 ← c2 + 1"]
+    INC3["c3 ← c3 + 1"]
+    INCB["blancos ← blancos + 1"]
+    INCN["nulos ← nulos + 1"]
+    MOSTRAR[/"mostrar resultados"/]
+    F([Fin])
+    I --> LN --> INIC --> D0
+    D0 -->|Si| LV --> D1
+    D1 -->|Si| INC1 --> D0
+    D1 -->|No| D2
+    D2 -->|Si| INC2 --> D0
+    D2 -->|No| D3
+    D3 -->|Si| INC3 --> D0
+    D3 -->|No| D4
+    D4 -->|Si| INCB --> D0
+    D4 -->|No| INCN --> D0
+    D0 -->|No| MOSTRAR --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style LN fill:#60a5fa,stroke:#1e40af,color:#000
+    style LV fill:#60a5fa,stroke:#1e40af,color:#000
+    style MOSTRAR fill:#60a5fa,stroke:#1e40af,color:#000
+    style INIC fill:#a78bfa,stroke:#6d28d9,color:#000
+    style INC1 fill:#a78bfa,stroke:#6d28d9,color:#000
+    style INC2 fill:#a78bfa,stroke:#6d28d9,color:#000
+    style INC3 fill:#a78bfa,stroke:#6d28d9,color:#000
+    style INCB fill:#a78bfa,stroke:#6d28d9,color:#000
+    style INCN fill:#a78bfa,stroke:#6d28d9,color:#000
+    style D0 fill:#fbbf24,stroke:#d97706,color:#000
+    style D1 fill:#fbbf24,stroke:#d97706,color:#000
+    style D2 fill:#fbbf24,stroke:#d97706,color:#000
+    style D3 fill:#fbbf24,stroke:#d97706,color:#000
+    style D4 fill:#fbbf24,stroke:#d97706,color:#000'><div class="mermaid">
+flowchart TB
+    I([Inicio])
+    LN[/"leer n"/]
+    INIC["c1←0, c2←0, c3←0, blancos←0, nulos←0"]
+    D0{"¿quedan votos por leer?"}
+    LV[/"leer voto"/]
+    D1{"voto == 1 ?"}
+    D2{"voto == 2 ?"}
+    D3{"voto == 3 ?"}
+    D4{"voto == 0 ?"}
+    INC1["c1 ← c1 + 1"]
+    INC2["c2 ← c2 + 1"]
+    INC3["c3 ← c3 + 1"]
+    INCB["blancos ← blancos + 1"]
+    INCN["nulos ← nulos + 1"]
+    MOSTRAR[/"mostrar resultados"/]
+    F([Fin])
+    I --> LN --> INIC --> D0
+    D0 -->|Si| LV --> D1
+    D1 -->|Si| INC1 --> D0
+    D1 -->|No| D2
+    D2 -->|Si| INC2 --> D0
+    D2 -->|No| D3
+    D3 -->|Si| INC3 --> D0
+    D3 -->|No| D4
+    D4 -->|Si| INCB --> D0
+    D4 -->|No| INCN --> D0
+    D0 -->|No| MOSTRAR --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style LN fill:#60a5fa,stroke:#1e40af,color:#000
+    style LV fill:#60a5fa,stroke:#1e40af,color:#000
+    style MOSTRAR fill:#60a5fa,stroke:#1e40af,color:#000
+    style INIC fill:#a78bfa,stroke:#6d28d9,color:#000
+    style INC1 fill:#a78bfa,stroke:#6d28d9,color:#000
+    style INC2 fill:#a78bfa,stroke:#6d28d9,color:#000
+    style INC3 fill:#a78bfa,stroke:#6d28d9,color:#000
+    style INCB fill:#a78bfa,stroke:#6d28d9,color:#000
+    style INCN fill:#a78bfa,stroke:#6d28d9,color:#000
+    style D0 fill:#fbbf24,stroke:#d97706,color:#000
+    style D1 fill:#fbbf24,stroke:#d97706,color:#000
+    style D2 fill:#fbbf24,stroke:#d97706,color:#000
+    style D3 fill:#fbbf24,stroke:#d97706,color:#000
+    style D4 fill:#fbbf24,stroke:#d97706,color:#000
+            </div></div>
+          </div>
+          <h4>📋 Paso 3 — Python</h4>
+<pre class="python"><code><span class="var">n</span> = <span class="fn">int</span>(<span class="fn">input</span>(<span class="str">"Ingrese la cantidad de personas: "</span>))
+c1 = c2 = c3 = blancos = nulos = <span class="num">0</span>
+
+<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(n):
+    voto = <span class="fn">int</span>(<span class="fn">input</span>(<span class="str">f"Voto de la persona {i+1}: "</span>))
+    <span class="kw">if</span> voto == <span class="num">1</span>:
+        c1 += <span class="num">1</span>
+    <span class="kw">elif</span> voto == <span class="num">2</span>:
+        c2 += <span class="num">1</span>
+    <span class="kw">elif</span> voto == <span class="num">3</span>:
+        c3 += <span class="num">1</span>
+    <span class="kw">elif</span> voto == <span class="num">0</span>:
+        blancos += <span class="num">1</span>
+    <span class="kw">else</span>:
+        nulos += <span class="num">1</span>
+
+<span class="fn">print</span>(<span class="str">"Candidato 1:"</span>, c1)
+<span class="fn">print</span>(<span class="str">"Candidato 2:"</span>, c2)
+<span class="fn">print</span>(<span class="str">"Candidato 3:"</span>, c3)
+<span class="fn">print</span>(<span class="str">"Votos en blanco:"</span>, blancos)
+<span class="fn">print</span>(<span class="str">"Votos nulos:"</span>, nulos)</code></pre>
+          <div class="why-box">
+            <div class="why-label">🤔 ¿Qué hace <code>c1 = c2 = c3 = blancos = nulos = 0</code>?</div>
+            <p>Es una <strong>asignación múltiple</strong> — Python permite asignar el mismo valor a varias variables en una sola línea, encadenando los signos <code>=</code>. Es equivalente a escribir cinco líneas <code>c1 = 0</code>, <code>c2 = 0</code>, etc., pero más compacto cuando todas comparten el mismo valor inicial.</p>
+          </div>
+          <div class="final-answer">
+            <div class="final-answer-label">✅ Resultado</div>
+            <p>El programa clasifica cada voto en una de cinco categorías y muestra los cinco totales al final del recorrido.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="exercise" id="ej13-descaleat">
+      <div class="exercise-header"><span class="exercise-num">EJEMPLO 2</span><span>Descuento según un número aleatorio</span><span class="exercise-tag">🔵 random + if/else</span></div>
+      <div class="exercise-body">
+        <div class="statement-box"><span class="statement-label">📝 Enunciado</span>
+          <p>En un supermercado se hace una promoción mediante la cual el cliente obtiene un descuento dependiendo de un número de una cifra que sale al azar. Si el número escogido es menor que 7 el descuento es del 5% sobre el total de la compra, si es mayor o igual a 7 el descuento es del 10%. Elabore el programa que lea la cantidad de dinero, genere el número aleatorio y muestre cuánto dinero se le descuenta.</p>
+        </div>
+        <div class="solution-block">
+          <h4>📋 Paso 1 — "Número de una cifra" define el rango exacto de <code>randint</code></h4>
+          <p>Un número de una cifra va de 0 a 9 (10 posibilidades). Genero ese número con <code>random.randint(0,9)</code> — a diferencia del dado (1 a 6), aquí el 0 sí es un valor válido.</p>
+          <h4>📋 Paso 2 — Diagrama de flujo</h4>
+          <div class="flowchart-container">
+            <div class="mermaid-container" data-original='flowchart TB
+    I([Inicio])
+    LM[/"leer monto"/]
+    GEN["numero ← aleatorio&#40;0,9&#41;"]
+    D1{"numero &lt; 7 ?"}
+    DC1["descuento ← 0.05"]
+    DC2["descuento ← 0.10"]
+    CALC["valor_descuento ← monto * descuento"]
+    MOSTRAR[/"mostrar numero, valor_descuento"/]
+    F([Fin])
+    I --> LM --> GEN --> D1
+    D1 -->|Si| DC1 --> CALC
+    D1 -->|No| DC2 --> CALC
+    CALC --> MOSTRAR --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style LM fill:#60a5fa,stroke:#1e40af,color:#000
+    style MOSTRAR fill:#60a5fa,stroke:#1e40af,color:#000
+    style GEN fill:#a78bfa,stroke:#6d28d9,color:#000
+    style DC1 fill:#a78bfa,stroke:#6d28d9,color:#000
+    style DC2 fill:#a78bfa,stroke:#6d28d9,color:#000
+    style CALC fill:#a78bfa,stroke:#6d28d9,color:#000
+    style D1 fill:#fbbf24,stroke:#d97706,color:#000'><div class="mermaid">
+flowchart TB
+    I([Inicio])
+    LM[/"leer monto"/]
+    GEN["numero ← aleatorio&#40;0,9&#41;"]
+    D1{"numero &lt; 7 ?"}
+    DC1["descuento ← 0.05"]
+    DC2["descuento ← 0.10"]
+    CALC["valor_descuento ← monto * descuento"]
+    MOSTRAR[/"mostrar numero, valor_descuento"/]
+    F([Fin])
+    I --> LM --> GEN --> D1
+    D1 -->|Si| DC1 --> CALC
+    D1 -->|No| DC2 --> CALC
+    CALC --> MOSTRAR --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style LM fill:#60a5fa,stroke:#1e40af,color:#000
+    style MOSTRAR fill:#60a5fa,stroke:#1e40af,color:#000
+    style GEN fill:#a78bfa,stroke:#6d28d9,color:#000
+    style DC1 fill:#a78bfa,stroke:#6d28d9,color:#000
+    style DC2 fill:#a78bfa,stroke:#6d28d9,color:#000
+    style CALC fill:#a78bfa,stroke:#6d28d9,color:#000
+    style D1 fill:#fbbf24,stroke:#d97706,color:#000
+            </div></div>
+          </div>
+          <h4>📋 Paso 3 — Python</h4>
+<pre class="python"><code><span class="kw">import</span> random
+
+monto = <span class="fn">float</span>(<span class="fn">input</span>(<span class="str">"Ingrese el monto de la compra: "</span>))
+numero = random.randint(<span class="num">0</span>, <span class="num">9</span>)
+
+<span class="kw">if</span> numero &lt; <span class="num">7</span>:
+    descuento = <span class="num">0.05</span>
+<span class="kw">else</span>:
+    descuento = <span class="num">0.10</span>
+
+valor_descuento = monto * descuento
+<span class="fn">print</span>(<span class="str">"Número generado:"</span>, numero)
+<span class="fn">print</span>(<span class="str">"Se le descuenta:"</span>, valor_descuento, <span class="str">"soles"</span>)</code></pre>
+          <div class="trace-table"><table>
+            <thead><tr><th class="center">monto</th><th class="center">numero</th><th class="center">¿&lt;7?</th><th class="center">descuento</th><th>valor descontado</th></tr></thead>
+            <tbody>
+              <tr><td class="center mono">200</td><td class="center mono">4</td><td class="center">V</td><td class="center mono">5%</td><td class="mono">10.0 soles</td></tr>
+              <tr><td class="center mono">200</td><td class="center mono">8</td><td class="center">F</td><td class="center mono">10%</td><td class="mono">20.0 soles</td></tr>
+            </tbody>
+          </table></div>
+          <div class="final-answer">
+            <div class="final-answer-label">✅ Resultado</div>
+            <p>El programa genera un dígito aleatorio (0-9), y según sea menor o mayor/igual a 7, aplica 5% o 10% de descuento respectivamente.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="exercise" id="ej13-dadopunt">
+      <div class="exercise-header"><span class="exercise-num">EJEMPLO 3</span><span>Simulación de dado con puntaje acumulado</span><span class="exercise-tag">🔵 for + random + acumulador</span></div>
+      <div class="exercise-body">
+        <div class="statement-box"><span class="statement-label">📝 Enunciado</span>
+          <p>Realice la simulación de n intentos de lanzamientos de un dado con las siguientes reglas: si sale 6 gana $5. Si sale 1 gana $1. Si sale 2, 3, 4 o 5 pierde $2. Determine la cantidad acumulada al final del juego.</p>
+        </div>
+        <div class="solution-block">
+          <h4>📋 Paso 1 — Distinguir "acumular puntaje" de "contar intentos" (Ejercicio 1)</h4>
+          <p>Este ejercicio se parece al Ejercicio 1 (dado con <code>random</code> y <code>for</code>), pero la diferencia clave es que aquí <strong>no hay condición de salida anticipada</strong> — se hacen los n lanzamientos completos siempre, y lo que cambia en cada vuelta es cuánto se suma o resta a un <em>acumulador</em> de puntaje, no si el bucle continúa o no. Por eso aquí no hace falta <code>break</code> ni <code>continue</code>: solo un <code>for</code> normal con un <code>if/elif/else</code> adentro.</p>
+          <h4>📋 Paso 2 — Diagrama de flujo</h4>
+          <div class="flowchart-container">
+            <div class="mermaid-container" data-original='flowchart TB
+    I([Inicio])
+    LN[/"leer n"/]
+    INIC["puntaje ← 0"]
+    D0{"¿quedan lanzamientos?"}
+    TIRA["dado ← aleatorio&#40;1,6&#41;"]
+    D1{"dado == 6 ?"}
+    D2{"dado == 1 ?"}
+    S1["puntaje ← puntaje + 5"]
+    S2["puntaje ← puntaje + 1"]
+    S3["puntaje ← puntaje - 2"]
+    MOSTRAR[/"mostrar puntaje final"/]
+    F([Fin])
+    I --> LN --> INIC --> D0
+    D0 -->|Si| TIRA --> D1
+    D1 -->|Si| S1 --> D0
+    D1 -->|No| D2
+    D2 -->|Si| S2 --> D0
+    D2 -->|No| S3 --> D0
+    D0 -->|No| MOSTRAR --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style LN fill:#60a5fa,stroke:#1e40af,color:#000
+    style MOSTRAR fill:#60a5fa,stroke:#1e40af,color:#000
+    style TIRA fill:#a78bfa,stroke:#6d28d9,color:#000
+    style INIC fill:#a78bfa,stroke:#6d28d9,color:#000
+    style S1 fill:#a78bfa,stroke:#6d28d9,color:#000
+    style S2 fill:#a78bfa,stroke:#6d28d9,color:#000
+    style S3 fill:#a78bfa,stroke:#6d28d9,color:#000
+    style D0 fill:#fbbf24,stroke:#d97706,color:#000
+    style D1 fill:#fbbf24,stroke:#d97706,color:#000
+    style D2 fill:#fbbf24,stroke:#d97706,color:#000'><div class="mermaid">
+flowchart TB
+    I([Inicio])
+    LN[/"leer n"/]
+    INIC["puntaje ← 0"]
+    D0{"¿quedan lanzamientos?"}
+    TIRA["dado ← aleatorio&#40;1,6&#41;"]
+    D1{"dado == 6 ?"}
+    D2{"dado == 1 ?"}
+    S1["puntaje ← puntaje + 5"]
+    S2["puntaje ← puntaje + 1"]
+    S3["puntaje ← puntaje - 2"]
+    MOSTRAR[/"mostrar puntaje final"/]
+    F([Fin])
+    I --> LN --> INIC --> D0
+    D0 -->|Si| TIRA --> D1
+    D1 -->|Si| S1 --> D0
+    D1 -->|No| D2
+    D2 -->|Si| S2 --> D0
+    D2 -->|No| S3 --> D0
+    D0 -->|No| MOSTRAR --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style LN fill:#60a5fa,stroke:#1e40af,color:#000
+    style MOSTRAR fill:#60a5fa,stroke:#1e40af,color:#000
+    style TIRA fill:#a78bfa,stroke:#6d28d9,color:#000
+    style INIC fill:#a78bfa,stroke:#6d28d9,color:#000
+    style S1 fill:#a78bfa,stroke:#6d28d9,color:#000
+    style S2 fill:#a78bfa,stroke:#6d28d9,color:#000
+    style S3 fill:#a78bfa,stroke:#6d28d9,color:#000
+    style D0 fill:#fbbf24,stroke:#d97706,color:#000
+    style D1 fill:#fbbf24,stroke:#d97706,color:#000
+    style D2 fill:#fbbf24,stroke:#d97706,color:#000
+            </div></div>
+          </div>
+          <h4>📋 Paso 3 — Python</h4>
+<pre class="python"><code><span class="kw">import</span> random
+
+<span class="var">n</span> = <span class="fn">int</span>(<span class="fn">input</span>(<span class="str">"Ingrese la cantidad de lanzamientos: "</span>))
+puntaje = <span class="num">0</span>
+
+<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(n):
+    dado = random.randint(<span class="num">1</span>, <span class="num">6</span>)
+    <span class="kw">if</span> dado == <span class="num">6</span>:
+        puntaje += <span class="num">5</span>
+    <span class="kw">elif</span> dado == <span class="num">1</span>:
+        puntaje += <span class="num">1</span>
+    <span class="kw">else</span>:
+        puntaje -= <span class="num">2</span>
+    <span class="fn">print</span>(<span class="str">f"Lanzamiento {i+1}: salió {dado} -> puntaje: {puntaje}"</span>)
+
+<span class="fn">print</span>(<span class="str">"Puntaje final:"</span>, puntaje)</code></pre>
+          <div class="trace-table"><table>
+            <thead><tr><th class="center">lanzamiento</th><th class="center">dado</th><th>regla</th><th class="center">puntaje acumulado</th></tr></thead>
+            <tbody>
+              <tr><td class="center mono">1</td><td class="center mono">6</td><td>+5</td><td class="center mono">5</td></tr>
+              <tr><td class="center mono">2</td><td class="center mono">3</td><td>-2</td><td class="center mono">3</td></tr>
+              <tr><td class="center mono">3</td><td class="center mono">1</td><td>+1</td><td class="center mono">4</td></tr>
+              <tr><td class="center mono">4</td><td class="center mono">6</td><td>+5</td><td class="center mono"><strong>9</strong></td></tr>
+            </tbody>
+          </table></div>
+          <div class="final-answer">
+            <div class="final-answer-label">✅ Resultado</div>
+            <p>Al final de los n lanzamientos, <code>puntaje</code> contiene la cantidad acumulada según las reglas del juego (por ejemplo, 9 en la traza anterior).</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="exercise" id="ej13-forwhile">
+      <div class="exercise-header"><span class="exercise-num">EJEMPLO 4</span><span>Convertir un ciclo FOR a su equivalente WHILE</span><span class="exercise-tag">🟣 equivalencia for/while</span></div>
+      <div class="exercise-body">
+        <div class="statement-box"><span class="statement-label">📝 Enunciado</span>
+          <p>Analice el siguiente programa que usa un ciclo <code>for</code>. Escriba un programa equivalente que produzca el mismo resultado, pero sustituyendo el ciclo <code>for</code> por un ciclo <code>while</code>. Debe definir una variable para conteo de repeticiones y la condición para salir del ciclo.</p>
+<pre class="python"><code>n = <span class="fn">int</span>(<span class="fn">input</span>(<span class="str">'Ingrese un número: '</span>))
+s = <span class="num">0</span>
+<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>,n):
+    s = s + i**<span class="num">2</span>
+<span class="fn">print</span>(s)</code></pre>
+        </div>
+        <div class="solution-block">
+          <h4>📋 Paso 1 — Entender exactamente qué hace <code>range(1,n)</code></h4>
+          <p><code>range(1,n)</code> genera los valores <code>1, 2, 3, ..., n-1</code> — <strong>nunca incluye n</strong>. Este detalle es crítico: si al pasar a <code>while</code> pongo la condición como <code>i &lt;= n</code> por error, el resultado ya no sería equivalente. La condición correcta que reproduce exactamente el mismo recorrido es <code>i &lt; n</code>.</p>
+          <h4>📋 Paso 2 — Identificar las tres piezas que un FOR "esconde" y que un WHILE debe hacer explícitas</h4>
+          <p>Un <code>for i in range(a,b)</code> hace automáticamente tres cosas en cada vuelta: <strong>(1)</strong> inicializa <code>i</code> en <code>a</code> antes de empezar, <strong>(2)</strong> revisa la condición <code>i &lt; b</code> antes de cada vuelta, y <strong>(3)</strong> incrementa <code>i</code> en 1 al final de cada vuelta. Un <code>while</code> no hace nada de esto solo — tengo que escribir las tres partes yo mismo.</p>
+          <div class="why-box">
+            <div class="why-label">🤔 ¿Dónde exactamente va el incremento de <code>i</code> en el WHILE?</div>
+            <p><strong>Al final del cuerpo del bucle</strong>, después de haber usado <code>i</code> para el cálculo — nunca antes. Si lo pusiera al inicio, la primera vez que se usa <code>i</code> dentro del cálculo ya tendría el valor incrementado, desalineando toda la secuencia respecto al <code>for</code> original.</p>
+          </div>
+          <h4>📋 Paso 3 — Diagrama de flujo (la lógica es idéntica para ambas versiones — solo cambia la sintaxis)</h4>
+          <div class="flowchart-container">
+            <div class="mermaid-container" data-original='flowchart TB
+    I([Inicio])
+    LN[/"leer n"/]
+    INIC["s ← 0, i ← 1"]
+    D0{"i &lt; n ?"}
+    CALC["s ← s + i^2"]
+    INC["i ← i + 1"]
+    MOSTRAR[/"mostrar s"/]
+    F([Fin])
+    I --> LN --> INIC --> D0
+    D0 -->|Si| CALC --> INC --> D0
+    D0 -->|No| MOSTRAR --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style LN fill:#60a5fa,stroke:#1e40af,color:#000
+    style MOSTRAR fill:#60a5fa,stroke:#1e40af,color:#000
+    style INIC fill:#a78bfa,stroke:#6d28d9,color:#000
+    style CALC fill:#a78bfa,stroke:#6d28d9,color:#000
+    style INC fill:#a78bfa,stroke:#6d28d9,color:#000
+    style D0 fill:#fbbf24,stroke:#d97706,color:#000'><div class="mermaid">
+flowchart TB
+    I([Inicio])
+    LN[/"leer n"/]
+    INIC["s ← 0, i ← 1"]
+    D0{"i &lt; n ?"}
+    CALC["s ← s + i^2"]
+    INC["i ← i + 1"]
+    MOSTRAR[/"mostrar s"/]
+    F([Fin])
+    I --> LN --> INIC --> D0
+    D0 -->|Si| CALC --> INC --> D0
+    D0 -->|No| MOSTRAR --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style LN fill:#60a5fa,stroke:#1e40af,color:#000
+    style MOSTRAR fill:#60a5fa,stroke:#1e40af,color:#000
+    style INIC fill:#a78bfa,stroke:#6d28d9,color:#000
+    style CALC fill:#a78bfa,stroke:#6d28d9,color:#000
+    style INC fill:#a78bfa,stroke:#6d28d9,color:#000
+    style D0 fill:#fbbf24,stroke:#d97706,color:#000
+            </div></div>
+            <div class="flowchart-caption">📊 Este mismo diagrama describe tanto el FOR original como el WHILE equivalente — la lógica es una sola, solo cambia cómo Python la escribe por dentro.</div>
+          </div>
+          <h4>📋 Paso 4 — Comparación lado a lado</h4>
+          <div class="dual-view">
+            <div>
+              <h4 style="border:none;padding:0;margin-top:0">Original (FOR)</h4>
+<pre class="python"><code>n = <span class="fn">int</span>(<span class="fn">input</span>(<span class="str">'Ingrese un número: '</span>))
+s = <span class="num">0</span>
+<span class="kw">for</span> i <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>, n):
+    s = s + i ** <span class="num">2</span>
+<span class="fn">print</span>(s)</code></pre>
+            </div>
+            <div>
+              <h4 style="border:none;padding:0;margin-top:0">Equivalente (WHILE)</h4>
+<pre class="python"><code>n = <span class="fn">int</span>(<span class="fn">input</span>(<span class="str">'Ingrese un número: '</span>))
+s = <span class="num">0</span>
+i = <span class="num">1</span>
+<span class="kw">while</span> i &lt; n:
+    s = s + i ** <span class="num">2</span>
+    i = i + <span class="num">1</span>
+<span class="fn">print</span>(s)</code></pre>
+            </div>
+          </div>
+          <h4>📋 Paso 5 — Prueba de escritorio (verificando que ambos dan el mismo resultado, con n=5)</h4>
+          <div class="trace-table"><table>
+            <thead><tr><th class="center">i</th><th class="center">i &lt; 5 ?</th><th>s (antes)</th><th class="mono">s + i²</th><th>s (después)</th></tr></thead>
+            <tbody>
+              <tr><td class="center mono">1</td><td class="center">V</td><td class="center mono">0</td><td class="mono">0+1</td><td class="center mono">1</td></tr>
+              <tr><td class="center mono">2</td><td class="center">V</td><td class="center mono">1</td><td class="mono">1+4</td><td class="center mono">5</td></tr>
+              <tr><td class="center mono">3</td><td class="center">V</td><td class="center mono">5</td><td class="mono">5+9</td><td class="center mono">14</td></tr>
+              <tr><td class="center mono">4</td><td class="center">V</td><td class="center mono">14</td><td class="mono">14+16</td><td class="center mono">30</td></tr>
+              <tr><td class="center mono">5</td><td class="center">F</td><td colspan="3">bucle termina (5 &lt; 5 es falso)</td></tr>
+            </tbody>
+          </table></div>
+          <div class="final-answer">
+            <div class="final-answer-label">✅ Resultado</div>
+            <p>Con n=5, ambos programas (el FOR original y el WHILE equivalente) imprimen <strong>30</strong> — confirmando que son verdaderamente equivalentes.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="exercise" id="ej13-magico">
+      <div class="exercise-header"><span class="exercise-num">EJEMPLO 5</span><span>Número mágico a partir de la fecha de nacimiento</span><span class="exercise-tag">🟣 while + descomposición en dígitos</span></div>
+      <div class="exercise-body">
+        <div class="statement-box"><span class="statement-label">📝 Enunciado</span>
+          <p>En un juego se debe asignar a cada persona un número mágico que se obtiene con la siguiente regla: Se suman los dígitos de la fecha de nacimiento y se suman nuevamente los dígitos del resultado hasta obtener un solo dígito. Ejemplo: Fecha de Nacimiento 28/11/1999 → 28+11+1999=2038 → 2+0+3+8=13 → 1+3=4. Elabore el programa que lea los tres números: día, mes, año y muestre el número mágico correspondiente.</p>
+        </div>
+        <div class="solution-block">
+          <h4>📋 Paso 1 — Identificar por qué esto necesita un bucle (y no se sabe de antemano cuántas vueltas)</h4>
+          <p>El proceso de "sumar los dígitos" se repite un número <em>impredecible</em> de veces — depende de cuántas cifras tenga cada resultado intermedio. Eso descarta un <code>for</code> con rango fijo, y apunta directamente a un <code>while</code>: "mientras la suma tenga más de un dígito (sea mayor que 9), sigue descomponiendo".</p>
+          <h4>📋 Paso 2 — Cómo descomponer un número en sus dígitos en Python</h4>
+          <p>La forma más directa es convertir el número a texto con <code>str()</code>, recorrer cada carácter con un <code>for</code>, y convertir cada carácter de vuelta a número con <code>int()</code> para sumarlo. Es un pequeño bucle <em>anidado dentro</em> del bucle principal.</p>
+          <div class="why-box">
+            <div class="why-label">🤔 ¿Por qué convertir a texto en vez de usar operaciones matemáticas (// y %)?</div>
+            <p>También se podría extraer dígito por dígito con <code>numero % 10</code> (último dígito) y <code>numero // 10</code> (quitar ese dígito), en un bucle <code>while numero &gt; 0</code>. Es igualmente válido y más "matemático". Elegí la versión con <code>str()</code> porque es más legible para quien recién está aprendiendo bucles anidados — pero vale la pena que sepas que ambos caminos existen y llegan al mismo resultado.</p>
+          </div>
+          <h4>📋 Paso 3 — Diagrama de flujo</h4>
+          <div class="flowchart-container">
+            <div class="mermaid-container" data-original='flowchart TB
+    I([Inicio])
+    L[/"leer día, mes, año"/]
+    INIC["suma ← día + mes + año"]
+    D0{"suma &gt; 9 ?"}
+    DESC["descomponer suma en dígitos y sumarlos de nuevo"]
+    MOSTRAR[/"mostrar suma"/]
+    F([Fin])
+    I --> L --> INIC --> D0
+    D0 -->|Si| DESC --> D0
+    D0 -->|No| MOSTRAR --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style MOSTRAR fill:#60a5fa,stroke:#1e40af,color:#000
+    style INIC fill:#a78bfa,stroke:#6d28d9,color:#000
+    style DESC fill:#a78bfa,stroke:#6d28d9,color:#000
+    style D0 fill:#fbbf24,stroke:#d97706,color:#000'><div class="mermaid">
+flowchart TB
+    I([Inicio])
+    L[/"leer día, mes, año"/]
+    INIC["suma ← día + mes + año"]
+    D0{"suma &gt; 9 ?"}
+    DESC["descomponer suma en dígitos y sumarlos de nuevo"]
+    MOSTRAR[/"mostrar suma"/]
+    F([Fin])
+    I --> L --> INIC --> D0
+    D0 -->|Si| DESC --> D0
+    D0 -->|No| MOSTRAR --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style MOSTRAR fill:#60a5fa,stroke:#1e40af,color:#000
+    style INIC fill:#a78bfa,stroke:#6d28d9,color:#000
+    style DESC fill:#a78bfa,stroke:#6d28d9,color:#000
+    style D0 fill:#fbbf24,stroke:#d97706,color:#000
+            </div></div>
+          </div>
+          <h4>📋 Paso 4 — Python</h4>
+<pre class="python"><code>dia = <span class="fn">int</span>(<span class="fn">input</span>(<span class="str">"Ingrese el día: "</span>))
+mes = <span class="fn">int</span>(<span class="fn">input</span>(<span class="str">"Ingrese el mes: "</span>))
+anio = <span class="fn">int</span>(<span class="fn">input</span>(<span class="str">"Ingrese el año: "</span>))
+
+suma = dia + mes + anio
+
+<span class="kw">while</span> suma &gt; <span class="num">9</span>:
+    texto = <span class="fn">str</span>(suma)
+    nueva_suma = <span class="num">0</span>
+    <span class="kw">for</span> digito <span class="kw">in</span> texto:
+        nueva_suma += <span class="fn">int</span>(digito)
+    suma = nueva_suma
+
+<span class="fn">print</span>(<span class="str">"El número mágico es:"</span>, suma)</code></pre>
+          <h4>📋 Paso 5 — Prueba de escritorio (con el ejemplo del enunciado: 28/11/1999)</h4>
+          <div class="trace-table"><table>
+            <thead><tr><th>Vuelta</th><th class="center">suma</th><th>¿suma &gt; 9?</th><th>Acción</th></tr></thead>
+            <tbody>
+              <tr><td>Antes del bucle</td><td class="center mono">2038</td><td>—</td><td>28+11+1999 = 2038</td></tr>
+              <tr><td>1ª vuelta</td><td class="center mono">2038</td><td class="center">V</td><td>2+0+3+8 = 13 → suma ← 13</td></tr>
+              <tr><td>2ª vuelta</td><td class="center mono">13</td><td class="center">V</td><td>1+3 = 4 → suma ← 4</td></tr>
+              <tr><td>3ª evaluación</td><td class="center mono">4</td><td class="center">F</td><td>bucle termina</td></tr>
+            </tbody>
+          </table></div>
+          <div class="final-answer">
+            <div class="final-answer-label">✅ Resultado</div>
+            <p>Para la fecha 28/11/1999, el número mágico es <strong>4</strong> — coincide exactamente con el ejemplo del profesor.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="exercise" id="ej13-pizza">
+      <div class="exercise-header"><span class="exercise-num">EJEMPLO 6</span><span>Calculadora de pizzas con menú</span><span class="exercise-tag">🔴 while True + break + diccionario</span></div>
+      <div class="exercise-body">
+        <div class="statement-box"><span class="statement-label">📝 Enunciado</span>
+          <p>El precio de una pizza depende de su tamaño: Pequeña $5, Mediana $8, Grande $12. Cada ingrediente adicional cuesta $1.5. Escriba un programa interactivo con un menú para elegir el tamaño de la pizza, indicar la cantidad de ingredientes adicionales y mostrar el valor a pagar. Menú: 1) Pizza pequeña, 2) Pizza mediana, 3) Pizza grande, 4) Salir.</p>
+        </div>
+        <div class="solution-block">
+          <h4>📋 Paso 1 — Guardar los tres precios en un diccionario, en vez de tres if/elif</h4>
+          <p>Tengo tres tamaños, cada uno con un precio fijo asociado a un número de opción. En vez de escribir <code>if opcion==1: precio=5 elif opcion==2: precio=8 elif opcion==3: precio=12</code>, guardo esa correspondencia en un diccionario <code>{1:5, 2:8, 3:12}</code> y accedo al precio con <code>precios[opcion]</code>. Es más corto y — como verás en la Semana 14 — es exactamente la misma idea que usaremos para la decisión múltiple con <code>.get()</code>.</p>
+          <div class="callout tip">
+            <div class="callout-header"><span class="callout-icon">🔮</span> Adelanto de la Semana 14</div>
+            <p>Este ejercicio ya está "pidiendo a gritos" el patrón que vas a formalizar en la próxima semana: cuando una variable (aquí, <code>opcion</code>) puede tomar varios valores y cada uno debe traducirse a otro valor fijo (aquí, el precio), un diccionario es más limpio que una cadena larga de <code>if/elif</code>.</p>
+          </div>
+          <h4>📋 Paso 2 — Diagrama de flujo</h4>
+          <div class="flowchart-container">
+            <div class="mermaid-container" data-original='flowchart TB
+    I([Inicio])
+    M[/"mostrar menú"/]
+    LO[/"leer opción"/]
+    D4{"opción == 4 ?"}
+    DVAL{"¿opción es 1, 2 o 3 ?"}
+    PRECIO["precio_base ← precios&#91;opción&#93;"]
+    LI[/"leer ingredientes adicionales"/]
+    CALC["total ← precio_base + ingredientes*1.5"]
+    MOSTRAR[/"mostrar total"/]
+    INV[/"mostrar opción no válida"/]
+    F([Fin])
+    I --> M --> LO --> D4
+    D4 -->|Si| F
+    D4 -->|No| DVAL
+    DVAL -->|No| INV --> M
+    DVAL -->|Si| PRECIO --> LI --> CALC --> MOSTRAR --> M
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style LO fill:#60a5fa,stroke:#1e40af,color:#000
+    style LI fill:#60a5fa,stroke:#1e40af,color:#000
+    style MOSTRAR fill:#60a5fa,stroke:#1e40af,color:#000
+    style INV fill:#60a5fa,stroke:#1e40af,color:#000
+    style PRECIO fill:#a78bfa,stroke:#6d28d9,color:#000
+    style CALC fill:#a78bfa,stroke:#6d28d9,color:#000
+    style D4 fill:#fbbf24,stroke:#d97706,color:#000
+    style DVAL fill:#fbbf24,stroke:#d97706,color:#000'><div class="mermaid">
+flowchart TB
+    I([Inicio])
+    M[/"mostrar menú"/]
+    LO[/"leer opción"/]
+    D4{"opción == 4 ?"}
+    DVAL{"¿opción es 1, 2 o 3 ?"}
+    PRECIO["precio_base ← precios&#91;opción&#93;"]
+    LI[/"leer ingredientes adicionales"/]
+    CALC["total ← precio_base + ingredientes*1.5"]
+    MOSTRAR[/"mostrar total"/]
+    INV[/"mostrar opción no válida"/]
+    F([Fin])
+    I --> M --> LO --> D4
+    D4 -->|Si| F
+    D4 -->|No| DVAL
+    DVAL -->|No| INV --> M
+    DVAL -->|Si| PRECIO --> LI --> CALC --> MOSTRAR --> M
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style M fill:#60a5fa,stroke:#1e40af,color:#000
+    style LO fill:#60a5fa,stroke:#1e40af,color:#000
+    style LI fill:#60a5fa,stroke:#1e40af,color:#000
+    style MOSTRAR fill:#60a5fa,stroke:#1e40af,color:#000
+    style INV fill:#60a5fa,stroke:#1e40af,color:#000
+    style PRECIO fill:#a78bfa,stroke:#6d28d9,color:#000
+    style CALC fill:#a78bfa,stroke:#6d28d9,color:#000
+    style D4 fill:#fbbf24,stroke:#d97706,color:#000
+    style DVAL fill:#fbbf24,stroke:#d97706,color:#000
+            </div></div>
+          </div>
+          <h4>📋 Paso 3 — Python</h4>
+<pre class="python"><code>precios = {<span class="num">1</span>: <span class="num">5</span>, <span class="num">2</span>: <span class="num">8</span>, <span class="num">3</span>: <span class="num">12</span>}
+
+<span class="kw">while</span> <span class="kw">True</span>:
+    <span class="fn">print</span>(<span class="str">"Menú"</span>)
+    <span class="fn">print</span>(<span class="str">"1) Pizza pequeña"</span>)
+    <span class="fn">print</span>(<span class="str">"2) Pizza mediana"</span>)
+    <span class="fn">print</span>(<span class="str">"3) Pizza grande"</span>)
+    <span class="fn">print</span>(<span class="str">"4) Salir"</span>)
+
+    opcion = <span class="fn">int</span>(<span class="fn">input</span>(<span class="str">"Elija una opción: "</span>))
+
+    <span class="kw">if</span> opcion == <span class="num">4</span>:
+        <span class="fn">print</span>(<span class="str">"Gracias por su compra"</span>)
+        <span class="kw">break</span>
+
+    <span class="kw">if</span> opcion <span class="kw">not in</span> precios:
+        <span class="fn">print</span>(<span class="str">"Opción no válida"</span>)
+        <span class="kw">continue</span>
+
+    ingredientes = <span class="fn">int</span>(<span class="fn">input</span>(<span class="str">"Ingrese la cantidad de ingredientes adicionales: "</span>))
+    total = precios[opcion] + ingredientes * <span class="num">1.5</span>
+    <span class="fn">print</span>(<span class="str">"Total a pagar: $"</span>, total)</code></pre>
+          <h4>📋 Paso 4 — Prueba de escritorio</h4>
+          <div class="trace-table"><table>
+            <thead><tr><th class="center">opción</th><th class="center">ingredientes</th><th>cálculo</th><th>total</th></tr></thead>
+            <tbody>
+              <tr><td class="center mono">2</td><td class="center mono">3</td><td class="mono">8 + 3*1.5</td><td class="mono">$12.5</td></tr>
+              <tr><td class="center mono">3</td><td class="center mono">0</td><td class="mono">12 + 0*1.5</td><td class="mono">$12.0</td></tr>
+              <tr><td class="center mono">4</td><td>—</td><td>—</td><td>Fin del programa (<code>break</code>)</td></tr>
+            </tbody>
+          </table></div>
+          <div class="final-answer">
+            <div class="final-answer-label">✅ Resultado</div>
+            <p>El menú se repite tras cada compra y calcula correctamente el total según tamaño e ingredientes, hasta que el usuario elige la opción 4.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- SEMANA 14 — TEORÍA DECISIÓN MÚLTIPLE -->
+    <!-- ============================================================ -->
+    <section class="block" id="s14-teoria">
+      <div class="block-header"><div class="block-num">14</div><h2>Estructuras de decisión múltiple</h2></div>
+
+      <h3>14.1. El problema: demasiadas ramas para un simple SI/SINO</h3>
+      <p>Un <code>SI/SINO</code> decide entre dos caminos. Pero, ¿qué pasa cuando una variable puede tomar <em>muchos</em> valores posibles, y cada uno dispara una acción distinta? Podrías encadenar muchos <code>SI/SINO SI</code>, pero cuando son 5, 10 o más opciones, ese código se vuelve largo y repetitivo. Para este caso existe la <strong>estructura de decisión múltiple</strong>, también llamada SEGÚN-CASO (o <code>switch/case</code> en otros lenguajes).</p>
+
+      <div class="def-card">
+        <span class="def-label">Definición</span>
+        <div class="def-term">Decisión múltiple / SEGÚN-CASO</div>
+        <div class="def-text">Se evalúa una variable "selector" que puede tomar diversos valores. Según el valor que tome en cada momento, se ejecutan las acciones correspondientes a ese valor específico.</div>
+      </div>
+
+      <div class="callout theory">
+        <div class="callout-header"><span class="callout-icon">📌</span> "En realidad, equivale a un conjunto de condiciones anidadas" (tal como lo dice el profesor)</div>
+        <p>Esto es clave para no confundirte: el SEGÚN-CASO <strong>no es una estructura de control fundamentalmente nueva</strong> — es <em>azúcar sintáctico</em> (una forma más cómoda de escribir) sobre algo que ya conoces perfectamente: una cadena de <code>SI ... SINO SI ... SINO SI ... SINO</code>. Cualquier SEGÚN-CASO se puede reescribir siempre como condicionales anidados, y viceversa. La ventaja de SEGÚN-CASO es solo de <strong>legibilidad</strong> cuando comparas una misma variable contra muchos valores distintos.</p>
+      </div>
+
+      <h3>14.2. Pseudocódigo del profesor</h3>
+<pre class="pseudo"><code><span class="kw">Si</span> &lt;selector&gt; igual
+    &lt;Valor1&gt;: &lt;operación 1&gt;
+    &lt;valor2&gt;: &lt;operación 2&gt;
+    ...
+    [&lt;En otro caso&gt;: &lt;operación n+1&gt;]
+<span class="kw">fin selector</span></code></pre>
+      <p>El corchete en <code>[&lt;En otro caso&gt;: ...]</code> indica que esa rama es <strong>opcional</strong> — si ninguno de los valores listados coincide y no hay "en otro caso" definido, sencillamente no se ejecuta ninguna operación.</p>
+
+      <h3>14.3. Diagrama de flujo genérico</h3>
+      <div class="flowchart-container">
+        <div class="mermaid-container" data-original='flowchart TB
+    I([Inicio])
+    C{"selector == ?"}
+    O1[/"operación 1"/]
+    O2[/"operación 2"/]
+    ON[/"operación N"/]
+    OD[/"operación en otro caso"/]
+    F([Fin])
+    I --> C
+    C -->|Valor1| O1 --> F
+    C -->|Valor2| O2 --> F
+    C -->|ValorN| ON --> F
+    C -->|En otro caso| OD --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style O1 fill:#60a5fa,stroke:#1e40af,color:#000
+    style O2 fill:#60a5fa,stroke:#1e40af,color:#000
+    style ON fill:#60a5fa,stroke:#1e40af,color:#000
+    style OD fill:#60a5fa,stroke:#1e40af,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000'><div class="mermaid">
+flowchart TB
+    I([Inicio])
+    C{"selector == ?"}
+    O1[/"operación 1"/]
+    O2[/"operación 2"/]
+    ON[/"operación N"/]
+    OD[/"operación en otro caso"/]
+    F([Fin])
+    I --> C
+    C -->|Valor1| O1 --> F
+    C -->|Valor2| O2 --> F
+    C -->|ValorN| ON --> F
+    C -->|En otro caso| OD --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style O1 fill:#60a5fa,stroke:#1e40af,color:#000
+    style O2 fill:#60a5fa,stroke:#1e40af,color:#000
+    style ON fill:#60a5fa,stroke:#1e40af,color:#000
+    style OD fill:#60a5fa,stroke:#1e40af,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000
+        </div></div>
+        <div class="flowchart-caption">📊 Es el mismo diagrama que en la diapositiva del profesor, solo redibujado con más contraste — una única decisión que se abre en tantas ramas como valores tenga el selector, y todas convergen al final.</div>
+      </div>
+
+      <h3>14.4. La técnica de Python: diccionario + <code>.get()</code></h3>
+      <p>Python <strong>no incluye</strong> una instrucción nativa de tipo <code>switch/case</code> como otros lenguajes (C, Java). Por eso, para implementar el SEGÚN-CASO, el curso usa un patrón muy elegante: guardar la correspondencia "valor del selector → resultado" dentro de un <strong>diccionario</strong>, y usar el método <code>.get()</code> para consultarlo.</p>
+
+      <div class="def-card">
+        <span class="def-label">Sintaxis</span>
+        <div class="def-term"><code>nombre_diccionario.get(clave, valor_por_defecto)</code></div>
+        <div class="def-text">Busca <code>clave</code> dentro del diccionario. Si la encuentra, devuelve el valor asociado. Si <strong>no</strong> la encuentra, devuelve <code>valor_por_defecto</code> en su lugar — sin lanzar ningún error.</div>
+      </div>
+
+      <div class="theory-recap">
+        <div class="theory-label"><span>📌</span> El paralelo exacto entre el SEGÚN-CASO y el diccionario.get()</div>
+        <div class="table-wrapper">
+          <table class="bridge-table">
+            <thead><tr><th>Pseudocódigo (SEGÚN-CASO)</th><th>Python (diccionario.get)</th></tr></thead>
+            <tbody>
+              <tr><td class="pseudo-cell">Si &lt;selector&gt; igual</td><td class="py-cell">diccionario = {'clave': valor, ...}</td></tr>
+              <tr><td class="pseudo-cell">&lt;Valor1&gt;: &lt;operación 1&gt;</td><td class="py-cell">1: 'operación 1'</td></tr>
+              <tr><td class="pseudo-cell">&lt;Valor2&gt;: &lt;operación 2&gt;</td><td class="py-cell">2: 'operación 2'</td></tr>
+              <tr><td class="pseudo-cell">[&lt;En otro caso&gt;: ...]</td><td class="py-cell">diccionario.get(selector, 'valor por defecto')</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>El <strong>segundo argumento de <code>.get()</code> es literalmente el "En otro caso" del pseudocódigo</strong> — cumple exactamente el mismo rol: qué hacer cuando el selector no coincide con ninguna de las claves definidas.</p>
+      </div>
+
+      <div class="callout warning">
+        <div class="callout-header"><span class="callout-icon">⚠️</span> Un límite importante de esta técnica</div>
+        <p>El patrón diccionario+<code>.get()</code> funciona perfecto cuando cada valor del selector se traduce a un <strong>dato</strong> fijo (un texto, un número, un precio). Pero si cada opción necesitara ejecutar <em>varias instrucciones distintas</em> (no solo devolver un valor), tendrías que guardar <em>funciones</em> como valores del diccionario, lo cual es un tema más avanzado. Para todo lo que se pide en este curso, el diccionario devolviendo un valor directo es suficiente y es exactamente el patrón que usa el profesor.</p>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- EJERCICIO: día de la semana (del profesor) -->
+    <!-- ============================================================ -->
+    <div class="exercise" id="ej14-dia">
+      <div class="exercise-header"><span class="exercise-num">EJ. RESUELTO</span><span>Mostrar el día de la semana según un número</span><span class="exercise-tag">🟢 diccionario.get</span></div>
+      <div class="exercise-body">
+        <div class="statement-box"><span class="statement-label">📝 Enunciado (tal como lo dio el profesor)</span>
+          <p>Elaborar un programa que solicite ingresar un número y muestre el día de la semana que le corresponde. Para este ejemplo, el número 1 corresponde a "lunes".</p>
+        </div>
+
+        <div class="solution-block">
+          <h4>📋 Paso 1 — Identificar el selector y sus 7 valores posibles</h4>
+          <p>El selector es el número ingresado (1 al 7), y cada valor se traduce a un nombre de día fijo. Es el caso más puro de decisión múltiple: 7 valores, 7 resultados, sin cálculos de por medio — el diccionario le queda perfecto.</p>
+
+          <h4>📋 Paso 2 — El código del profesor, explicado línea por línea</h4>
+<pre class="python"><code><span class="cmt"># PROGRAMA PARA ESCOGER EL DÍA DE LA SEMANA</span>
+diasem = {
+    <span class="num">1</span>: <span class="str">"Lunes"</span>,
+    <span class="num">2</span>: <span class="str">"Martes"</span>,
+    <span class="num">3</span>: <span class="str">"Miércoles"</span>,
+    <span class="num">4</span>: <span class="str">"Jueves"</span>,
+    <span class="num">5</span>: <span class="str">"Viernes"</span>,
+    <span class="num">6</span>: <span class="str">"Sábado"</span>,
+    <span class="num">7</span>: <span class="str">"Domingo"</span>,
+}
+num = <span class="fn">int</span>(<span class="fn">input</span>(<span class="str">'Ingrese un número del 1 al 7: '</span>))
+nombrededia = diasem.get(num, <span class="str">'No es un día de la semana'</span>)
+<span class="fn">print</span>(nombrededia)</code></pre>
+          <div class="legend-box">
+            <div class="legend-title">Lo que hace cada parte</div>
+            <p><code>diasem = {1: "Lunes", ...}</code> crea el diccionario, donde cada clave (1 al 7) es un posible valor del selector, y su valor asociado es el texto a mostrar.<br/><code>diasem.get(num, 'No es un día de la semana')</code> busca <code>num</code> entre las claves: si está entre 1 y 7, devuelve el nombre del día; si el usuario ingresó cualquier otro número (0, 8, -3, etc.), devuelve el mensaje por defecto sin que el programa se caiga.</p>
+          </div>
+
+          <h4>📋 Paso 3 — Diagrama de flujo (la decisión múltiple detrás del <code>.get()</code>)</h4>
+          <div class="flowchart-container">
+            <div class="mermaid-container" data-original='flowchart TB
+    I([Inicio])
+    L[/"leer num"/]
+    C{"num == ?"}
+    O1[/"mostrar Lunes"/]
+    O2[/"mostrar Martes"/]
+    ON[/"mostrar ... Domingo &#40;3 a 7&#41;"/]
+    OD[/"mostrar No es un día de la semana"/]
+    F([Fin])
+    I --> L --> C
+    C -->|1| O1 --> F
+    C -->|2| O2 --> F
+    C -->|3 a 7| ON --> F
+    C -->|En otro caso| OD --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style O1 fill:#60a5fa,stroke:#1e40af,color:#000
+    style O2 fill:#60a5fa,stroke:#1e40af,color:#000
+    style ON fill:#60a5fa,stroke:#1e40af,color:#000
+    style OD fill:#60a5fa,stroke:#1e40af,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000'><div class="mermaid">
+flowchart TB
+    I([Inicio])
+    L[/"leer num"/]
+    C{"num == ?"}
+    O1[/"mostrar Lunes"/]
+    O2[/"mostrar Martes"/]
+    ON[/"mostrar ... Domingo &#40;3 a 7&#41;"/]
+    OD[/"mostrar No es un día de la semana"/]
+    F([Fin])
+    I --> L --> C
+    C -->|1| O1 --> F
+    C -->|2| O2 --> F
+    C -->|3 a 7| ON --> F
+    C -->|En otro caso| OD --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style O1 fill:#60a5fa,stroke:#1e40af,color:#000
+    style O2 fill:#60a5fa,stroke:#1e40af,color:#000
+    style ON fill:#60a5fa,stroke:#1e40af,color:#000
+    style OD fill:#60a5fa,stroke:#1e40af,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000
+            </div></div>
+            <div class="flowchart-caption">📊 Aunque el código Python no tiene ningún <code>if</code> visible, conceptualmente el <code>.get()</code> está resolviendo exactamente esta decisión múltiple por dentro.</div>
+          </div>
+
+          <h4>📋 Paso 4 — Prueba de escritorio</h4>
+          <div class="trace-table"><table>
+            <thead><tr><th class="center">num</th><th>¿está en el diccionario?</th><th>salida</th></tr></thead>
+            <tbody>
+              <tr><td class="center mono">1</td><td class="center">Sí</td><td>Lunes</td></tr>
+              <tr><td class="center mono">7</td><td class="center">Sí</td><td>Domingo</td></tr>
+              <tr><td class="center mono">8</td><td class="center">No</td><td>No es un día de la semana</td></tr>
+              <tr><td class="center mono">0</td><td class="center">No</td><td>No es un día de la semana</td></tr>
+            </tbody>
+          </table></div>
+
+          <div class="final-answer">
+            <div class="final-answer-label">✅ Resultado</div>
+            <p>El programa traduce cualquier número del 1 al 7 a su día correspondiente, y responde con un mensaje claro para cualquier otro valor — sin necesidad de escribir siete condicionales encadenados.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- EJERCICIO: par/impar con diccionario.get -->
+    <!-- ============================================================ -->
+    <div class="exercise" id="ej14-parimpar">
+      <div class="exercise-header"><span class="exercise-num">EJ. PROPUESTO</span><span>Determinar si un número del 1 al 10 es par o impar</span><span class="exercise-tag">🟢 diccionario.get</span></div>
+      <div class="exercise-body">
+        <div class="statement-box"><span class="statement-label">📝 Enunciado (tal como lo dio el profesor)</span>
+          <p>Se desea elaborar un programa que permita ingresar un número entre 1 y 10 (inclusive) y muestre si es número par o impar. (utilizar diccionario.get)</p>
+        </div>
+
+        <div class="solution-block">
+          <h4>📋 Paso 1 — Aplicar literalmente el mismo patrón del ejercicio anterior</h4>
+          <p>El enunciado exige explícitamente usar <code>diccionario.get</code>, así que sigo la misma receta: cada número del 1 al 10 (el selector) es una clave, y su valor asociado es el texto "par" o "impar" que le corresponde.</p>
+
+          <div class="why-box">
+            <div class="why-label">🤔 ¿Tengo que escribir las 10 claves a mano, una por una?</div>
+            <p>Para resolver el ejercicio <em>tal como fue pedido</em>, sí — el objetivo es practicar exactamente la construcción de un diccionario de decisión múltiple con varias claves explícitas, igual que el ejemplo del profesor tenía 7 claves para los días. Más abajo te muestro además una versión más elegante que resuelve el mismo problema con un diccionario de solo 2 claves, para que veas la idea completa — pero la solución "de libro" para este enunciado es la de las 10 claves.</p>
+          </div>
+
+          <h4>📋 Paso 2 — Diagrama de flujo</h4>
+          <div class="flowchart-container">
+            <div class="mermaid-container" data-original='flowchart TB
+    I([Inicio])
+    L[/"leer num"/]
+    C{"num == ?"}
+    O1[/"mostrar impar"/]
+    O2[/"mostrar par"/]
+    OD[/"mostrar fuera de rango"/]
+    F([Fin])
+    I --> L --> C
+    C -->|1, 3, 5, 7, 9| O1 --> F
+    C -->|2, 4, 6, 8, 10| O2 --> F
+    C -->|En otro caso| OD --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style O1 fill:#60a5fa,stroke:#1e40af,color:#000
+    style O2 fill:#60a5fa,stroke:#1e40af,color:#000
+    style OD fill:#60a5fa,stroke:#1e40af,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000'><div class="mermaid">
+flowchart TB
+    I([Inicio])
+    L[/"leer num"/]
+    C{"num == ?"}
+    O1[/"mostrar impar"/]
+    O2[/"mostrar par"/]
+    OD[/"mostrar fuera de rango"/]
+    F([Fin])
+    I --> L --> C
+    C -->|1, 3, 5, 7, 9| O1 --> F
+    C -->|2, 4, 6, 8, 10| O2 --> F
+    C -->|En otro caso| OD --> F
+    style I fill:#34d399,stroke:#059669,color:#000
+    style F fill:#f87171,stroke:#dc2626,color:#000
+    style L fill:#60a5fa,stroke:#1e40af,color:#000
+    style O1 fill:#60a5fa,stroke:#1e40af,color:#000
+    style O2 fill:#60a5fa,stroke:#1e40af,color:#000
+    style OD fill:#60a5fa,stroke:#1e40af,color:#000
+    style C fill:#fbbf24,stroke:#d97706,color:#000
+            </div></div>
+          </div>
+
+          <h4>📋 Paso 3 — Pseudocódigo</h4>
+<pre class="pseudo"><code><span class="kw">INICIO</span>
+    <span class="fn">Leer</span> <span class="var">num</span>
+    <span class="kw">Si</span> <span class="var">num</span> igual
+        <span class="num">1</span>: <span class="str">"impar"</span>
+        <span class="num">2</span>: <span class="str">"par"</span>
+        <span class="num">3</span>: <span class="str">"impar"</span>
+        <span class="num">4</span>: <span class="str">"par"</span>
+        <span class="num">5</span>: <span class="str">"impar"</span>
+        <span class="num">6</span>: <span class="str">"par"</span>
+        <span class="num">7</span>: <span class="str">"impar"</span>
+        <span class="num">8</span>: <span class="str">"par"</span>
+        <span class="num">9</span>: <span class="str">"impar"</span>
+        <span class="num">10</span>: <span class="str">"par"</span>
+        [<span class="kw">En otro caso</span>: <span class="str">"fuera de rango"</span>]
+    <span class="kw">fin selector</span>
+    <span class="fn">Mostrar</span> <span class="var">resultado</span>
+<span class="kw">FIN</span></code></pre>
+
+          <h4>📋 Paso 4 — Python (solución principal, fiel al enunciado)</h4>
+<pre class="python"><code>paridad = {
+    <span class="num">1</span>: <span class="str">"impar"</span>, <span class="num">2</span>: <span class="str">"par"</span>, <span class="num">3</span>: <span class="str">"impar"</span>, <span class="num">4</span>: <span class="str">"par"</span>, <span class="num">5</span>: <span class="str">"impar"</span>,
+    <span class="num">6</span>: <span class="str">"par"</span>, <span class="num">7</span>: <span class="str">"impar"</span>, <span class="num">8</span>: <span class="str">"par"</span>, <span class="num">9</span>: <span class="str">"impar"</span>, <span class="num">10</span>: <span class="str">"par"</span>
+}
+
+num = <span class="fn">int</span>(<span class="fn">input</span>(<span class="str">"Ingrese un número entre 1 y 10: "</span>))
+resultado = paridad.get(num, <span class="str">"Número fuera de rango"</span>)
+<span class="fn">print</span>(resultado)</code></pre>
+
+          <h4>📋 Paso 5 — Prueba de escritorio</h4>
+          <div class="trace-table"><table>
+            <thead><tr><th class="center">num</th><th>¿está en el diccionario?</th><th>salida</th></tr></thead>
+            <tbody>
+              <tr><td class="center mono">7</td><td class="center">Sí</td><td>impar</td></tr>
+              <tr><td class="center mono">10</td><td class="center">Sí</td><td>par</td></tr>
+              <tr><td class="center mono">15</td><td class="center">No</td><td>Número fuera de rango</td></tr>
+            </tbody>
+          </table></div>
+
+          <div class="final-answer">
+            <div class="final-answer-label">✅ Resultado</div>
+            <p>El programa muestra "par" o "impar" para cualquier número del 1 al 10, y un mensaje de rango inválido para cualquier otro valor.</p>
+          </div>
+
+          <div class="callout bonus">
+            <div class="callout-header"><span class="callout-icon">🚀</span> Para ir más allá: la versión elegante con solo 2 claves</div>
+            <p>Fíjate en algo: "par" e "impar" en realidad solo dependen del <strong>residuo</strong> de dividir <code>num</code> entre 2 (<code>num % 2</code>), que únicamente puede dar 0 (par) o 1 (impar) — sin importar si num es 2 o 4 o 1000. Eso significa que no hace falta un diccionario con 10 claves: basta con un diccionario de <strong>2 claves</strong> (0 y 1) que traduzca ese residuo:</p>
+<pre class="python"><code>num = <span class="fn">int</span>(<span class="fn">input</span>(<span class="str">"Ingrese un número entre 1 y 10: "</span>))
+
+<span class="kw">if</span> <span class="num">1</span> &lt;= num &lt;= <span class="num">10</span>:
+    resultado = {<span class="num">0</span>: <span class="str">"par"</span>, <span class="num">1</span>: <span class="str">"impar"</span>}.get(num % <span class="num">2</span>)
+<span class="kw">else</span>:
+    resultado = <span class="str">"Número fuera de rango"</span>
+
+<span class="fn">print</span>(resultado)</code></pre>
+            <p>Esta versión escala perfecto a cualquier rango de números (no solo 1-10) sin agregar una sola clave más — porque dejó de mapear "cada número posible" y pasó a mapear "cada resultado posible de una operación", que en este caso son solo dos. Es la misma idea de decisión múltiple, aplicada con más inteligencia sobre el problema.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================================================ -->
+    <!-- PUENTE: SEGÚN-CASO vs diccionario vs if-elif -->
+    <!-- ============================================================ -->
+    <section class="block" id="s14-puente">
+      <div class="block-header"><div class="block-num">14B</div><h2>Comparando las tres formas de decidir entre varias opciones</h2></div>
+      <p>Ya conoces tres maneras de resolver el mismo tipo de problema. Vale la pena tenerlas todas claras, para elegir la más adecuada según el caso — esto es exactamente el tipo de criterio que distingue a alguien que ya domina el tema de alguien que solo memorizó una receta.</p>
+
+      <div class="compare-grid">
+        <div class="compare-card">
+          <h4>🔗 Cadena de <code>if/elif/else</code></h4>
+          <p>Ideal cuando las condiciones <strong>no son solo igualdades simples</strong> — por ejemplo rangos (<code>num &lt; 7</code>), combinaciones de variables, o condiciones con <code>and</code>/<code>or</code>. Es la opción más flexible, pero se vuelve larga con muchos casos.</p>
+        </div>
+        <div class="compare-card">
+          <h4>📖 Diccionario + <code>.get()</code></h4>
+          <p>Ideal cuando comparas <strong>una sola variable</strong> contra <strong>muchos valores exactos</strong>, y cada uno se traduce a un dato fijo (texto, número). Muy legible y compacto, pero limitado a comparaciones de igualdad — no sirve directamente para rangos o condiciones compuestas.</p>
+        </div>
+        <div class="compare-card">
+          <h4>🧩 SEGÚN-CASO (pseudocódigo)</h4>
+          <p>Es la forma de <strong>pensar y comunicar</strong> este tipo de decisión en el papel, independiente del lenguaje de programación. Se traduce a <code>if/elif</code> en la mayoría de lenguajes, o a diccionario+<code>.get()</code> en Python cuando el patrón de "una variable, muchos valores exactos" aplica.</p>
+        </div>
+      </div>
+
+      <div class="callout intuition">
+        <div class="callout-header"><span class="callout-icon">💡</span> Regla práctica para decidir</div>
+        <p>Pregúntate: <strong>¿estoy comparando una sola variable contra valores exactos y específicos</strong> (1, 2, 3... o "rojo", "azul"...)? Si sí, un diccionario+<code>.get()</code> probablemente es más limpio. <strong>¿Hay rangos, comparaciones entre variables, o condiciones combinadas</strong> (a&lt;b, x&gt;10 and y&lt;5)? Entonces <code>if/elif/else</code> es la herramienta correcta — el diccionario no puede expresar eso directamente.</p>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- CIERRE -->
+    <!-- ============================================================ -->
+    <section class="block" id="cierre" style="margin-bottom:0">
+      <div class="block-header"><div class="block-num">🎯</div><h2>Cierre y autoevaluación</h2></div>
+
+      <div class="glossary-grid">
+        <div class="gloss-item"><div class="gloss-term">break</div><div class="gloss-def">Corta inmediatamente el bucle que lo contiene; el programa continúa después de ese bucle.</div></div>
+        <div class="gloss-item"><div class="gloss-term">continue</div><div class="gloss-def">Salta el resto del cuerpo del bucle solo en la iteración actual; el bucle sigue vivo.</div></div>
+        <div class="gloss-item"><div class="gloss-term">while True</div><div class="gloss-def">Bucle "infinito" cuyo único punto de salida está dentro del cuerpo, normalmente con un break condicional.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Menú interactivo</div><div class="gloss-def">Patrón mostrar → leer → ejecutar acción, típicamente repetido con while True hasta una opción de salida.</div></div>
+        <div class="gloss-item"><div class="gloss-term">Decisión múltiple / SEGÚN-CASO</div><div class="gloss-def">Evaluar un selector contra varios valores posibles; equivale a condicionales anidados.</div></div>
+        <div class="gloss-item"><div class="gloss-term">diccionario.get(clave, defecto)</div><div class="gloss-def">Busca clave en un diccionario; si no existe, devuelve defecto en vez de lanzar un error — el equivalente Python de "en otro caso".</div></div>
+      </div>
+
+      <h3>Autoevaluación rápida</h3>
+
+      <div class="quiz-item">
+        <div class="quiz-q">1. Dentro de un for con 10 vueltas, en la vuelta 4 se ejecuta break. ¿Cuántas veces se ejecutó el cuerpo del bucle en total?</div>
+        <details><summary>Ver respuesta</summary><div class="answer-content"><strong>4 veces</strong> (vueltas 1, 2, 3 y 4) — en la vuelta 4, break corta el bucle apenas se ejecuta, así que las vueltas 5 a 10 nunca ocurren.</div></details>
+      </div>
+      <div class="quiz-item">
+        <div class="quiz-q">2. En ese mismo escenario pero con continue en vez de break, ¿cuántas veces se ejecuta el cuerpo del bucle en total?</div>
+        <details><summary>Ver respuesta</summary><div class="answer-content"><strong>10 veces</strong> — continue solo se salta las instrucciones restantes de la vuelta 4, pero el for sigue corriendo normalmente hasta completar sus 10 iteraciones.</div></details>
+      </div>
+      <div class="quiz-item">
+        <div class="quiz-q">3. ¿Por qué un while True casi siempre necesita un break en algún lugar de su cuerpo?</div>
+        <details><summary>Ver respuesta</summary><div class="answer-content">Porque la condición <code>True</code> nunca se vuelve falsa por sí sola — sin un break disparado por alguna condición interna (como elegir la opción de salir del menú), el bucle correría para siempre.</div></details>
+      </div>
+      <div class="quiz-item">
+        <div class="quiz-q">4. ¿Qué devuelve diccionario.get(5, "no encontrado") si la clave 5 no existe en el diccionario?</div>
+        <details><summary>Ver respuesta</summary><div class="answer-content">El texto <code>"no encontrado"</code> — el segundo argumento de .get() es el valor por defecto que se devuelve cuando la clave buscada no está presente, en vez de lanzar un error.</div></details>
+      </div>
+      <div class="quiz-item">
+        <div class="quiz-q">5. ¿Cuándo conviene usar if/elif/else en vez de diccionario.get() para una decisión múltiple?</div>
+        <details><summary>Ver respuesta</summary><div class="answer-content">Cuando las condiciones no son simples igualdades exactas — por ejemplo, rangos de valores (num &lt; 7), comparaciones entre variables, o condiciones compuestas con and/or. El diccionario solo puede comparar por igualdad de una clave.</div></details>
+      </div>
+
+      <div class="callout tip" style="margin-top:28px">
+        <div class="callout-header"><span class="callout-icon">✅</span> Checklist antes de dar por dominado este tema</div>
+        <ul style="margin-top:4px">
+          <li>Puedo explicar con mis palabras la diferencia entre break y continue, y dar un ejemplo de cuándo usar cada uno.</li>
+          <li>Puedo escribir un menú con while True que se repita hasta que el usuario elija salir.</li>
+          <li>Sé por qué break y continue no contradicen la programación estructurada, aunque técnicamente son "saltos".</li>
+          <li>Puedo construir un diccionario y usar .get() con un valor por defecto para resolver una decisión múltiple.</li>
+          <li>Sé identificar cuándo un problema conviene resolverlo con diccionario.get() y cuándo conviene resolverlo con if/elif/else.</li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<button id="backBtn" aria-label="Volver a donde estabas leyendo" title="Volver a donde estabas (antes de saltar de sección)">↩︎</button>
+<button id="toTopBtn" aria-label="Subir al inicio">↑</button>
+
+<script>
+function isDarkishTheme(theme) {
+  return theme === 'dark' || theme === 'dim' || theme === 'contrast';
+}
+
+function getMermaidConfig(theme) {
+  const isDark = isDarkishTheme(theme);
+  return {
+    startOnLoad: false,
+    theme: 'base',
+    securityLevel: 'loose',
+    themeVariables: {
+      fontFamily: "'Inter', sans-serif",
+      fontSize: '12.5px',
+      primaryColor: '#a78bfa',
+      primaryTextColor: '#0a0e1a',
+      primaryBorderColor: '#6d28d9',
+      lineColor: isDark ? '#cbd5e1' : '#475569',
+      secondaryColor: '#60a5fa',
+      tertiaryColor: '#fbbf24',
+      background: isDark ? '#1a2138' : '#fafbfd',
+      mainBkg: '#a78bfa',
+      edgeLabelBackground: isDark ? '#1a2138' : '#fafbfd',
+      labelTextColor: isDark ? '#f1f5f9' : '#0f172a',
+      tertiaryTextColor: isDark ? '#f1f5f9' : '#0f172a',
+      noteTextColor: isDark ? '#f1f5f9' : '#0f172a',
+      clusterBkg: isDark ? '#161c2f' : '#fff',
+      clusterBorder: isDark ? '#2a3354' : '#e2e8f0',
+      titleColor: isDark ? '#e8edf7' : '#0f172a'
+    },
+    flowchart: {
+      curve: 'basis',
+      padding: 10,
+      useMaxWidth: true,
+      htmlLabels: false,
+      nodeSpacing: 30,
+      rankSpacing: 24,
+      defaultRenderer: 'dagre-wrapper',
+      wrappingWidth: 130
+    }
+  };
+}
+
+async function renderMermaid() {
+  const containers = document.querySelectorAll('.mermaid-container');
+  const theme = document.documentElement.getAttribute('data-theme');
+  const isDark = isDarkishTheme(theme);
+  const edgeColor = getComputedStyle(document.documentElement).getPropertyValue('--edge-text').trim() || (isDark ? '#f1f5f9' : '#0f172a');
+  const edgeBg = getComputedStyle(document.documentElement).getPropertyValue('--edge-bg').trim() || (isDark ? '#1a2138' : '#fafbfd');
+
+  for (let i = 0; i < containers.length; i++) {
+    const container = containers[i];
+    const original = container.getAttribute('data-original');
+    if (!original) continue;
+    const mermaidDiv = container.querySelector('.mermaid');
+    if (!mermaidDiv) continue;
+    mermaidDiv.removeAttribute('data-processed');
+    mermaidDiv.innerHTML = original;
+    try {
+      const { svg } = await mermaid.render('mermaid-svg-' + i + '-' + Date.now(), original);
+      mermaidDiv.innerHTML = svg;
+
+      const renderedSvg = mermaidDiv.querySelector('svg');
+      if (renderedSvg) {
+        renderedSvg.querySelectorAll('.edgeLabel text, .edgeLabel tspan').forEach(el => {
+          el.style.fill = edgeColor;
+          el.setAttribute('fill', edgeColor);
+        });
+        renderedSvg.querySelectorAll('.edgeLabel rect, .labelBkg').forEach(el => {
+          el.style.fill = edgeBg;
+          el.setAttribute('fill', edgeBg);
+          el.style.opacity = '0.97';
+        });
+        renderedSvg.querySelectorAll('.edgeLabel foreignObject span, .edgeLabel foreignObject div').forEach(el => {
+          el.style.color = edgeColor;
+          el.style.backgroundColor = edgeBg;
+        });
+      }
+    } catch (err) {
+      console.error('Error renderizando diagrama', i, err);
+      mermaidDiv.innerHTML = '<pre style="text-align:left;color:#f87171;font-size:.8rem">Error: ' + err.message + '</pre>';
+    }
+  }
+
+  setTimeout(() => {
+    document.querySelectorAll('.flowchart-container').forEach(setupDiagramZoom);
+  }, 80);
+}
+
+function setupDiagramZoom(container) {
+  container.querySelectorAll('.zoom-toolbar').forEach(t => t.remove());
+  container.classList.remove('has-toolbar');
+
+  const svg = container.querySelector('.mermaid svg');
+  if (!svg) return;
+
+  const rect = svg.getBoundingClientRect();
+  const baseW = rect.width;
+  const baseH = rect.height;
+  if (baseW < 10) return;
+
+  let scale = 1;
+  const minScale = 0.5;
+  const maxScale = 4;
+  const stepBtn = 0.2;
+
+  const toolbar = document.createElement('div');
+  toolbar.className = 'zoom-toolbar';
+  toolbar.innerHTML = `
+    <button class="zoom-btn" data-zoom="out" title="Alejar (−)" aria-label="Alejar">−</button>
+    <span class="zoom-label">100%</span>
+    <button class="zoom-btn" data-zoom="in" title="Acercar (+)" aria-label="Acercar">+</button>
+    <button class="zoom-btn" data-zoom="reset" title="Resetear al 100% (doble click)" aria-label="Reset">⟳</button>
+  `;
+  container.insertBefore(toolbar, container.firstChild);
+  container.classList.add('has-toolbar');
+
+  const label = toolbar.querySelector('.zoom-label');
+
+  function apply() {
+    scale = Math.min(maxScale, Math.max(minScale, scale));
+    /* El CSS base usa !important en width/max-width del SVG para que los
+       diagramas se vean bien por defecto sin JS. Para que el zoom pueda
+       ganarle a esas reglas, hay que fijar los estilos en línea también
+       como 'important' (si no, el navegador ignora el estilo en línea). */
+    svg.style.setProperty('width', (baseW * scale) + 'px', 'important');
+    svg.style.setProperty('height', (baseH * scale) + 'px', 'important');
+    svg.style.setProperty('max-width', 'none', 'important');
+    svg.style.setProperty('max-height', 'none', 'important');
+    label.textContent = Math.round(scale * 100) + '%';
+    if (Math.abs(scale - 1) < 0.01) {
+      container.classList.remove('zooming');
+    } else {
+      container.classList.add('zooming');
+    }
+  }
+
+  toolbar.addEventListener('click', e => {
+    const btn = e.target.closest('[data-zoom]');
+    if (!btn) return;
+    const action = btn.dataset.zoom;
+    if (action === 'in') scale += stepBtn;
+    else if (action === 'out') scale -= stepBtn;
+    else if (action === 'reset') scale = 1;
+    apply();
+  });
+
+  container.addEventListener('wheel', e => {
+    if (e.ctrlKey || e.metaKey) {
+      e.preventDefault();
+      const delta = -e.deltaY * 0.012;
+      scale += delta;
+      apply();
+    }
+  }, { passive: false });
+
+  let gestureStartScale = 1;
+  container.addEventListener('gesturestart', e => {
+    e.preventDefault();
+    gestureStartScale = scale;
+  });
+  container.addEventListener('gesturechange', e => {
+    e.preventDefault();
+    scale = gestureStartScale * e.scale;
+    apply();
+  });
+  container.addEventListener('gestureend', e => {
+    e.preventDefault();
+  });
+
+  svg.addEventListener('dblclick', e => {
+    e.preventDefault();
+    scale = 1;
+    apply();
+  });
+}
+
+const themeToggle = document.getElementById('themeToggle');
+const themeIcon = document.getElementById('themeIcon');
+const themeLabel = document.getElementById('themeLabel');
+const THEME_KEY = 's1314-theme';
+
+function updateThemeUI(theme) {
+  if (theme === 'light') {
+    themeIcon.textContent = '☀️';
+    themeLabel.textContent = 'Claro';
+  } else if (theme === 'sepia') {
+    themeIcon.textContent = '📜';
+    themeLabel.textContent = 'Sepia';
+  } else if (theme === 'dim') {
+    themeIcon.textContent = '🌆';
+    themeLabel.textContent = 'Nocturno';
+  } else if (theme === 'contrast') {
+    themeIcon.textContent = '⬛';
+    themeLabel.textContent = 'Contraste';
+  } else {
+    themeIcon.textContent = '🌙';
+    themeLabel.textContent = 'Oscuro';
+  }
+  document.querySelectorAll('.a11y-opt[data-theme-opt]').forEach(b => {
+    b.classList.toggle('active', b.dataset.themeOpt === theme);
+  });
+}
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  updateThemeUI(theme);
+  localStorage.setItem(THEME_KEY, theme);
+  mermaid.initialize(getMermaidConfig(theme));
+  renderMermaid();
+}
+
+themeToggle.addEventListener('click', () => {
+  const current = document.documentElement.getAttribute('data-theme');
+  const order = ['dark', 'light', 'sepia', 'dim', 'contrast'];
+  const idx = order.indexOf(current);
+  const next = order[(idx === -1 ? 0 : idx + 1) % order.length];
+  applyTheme(next);
+});
+
+document.querySelectorAll('.a11y-opt[data-theme-opt]').forEach(btn => {
+  btn.addEventListener('click', () => applyTheme(btn.dataset.themeOpt));
+});
+
+const sidebarToggle = document.getElementById('sidebarToggle');
+const layout = document.getElementById('layout');
+const SIDEBAR_KEY = 's1314-sidebar-hidden';
+
+function applySidebarState(hidden) {
+  if (hidden) {
+    layout.classList.add('sidebar-hidden');
+    sidebarToggle.textContent = '☰';
+    sidebarToggle.title = 'Mostrar menú (S)';
+  } else {
+    layout.classList.remove('sidebar-hidden');
+    sidebarToggle.textContent = '✕';
+    sidebarToggle.title = 'Ocultar menú (S)';
+  }
+  localStorage.setItem(SIDEBAR_KEY, hidden ? '1' : '0');
+}
+
+sidebarToggle.addEventListener('click', () => {
+  const isHidden = layout.classList.contains('sidebar-hidden');
+  applySidebarState(!isHidden);
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  if (e.key === 't' || e.key === 'T') {
+    themeToggle.click();
+  } else if (e.key === 's' || e.key === 'S') {
+    sidebarToggle.click();
+  } else if (e.key === 'Escape') {
+    closeA11y();
+  }
+});
+
+const sections = document.querySelectorAll('section.block, section.hero');
+const tocLinks = document.querySelectorAll('.toc-list a');
+
+function updateActiveSection() {
+  let current = '';
+  const scrollPos = window.scrollY + 90;
+  sections.forEach(sec => {
+    if (sec.offsetTop <= scrollPos) {
+      current = sec.id;
+    }
+  });
+  tocLinks.forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('href') === '#' + current) {
+      link.classList.add('active');
+    }
+  });
+}
+
+const topbarEl = document.getElementById('topbar');
+const readProgressEl = document.getElementById('readProgress');
+const toTopBtn = document.getElementById('toTopBtn');
+let lastScrollY = window.scrollY;
+
+function handleScrollUI() {
+  const y = window.scrollY;
+  const doc = document.documentElement;
+  const scrollable = doc.scrollHeight - doc.clientHeight;
+  const pct = scrollable > 0 ? (y / scrollable) * 100 : 0;
+  readProgressEl.style.width = pct + '%';
+
+  if (y > 140 && y > lastScrollY) {
+    topbarEl.classList.add('topbar-hidden');
+  } else if (y < lastScrollY || y < 140) {
+    topbarEl.classList.remove('topbar-hidden');
+  }
+  lastScrollY = y;
+
+  if (y > 480) {
+    toTopBtn.classList.add('show');
+  } else {
+    toTopBtn.classList.remove('show');
+  }
+
+  updateActiveSection();
+}
+
+window.addEventListener('scroll', handleScrollUI, { passive: true });
+
+toTopBtn.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+/* ============================================================
+   Botón "volver a donde estabas": guarda tu posición de lectura
+   justo antes de saltar a otra sección desde el menú lateral,
+   para que puedas regresar con un solo click.
+   ============================================================ */
+const backBtn = document.getElementById('backBtn');
+let backScrollPosition = null;
+
+tocLinks.forEach(link => {
+  link.addEventListener('click', () => {
+    backScrollPosition = window.scrollY;
+    backBtn.classList.add('show');
+  });
+});
+
+backBtn.addEventListener('click', () => {
+  if (backScrollPosition === null) return;
+  const target = backScrollPosition;
+  backScrollPosition = null;
+  backBtn.classList.remove('show');
+  window.scrollTo({ top: target, behavior: 'smooth' });
+});
+
+const a11yToggle = document.getElementById('a11yToggle');
+const a11yPanel = document.getElementById('a11yPanel');
+const a11yOverlay = document.getElementById('a11yOverlay');
+const a11yClose = document.getElementById('a11yClose');
+const a11yReset = document.getElementById('a11yReset');
+const fsMinus = document.getElementById('fsMinus');
+const fsPlus = document.getElementById('fsPlus');
+const fsLabel = document.getElementById('fsLabel');
+
+const FS_KEY = 's1314-fontzoom';
+const WIDTH_KEY = 's1314-width';
+const LH_KEY = 's1314-lineheight';
+const FS_STEPS = [0.85, 0.9, 1, 1.1, 1.2, 1.3, 1.45];
+let fsIndex = 2;
+
+function openA11y() {
+  a11yPanel.classList.add('show');
+  a11yOverlay.classList.add('show');
+  a11yToggle.setAttribute('aria-expanded', 'true');
+}
+function closeA11y() {
+  a11yPanel.classList.remove('show');
+  a11yOverlay.classList.remove('show');
+  a11yToggle.setAttribute('aria-expanded', 'false');
+}
+a11yToggle.addEventListener('click', () => {
+  if (a11yPanel.classList.contains('show')) closeA11y(); else openA11y();
+});
+a11yClose.addEventListener('click', closeA11y);
+a11yOverlay.addEventListener('click', closeA11y);
+
+function applyFontZoom(index) {
+  fsIndex = Math.min(FS_STEPS.length - 1, Math.max(0, index));
+  const val = FS_STEPS[fsIndex];
+  document.documentElement.style.setProperty('--text-zoom', val);
+  fsLabel.textContent = Math.round(val * 100) + '%';
+  localStorage.setItem(FS_KEY, fsIndex);
+}
+fsMinus.addEventListener('click', () => applyFontZoom(fsIndex - 1));
+fsPlus.addEventListener('click', () => applyFontZoom(fsIndex + 1));
+
+function applyWidth(opt) {
+  const widths = { normal: '100%', narrow: '1100px', focus: '760px' };
+  document.documentElement.style.setProperty('--reading-width', widths[opt] || '100%');
+  document.querySelectorAll('.a11y-opt[data-width-opt]').forEach(b => {
+    b.classList.toggle('active', b.dataset.widthOpt === opt);
+  });
+  localStorage.setItem(WIDTH_KEY, opt);
+}
+document.querySelectorAll('.a11y-opt[data-width-opt]').forEach(btn => {
+  btn.addEventListener('click', () => applyWidth(btn.dataset.widthOpt));
+});
+
+function applyLineHeight(opt) {
+  document.documentElement.style.setProperty('--body-lh', opt === 'relaxed' ? '1.95' : '1.7');
+  document.querySelectorAll('.a11y-opt[data-lh-opt]').forEach(b => {
+    b.classList.toggle('active', b.dataset.lhOpt === opt);
+  });
+  localStorage.setItem(LH_KEY, opt);
+}
+document.querySelectorAll('.a11y-opt[data-lh-opt]').forEach(btn => {
+  btn.addEventListener('click', () => applyLineHeight(btn.dataset.lhOpt));
+});
+
+const LS_KEY = 's1314-letterspacing';
+function applyLetterSpacing(opt) {
+  document.documentElement.style.setProperty('--letter-spacing', opt === 'wide' ? '.03em' : 'normal');
+  document.querySelectorAll('.a11y-opt[data-ls-opt]').forEach(b => {
+    b.classList.toggle('active', b.dataset.lsOpt === opt);
+  });
+  localStorage.setItem(LS_KEY, opt);
+}
+document.querySelectorAll('.a11y-opt[data-ls-opt]').forEach(btn => {
+  btn.addEventListener('click', () => applyLetterSpacing(btn.dataset.lsOpt));
+});
+
+const UNDERLINE_KEY = 's1314-underline';
+function applyUnderline(opt) {
+  document.documentElement.classList.toggle('underline-links', opt === 'on');
+  document.querySelectorAll('.a11y-opt[data-underline-opt]').forEach(b => {
+    b.classList.toggle('active', b.dataset.underlineOpt === opt);
+  });
+  localStorage.setItem(UNDERLINE_KEY, opt);
+}
+document.querySelectorAll('.a11y-opt[data-underline-opt]').forEach(btn => {
+  btn.addEventListener('click', () => applyUnderline(btn.dataset.underlineOpt));
+});
+
+const MOTION_KEY = 's1314-motion';
+function applyMotion(opt) {
+  document.documentElement.classList.toggle('reduce-motion', opt === 'off');
+  document.querySelectorAll('.a11y-opt[data-motion-opt]').forEach(b => {
+    b.classList.toggle('active', b.dataset.motionOpt === opt);
+  });
+  localStorage.setItem(MOTION_KEY, opt);
+}
+document.querySelectorAll('.a11y-opt[data-motion-opt]').forEach(btn => {
+  btn.addEventListener('click', () => applyMotion(btn.dataset.motionOpt));
+});
+
+a11yReset.addEventListener('click', () => {
+  applyTheme('dark');
+  applyFontZoom(2);
+  applyWidth('normal');
+  applyLineHeight('normal');
+  applyLetterSpacing('normal');
+  applyUnderline('off');
+  applyMotion('on');
+});
+
+window.addEventListener('DOMContentLoaded', () => {
+  const savedTheme = localStorage.getItem(THEME_KEY) || 'dark';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeUI(savedTheme);
+
+  const savedSidebarHidden = localStorage.getItem(SIDEBAR_KEY);
+  const isMobile = window.innerWidth <= 1024;
+  const hidden = savedSidebarHidden !== null ? (savedSidebarHidden === '1') : isMobile;
+  applySidebarState(hidden);
+
+  const savedFs = localStorage.getItem(FS_KEY);
+  applyFontZoom(savedFs !== null ? parseInt(savedFs, 10) : 2);
+
+  const savedWidth = localStorage.getItem(WIDTH_KEY) || 'normal';
+  applyWidth(savedWidth);
+
+  const savedLh = localStorage.getItem(LH_KEY) || 'normal';
+  applyLineHeight(savedLh);
+
+  const savedLs = localStorage.getItem(LS_KEY) || 'normal';
+  applyLetterSpacing(savedLs);
+
+  const savedUnderline = localStorage.getItem(UNDERLINE_KEY) || 'off';
+  applyUnderline(savedUnderline);
+
+  const savedMotion = localStorage.getItem(MOTION_KEY) || 'on';
+  applyMotion(savedMotion);
+
+  mermaid.initialize(getMermaidConfig(savedTheme));
+  setTimeout(() => {
+    renderMermaid();
+    updateActiveSection();
+  }, 100);
+});
+</script>
+
+</body>
+</html>
